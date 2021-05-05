@@ -1,0 +1,85 @@
+.logReg {
+    width: 20rem;
+    height: 20rem;
+    border: 2px solid white;
+    display: flex;
+    flex-flow: wrap column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: rgba(0,0,0,0.6);
+    --reg-log-alert: "";
+}
+
+.logReg h1 {
+    color: white;
+    font-size: 2.5rem;
+    /*margin-bottom: 0.3rem;*/
+}
+
+.logReg .username:before {
+    content: var(--reg-log-alert);
+    position: relative;
+    color: rgba(255,0,0,0.8);
+    font-size: 1rem;
+    font-weight: 400;
+    text-align: center;
+}
+
+.logReg .username {
+    height: 7rem;
+    display: flex;
+    flex-flow: wrap column;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 0.5rem;
+}
+
+.logReg .password {
+    height: 5rem;
+    display: flex;
+    flex-flow: wrap column;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 0.5rem;
+}
+
+.logReg h4 {
+    color: white;
+}
+
+.logReg input {
+    height: 2rem;
+    width: 12rem;
+    margin-bottom: 1rem;
+}
+
+.logReg .password + button {
+    height: 1.7rem;
+    width: 4.2rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+
+/*.logReg .password + button h4 {
+    color: black;
+    border: none;
+}*/
+
+.logReg .changeLogReg {
+    background: transparent;
+    color: white;
+    font-size: 0.7rem;
+    border: none;
+    margin-top: 0.3rem;
+    width: 4rem;
+    height: 1rem;
+}
+
+.logReg button:hover {
+    opacity: 0.8;
+}
+

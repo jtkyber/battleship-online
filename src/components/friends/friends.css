@@ -1,0 +1,182 @@
+.friendsContainer {
+    width: 15rem;
+    position: relative;
+    background-color: rgba(0,0,0,0.4);
+    --add-friend-alert: "";
+}
+
+.friendsSection {
+    height: 100vh;
+    display: flex;
+    flex-flow: nowrap column;
+    align-items: center;
+    justify-content: flex-start;
+    border: 2px solid rgba(255,255,255,0.4);
+    border-left: none;
+    border-top: none;
+    border-bottom: none;
+    padding-top: 0.5rem;
+}
+
+.friendsSection > h2 {
+    color: white;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 3px dotted green;
+    width: 13rem;
+    text-align: center;
+    z-index: 100;
+}
+
+.friendsSection h2 + input {
+    width: 10rem;
+    height: 2rem;
+    text-align: center;
+    /*animation: 0.5s linear 0s 1 slideRight;*/
+}
+
+.noFriends {
+    margin: 0.5rem 0;
+    color: rgba(255,0,0,0.7);
+    text-align: center;
+}
+
+/*@keyframes slideRight {
+  0% {
+    transform: translate(-20rem);
+  }
+  100% {
+    transform: translate(0);
+  }
+}*/
+
+.friendsListContainer {
+    /*height: 70vh;*/
+    overflow: scroll;
+    overflow-x: hidden;
+    width: 15rem;
+    margin-bottom: 12.7rem;
+}
+
+.friendsListContainer::-webkit-scrollbar {
+    width: 1.2rem;
+}
+
+.friendsListContainer::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+.friendsListContainer::-webkit-scrollbar-thumb {
+    background-color: rgba(0,0,0,0.6);
+    border-radius: 10px;
+}
+
+.friendsListContainer::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0,0,0,0.4);
+}
+
+.friendsListContainer > h3 {
+    margin: 1rem;
+    color: rgba(220,0,0,1);
+    text-align: center;
+}
+
+.friendsList {
+    width: 15rem;
+    display: flex;
+    flex-flow: nowrap column;
+    align-items: center;
+    padding: 1rem 0;
+    animation: 0.5s linear 0s 1 slideUp;
+}
+
+@keyframes slideUp {
+  0% {
+    transform: translateY(100vh);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+
+.addFriend {
+    width: 12rem;
+    height: 7rem;
+    display: flex;
+    flex-flow: wrap column;
+    justify-content: center;
+    align-items: center;
+    bottom: 0;
+    position: absolute;
+    border: 2px solid rgba(255,255,255,0.8);
+    border-bottom: none;
+    border-radius: 20px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(0,40,0,0.8), rgba(0,100,0,0.8));
+    animation: 1s ease 0s 1 fadeIn;
+    z-index: 99;
+    opacity: 0.9;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.addFriend > h3 {
+    height: 2.7rem;
+    color: rgb(220,220,220);
+    font-size: 1.3rem;
+    display: flex;
+    flex-flow: wrap column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-bottom: 0rem;
+}
+
+.addFriend > h3::after {
+    content: var(--add-friend-alert);
+    font-size: 0.8rem;
+    color: rgba(255,0,0,1);
+    padding-top: 0rem;
+    text-align: center;
+    animation: 1s ease fadeOut;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.addFriend input {
+    height: 1.5rem;
+    width: 8rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.addFriend button {
+    width: 5rem;
+    height: 1.5rem;
+    border: 2px solid black;
+    background-color: rgba(255,255,255,1);
+    color: black;
+    border-radius: 10px;
+}
+
+.addFriend button:hover {
+    opacity: 0.8;
+    border: 2px solid white;
+    background-color: rgba(0,0,0,0.8);
+    color: white;
+}

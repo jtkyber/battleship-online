@@ -1,0 +1,21 @@
+.homeText {
+    text-align: center;
+    width: 16rem;
+    height: 17rem;
+    display: flex;
+    flex-flow: wrap column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.homeText h1{
+    color: white;
+    margin-bottom: 1rem;
+    font-size: 2.5rem;
+}
+
+.homeText h3{
+    color: green;
+}
+

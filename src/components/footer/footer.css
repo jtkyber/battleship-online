@@ -1,0 +1,11 @@
+footer {
+    background-color: rgba(0,0,0,0.4);
+    border-top: 2px solid rgba(255,255,255,0.2);
+}
+
+/*.footer {
+    width: 100vw;
+    height: 2rem;
+    border-top: 2px solid rgba(255,255,255,0.4);
+    /*margin-left: 14.9rem;
+}*/

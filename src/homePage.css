@@ -1,0 +1,40 @@
+.homePage {
+    background-color: rgba(0,0,0,0.7);
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 15rem 1.8fr 1fr;
+    grid-template-rows: 1fr 1fr 2rem;
+    grid-template-areas:
+            "friends homeBoard homeText"
+            "friends homeBoard logReg"
+            "footer footer footer";
+}
+
+.homePage .friendsContainer {
+    grid-area: friends;
+}
+
+.homePage .homeBoard {
+    grid-area: homeBoard;
+    justify-self: center;
+    align-self: center;
+}
+
+.homePage .homeText {
+    grid-area: homeText;
+    justify-self: center;
+    align-self: center;
+    margin-top: 1rem;
+    margin-right: 3rem;
+}
+
+.homePage .logReg {
+    grid-area: logReg;
+    justify-self: center;
+    align-self: start;
+    margin-right: 3rem;
+}
+
+.homePage footer {
+    grid-area: footer;
+}

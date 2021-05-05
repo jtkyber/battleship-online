@@ -1,0 +1,86 @@
+:root {
+    --battle-word-color: rgba(0,170,200,1);
+    --ship-word-color: rgba(0,170,200,1);
+    --letter-size: 3rem;
+    --thickness: 600;
+}
+
+.homeBoard {
+    transition: 0.2s ease;
+}
+
+@media only screen and (max-width: 1080px) {
+    .homeBoard {
+        transform: scale(0.8);
+    }
+}
+
+.homeBoard .e3:before {
+    content: "B";
+    color: var(--battle-word-color);
+    font-size: var(--letter-size);
+    font-weight: var(--thickness);
+}
+.homeBoard .e4:before {
+    content: "A";
+    color: var(--battle-word-color);
+    font-size: var(--letter-size);
+    font-weight: var(--thickness);
+    font-weight: var(--thickness);
+}
+.homeBoard .e5:before {
+    content: "T";
+    color: var(--battle-word-color);
+    font-size: var(--letter-size);
+    font-weight: var(--thickness);
+}
+.homeBoard .e6:before {
+    content: "T";
+    color: var(--battle-word-color);
+    font-size: var(--letter-size);
+    font-weight: var(--thickness);
+}
+.homeBoard .e7:before {
+    content: "L";
+    color: var(--battle-word-color);
+    font-size: var(--letter-size);
+    font-weight: var(--thickness);
+}
+.homeBoard .e8:before {
+    content: "E";
+    color: var(--battle-word-color);
+    font-size: var(--letter-size);
+    font-weight: var(--thickness);
+}
+
+
+.homeBoard .f4:before {
+    content: "S";
+    color: var(--ship-word-color);
+    font-size: var(--letter-size);
+    font-weight: var(--thickness);
+}
+.homeBoard .f5:before {
+    content: "H";
+    color: var(--ship-word-color);
+    font-size: var(--letter-size);
+    font-weight: var(--thickness);
+}
+.homeBoard .f6 {
+    background: url('../ships/submarine-vert.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    filter: brightness(0);
+
+   /* content: "I";
+    color: var(--ship-word-color);
+    font-size: var(--letter-size);
+    font-weight: var(--thickness);*/
+}
+.homeBoard .f7:before {
+    content: "P";
+    color: var(--ship-word-color);
+    font-size: var(--letter-size);
+    font-weight: var(--thickness);
+}

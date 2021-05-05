@@ -1,0 +1,17 @@
+nav {
+    background-color: rgba(0,0,0,0.3);
+    border-bottom: 2px solid rgba(255,255,255,0.2);
+    color: green;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 2rem;
+}
+
+nav button {
+    background: transparent;
+    border: none;
+    color: rgba(0,200,20,0.8);
+    font-size: 1rem;
+
+}
