@@ -16,6 +16,7 @@
 
 .homePageLogged .friendsContainer {
     grid-area: friends;
+    z-index: 2;
 }
 
 .homePageLogged .homeBoard {

@@ -153,7 +153,7 @@ function App() {
             ?
             <div className='homePageLogged'>
                 <Navigation onRouteChange={onRouteChange} route={route} />
-                <Friends setFriendSocket={setFriendSocket} currentSocket={currentSocket} showOnlineStatusToFriends={showOnlineStatusToFriends} username={user.username} setRoute={setRoute} />
+                <Friends route={route} setFriendSocket={setFriendSocket} currentSocket={currentSocket} showOnlineStatusToFriends={showOnlineStatusToFriends} username={user.username} setRoute={setRoute} />
                 <HomeBoard route={route}/>
                 <Footer />
             </div>

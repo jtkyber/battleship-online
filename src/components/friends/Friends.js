@@ -3,7 +3,7 @@ import SingleFriend from './SingleFriend';
 import { socket } from '../../socket/socketImport';
 import './friends.css';
 
-const Friends = ({ setFriendSocket, currentSocket, username, showOnlineStatusToFriends, setRoute }) => {
+const Friends = ({ route, setFriendSocket, currentSocket, username, showOnlineStatusToFriends, setRoute }) => {
     const [allFriends, setAllFriends] = useState([]);
     const [unsortedFriends, setUnsortedFriends] = useState([]);
     const [friendFilter, setFriendFilter] = useState('');
@@ -120,7 +120,10 @@ const Friends = ({ setFriendSocket, currentSocket, username, showOnlineStatusToF
                 throw new Error('User does not exist')
             }
             const user = await res.json();
-            if (user.username) {
+            if (user.username === username) {
+                friendAlert.style.setProperty('--add-friend-alert', '"Cannot add self as friend"');
+                throw new Error('Cannot add self as friend')
+            } else if (user.username) {
     //-----------------------------------------------------------------------------------
                 // If friend exists, grab the user's friend list string
                 // Make a temporary string and array with the new friend
@@ -182,7 +185,7 @@ const Friends = ({ setFriendSocket, currentSocket, username, showOnlineStatusToF
 //-----------------------------------------------------------------------------------
                         allFriends.map(f => {
                             if (f.name.toLowerCase().includes(friendFilter.toLowerCase())) {
-                                return <SingleFriend setFriendSocket={setFriendSocket} currentSocket={currentSocket} username={username} fetchFriends={fetchFriends} key={f.name} name={f.name} status={f.status} setRoute={setRoute} />
+                                return <SingleFriend route={route} setFriendSocket={setFriendSocket} currentSocket={currentSocket} username={username} fetchFriends={fetchFriends} key={f.name} name={f.name} status={f.status} setRoute={setRoute} />
                             } else return null
                         })
                     }

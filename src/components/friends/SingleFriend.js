@@ -2,7 +2,7 @@ import React from 'react';
 import { socket } from '../../socket/socketImport';
 import './singleFriend.css';
 
-const SingleFriend = ({ setFriendSocket, currentSocket, username, fetchFriends, name, status, setRoute }) => {
+const SingleFriend = ({ route, setFriendSocket, currentSocket, username, fetchFriends, name, status, setRoute }) => {
     let friendSocket = '';
 
     const sendInvite = async (e) => {
@@ -37,8 +37,16 @@ const SingleFriend = ({ setFriendSocket, currentSocket, username, fetchFriends, 
 
     socket.on('receive invite', data => {
         const btn = document.querySelector(`.btn${data.username}`);
-        btn.childNodes[0].nodeValue = "Accept";
-        friendSocket = data.socketid;
+        if (route === 'loggedIn' && btn !== null) {
+            if (btn.disabled === true) {
+                btn.style.backgroundColor = 'rgba(0,255,50,0.7)';
+                btn.style.border = '2px solid rgba(255,255,255,0.5)';
+                btn.style.color = 'rgba(0,0,0,1)';
+                btn.disabled = false;
+            }
+            btn.childNodes[0].nodeValue = "Accept";
+            friendSocket = data.socketid;
+        }
     })
 
     const handleOnClick = (e) => {
