@@ -1,18 +1,21 @@
 import React from 'react';
+import FriendRequests from './FriendRequests';
 import './navigation.css';
 
-const Navigation = ({onRouteChange, route}) => {
+const Navigation = ({username, onRouteChange, route}) => {
     return (
-        <nav>
+        <nav className='nav'>
             {
             route === 'loggedIn'
             ?
             <>
-                <button value='goToLogin' onClick={onRouteChange}>Log Out</button>
-                <button value='game' onClick={onRouteChange}>Game</button>
+            <FriendRequests username={username} />
+            <button value='goToLogin' onClick={onRouteChange}>Log Out</button>
+            <button value='game' onClick={onRouteChange}>Game</button>
             </>
             :
             <>
+                <FriendRequests username={username} />
                 <button value='goToLogin' onClick={onRouteChange}>Log Out</button>
                 <button value='login' onClick={onRouteChange}>Home</button>
             </>

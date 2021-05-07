@@ -6,25 +6,28 @@ const Login = ({onRouteChange, loadUser, currentSocket}) => {
     const [password, setPassword] = useState('');
     const logReg = document.querySelector('.logReg');
 
-    const onSubmitLogin = (e) => {
-        fetch('http://localhost:8000/login', {
-          method: 'put',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({
-            username: userName,
-            password: password,
-            socketid: currentSocket
-          })
-        })
-        .then(response => response.json())
-        .then(user => {
-          if (user.username) {
-            loadUser(user);
-            onRouteChange(e);
-          } else if (logReg !== null) {
-            logReg.style.setProperty("--reg-log-alert", '"The username or password you entered does not exist"');
-          }
-        })
+    const onSubmitLogin = async (e) => {
+        try {
+            const res = await fetch('http://localhost:8000/login', {
+              method: 'put',
+              headers: {'Content-Type': 'application/json'},
+              body: JSON.stringify({
+                username: userName,
+                password: password,
+                socketid: currentSocket
+              })
+            })
+            const user = await res.json();
+            if (user.username) {
+                loadUser(user);
+                onRouteChange(e);
+            } else if (logReg !== null) {
+                logReg.style.setProperty("--reg-log-alert", '"The username or password you entered is incorrect"');
+            }
+        } catch(err) {
+            console.log(err);
+        }
+
     }
 
     return (

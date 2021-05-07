@@ -78,24 +78,30 @@ function App() {
         setUser({ username: user.username, wins: user.wins })
     }
 
-    const removeUserSocket = () => {
-        fetch('http://localhost:8000/removeUserSocket', {
+    const removeUserSocket = async () => {
+        const res = await fetch('http://localhost:8000/removeUserSocket', {
           method: 'put',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify({
             username: user.username
           })
         })
-        .then(response => response.json())
-        .then(res => {
+        const socketRemoved = await res.json();
+        if (socketRemoved) {
             showOnlineStatusToFriends();
-        })
+        }
     }
 
-    window.onbeforeunload = () => {
+    // window.unload = window.onbeforeunload = () => {
+    //     removeUserSocket();
+    //     return "Your game progress may be lost. Are you sure you want to reload the page?";
+    // }
+
+    window.addEventListener('beforeunload', (e) => {
+        e.preventDefault();
         removeUserSocket();
-        return "Your game progress may be lost. Are you sure you want to reload the page?";
-    }
+        // e.returnValue = '';
+    })
 
     //  const addUserSocket = () => {
     //     fetch('http://localhost:8000/removeUserSocket', {
@@ -152,14 +158,14 @@ function App() {
             route === 'loggedIn'
             ?
             <div className='homePageLogged'>
-                <Navigation onRouteChange={onRouteChange} route={route} />
+                <Navigation username={user.username} onRouteChange={onRouteChange} route={route} />
                 <Friends route={route} setFriendSocket={setFriendSocket} currentSocket={currentSocket} showOnlineStatusToFriends={showOnlineStatusToFriends} username={user.username} setRoute={setRoute} />
                 <HomeBoard route={route}/>
                 <Footer />
             </div>
             :
             <div className='gamePage'>
-                <Navigation onRouteChange={onRouteChange} route={route} />
+                <Navigation username={user.username} onRouteChange={onRouteChange} route={route} />
                 <UserBoard friendSocket={friendSocket} route={route}/>
                 <ReadyButton />
                 <OpponentBoard friendSocket={friendSocket} route={route}/>

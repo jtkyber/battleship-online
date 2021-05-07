@@ -30,6 +30,10 @@ io.on('connection', (socket) => {
     socket.on('send go to game', socketid => {
         socket.broadcast.to(socketid).emit('receive go to game', socketid);
     })
+
+    socket.on('send friend request', socketid => {
+        socket.broadcast.to(socketid).emit('receive friend request');
+    })
 });
 
 

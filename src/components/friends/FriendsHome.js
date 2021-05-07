@@ -4,11 +4,11 @@ import './friends.css';
 const FriendsHome = () => {
     return (
     <div className='friendsContainer'>
-        <div className='friendsSection'>
+        <div className='friendsContainerHeader'>
             <h2>Friends</h2>
-            <div className='friendsListContainer'>
-                <h3>Log in to see your friends here</h3>
-            </div>
+        </div>
+        <div className='logToSeeFriendsText'>
+            <h3>Log in to see your friends here</h3>
         </div>
     </div>
     )
