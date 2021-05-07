@@ -213,19 +213,34 @@ const Friends = ({ route, setFriendSocket, currentSocket, username, showOnlineSt
         let friendSocketId = '';
         let friendsRequests = '';
         let friendsRequestsArray = [];
-
 //-----------------------------------------------------------------------------------
-        // Check to see if friend exists
+        // Check to see if friend already sent user request
 //-----------------------------------------------------------------------------------
         try {
-            const res = await fetch(`http://localhost:8000/findFriend?username=${friendSearch}`);
+            const res = await fetch(`http://localhost:8000/getFriendRequests?username=${username}`);
             if (!res.ok) {
+                throw new Error('Could not get friend requests')
+            }
+            const requests = await res.json();
+            if (requests !== null && requests !== '') {
+                const requestsArray = requests.split(',');
+                console.log(requestsArray);
+                if (requestsArray.includes(friendSearch)) {
+                    friendAlert.style.setProperty('--add-friend-alert', '"User already sent you a request"');
+                    throw new Error('User already sent you a request')
+                }
+            }
+//-----------------------------------------------------------------------------------
+            // Check to see if friend exists
+//-----------------------------------------------------------------------------------
+            const res2 = await fetch(`http://localhost:8000/findFriend?username=${friendSearch}`);
+            if (!res2.ok) {
                 friendAlert.style.setProperty('--add-friend-alert', '"User does not exist"');
                 throw new Error('User does not exist')
             }
-            const user = await res.json();
+            const user = await res2.json();
             if (user.username === username) {
-                friendAlert.style.setProperty('--add-friend-alert', '"Cannot add self as friend"');
+                friendAlert.style.setProperty('--add-friend-alert', '"Cannot add yourself as a friend"');
                 throw new Error('Cannot add self as friend')
             } else if (user.username) {
                 // let friendlistOfFriendsArray = [];
@@ -253,7 +268,7 @@ const Friends = ({ route, setFriendSocket, currentSocket, username, showOnlineSt
                 if (user.friendrequests !== null && user.friendrequests !== '') {
                     friendsRequestsArray = user.friendrequests.split(',');
                     if (friendsRequestsArray.includes(username)) {
-                        friendAlert.style.setProperty('--add-friend-alert', '"Request already sent"');
+                        friendAlert.style.setProperty('--add-friend-alert', '"You have already sent them a request"');
                         throw new Error('You have already sent them a request');
                     } else {
                         friendsRequestsArray.push(username);
@@ -265,7 +280,7 @@ const Friends = ({ route, setFriendSocket, currentSocket, username, showOnlineSt
                 }
             }
             friendAlert.style.setProperty('--add-friend-alert', '""');
-            const res2 = await fetch('http://localhost:8000/addSelfToFriendRequests', {
+            const res3 = await fetch('http://localhost:8000/addSelfToFriendRequests', {
                 method: 'put',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({
@@ -273,10 +288,10 @@ const Friends = ({ route, setFriendSocket, currentSocket, username, showOnlineSt
                         username: friendName
                     })
             });
-            if (!res2.ok) {
+            if (!res3.ok) {
                 throw new Error('Could not add self to friendrequests of friend');
             }
-            const selfAdded = await res2.json();
+            const selfAdded = await res3.json();
             if (selfAdded) {
                 console.log('self added to friends list');
                 socket.emit('send friend request', friendSocketId);

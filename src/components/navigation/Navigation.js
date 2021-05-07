@@ -11,7 +11,7 @@ const Navigation = ({username, onRouteChange, route}) => {
             <>
             <FriendRequests username={username} />
             <button value='goToLogin' onClick={onRouteChange}>Log Out</button>
-            <button value='game' onClick={onRouteChange}>Game</button>
+            {/*<button value='game' onClick={onRouteChange}>Game</button>*/}
             </>
             :
             <>
