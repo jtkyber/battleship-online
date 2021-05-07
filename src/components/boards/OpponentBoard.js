@@ -1,13 +1,29 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Board from './Board';
-import { socket } from '../../socket/socketImport';
 import './board.css';
 
-const OpponentBoard = ({friendSocket, route}) => {
+const OpponentBoard = ({socket, friendSocket, route}) => {
     const root = document.querySelector(':root');
     let clickedSquare = '';
     let score = 0;
 
+    useEffect(() => {
+        socket.on('show result on opponent board', result => {
+            if (result === 'hit' && clickedSquare.classList !== undefined) {
+                clickedSquare.classList.add('hit');
+                score += 1;
+                if (score === 17) {
+                    displayWinner();
+                }
+            } else if (result === 'miss' && clickedSquare.classList !== undefined) {
+                clickedSquare.classList.add('miss');
+            }
+        })
+
+        return () => {
+            socket.off('show result on opponent board');
+        }
+    },[])
     const onSquareClicked = (e) => {
         if (!e.target.classList.contains('hit') && !e.target.classList.contains('miss')) {
             clickedSquare = e.target;
@@ -23,18 +39,6 @@ const OpponentBoard = ({friendSocket, route}) => {
         console.log(score);
         score = 0;
     }
-
-    socket.on('show result on opponent board', result => {
-        if (result === 'hit' && clickedSquare.classList !== undefined) {
-            clickedSquare.classList.add('hit');
-            score += 1;
-            if (score === 17) {
-                displayWinner();
-            }
-        } else if (result === 'miss' && clickedSquare.classList !== undefined) {
-            clickedSquare.classList.add('miss');
-        }
-    })
 
     return (
         <div className='board opponentBoard'>

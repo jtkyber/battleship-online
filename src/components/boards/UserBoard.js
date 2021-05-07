@@ -1,11 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Board from './Board';
 import Ships from '../ships/Ships';
-import { socket } from '../../socket/socketImport';
 import $ from 'jquery';
 import './board.css';
 
-const UserBoard = ({friendSocket, route}) => {
+const UserBoard = ({socket, friendSocket, route}) => {
+    useEffect(() => {
+        socket.on('receive shot', shot => {
+            const oppShot = document.getElementById(shot);
+            applyHitOrMiss(oppShot);
+        })
+
+        return () => {
+            socket.off('receive shot');
+        }
+    },[])
     const hit = (item1, item2) => {
         let d1Offset = $(item1).offset();
         let d1Height = $(item1).outerHeight(true);
@@ -42,11 +51,6 @@ const UserBoard = ({friendSocket, route}) => {
         }
         return false;
     }
-
-    socket.on('receive shot', shot => {
-        const oppShot = document.getElementById(shot);
-        applyHitOrMiss(oppShot);
-    })
 
     return (
         <div className='board userBoard'>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import UserBoard from './components/boards/UserBoard';
 import OpponentBoard from './components/boards/OpponentBoard';
 import HomeBoard from './components/homeBoard/HomeBoard';
@@ -20,7 +20,18 @@ function App() {
     const [user, setUser] = useState({username: '', wins: 0});
     const [currentSocket, setCurrentSocket] = useState(null);
     const [friendSocket, setFriendSocket] = useState(null);
+    const [unsortedFriends, setUnsortedFriends] = useState([]);
 
+    useEffect(() => {
+        socket.on('disconnect', () => {
+            // console.log('disconnected');
+        })
+
+        socket.on('connect', () => {
+            setCurrentSocket(socket.id);
+            // console.log('connected');
+        })
+    },[])
     const onRouteChange = (e) => {
         switch(e.target.value) {
             case 'goToRegister':
@@ -65,7 +76,6 @@ function App() {
                 }
                 const user = await response2.json();
                 if (user.socketid) {
-                    console.log('sending update');
                     socket.emit('update user status', user.socketid);
                 }
             }
@@ -92,11 +102,6 @@ function App() {
         }
     }
 
-    // window.unload = window.onbeforeunload = () => {
-    //     removeUserSocket();
-    //     return "Your game progress may be lost. Are you sure you want to reload the page?";
-    // }
-
     window.addEventListener('beforeunload', (e) => {
         e.preventDefault();
         removeUserSocket();
@@ -115,15 +120,6 @@ function App() {
     //     .then(response => response.json())
     //     .then(res => console.log(res))
     // }
-
-    socket.on('disconnect', () => {
-        // console.log('disconnected');
-    })
-
-    socket.on('connect', () => {
-        setCurrentSocket(socket.id);
-        // console.log('connected');
-    })
 
     document.onkeydown = (e) => {
         const loginBtn = document.querySelector('.loginBtn');
@@ -158,17 +154,17 @@ function App() {
             route === 'loggedIn'
             ?
             <div className='homePageLogged'>
-                <Navigation username={user.username} onRouteChange={onRouteChange} route={route} />
-                <Friends route={route} setFriendSocket={setFriendSocket} currentSocket={currentSocket} showOnlineStatusToFriends={showOnlineStatusToFriends} username={user.username} setRoute={setRoute} />
+                <Navigation setUnsortedFriends={setUnsortedFriends} socket={socket} username={user.username} onRouteChange={onRouteChange} route={route} />
+                <Friends unsortedFriends={unsortedFriends} setUnsortedFriends={setUnsortedFriends} socket={socket} route={route} setFriendSocket={setFriendSocket} currentSocket={currentSocket} showOnlineStatusToFriends={showOnlineStatusToFriends} username={user.username} setRoute={setRoute} />
                 <HomeBoard route={route}/>
                 <Footer />
             </div>
             :
             <div className='gamePage'>
-                <Navigation username={user.username} onRouteChange={onRouteChange} route={route} />
-                <UserBoard friendSocket={friendSocket} route={route}/>
+                <Navigation setUnsortedFriends={setUnsortedFriends} socket={socket} username={user.username} onRouteChange={onRouteChange} route={route} />
+                <UserBoard socket={socket} friendSocket={friendSocket} route={route}/>
                 <ReadyButton />
-                <OpponentBoard friendSocket={friendSocket} route={route}/>
+                <OpponentBoard socket={socket} friendSocket={friendSocket} route={route}/>
                 <Footer />
             </div>
             }
