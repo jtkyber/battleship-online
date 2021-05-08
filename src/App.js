@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Game from './components/boards/Game';
 import UserBoard from './components/boards/UserBoard';
 import OpponentBoard from './components/boards/OpponentBoard';
 import HomeBoard from './components/homeBoard/HomeBoard';
@@ -124,6 +125,7 @@ function App() {
     document.onkeydown = (e) => {
         const loginBtn = document.querySelector('.loginBtn');
         const registerBtn = document.querySelector('.registerBtn');
+        const friendRequestBtn = document.querySelector('.friendRequestBtn');
 
         if ((e.keyCode === 13) && (route === 'login')) {
             e.preventDefault();
@@ -131,6 +133,9 @@ function App() {
         } else if ((e.keyCode === 13) && (route === 'register')) {
             e.preventDefault();
             registerBtn.click();
+        } else if ((e.keyCode === 13) && (route === 'loggedIn')) {
+            e.preventDefault();
+            friendRequestBtn.click();
         }
     };
 
@@ -159,14 +164,7 @@ function App() {
                 <HomeBoard route={route}/>
                 <Footer />
             </div>
-            :
-            <div className='gamePage'>
-                <Navigation setUnsortedFriends={setUnsortedFriends} socket={socket} username={user.username} onRouteChange={onRouteChange} route={route} />
-                <UserBoard socket={socket} friendSocket={friendSocket} route={route}/>
-                <ReadyButton />
-                <OpponentBoard socket={socket} friendSocket={friendSocket} route={route}/>
-                <Footer />
-            </div>
+            : <Game setUnsortedFriends={setUnsortedFriends} socket={socket} username={user.username} onRouteChange={onRouteChange} route={route} friendSocket={friendSocket} />
             }
         </>
     );

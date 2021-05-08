@@ -225,7 +225,7 @@ const Friends = ({ unsortedFriends, setUnsortedFriends, socket, route, setFriend
                 <div className='addFriend'>
                     <h3 className='addFriendText' >Add a friend</h3>
                     <input className='addFriendInput' onChange={(e) => setFriendSearch(e.target.value)} type='text' placeholder='Enter a username'/>
-                    <button onClick={sendFriendRequest}>Send Request</button>
+                    <button className='friendRequestBtn' onClick={sendFriendRequest}>Send Request</button>
                 </div>
             </div>
         </div>
