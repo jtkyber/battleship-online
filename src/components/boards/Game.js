@@ -66,12 +66,15 @@ const Game = ({ setRoute, setUnsortedFriends, socket, username, onRouteChange, r
 
     const handleReadyButton = () => {
         const ships = document.querySelectorAll('.ship');
+        const readyBtn = document.querySelector('.readyBtn');
         for (let ship of ships) {
             ship.style.cursor = 'default';
         }
         if (opponentIsReady) {
             setGameRoute('gameInProgress');
             setYourTurn(true);
+        } else {
+            readyBtn.style.opacity = '0.4';
         }
         setPlayerIsReady(true);
         socket.emit('send ready status', friendSocket);
