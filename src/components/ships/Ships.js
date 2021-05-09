@@ -3,7 +3,7 @@ import $ from 'jquery';
 import './ships.css';
 import '../boards/board.css';
 
-const Ships = ({route}) => {
+const Ships = ({gameRoute, route}) => {
     let rotating = false;
     let orientation = 'hor';
     let selectedShip = '';
@@ -14,7 +14,7 @@ const Ships = ({route}) => {
     // Decide what happens when a ship is selected to move
 
     const onShipSelect = (e) => {
-        if (!shipIsSelected) {
+        if (!shipIsSelected && gameRoute === 'placeShips') {
             const userBoard = document.querySelector('.userBoard');
             shipIsSelected = true;
             selectedShip = e.target.parentElement;

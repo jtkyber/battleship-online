@@ -2,20 +2,14 @@ import React, { useEffect } from 'react';
 import Board from './Board';
 import './board.css';
 
-const OpponentBoard = ({socket, friendSocket, route}) => {
-    const root = document.querySelector(':root');
-    let clickedSquare = '';
-    let score = 0;
-
+const OpponentBoard = ({ yourTurn, setYourTurn, gameRoute, socket, friendSocket, route }) => {
+    // const [squareClicked, setSquareClicked] = useState('');
     useEffect(() => {
-        socket.on('show result on opponent board', result => {
-            if (result === 'hit' && clickedSquare.classList !== undefined) {
+        socket.on('show result on opponent board', data => {
+            const clickedSquare = document.querySelector(`.opponentBoard [id='${data.shotSquare}']`);
+            if (data.result === 'hit' && clickedSquare.classList !== undefined) {
                 clickedSquare.classList.add('hit');
-                score += 1;
-                if (score === 17) {
-                    displayWinner();
-                }
-            } else if (result === 'miss' && clickedSquare.classList !== undefined) {
+            } else if (data.result === 'miss' && clickedSquare.classList !== undefined) {
                 clickedSquare.classList.add('miss');
             }
         })
@@ -24,20 +18,13 @@ const OpponentBoard = ({socket, friendSocket, route}) => {
             socket.off('show result on opponent board');
         }
     },[])
-    const onSquareClicked = (e) => {
-        if (!e.target.classList.contains('hit') && !e.target.classList.contains('miss')) {
-            clickedSquare = e.target;
-            socket.emit('send shot to opponent', {target: e.target.id, socketid: friendSocket});
-            root.style.setProperty("--sqaure-already-selected", '""');
-        } else {
-            root.style.setProperty("--sqaure-already-selected", '"That spot has already been selected"');
-        }
-    }
 
-    const displayWinner = () => {
-        root.style.setProperty("--winner-text", '"You Win!"');
-        console.log(score);
-        score = 0;
+    const onSquareClicked = (e) => {
+        if (yourTurn && !e.target.classList.contains('hit') && !e.target.classList.contains('miss')) {
+            // setSquareClicked(e.target);
+            socket.emit('send shot to opponent', {target: e.target.id, socketid: friendSocket});
+            setYourTurn(false);
+        }
     }
 
     return (
@@ -70,7 +57,7 @@ const OpponentBoard = ({socket, friendSocket, route}) => {
 
             <div className='grid'>
                 <div className='allSqaures'>
-                    <Board route={route} onSquareClicked={onSquareClicked} />
+                    <Board gameRoute={gameRoute} route={route} onSquareClicked={onSquareClicked} />
                 </div>
             </div>
         </div>

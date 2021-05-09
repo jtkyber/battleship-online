@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Game from './components/boards/Game';
-import UserBoard from './components/boards/UserBoard';
-import OpponentBoard from './components/boards/OpponentBoard';
 import HomeBoard from './components/homeBoard/HomeBoard';
 import Friends from './components/friends/Friends';
 import FriendsHome from './components/friends/FriendsHome';
 import HomeText from './components/homeText/HomeText';
 import Login from './components/logReg/Login';
 import Register from './components/logReg/Register';
-import ReadyButton from './components/readyButton/ReadyButton';
 import Navigation from './components/navigation/Navigation';
 import Footer from './components/footer/Footer';
 import { socket } from './socket/socketImport';
@@ -164,7 +161,7 @@ function App() {
                 <HomeBoard route={route}/>
                 <Footer />
             </div>
-            : <Game setUnsortedFriends={setUnsortedFriends} socket={socket} username={user.username} onRouteChange={onRouteChange} route={route} friendSocket={friendSocket} />
+            : <Game setRoute={setRoute} setUnsortedFriends={setUnsortedFriends} socket={socket} username={user.username} onRouteChange={onRouteChange} route={route} friendSocket={friendSocket} />
             }
         </>
     );

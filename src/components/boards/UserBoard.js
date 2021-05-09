@@ -4,17 +4,19 @@ import Ships from '../ships/Ships';
 import $ from 'jquery';
 import './board.css';
 
-const UserBoard = ({socket, friendSocket, route}) => {
+const UserBoard = ({yourTurn, setYourTurn, gameRoute, socket, friendSocket, route}) => {
     useEffect(() => {
         socket.on('receive shot', shot => {
             const oppShot = document.getElementById(shot);
             applyHitOrMiss(oppShot);
+            setYourTurn(true);
         })
 
         return () => {
             socket.off('receive shot');
         }
     },[])
+
     const hit = (item1, item2) => {
         let d1Offset = $(item1).offset();
         let d1Height = $(item1).outerHeight(true);
@@ -35,10 +37,10 @@ const UserBoard = ({socket, friendSocket, route}) => {
     const applyHitOrMiss = (oppShot) => {
         if (matchOppShotToBoard(oppShot)) {
             oppShot.classList.add('hit');
-            socket.emit('send result to opponent board', {shot: 'hit', socketid: friendSocket});
+            socket.emit('send result to opponent board', {shotSquare: oppShot.id, shot: 'hit', socketid: friendSocket});
         } else {
             oppShot.classList.add('miss');
-            socket.emit('send result to opponent board', {shot: 'miss', socketid: friendSocket});
+            socket.emit('send result to opponent board', {shotSquare: oppShot.id, shot: 'miss', socketid: friendSocket});
         }
     }
 
@@ -82,8 +84,8 @@ const UserBoard = ({socket, friendSocket, route}) => {
 
             <div className='grid'>
                 <div className='allSqaures'>
-                    <Board />
-                    <Ships route={route}/>
+                    <Board gameRoute={gameRoute} />
+                    <Ships gameRoute={gameRoute} route={route}/>
                 </div>
             </div>
         </div>

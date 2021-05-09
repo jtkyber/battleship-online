@@ -28,6 +28,7 @@
 }
 .gamePage {
     user-select: none;
+    --player-turn-text: "";
 }
 
 .gamePage nav{
@@ -47,6 +48,14 @@
     transition: 0.2s ease;
     justify-self: center;
     align-self: center;
+    text-align: center;
+}
+
+.gamePage .opponentBoard::before {
+    content: var(--player-turn-text);
+    color: red;
+    position: relative;
+    font-weight: 600;
 }
 
 .gamePage .readyBtn:hover {

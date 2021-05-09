@@ -1,7 +1,7 @@
 import React from 'react';
 import './board.css';
 
-const AssembleBoard = ({route, onSquareClicked}) => {
+const AssembleBoard = ({gameRoute, route, onSquareClicked}) => {
     const allSquares = [];
     for (let i = 1; i < 11; i++) {
         for (let j = 0; j < 10; j++) {
@@ -9,11 +9,18 @@ const AssembleBoard = ({route, onSquareClicked}) => {
         }
     }
 
+    const handleSquareClick = (e) => {
+        const parentBoard = e.target.parentElement.parentElement.parentElement;
+        if (gameRoute === 'gameInProgress' && parentBoard.classList.contains('opponentBoard')) {
+            onSquareClicked(e);
+        }
+    }
+
     return (
         allSquares.map(square => {
             return (
                 <div
-                    onClick={onSquareClicked}
+                    onClick={handleSquareClick}
                     style={{gridArea: square.row + square.col}}
                     className={'singleSquare ' + square.row + ' ' + square.row + square.col}
                     key={square.row + square.col}

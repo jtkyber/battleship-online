@@ -5,29 +5,30 @@ const SingleFriend = ({ socket, route, setFriendSocket, currentSocket, username,
     let friendSocket = '';
 
     useEffect(() => {
-        socket.on('receive go to game', socketid => {
-            setRoute('game');
-        })
 
-        socket.on('receive invite', data => {
-            const btn = document.querySelector(`.btn${data.username}`);
-            if (route === 'loggedIn' && btn !== null) {
-                if (btn.disabled === true) {
-                    btn.style.backgroundColor = 'rgba(0,255,50,0.7)';
-                    btn.style.border = '2px solid rgba(255,255,255,0.5)';
-                    btn.style.color = 'rgba(0,0,0,1)';
-                    btn.disabled = false;
-                }
-                btn.childNodes[0].nodeValue = "Accept";
-                friendSocket = data.socketid;
-            }
-
-            return () => {
-                socket.off('receive go to game');
-                socket.off('receive invite');
-            }
-        })
+        return () => {
+            socket.off('receive go to game');
+            socket.off('receive invite');
+        }
     },[])
+
+    socket.on('receive go to game', () => {
+        setRoute('game');
+    })
+
+    socket.on('receive invite', data => {
+        const btn = document.querySelector(`.btn${data.username}`);
+        if (route === 'loggedIn' && btn !== null) {
+            if (btn.disabled === true) {
+                btn.style.backgroundColor = 'rgba(0,255,50,0.7)';
+                btn.style.border = '2px solid rgba(255,255,255,0.5)';
+                btn.style.color = 'rgba(0,0,0,1)';
+                btn.disabled = false;
+            }
+            btn.childNodes[0].nodeValue = "Accept";
+            friendSocket = data.socketid;
+        }
+    })
 
     const sendInvite = async (e) => {
         const friend = e.target.id;

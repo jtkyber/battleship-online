@@ -10,7 +10,6 @@ const FriendRequests = ({ setUnsortedFriends, socket, username }) => {
         updateRequests();
 
         socket.on('receive friend request', () => {
-            console.log('received request');
             updateRequests();
         })
 

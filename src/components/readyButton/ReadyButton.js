@@ -1,9 +1,9 @@
 import React from 'react';
 
-const ReadyButton = () => {
+const ReadyButton = ({handleReadyButton}) => {
     return (
         <div className='readyBtn'>
-            <button className='btn'><h3>Ready!</h3></button>
+            <button onClick={handleReadyButton} className='btn'><h3>Ready!</h3></button>
         </div>
     )
 }

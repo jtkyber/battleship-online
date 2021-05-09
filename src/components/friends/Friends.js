@@ -17,7 +17,6 @@ const Friends = ({ unsortedFriends, setUnsortedFriends, socket, route, setFriend
         showOnlineStatusToFriends();
 
         socket.on('update friend status', () => {
-            console.log('updating friend status');
             fetchFriends();
         });
 
