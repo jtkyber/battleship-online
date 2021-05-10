@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/battleship/static/css/main.dcf3d8f0.chunk.css",
+    "main.js": "/battleship/static/js/main.90f2f05a.chunk.js",
+    "main.js.map": "/battleship/static/js/main.90f2f05a.chunk.js.map",
+    "runtime-main.js": "/battleship/static/js/runtime-main.fb6c8eda.js",
+    "runtime-main.js.map": "/battleship/static/js/runtime-main.fb6c8eda.js.map",
+    "static/js/2.a424f33d.chunk.js": "/battleship/static/js/2.a424f33d.chunk.js",
+    "static/js/2.a424f33d.chunk.js.map": "/battleship/static/js/2.a424f33d.chunk.js.map",
+    "static/js/3.d163dac9.chunk.js": "/battleship/static/js/3.d163dac9.chunk.js",
+    "static/js/3.d163dac9.chunk.js.map": "/battleship/static/js/3.d163dac9.chunk.js.map",
+    "index.html": "/battleship/index.html",
+    "static/css/main.dcf3d8f0.chunk.css.map": "/battleship/static/css/main.dcf3d8f0.chunk.css.map",
+    "static/js/2.a424f33d.chunk.js.LICENSE.txt": "/battleship/static/js/2.a424f33d.chunk.js.LICENSE.txt",
+    "static/media/index.css": "/battleship/static/media/background.f30097d9.jpg",
+    "static/media/board.css": "/battleship/static/media/waterbg.ade23eca.gif",
+    "static/media/msg-icon.b63e7a13.png": "/battleship/static/media/msg-icon.b63e7a13.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.fb6c8eda.js",
+    "static/js/2.a424f33d.chunk.js",
+    "static/css/main.dcf3d8f0.chunk.css",
+    "static/js/main.90f2f05a.chunk.js"
+  ]
+}
