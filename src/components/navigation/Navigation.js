@@ -11,15 +11,13 @@ const Navigation = ({ setUnsortedFriends, socket, username, onRouteChange, route
             <>
             <FriendRequests setUnsortedFriends={setUnsortedFriends} socket={socket} username={username} />
             <button value='goToLogin' onClick={onRouteChange}>Log Out</button>
-            {/*<button value='game' onClick={onRouteChange}>Game</button>*/}
             </>
             :
             <>
-                <FriendRequests setUnsortedFriends={setUnsortedFriends} socket={socket} username={username} />
-                <button value='goToLogin' onClick={onRouteChange}>Log Out</button>
-                <button value='login' onClick={onRouteChange}>Home</button>
+            <FriendRequests setUnsortedFriends={setUnsortedFriends} socket={socket} username={username} />
+            <button value='goToLogin' onClick={onRouteChange}>Log Out</button>
             </>
-        }
+            }
         </nav>
     )
 }
