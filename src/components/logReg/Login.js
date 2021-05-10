@@ -8,7 +8,7 @@ const Login = ({onRouteChange, loadUser, currentSocket}) => {
 
     const onSubmitLogin = async (e) => {
         try {
-            const res = await fetch('http://localhost:8000/login', {
+            const res = await fetch('https://calm-ridge-60009.herokuapp.com/login', {
               method: 'put',
               headers: {'Content-Type': 'application/json'},
               body: JSON.stringify({

@@ -58,7 +58,7 @@ function App() {
     const showOnlineStatusToFriends = async () => {
         let allFriendNames = [];
         try {
-            const response1 = await fetch(`http://localhost:8000/getFriends?username=${user.username}`)
+            const response1 = await fetch(`https://calm-ridge-60009.herokuapp.com/getFriends?username=${user.username}`)
             if (!response1.ok) {
                 throw new Error('Error')
             }
@@ -68,7 +68,7 @@ function App() {
             }
 
             for (let friend of allFriendNames) {
-                const response2 = await fetch(`http://localhost:8000/findFriend?username=${friend}`)
+                const response2 = await fetch(`https://calm-ridge-60009.herokuapp.com/findFriend?username=${friend}`)
                 if (!response2.ok) {
                     throw new Error('Error')
                 }
@@ -87,7 +87,7 @@ function App() {
     }
 
     const removeUserSocket = async () => {
-        const res = await fetch('http://localhost:8000/removeUserSocket', {
+        const res = await fetch('https://calm-ridge-60009.herokuapp.com/removeUserSocket', {
           method: 'put',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify({
@@ -107,7 +107,7 @@ function App() {
     })
 
     //  const addUserSocket = () => {
-    //     fetch('http://localhost:8000/removeUserSocket', {
+    //     fetch('https://calm-ridge-60009.herokuapp.com/removeUserSocket', {
     //       method: 'put',
     //       headers: {'Content-Type': 'application/json'},
     //       body: JSON.stringify({

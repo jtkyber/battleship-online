@@ -14,7 +14,7 @@ const Register = ({onRouteChange, loadUser, currentSocket}) => {
         } else if (password.length < 5) {
             logReg.style.setProperty("--reg-log-alert", '"Password must be at least 5 characters"');
         } else {
-            fetch('http://localhost:8000/register', {
+            fetch('https://calm-ridge-60009.herokuapp.com/register', {
               method: 'post',
               headers: {'Content-Type': 'application/json'},
               body: JSON.stringify({

@@ -33,7 +33,7 @@ const SingleFriend = ({ socket, route, setFriendSocket, currentSocket, username,
     const sendInvite = async (e) => {
         const friend = e.target.id;
         try {
-            const response = await fetch(`http://localhost:8000/findFriend?username=${friend}`)
+            const response = await fetch(`https://calm-ridge-60009.herokuapp.com/findFriend?username=${friend}`)
             const user = await response.json();
             if (user.socketid) {
                 setFriendSocket(user.socketid);
