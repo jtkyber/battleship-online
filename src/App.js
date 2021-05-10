@@ -103,7 +103,7 @@ function App() {
     window.addEventListener('beforeunload', (e) => {
         e.preventDefault();
         removeUserSocket();
-        // e.returnValue = '';
+        e.returnValue = '';
     })
 
     //  const addUserSocket = () => {
