@@ -34,7 +34,7 @@
 .friendsContainerHeader {
     height: 5.5rem;
     display: flex;
-    flex-flow: wrap column;
+    flex-flow: nowrap column;
     justify-content: center;
     align-items: center;
 }

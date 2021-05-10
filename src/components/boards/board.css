@@ -1,6 +1,6 @@
-.board {
+.userBoard {
     display: grid;
-    grid-template-columns: 3rem 30rem;
+    grid-template-columns: 3rem 30vw;
     grid-template-rows: 3rem;
     gap: 0;
     grid-template-areas:
@@ -9,20 +9,31 @@
     padding-top: 2rem;
 }
 
-@media only screen and (max-width: 1150px) {
+.opponentBoard {
+    display: grid;
+    grid-template-columns: 3rem 30vw;
+    grid-template-rows: 3rem;
+    gap: 0;
+    grid-template-areas:
+    "rows cols"
+    "rows board";
+    padding-top: 2rem;
+}
+
+/*@media only screen and (max-width: 1150px) {
     .board {
         transform: scale(0.8);
     }
-}
+}*/
 .rows {
     display: flex;
     grid-area: rows;
     grid-row-start: 2;
-    flex-flow: wrap column;
+    flex-flow: nowrap column;
     justify-content: space-around;
     align-items: center;
     color: white;
-    height: 30rem;
+    /*height: 30rem;*/
 }
 
 .cols {
@@ -45,8 +56,8 @@
 
 .allSqaures {
     display: grid;
-    grid-template-columns: 3rem 3rem 3rem 3rem 3rem 3rem 3rem 3rem 3rem 3rem;
-    grid-template-rows: 3rem 3rem 3rem 3rem 3rem 3rem 3rem 3rem 3rem 3rem;
+    grid-template-columns: 3vw 3vw 3vw 3vw 3vw 3vw 3vw 3vw 3vw 3vw;
+    grid-template-rows: 3vw 3vw 3vw 3vw 3vw 3vw 3vw 3vw 3vw 3vw;
     gap: 0;
     grid-template-areas:
     "a1 a2 a3 a4 a5 a6 a7 a8 a9 a10"
@@ -102,7 +113,8 @@
     content: var(--sqaure-already-selected);
     color: rgba(255,0,0,0.9);
     top: -10px;
-    width: 35rem;
+    width: 37vw;
+    /*margin-left: 4rem;*/
     text-align: center;
 }
 
@@ -111,7 +123,7 @@
     content: var(--winner-text);
     color: rgba(0,255,0,0.9);
     top: -10px;
-    width: 35rem;
+    width: 37vw;
     font-size: 1.4rem;
     font-weight: 600;
     text-align: center;

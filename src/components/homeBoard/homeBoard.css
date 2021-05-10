@@ -1,7 +1,7 @@
 :root {
     --battle-word-color: rgba(0,170,200,1);
     --ship-word-color: rgba(0,170,200,1);
-    --letter-size: 3rem;
+    --letter-size: 2.5vw;
     --thickness: 600;
 }
 
@@ -9,11 +9,11 @@
     transition: 0.2s ease;
 }
 
-@media only screen and (max-width: 1080px) {
+/*@media only screen and (max-width: 1080px) {
     .homeBoard {
         transform: scale(0.8);
     }
-}
+}*/
 
 .homeBoard .e3:before {
     content: "B";

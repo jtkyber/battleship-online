@@ -5,7 +5,7 @@ import './homeBoard.css';
 const HomeBoard = ({route}) => {
     return (
         <div className='board homeBoard'>
-            <div className='rows'>
+{/*            <div className='rows'>
                 <h3>A</h3>
                 <h3>B</h3>
                 <h3>C</h3>
@@ -29,7 +29,7 @@ const HomeBoard = ({route}) => {
                 <h3>8</h3>
                 <h3>9</h3>
                 <h3>10</h3>
-            </div>
+            </div>*/}
 
             <div className='grid'>
                 <div className='allSqaures'>

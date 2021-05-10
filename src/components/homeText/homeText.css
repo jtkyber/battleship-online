@@ -1,18 +1,18 @@
 .homeText {
     text-align: center;
-    width: 16rem;
-    height: 17rem;
+    max-width: 25rem;
+    /*height: 17rem;*/
     display: flex;
-    flex-flow: wrap column;
+    flex-flow: nowrap column;
     justify-content: center;
     align-items: center;
-
 }
 
 .homeText h1{
     color: white;
-    margin-bottom: 1rem;
-    font-size: 2.5rem;
+    /*margin-bottom: 1rem;*/
+    font-size: calc(1.3rem + 1.2vw);
+
 }
 
 .homeText h3{
