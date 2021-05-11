@@ -16,12 +16,12 @@ const Game = ({ setRoute, setUnsortedFriends, socket, username, onRouteChange, r
         socket.on('receive game over', () => {
             // gamePage.style.setProperty('--player-turn-text', '"You Won!"');
             // setTimeout(gameOver, 2000);
-            alert('You Won!!!');
+            window.alert('You Won!!!');
             setRoute('loggedIn');
         })
 
         socket.on('receive exit game', () => {
-            alert('Opponent has left the game');
+            window.alert('Opponent has left the game');
             setRoute('loggedIn');
         })
 
@@ -57,7 +57,7 @@ const Game = ({ setRoute, setUnsortedFriends, socket, username, onRouteChange, r
                 // gamePage.style.setProperty('--player-turn-text', '"You Lose"');
                 socket.emit('game over', friendSocket);
                 // setTimeout(gameOver, 2000);
-                alert('You Lose');
+                window.alert('You Lose');
                 setRoute('loggedIn');
             }
         }
