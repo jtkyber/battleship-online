@@ -44,7 +44,7 @@ const Game = ({ setRoute, setUnsortedFriends, socket, username, onRouteChange, r
     },[yourTurn, gameRoute])
 
     useEffect(() => {
-        const gamePage = document.querySelector('.gamePage');
+        // const gamePage = document.querySelector('.gamePage');
         const squares = document.querySelectorAll('.userBoard .singleSquare');
         let score = 0;
         if (yourTurn) {
