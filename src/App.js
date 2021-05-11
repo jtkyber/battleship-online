@@ -40,6 +40,9 @@ function App() {
                 setRoute('login');
                 removeUserSocket();
                 break;
+            case 'goHome':
+                setRoute('loggedIn');
+                break;
             case 'login':
                 setRoute('loggedIn');
                 break;

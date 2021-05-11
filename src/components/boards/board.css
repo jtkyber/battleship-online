@@ -20,11 +20,6 @@
     padding-top: 2rem;
 }
 
-/*@media only screen and (max-width: 1150px) {
-    .board {
-        transform: scale(0.8);
-    }
-}*/
 .rows {
     display: flex;
     grid-area: rows;
@@ -33,7 +28,7 @@
     justify-content: space-around;
     align-items: center;
     color: white;
-    /*height: 30rem;*/
+    height: 30vw;
 }
 
 .cols {
@@ -56,8 +51,8 @@
 
 .allSqaures {
     display: grid;
-    grid-template-columns: 3vw 3vw 3vw 3vw 3vw 3vw 3vw 3vw 3vw 3vw;
-    grid-template-rows: 3vw 3vw 3vw 3vw 3vw 3vw 3vw 3vw 3vw 3vw;
+    grid-template-columns: repeat(10, 3vw);
+    grid-template-rows: repeat(10, 3vw);
     gap: 0;
     grid-template-areas:
     "a1 a2 a3 a4 a5 a6 a7 a8 a9 a10"

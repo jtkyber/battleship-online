@@ -18,9 +18,15 @@ const Game = ({ setRoute, setUnsortedFriends, socket, username, onRouteChange, r
             setTimeout(gameOver, 2000);
         })
 
+        socket.on('receive exit game', () => {
+            alert('Opponent has left the game');
+            setRoute('loggedIn');
+        })
+
         return () => {
             socket.off('receive ready status');
             socket.off('receive game over');
+            socket.off('receive exit game');
         }
     },[])
 
@@ -82,7 +88,7 @@ const Game = ({ setRoute, setUnsortedFriends, socket, username, onRouteChange, r
 
     return (
         <div className='gamePage'>
-            <Navigation setUnsortedFriends={setUnsortedFriends} socket={socket} username={username} onRouteChange={onRouteChange} route={route} />
+            <Navigation friendSocket={friendSocket} setUnsortedFriends={setUnsortedFriends} socket={socket} username={username} onRouteChange={onRouteChange} route={route} />
             <UserBoard yourTurn={yourTurn} setYourTurn={setYourTurn} gameRoute={gameRoute} socket={socket} friendSocket={friendSocket} route={route}/>
             {
             gameRoute === 'placeShips'
