@@ -12,10 +12,12 @@ const Game = ({ setRoute, setUnsortedFriends, socket, username, onRouteChange, r
     const [yourTurn, setYourTurn] = useState(false);
 
     useEffect(() => {
-        const gamePage = document.querySelector('.gamePage');
+        // const gamePage = document.querySelector('.gamePage');
         socket.on('receive game over', () => {
-            gamePage.style.setProperty('--player-turn-text', '"You Won!"');
-            setTimeout(gameOver, 2000);
+            // gamePage.style.setProperty('--player-turn-text', '"You Won!"');
+            // setTimeout(gameOver, 2000);
+            alert('You Won!!!');
+            setRoute('loggedIn');
         })
 
         socket.on('receive exit game', () => {
@@ -52,16 +54,18 @@ const Game = ({ setRoute, setUnsortedFriends, socket, username, onRouteChange, r
                 }
             }
             if (score >= 17) {
-                gamePage.style.setProperty('--player-turn-text', '"You Lose"');
+                // gamePage.style.setProperty('--player-turn-text', '"You Lose"');
                 socket.emit('game over', friendSocket);
-                setTimeout(gameOver, 2000);
+                // setTimeout(gameOver, 2000);
+                alert('You Lose');
+                setRoute('loggedIn');
             }
         }
     },[yourTurn])
 
-    const gameOver = () => {
-        setRoute('loggedIn');
-    }
+    // const gameOver = () => {
+    //     setRoute('loggedIn');
+    // }
 
     socket.on('receive ready status', () => {
         if (playerIsReady) {
