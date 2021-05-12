@@ -11,7 +11,7 @@
 .carrierIcon {
     background: url('./carrier.png');
     /*background-color: black;*/
-    background-size: 100% 100%;
+    background-size: 90% 90%;
     background-repeat: no-repeat;
     background-position: center;
     width: 100%;
@@ -29,7 +29,7 @@
 .battleshipIcon {
     background: url('./battleship.png');
     /*background-color: black;*/
-    background-size: 100% 100%;
+    background-size: 90% 90%;
     background-repeat: no-repeat;
     background-position: center;
     width: 100%;
@@ -47,7 +47,7 @@
 .cruiserIcon {
     background: url('./cruiser.png');
     /*background-color: black;*/
-    background-size: 100% 100%;
+    background-size: 90% 90%;
     background-repeat: no-repeat;
     background-position: center;
     width: 100%;
@@ -65,7 +65,7 @@
 .submarineIcon {
     background: url('./submarine.png');
     /*background-color: black;*/
-    background-size: 100% 100%;
+    background-size: 90% 90%;
     background-repeat: no-repeat;
     background-position: center;
     width: 100%;
@@ -83,7 +83,7 @@
 .destroyerIcon {
     background: url('./destroyer.png');
     /*background-color: black;*/
-    background-size: 100% 100%;
+    background-size: 90% 90%;
     background-repeat: no-repeat;
     background-position: center;
     width: 100%;
@@ -94,7 +94,7 @@
 
 .rotate-carrier {
     background: url('./carrier-vert.png');
-    background-size: 100% 100%;
+    background-size: 90% 90%;
     background-repeat: no-repeat;
     background-position: center;
     width: 100%;
@@ -104,7 +104,7 @@
 
 .rotate-battleship {
     background: url('./battleship-vert.png');
-    background-size: 100% 100%;
+    background-size: 90% 90%;
     background-repeat: no-repeat;
     background-position: center;
     width: 100%;
@@ -114,7 +114,7 @@
 
 .rotate-cruiser {
     background: url('./cruiser-vert.png');
-    background-size: 100% 100%;
+    background-size: 90% 90%;
     background-repeat: no-repeat;
     background-position: center;
     width: 100%;
@@ -124,7 +124,7 @@
 
 .rotate-submarine {
     background: url('./submarine-vert.png');
-    background-size: 100% 100%;
+    background-size: 90% 90%;
     background-repeat: no-repeat;
     background-position: center;
     width: 100%;
@@ -134,7 +134,7 @@
 
 .rotate-destroyer {
     background: url('./destroyer-vert.png');
-    background-size: 100% 100%;
+    background-size: 90% 90%;
     background-repeat: no-repeat;
     background-position: center;
     width: 100%;

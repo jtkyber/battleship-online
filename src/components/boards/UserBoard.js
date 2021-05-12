@@ -29,7 +29,7 @@ const UserBoard = ({yourTurn, setYourTurn, gameRoute, socket, friendSocket, rout
         let d2Top = d2Offset.top + d2Height;
         let d2Left = d2Offset.left + d2Width;
 
-        const colliding = !(d1Top <= d2Offset.top || d1Offset.top >= d2Top || d1Left <= d2Offset.left || d1Offset.left >= d2Left);
+        const colliding = !(d1Top <= d2Offset.top + 2 || d1Offset.top >= d2Top - 2 || d1Left <= d2Offset.left + 2 || d1Offset.left >= d2Left - 2);
 
         return colliding;
     }

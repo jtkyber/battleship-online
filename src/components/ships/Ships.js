@@ -57,7 +57,7 @@ const Ships = ({gameRoute, route}) => {
         let d2Top = d2Offset.top + d2Height;
         let d2Left = d2Offset.left + d2Width;
 
-        const colliding = !(d1Top <= d2Offset.top || d1Offset.top >= d2Top || d1Left <= d2Offset.left || d1Offset.left >= d2Left);
+        const colliding = !(d1Top <= d2Offset.top + 2 || d1Offset.top >= d2Top - 2 || d1Left <= d2Offset.left + 2 || d1Offset.left >= d2Left - 2);
 
         return colliding;
     }
@@ -134,6 +134,7 @@ const Ships = ({gameRoute, route}) => {
     // Change the grid-row and grid-column of the selected ship mouse is over the user's board
 
     window.onmouseover = (e) => {
+        // const sub = document.querySelector(`.submarine`);
         if (shipIsSelected) {
             rotating = false;
             selectedShip.style.transform = null;
@@ -143,8 +144,9 @@ const Ships = ({gameRoute, route}) => {
             const colStart = targetId.substring(0, targetId.indexOf('-'));
             const rowStart = targetId.substring((targetId.indexOf('-') + 1), targetId.length);
 
+
             if (userGrid.contains(e.target)
-            && (e.target.classList.contains('singleSquare') || e.target.classList.contains('singleSquare'))
+            && (e.target.classList.contains('singleSquare'))
             && shipIsSelected === true) {
                 if (orientation === 'hor') {
                     childShip.classList.remove(`rotate-${selectedShipName}`);
