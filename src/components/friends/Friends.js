@@ -6,15 +6,18 @@ const Friends = ({ unsortedFriends, setUnsortedFriends, socket, route, setFriend
     const [allFriends, setAllFriends] = useState([]);
     const [friendFilter, setFriendFilter] = useState('');
     const [friendSearch, setFriendSearch] = useState('');
+    const [friendsOnline, setFriendOnline] = useState(0);
 
     // Start fetching friends on component mount
 // -----------------------------------------------------------------------------------
     useEffect(() => {
-        // setTimeout(() => {
-
-        // }, 300)
         fetchFriends();
         showOnlineStatusToFriends();
+
+        setInterval(() => {
+            console.log('checking friends status')
+            checkFriendStatus();
+        }, 5000)
 
         socket.on('update friend status', () => {
             fetchFriends();
@@ -30,6 +33,10 @@ const Friends = ({ unsortedFriends, setUnsortedFriends, socket, route, setFriend
     useEffect(() => {
         sortFriends();
     },[unsortedFriends])
+
+    useEffect(() => {
+        fetchFriends();
+    },[friendsOnline])
 //-----------------------------------------------------------------------------------
     // Sort friends. Online at top
 //-----------------------------------------------------------------------------------
@@ -58,6 +65,19 @@ const Friends = ({ unsortedFriends, setUnsortedFriends, socket, route, setFriend
             setAllFriends(onlineFriends.concat(offlineFriends));
         }
     }
+
+    const checkFriendStatus = async () => {
+         try {
+            const response = await fetch(`https://calm-ridge-60009.herokuapp.com/getFriendsOnline?username=${username}`)
+            const onlineFriends = await response.json();
+            if (friendsOnline !== onlineFriends) {
+                setFriendOnline(onlineFriends);
+            }
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
 //-----------------------------------------------------------------------------------
     // Get the string of friends that is stored in the database for the user
     // Convert to array of friends

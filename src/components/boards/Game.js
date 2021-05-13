@@ -16,8 +16,11 @@ const Game = ({ setRoute, setUnsortedFriends, socket, username, onRouteChange, r
         socket.on('receive game over', () => {
             // gamePage.style.setProperty('--player-turn-text', '"You Won!"');
             // setTimeout(gameOver, 2000);
-            window.alert('You Won!!!');
-            setRoute('loggedIn');
+            addWin();
+            setTimeout(() => {
+                window.alert('You Won!!!');
+                setRoute('loggedIn');
+            }, 300);
         })
 
         socket.on('receive exit game', () => {
@@ -56,16 +59,31 @@ const Game = ({ setRoute, setUnsortedFriends, socket, username, onRouteChange, r
             if (score >= 17) {
                 // gamePage.style.setProperty('--player-turn-text', '"You Lose"');
                 socket.emit('game over', friendSocket);
-                // setTimeout(gameOver, 2000);
-                window.alert('You Lose');
-                setRoute('loggedIn');
+                setTimeout(() => {
+                    window.alert('You Lose');
+                    setRoute('loggedIn');
+                }, 300);
             }
         }
     },[yourTurn])
 
-    // const gameOver = () => {
-    //     setRoute('loggedIn');
-    // }
+    const addWin = async () => {
+        try {
+            const res = await fetch('https://calm-ridge-60009.herokuapp.com/updateWins', {
+                method: 'put',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    username: username
+                })
+            })
+            const winsUpdated = await res.json();
+            if (!winsUpdated) {
+                throw new Error('Could not increment wins')
+            }
+        } catch(err) {
+            console.log(err);
+        }
+    }
 
     socket.on('receive ready status', () => {
         if (playerIsReady) {

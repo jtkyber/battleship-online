@@ -34,11 +34,11 @@ function App() {
         switch(e.target.value) {
             case 'goToRegister':
                 setRoute('register');
-                removeUserSocket();
+                removeUserSocket(true);
                 break;
             case 'goToLogin':
                 setRoute('login');
-                removeUserSocket();
+                removeUserSocket(true);
                 break;
             case 'goHome':
                 setRoute('loggedIn');
@@ -54,7 +54,7 @@ function App() {
                 break;
             default:
                 setRoute('login');
-                removeUserSocket();
+                removeUserSocket(true);
         }
     }
 
@@ -89,7 +89,7 @@ function App() {
         setUser({ username: user.username, wins: user.wins })
     }
 
-    const removeUserSocket = async () => {
+    const removeUserSocket = async (show) => {
         const res = await fetch('https://calm-ridge-60009.herokuapp.com/removeUserSocket', {
           method: 'put',
           headers: {'Content-Type': 'application/json'},
@@ -98,14 +98,14 @@ function App() {
           })
         })
         const socketRemoved = await res.json();
-        if (socketRemoved) {
+        if (socketRemoved && show) {
             showOnlineStatusToFriends();
         }
     }
 
     window.addEventListener('beforeunload', (e) => {
         e.preventDefault();
-        removeUserSocket();
+        removeUserSocket(false);
         e.returnValue = '';
     })
 

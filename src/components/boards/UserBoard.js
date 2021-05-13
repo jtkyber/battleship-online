@@ -1,10 +1,20 @@
 import React, { useEffect } from 'react';
 import Board from './Board';
 import Ships from '../ships/Ships';
+// import useSound from 'use-sound';
+// import hitMissSounds from './hit-miss-sounds.mp3';
 import $ from 'jquery';
 import './board.css';
 
 const UserBoard = ({yourTurn, setYourTurn, gameRoute, socket, friendSocket, route}) => {
+    // const [play] = useSound(hitMissSounds, {
+    //     soundEnabled: true,
+    //     volume: 0.5,
+    //     sprite: {
+    //         miss: [1, 2000],
+    //         hit: [2001, 1500]
+    //     }
+    // });
     useEffect(() => {
         socket.on('receive shot', shot => {
             const oppShot = document.getElementById(shot);
@@ -36,10 +46,16 @@ const UserBoard = ({yourTurn, setYourTurn, gameRoute, socket, friendSocket, rout
 
     const applyHitOrMiss = (oppShot) => {
         if (matchOppShotToBoard(oppShot)) {
-            oppShot.classList.add('hit');
+            // play({id: 'hit'});
+            // setTimeout(() => {
+                oppShot.classList.add('hit');
+            // }, 300)
             socket.emit('send result to opponent board', {shotSquare: oppShot.id, shot: 'hit', socketid: friendSocket});
         } else {
-            oppShot.classList.add('miss');
+            // play({id: 'miss'});
+            // setTimeout(() => {
+                oppShot.classList.add('miss');
+            // }, 300)
             socket.emit('send result to opponent board', {shotSquare: oppShot.id, shot: 'miss', socketid: friendSocket});
         }
     }
