@@ -14,13 +14,12 @@ const Friends = ({ unsortedFriends, setUnsortedFriends, socket, route, setFriend
         fetchFriends();
         showOnlineStatusToFriends();
 
-        setInterval(() => {
-            console.log('checking friends status')
-            checkFriendStatus();
-        }, 5000)
+        let timer = setInterval(checkFriendStatus, 5000);
 
         socket.on('update friend status', () => {
+            clearInterval(timer);
             fetchFriends();
+            timer = setInterval(checkFriendStatus, 5000);
         });
 
         return () => {
@@ -67,6 +66,7 @@ const Friends = ({ unsortedFriends, setUnsortedFriends, socket, route, setFriend
     }
 
     const checkFriendStatus = async () => {
+        console.log('Checking Friend Status')
          try {
             const response = await fetch(`https://calm-ridge-60009.herokuapp.com/getFriendsOnline?username=${username}`)
             const onlineFriends = await response.json();
