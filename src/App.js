@@ -35,10 +35,12 @@ function App() {
     const onRouteChange = (e) => {
         switch(e.target.value) {
             case 'goToRegister':
+                setUser({username: '', wins: 0});
                 setRoute('register');
                 removeUserSocket(true);
                 break;
             case 'goToLogin':
+                setUser({username: '', wins: 0});
                 setRoute('login');
                 removeUserSocket(true);
                 break;
