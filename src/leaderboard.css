@@ -14,7 +14,7 @@
     grid-area: nav;
 }
 
-.topFive {
+.topFiveContainer {
     display: flex;
     flex-flow: nowrap column;
     justify-content: center;
@@ -22,7 +22,7 @@
     grid-area: topFive;
 }
 
-.topFive::before {
+.topFiveContainer::before {
     content: 'Leaderboard';
     color: green;
     font-size: 2.5rem;
@@ -32,11 +32,28 @@
     border-bottom: 3px solid black;
 }
 
+.topFive {
+    background-color: rgba(0, 0, 0, 0.3);
+    width:  20rem;
+    height: 20rem;
+    display: flex;
+    flex-flow: nowrap column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}
+
 .LBplayer {
     color: white;
     padding: 1rem;
+    font-weight: 400;
 }
 
 .leaderboard footer {
     grid-area: footer;
+}
+
+.wins {
+    color: white;
+    font-weight: 800;
 }
