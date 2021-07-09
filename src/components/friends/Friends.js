@@ -66,7 +66,6 @@ const Friends = ({ unsortedFriends, setUnsortedFriends, socket, route, setFriend
     }
 
     const checkFriendStatus = async () => {
-        console.log('Checking Friend Status')
          try {
             const response = await fetch(`https://calm-ridge-60009.herokuapp.com/getFriendsOnline?username=${username}`)
             const onlineFriends = await response.json();

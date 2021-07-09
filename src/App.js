@@ -6,12 +6,14 @@ import FriendsHome from './components/friends/FriendsHome';
 import HomeText from './components/homeText/HomeText';
 import Login from './components/logReg/Login';
 import Register from './components/logReg/Register';
+import Leaderboard from './components/leaderboard/Leaderboard';
 import Navigation from './components/navigation/Navigation';
 import Footer from './components/footer/Footer';
 import { socket } from './socket/socketImport';
 import './homePage.css';
 import './homePageLogged.css';
 import './gamePage.css';
+import './leaderboard.css';
 
 function App() {
     const [route, setRoute] = useState('login');
@@ -42,6 +44,9 @@ function App() {
                 break;
             case 'goHome':
                 setRoute('loggedIn');
+                break;
+            case 'goToLeaderboard':
+                setRoute('leaderboard');
                 break;
             case 'login':
                 setRoute('loggedIn');
@@ -143,7 +148,7 @@ function App() {
         route === 'login' || route === 'register'
         ?
         <div className='homePage'>
-            <FriendsHome />
+            <FriendsHome onRouteChange={onRouteChange}/>
             <HomeBoard route={route}/>
             <HomeText />
             {
@@ -164,7 +169,19 @@ function App() {
                 <HomeBoard route={route}/>
                 <Footer />
             </div>
-            : <Game setRoute={setRoute} setUnsortedFriends={setUnsortedFriends} socket={socket} username={user.username} onRouteChange={onRouteChange} route={route} friendSocket={friendSocket} />
+            :
+            <>
+                {
+                route === 'leaderboard'
+                ?
+                <div className='leaderboard'>
+                    <Leaderboard route={route} onRouteChange={onRouteChange} setUnsortedFriends={setUnsortedFriends} socket={socket} username={user.username} />
+                    <Footer />
+                </div>
+                :
+                <Game setRoute={setRoute} setUnsortedFriends={setUnsortedFriends} socket={socket} username={user.username} onRouteChange={onRouteChange} route={route} friendSocket={friendSocket} />
+                }
+            </>
             }
         </>
     );

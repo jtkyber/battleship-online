@@ -27,6 +27,31 @@
     text-align: center;
 }
 
+.homeLeaderboard {
+    text-align: center;
+    height: 75vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.homeLeaderboard button {
+    color: rgba(255, 255, 255, 0.5);
+    height: 2.5rem;
+    width: 7.5rem;
+    border:  2px solid black;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    background-color: rgba(0, 50, 0, 0.6);
+}
+
+.homeLeaderboard button:hover {
+    border:  2px solid rgb(0, 50, 0);
+    background-color: rgba(0, 0, 0, 0.6);
+    font-size: 0.95rem;
+}
+
 .friendSearch {
     height: 2rem;
 }

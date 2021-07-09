@@ -1,0 +1,42 @@
+.leaderboard {
+    background-color: rgba(0,0,0,0.7);
+    height: 100vh;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 3rem 1fr 2rem;
+        grid-template-areas:
+            "nav"
+            "topFive"
+            "footer";
+}
+
+.leaderboard nav {
+    grid-area: nav;
+}
+
+.topFive {
+    display: flex;
+    flex-flow: nowrap column;
+    justify-content: center;
+    align-items: center;
+    grid-area: topFive;
+}
+
+.topFive::before {
+    content: 'Leaderboard';
+    color: green;
+    font-size: 2.5rem;
+    font-weight: 600;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 3px solid black;
+}
+
+.LBplayer {
+    color: white;
+    padding: 1rem;
+}
+
+.leaderboard footer {
+    grid-area: footer;
+}

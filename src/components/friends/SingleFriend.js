@@ -5,16 +5,15 @@ const SingleFriend = ({ socket, route, setFriendSocket, currentSocket, username,
     let friendSocket = '';
 
     useEffect(() => {
+        socket.on('receive go to game', () => {
+            setRoute('game');
+        })
 
         return () => {
             socket.off('receive go to game');
             socket.off('receive invite');
         }
     },[])
-
-    socket.on('receive go to game', () => {
-        setRoute('game');
-    })
 
     socket.on('receive invite', data => {
         const btn = document.querySelector(`.btn${data.username}`);
