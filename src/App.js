@@ -23,14 +23,13 @@ function App() {
     const [unsortedFriends, setUnsortedFriends] = useState([]);
 
     useEffect(() => {
-        socket.on('disconnect', () => {
-            // console.log('disconnected');
-        })
-
         socket.on('connect', () => {
             setCurrentSocket(socket.id);
-            // console.log('connected');
         })
+
+        return () => {
+            socket.off('connect');
+        }
     },[])
     const onRouteChange = (e) => {
         switch(e.target.value) {
