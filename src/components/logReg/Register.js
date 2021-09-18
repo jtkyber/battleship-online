@@ -28,7 +28,10 @@ const Register = ({onRouteChange, loadUser, currentSocket}) => {
               if (user.username) {
                 loadUser(user);
                 onRouteChange(e);
-              } else if (!user.ok) {
+              } else if (user === 'no socketid') {
+                    logReg.style.setProperty("--reg-log-alert", '"Server error. Please try again"');
+                }
+                else if (!user.ok) {
                     logReg.style.setProperty("--reg-log-alert", '"Username has already been taken"');
                     console.log(user);
               }
