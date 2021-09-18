@@ -21,7 +21,10 @@ const Login = ({onRouteChange, loadUser, currentSocket}) => {
             if (user.username) {
                 loadUser(user);
                 onRouteChange(e);
-            } else if (logReg !== null) {
+            } else if (user === 'no socketid') {
+                logReg.style.setProperty("--reg-log-alert", '"Server error. Please try again"');
+            }
+            else if (logReg !== null) {
                 logReg.style.setProperty("--reg-log-alert", '"The username or password you entered is incorrect"');
             }
         } catch(err) {
