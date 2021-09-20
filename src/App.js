@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Game from './components/boards/Game';
 import HomeBoard from './components/homeBoard/HomeBoard';
+import FindMatch from './components/findMatch/FindMatch';
 import Friends from './components/friends/Friends';
 import FriendsHome from './components/friends/FriendsHome';
 import HomeText from './components/homeText/HomeText';
@@ -109,10 +110,30 @@ function App() {
         }
     }
 
+    const stopSearching = async () => {
+         try {
+            const response = await fetch('https://calm-ridge-60009.herokuapp.com/updateSearching', {
+                method: 'put',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    username: user.username,
+                    search: false
+                })
+            })
+            if (!response.ok) {throw new Error('Problem updating searching status')}
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
     window.addEventListener('beforeunload', (e) => {
         e.preventDefault();
+        setTimeout(() => {
+
+        }, 3000)
         removeUserSocket(false);
-        e.returnValue = '';
+        stopSearching();
+        // e.returnValue = '';
     })
 
     //  const addUserSocket = () => {
@@ -167,7 +188,10 @@ function App() {
             <div className='homePageLogged'>
                 <Navigation setUnsortedFriends={setUnsortedFriends} socket={socket} username={user.username} onRouteChange={onRouteChange} route={route} />
                 <Friends unsortedFriends={unsortedFriends} setUnsortedFriends={setUnsortedFriends} socket={socket} route={route} setFriendSocket={setFriendSocket} currentSocket={currentSocket} showOnlineStatusToFriends={showOnlineStatusToFriends} username={user.username} setRoute={setRoute} />
-                <HomeBoard route={route}/>
+                <div className='matchAndBoard'>
+                    <FindMatch username={user.username}/>
+                    <HomeBoard route={route}/>
+                </div>
                 <Footer />
             </div>
             :

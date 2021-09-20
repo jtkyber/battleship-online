@@ -1,13 +1,14 @@
 .homePageLogged {
     background-color: rgba(0,0,0,0.7);
     height: 100vh;
-        display: grid;
-        grid-template-columns: 15rem  1fr;
-        grid-template-rows: 3rem 1fr 2rem;
-        grid-template-areas:
-            "nav nav"
-            "friends homeBoard"
-            "footer footer";
+    display: grid;
+    grid-template-columns: 15rem  1fr;
+    grid-template-rows: 3rem 1fr 2rem;
+    grid-template-areas:
+        "nav nav"
+        "friends findMatch"
+        "friends homeBoard"
+        "footer footer";
 }
 
 .homePageLogged nav {
@@ -19,12 +20,25 @@
     z-index: 2;
 }
 
-.homePageLogged .homeBoard {
-    grid-area: homeBoard;
+.matchAndBoard {
+    height: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    gap:  3rem;
     justify-self: center;
     align-self: center;
+    justify-content: center;
+    align-items: center;
 }
 
-.homePageLogged footer {
+.matchAndBoard .findMatch {
+    grid-area: findMatch;
+}
+
+.matchAndBoard .homeBoard {
+    grid-area: homeBoard;
+}
+
+.homePageLogged + footer {
     grid-area: footer;
 }
