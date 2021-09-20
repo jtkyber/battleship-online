@@ -128,12 +128,9 @@ function App() {
 
     window.addEventListener('beforeunload', (e) => {
         e.preventDefault();
-        setTimeout(() => {
-
-        }, 3000)
         removeUserSocket(false);
         stopSearching();
-        // e.returnValue = '';
+        e.returnValue = '';
     })
 
     //  const addUserSocket = () => {
@@ -189,7 +186,7 @@ function App() {
                 <Navigation setUnsortedFriends={setUnsortedFriends} socket={socket} username={user.username} onRouteChange={onRouteChange} route={route} />
                 <Friends unsortedFriends={unsortedFriends} setUnsortedFriends={setUnsortedFriends} socket={socket} route={route} setFriendSocket={setFriendSocket} currentSocket={currentSocket} showOnlineStatusToFriends={showOnlineStatusToFriends} username={user.username} setRoute={setRoute} />
                 <div className='matchAndBoard'>
-                    <FindMatch username={user.username}/>
+                    <FindMatch username={user.username} setFriendSocket={setFriendSocket} setRoute={setRoute} />
                     <HomeBoard route={route}/>
                 </div>
                 <Footer />

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './findMatch.css';
 
-const FindMatch = ({ username }) => {
+const FindMatch = ({ username, setFriendSocket, setRoute }) => {
     const [search, setSearch] = useState(false);
     const [intervalID, setIntervalID] = useState(0);
     const prevIntID = useRef();
@@ -12,9 +12,10 @@ const FindMatch = ({ username }) => {
 
     useEffect(() => {
         return () => {
-            console.log(prevIntID.current)
-            stopSearching();
             clearInterval(prevIntID.current);
+            setTimeout(() => {
+                stopSearching();
+            }, 1000)
         }
     }, [])
 
@@ -59,8 +60,18 @@ const FindMatch = ({ username }) => {
         }
     }
 
-    const searchForMatch = () => {
-        console.log('test');
+    const searchForMatch = async () => {
+        try {
+            const response = await fetch(`https://calm-ridge-60009.herokuapp.com/findMatch?username=${username}`)
+            if (!response.ok) {throw new Error('Could not find match')}
+            const match = await response.json();
+            if (match) {
+                setFriendSocket(match.socketid);
+                setRoute('game');
+            }
+        } catch(err) {
+            console.log(err);
+        }
     }
 
     return (
