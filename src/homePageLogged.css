@@ -6,8 +6,7 @@
     grid-template-rows: 3rem 1fr 2rem;
     grid-template-areas:
         "nav nav"
-        "friends findMatch"
-        "friends homeBoard"
+        "friends matchAndBoard"
         "footer footer";
 }
 
@@ -29,16 +28,17 @@
     align-self: center;
     justify-content: center;
     align-items: center;
+    grid-area: matchAndBoard;
 }
 
 .matchAndBoard .findMatch {
-    grid-area: findMatch;
+
 }
 
 .matchAndBoard .homeBoard {
-    grid-area: homeBoard;
+
 }
 
-.homePageLogged + footer {
+.homePageLogged footer {
     grid-area: footer;
 }

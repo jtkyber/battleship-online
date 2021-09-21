@@ -133,19 +133,6 @@ function App() {
         e.returnValue = '';
     })
 
-    //  const addUserSocket = () => {
-    //     fetch('https://calm-ridge-60009.herokuapp.com/removeUserSocket', {
-    //       method: 'put',
-    //       headers: {'Content-Type': 'application/json'},
-    //       body: JSON.stringify({
-    //         username: user.username,
-    //         socketid: currentSocket
-    //       })
-    //     })
-    //     .then(response => response.json())
-    //     .then(res => console.log(res))
-    // }
-
     document.onkeydown = (e) => {
         const loginBtn = document.querySelector('.loginBtn');
         const registerBtn = document.querySelector('.registerBtn');
