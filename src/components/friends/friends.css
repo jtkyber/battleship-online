@@ -27,7 +27,7 @@
     text-align: center;
 }
 
-.homeLeaderboard {
+/*.homeLeaderboard {
     text-align: center;
     height: 75vh;
     display: flex;
@@ -50,7 +50,7 @@
     border:  2px solid rgb(0, 50, 0);
     background-color: rgba(0, 0, 0, 0.6);
     font-size: 0.95rem;
-}
+}*/
 
 .friendSearch {
     height: 2rem;

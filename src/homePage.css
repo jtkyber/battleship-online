@@ -2,16 +2,28 @@
     background-color: rgba(0,0,0,0.7);
     height: 100vh;
     display: grid;
-    grid-template-columns: 15rem 1.8fr 1fr;
-    grid-template-rows: 1fr 1fr 2rem;
+    grid-template-columns: 15rem 1fr;
+    grid-template-rows: 3rem 10rem 1fr 2rem;
     grid-template-areas:
-            "friends homeBoard homeText"
-            "friends homeBoard logReg"
-            "footer footer footer";
+            "nav nav"
+            "friends homeText"
+            "friends homeBoard"
+            "footer footer";
+}
+
+.homePage nav {
+    grid-area: nav;
 }
 
 .homePage .friendsContainer {
     grid-area: friends;
+    z-index: 2;
+}
+
+.homePage .homeText {
+    grid-area: homeText;
+    justify-self: center;
+    align-self: center;
     z-index: 2;
 }
 
@@ -40,19 +52,12 @@
     "j1 j2 j3 j4 j5 j6 j7 j8 j9 j10";
 }
 
-.homePage .homeText {
-    grid-area: homeText;
-    justify-self: center;
-    align-self: center;
-    z-index: 2;
-}
-
-.homePage .logReg {
+/*.homePage .logReg {
     grid-area: logReg;
     justify-self: center;
     align-self: start;
     z-index: 2;
-}
+}*/
 
 .homePage footer {
     grid-area: footer;

@@ -11,12 +11,26 @@ const Navigation = ({ friendSocket, setUnsortedFriends, socket, username, onRout
     return (
         <nav className='nav'>
             {
+            route === 'index'
+            ?
+            <>
+                <button value='goToLeaderboard' onClick={onRouteChange}>Leaderboard</button>
+                <button value='goToLogin' onClick={onRouteChange}>Log In</button>
+            </>
+            :
+            route === 'login' || route === 'register'
+            ?
+            <>
+                <button value='goToLeaderboard' onClick={onRouteChange}>Leaderboard</button>
+                <button value='homeNotLogged' onClick={onRouteChange}>Back</button>
+            </>
+            :
             route === 'loggedIn'
             ?
             <>
                 <FriendRequests setUnsortedFriends={setUnsortedFriends} socket={socket} username={username} />
                 <button value='goToLeaderboard' onClick={onRouteChange}>Leaderboard</button>
-                <button value='goToLogin' onClick={onRouteChange}>Log Out</button>
+                <button value='homeNotLogged' onClick={onRouteChange}>Log Out</button>
             </>
             :
             <>
@@ -27,12 +41,12 @@ const Navigation = ({ friendSocket, setUnsortedFriends, socket, username, onRout
                     ?
                     <>
                         <FriendRequests setUnsortedFriends={setUnsortedFriends} socket={socket} username={username} />
-                        <button value='goHome' onClick={onRouteChange}>Home</button>
+                        <button value='goHome' onClick={onRouteChange}>Back</button>
                         <button value='goToLogin' onClick={onRouteChange}>Log Out</button>
                     </>
                     :
                     <>
-                        <button value='goToLogin' onClick={onRouteChange}>Back</button>
+                        <button value='index' onClick={onRouteChange}>Back</button>
                     </>
                 :
                 <>

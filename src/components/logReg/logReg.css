@@ -1,8 +1,29 @@
+.logRegPage {
+    background-color: rgba(0,0,0,0.7);
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 15rem 1fr;
+    grid-template-rows: 3rem 1fr 2rem;
+    grid-template-areas:
+            "nav nav"
+            "friends logReg"
+            "footer footer";
+}
+
+.logRegPage nav {
+    grid-area: nav;
+}
+
+.logRegPage .friendsContainer {
+    grid-area: friends;
+    z-index: 2;
+}
+
 .logReg {
-    width: 50%;
-    min-width: 15rem;
-    height: 80%;
-    min-height: 17.5rem;
+    justify-self: center;
+    align-self: center;
+    width: 18rem;
+    height: 20rem;
     border: 2px solid white;
     display: flex;
     flex-flow: nowrap column;
@@ -12,6 +33,7 @@
     margin-bottom: 1rem;
     background-color: rgba(0,0,0,0.6);
     --reg-log-alert: "";
+    grid-area: logReg;
 }
 
 .logReg h1 {
@@ -85,5 +107,9 @@
 
 .logReg button:hover {
     opacity: 0.8;
+}
+
+.logRegPage footer {
+    grid-area: footer;
 }
 

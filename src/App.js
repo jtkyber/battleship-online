@@ -17,7 +17,7 @@ import './gamePage.css';
 import './leaderboard.css';
 
 function App() {
-    const [route, setRoute] = useState('login');
+    const [route, setRoute] = useState('index');
     const [user, setUser] = useState({username: '', wins: 0});
     const [currentSocket, setCurrentSocket] = useState(null);
     const [friendSocket, setFriendSocket] = useState(null);
@@ -34,6 +34,9 @@ function App() {
     },[])
     const onRouteChange = (e) => {
         switch(e.target.value) {
+            case 'homeNotLogged':
+                setRoute('index');
+                break;
             case 'goToRegister':
                 setUser({username: '', wins: 0});
                 setRoute('register');
@@ -60,7 +63,7 @@ function App() {
                 setRoute('game');
                 break;
             default:
-                setRoute('login');
+                setRoute('index');
                 removeUserSocket(true);
         }
     }
@@ -151,16 +154,25 @@ function App() {
     };
 
     return (
-        route === 'login' || route === 'register'
+        route === 'index'
         ?
         <div className='homePage'>
+            <Navigation setUnsortedFriends={setUnsortedFriends} socket={socket} username={user.username} onRouteChange={onRouteChange} route={route} />
             <FriendsHome onRouteChange={onRouteChange}/>
             <HomeBoard route={route}/>
             <HomeText />
+            <Footer />
+        </div>
+        :
+        route === 'login' || route === 'register'
+        ?
+        <div className='logRegPage'>
+            <Navigation setUnsortedFriends={setUnsortedFriends} socket={socket} username={user.username} onRouteChange={onRouteChange} route={route} />
+            <FriendsHome onRouteChange={onRouteChange}/>
             {
             route === 'login'
-            ? <Login currentSocket={currentSocket} loadUser={loadUser} onRouteChange={onRouteChange}/>
-            : <Register currentSocket={currentSocket} loadUser={loadUser} onRouteChange={onRouteChange}/>
+                ? <Login currentSocket={currentSocket} loadUser={loadUser} onRouteChange={onRouteChange}/>
+                : <Register currentSocket={currentSocket} loadUser={loadUser} onRouteChange={onRouteChange}/>
             }
             <Footer />
         </div>

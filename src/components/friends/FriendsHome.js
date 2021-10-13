@@ -10,9 +10,9 @@ const FriendsHome = ({onRouteChange}) => {
         <div className='logToSeeFriendsText'>
             <h3>Log in to see your friends here</h3>
         </div>
-        <div className='homeLeaderboard'>
+        {/*<div className='homeLeaderboard'>
             <button value='goToLeaderboard' onClick={onRouteChange}>Leaderboard</button>
-        </div>
+        </div>*/}
     </div>
     )
 }
