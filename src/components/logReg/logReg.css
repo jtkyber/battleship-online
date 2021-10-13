@@ -46,7 +46,7 @@
     content: var(--reg-log-alert);
     position: relative;
     color: rgba(255,0,0,0.8);
-    font-size: 2vh;
+    font-size: 0.9rem;
     font-weight: 400;
     text-align: center;
 }

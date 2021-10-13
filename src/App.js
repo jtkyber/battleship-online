@@ -37,15 +37,16 @@ function App() {
             case 'homeNotLogged':
                 setRoute('index');
                 break;
-            case 'goToRegister':
+            case 'logOut':
                 setUser({username: '', wins: 0});
-                setRoute('register');
+                setRoute('index');
                 removeUserSocket(true);
                 break;
+            case 'goToRegister':
+                setRoute('register');
+                break;
             case 'goToLogin':
-                setUser({username: '', wins: 0});
                 setRoute('login');
-                removeUserSocket(true);
                 break;
             case 'goHome':
                 setRoute('loggedIn');

@@ -30,7 +30,7 @@ const Navigation = ({ friendSocket, setUnsortedFriends, socket, username, onRout
             <>
                 <FriendRequests setUnsortedFriends={setUnsortedFriends} socket={socket} username={username} />
                 <button value='goToLeaderboard' onClick={onRouteChange}>Leaderboard</button>
-                <button value='homeNotLogged' onClick={onRouteChange}>Log Out</button>
+                <button value='logOut' onClick={onRouteChange}>Log Out</button>
             </>
             :
             <>
@@ -42,7 +42,7 @@ const Navigation = ({ friendSocket, setUnsortedFriends, socket, username, onRout
                     <>
                         <FriendRequests setUnsortedFriends={setUnsortedFriends} socket={socket} username={username} />
                         <button value='goHome' onClick={onRouteChange}>Back</button>
-                        <button value='goToLogin' onClick={onRouteChange}>Log Out</button>
+                        <button value='logOut' onClick={onRouteChange}>Log Out</button>
                     </>
                     :
                     <>
@@ -52,7 +52,7 @@ const Navigation = ({ friendSocket, setUnsortedFriends, socket, username, onRout
                 <>
                     <FriendRequests setUnsortedFriends={setUnsortedFriends} socket={socket} username={username} />
                     <button value='goHome' onClick={handleExitClick}>Exit</button>
-                    <button value='goToLogin' onClick={onRouteChange}>Log Out</button>
+                    <button value='logOut' onClick={onRouteChange}>Log Out</button>
                 </>
                 }
             </>
