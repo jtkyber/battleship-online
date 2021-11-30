@@ -141,3 +141,7 @@
     height: 100%;
     transform-origin: 10% 50%;
 }
+
+.shipSunk {
+   background-color: rgba(200, 0, 0, 0.9);
+}

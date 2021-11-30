@@ -4,11 +4,32 @@ import './board.css';
 
 const OpponentBoard = ({ yourTurn, setYourTurn, gameRoute, socket, friendSocket, route }) => {
     // const [squareClicked, setSquareClicked] = useState('');
+    const hitSquares = [];
+    const countHitsOnShip = (ship) => {
+        let count = 0;
+        for (let hit of hitSquares) {
+            if (hit === ship) {
+                count += 1;
+            }
+        }
+        return count;
+    }
+
     useEffect(() => {
         socket.on('show result on opponent board', data => {
             const clickedSquare = document.querySelector(`.opponentBoard [id='${data.shotSquare}']`);
             if (data.result === 'hit' && clickedSquare.classList !== undefined) {
                 clickedSquare.classList.add('hit');
+                hitSquares.push(data.shipHit);
+                clickedSquare.classList.add(`_${data.shipHit}`)
+                if (countHitsOnShip(data.shipHit) === parseInt(document.querySelector(`.${data.shipHit}`).id)) {
+                    const squares = document.querySelectorAll('.singleSquare');
+                    for (let square of squares) {
+                        if (square.classList.contains(`_${data.shipHit}`)) {
+                            square.classList.add('shipSunk');
+                        }
+                    }
+                }
             } else if (data.result === 'miss' && clickedSquare.classList !== undefined) {
                 clickedSquare.classList.add('miss');
             }

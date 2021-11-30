@@ -7,6 +7,7 @@ import $ from 'jquery';
 import './board.css';
 
 const UserBoard = ({yourTurn, setYourTurn, gameRoute, socket, friendSocket, route}) => {
+    let shipHit = '';
     // const [play] = useSound(hitMissSounds, {
     //     soundEnabled: true,
     //     volume: 0.5,
@@ -50,13 +51,13 @@ const UserBoard = ({yourTurn, setYourTurn, gameRoute, socket, friendSocket, rout
             // setTimeout(() => {
                 oppShot.classList.add('hit');
             // }, 300)
-            socket.emit('send result to opponent board', {shotSquare: oppShot.id, shot: 'hit', socketid: friendSocket});
+            socket.emit('send result to opponent board', {shotSquare: oppShot.id, shot: 'hit', socketid: friendSocket, shipHit: shipHit});
         } else {
             // play({id: 'miss'});
             // setTimeout(() => {
                 oppShot.classList.add('miss');
             // }, 300)
-            socket.emit('send result to opponent board', {shotSquare: oppShot.id, shot: 'miss', socketid: friendSocket});
+            socket.emit('send result to opponent board', {shotSquare: oppShot.id, shot: 'miss', socketid: friendSocket, shipHit: shipHit});
         }
     }
 
@@ -64,6 +65,7 @@ const UserBoard = ({yourTurn, setYourTurn, gameRoute, socket, friendSocket, rout
         const ships = document.querySelectorAll('.ship');
         for (let ship of ships) {
             if (hit(shot, ship)) {
+                shipHit = ship.classList[1];
                 return true;
             }
         }
