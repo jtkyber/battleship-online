@@ -91,6 +91,8 @@ const Friends = ({ unsortedFriends, setUnsortedFriends, socket, route, setFriend
             if (friends !== null && friends !== '') {
                 allFriendNames = friends.split(',');
                 fetchUserFriendData(allFriendNames);
+            } else {
+                setAllFriends([]);
             }
         } catch(err) {
             console.log(err);
