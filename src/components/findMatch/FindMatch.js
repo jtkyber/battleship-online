@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './findMatch.css';
 
-const FindMatch = ({ username, setFriendSocket, setRoute }) => {
+const FindMatch = ({ setOpponentName, opponentName, username, setFriendSocket, setRoute }) => {
     const [search, setSearch] = useState(false);
     const [intervalID, setIntervalID] = useState(0);
     const prevIntID = useRef();
@@ -67,6 +67,7 @@ const FindMatch = ({ username, setFriendSocket, setRoute }) => {
             const match = await response.json();
             if (match) {
                 setFriendSocket(match.socketid);
+                setOpponentName(match.username);
                 setRoute('game');
             }
         } catch(err) {

@@ -21,6 +21,7 @@ function App() {
     const [user, setUser] = useState({username: '', wins: 0});
     const [currentSocket, setCurrentSocket] = useState(null);
     const [friendSocket, setFriendSocket] = useState(null);
+    const [opponentName, setOpponentName] = useState('');
     const [unsortedFriends, setUnsortedFriends] = useState([]);
 
     useEffect(() => {
@@ -40,7 +41,9 @@ function App() {
             case 'logOut':
                 setUser({username: '', wins: 0});
                 setRoute('index');
-                removeUserSocket(true);
+                if (user.username) {
+                    removeUserSocket(true);
+                }
                 break;
             case 'goToRegister':
                 setRoute('register');
@@ -65,7 +68,9 @@ function App() {
                 break;
             default:
                 setRoute('index');
-                removeUserSocket(true);
+                if (user.username) {
+                    removeUserSocket(true);
+                }
         }
     }
 
@@ -184,9 +189,9 @@ function App() {
             ?
             <div className='homePageLogged'>
                 <Navigation setUnsortedFriends={setUnsortedFriends} socket={socket} username={user.username} onRouteChange={onRouteChange} route={route} />
-                <Friends unsortedFriends={unsortedFriends} setUnsortedFriends={setUnsortedFriends} socket={socket} route={route} setFriendSocket={setFriendSocket} currentSocket={currentSocket} showOnlineStatusToFriends={showOnlineStatusToFriends} username={user.username} setRoute={setRoute} />
+                <Friends opponentName={opponentName} setOpponentName={setOpponentName} unsortedFriends={unsortedFriends} setUnsortedFriends={setUnsortedFriends} socket={socket} route={route} setFriendSocket={setFriendSocket} currentSocket={currentSocket} showOnlineStatusToFriends={showOnlineStatusToFriends} username={user.username} setRoute={setRoute} />
                 <div className='matchAndBoard'>
-                    <FindMatch username={user.username} setFriendSocket={setFriendSocket} setRoute={setRoute} />
+                    <FindMatch opponentName={opponentName} setOpponentName={setOpponentName} username={user.username} setFriendSocket={setFriendSocket} setRoute={setRoute} />
                     <HomeBoard route={route}/>
                 </div>
                 <Footer />
@@ -201,7 +206,7 @@ function App() {
                     <Footer />
                 </div>
                 :
-                <Game setRoute={setRoute} setUnsortedFriends={setUnsortedFriends} socket={socket} username={user.username} onRouteChange={onRouteChange} route={route} friendSocket={friendSocket} />
+                <Game opponentName={opponentName} setRoute={setRoute} setUnsortedFriends={setUnsortedFriends} socket={socket} username={user.username} onRouteChange={onRouteChange} route={route} friendSocket={friendSocket} />
                 }
             </>
             }

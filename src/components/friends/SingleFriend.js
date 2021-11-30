@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import './singleFriend.css';
 
-const SingleFriend = ({ socket, route, setFriendSocket, currentSocket, username, fetchFriends, name, status, setRoute }) => {
-    let friendSocket = '';
+const SingleFriend = ({opponentName, setOpponentName, socket, route, setFriendSocket, currentSocket, username, fetchFriends, name, status, setRoute }) => {
+    let fSocket = '';
+    let opponent = '';
 
     useEffect(() => {
         socket.on('receive go to game', () => {
@@ -25,7 +26,8 @@ const SingleFriend = ({ socket, route, setFriendSocket, currentSocket, username,
                 btn.disabled = false;
             }
             btn.childNodes[0].nodeValue = "Accept";
-            friendSocket = data.socketid;
+            fSocket = data.socketid;
+            opponent = data.username;
         }
     })
 
@@ -36,13 +38,13 @@ const SingleFriend = ({ socket, route, setFriendSocket, currentSocket, username,
             const user = await response.json();
             if (user.socketid) {
                 setFriendSocket(user.socketid);
+                setOpponentName(user.username);
                 socket.emit('send invite', {currentSocket: currentSocket, username: username, socketid: user.socketid});
                 e.target.childNodes[0].nodeValue = "Invite sent";
                 e.target.style.backgroundColor = 'transparent';
                 e.target.style.border = 'none';
                 e.target.style.color = 'rgba(0,255,0,0.8)';
                 e.target.disabled = true;
-
             }
         } catch(err) {
             console.log(err);
@@ -50,8 +52,9 @@ const SingleFriend = ({ socket, route, setFriendSocket, currentSocket, username,
     }
 
     const acceptInvite = () => {
-        setFriendSocket(friendSocket);
-        socket.emit('send go to game', friendSocket);
+        socket.emit('send go to game', fSocket);
+        setFriendSocket(fSocket);
+        setOpponentName(opponent);
         setRoute('game');
     }
 

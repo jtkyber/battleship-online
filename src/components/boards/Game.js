@@ -5,7 +5,7 @@ import Navigation from '../navigation/Navigation';
 import Footer from '../footer/Footer';
 import ReadyButton from '../readyButton/ReadyButton';
 
-const Game = ({ setRoute, setUnsortedFriends, socket, username, onRouteChange, route, friendSocket }) => {
+const Game = ({ opponentName, setRoute, setUnsortedFriends, socket, username, onRouteChange, route, friendSocket }) => {
     const [gameRoute, setGameRoute] = useState('placeShips');
     const [playerIsReady, setPlayerIsReady] = useState(false);
     const [opponentIsReady, setOpponentIsReady] = useState(false);
@@ -13,6 +13,7 @@ const Game = ({ setRoute, setUnsortedFriends, socket, username, onRouteChange, r
 
     useEffect(() => {
         // const gamePage = document.querySelector('.gamePage');
+        console.log(opponentName);
         socket.on('receive game over', () => {
             // gamePage.style.setProperty('--player-turn-text', '"You Won!"');
             // setTimeout(gameOver, 2000);
@@ -42,7 +43,7 @@ const Game = ({ setRoute, setUnsortedFriends, socket, username, onRouteChange, r
         } else if (yourTurn) {
             gameInstructions.style.setProperty('--player-turn-text', '"Your Turn!"');
         } else {
-            gameInstructions.style.setProperty('--player-turn-text', `"Opponent's Turn!"`);
+            gameInstructions.style.setProperty('--player-turn-text', `"${opponentName}'s Turn!"`);
         }
     },[yourTurn, gameRoute])
 

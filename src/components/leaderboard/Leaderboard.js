@@ -31,7 +31,7 @@ const Leaderboard = ({ route, onRouteChange, setUnsortedFriends, socket, usernam
                 <div className='topFive'>
                     {
                     topFive.map(player => {
-                        return <h3 className='LBplayer'> {player.name} : <span className='wins'>{player.wins}</span> wins </h3>
+                        return <h3 key={player.name} className='LBplayer'> {player.name} : <span className='wins'>{player.wins}</span> wins </h3>
                     })
                     }
                 </div>
