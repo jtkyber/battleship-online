@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import UserBoard from './UserBoard';
 import OpponentBoard from './OpponentBoard';
 import Navigation from '../navigation/Navigation';
+import ChatBox from './ChatBox';
 import Footer from '../footer/Footer';
 import ReadyButton from '../readyButton/ReadyButton';
 
@@ -119,6 +120,7 @@ const Game = ({ opponentName, setRoute, setUnsortedFriends, socket, username, on
             : (null)
             }
             <OpponentBoard yourTurn={yourTurn} setYourTurn={setYourTurn} gameRoute={gameRoute} socket={socket} friendSocket={friendSocket} route={route}/>
+            <ChatBox opponentName={opponentName} friendSocket={friendSocket} socket={socket} />
             <Footer />
         </div>
     )

@@ -1,7 +1,7 @@
 :root {
     --battle-word-color: rgba(0,170,200,1);
     --ship-word-color: rgba(0,170,200,1);
-    --letter-size: 2.5vw;
+    --letter-size: 4vh;
     --thickness: 600;
 }
 

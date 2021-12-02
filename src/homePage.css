@@ -23,7 +23,8 @@
 .homePage .homeText {
     grid-area: homeText;
     justify-self: center;
-    align-self: center;
+    align-self: start;
+    margin-top: 1rem;
     z-index: 2;
 }
 
@@ -36,8 +37,8 @@
 
 .homeBoard .allSqaures {
     display: grid;
-    grid-template-columns: repeat(10, 3vw);
-    grid-template-rows: repeat(10, 3vw);
+    grid-template-columns: repeat(10, 5vh);
+    grid-template-rows: repeat(10, 5vh);
     gap: 0;
     grid-template-areas:
     "a1 a2 a3 a4 a5 a6 a7 a8 a9 a10"
