@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import SingleFriend from './SingleFriend';
 import './friends.css';
 
-const Friends = ({ opponentName, setOpponentName, unsortedFriends, setUnsortedFriends, socket, route, setFriendSocket, currentSocket, username, showOnlineStatusToFriends, setRoute }) => {
+const Friends = ({ friendSocket, opponentName, setOpponentName, unsortedFriends, setUnsortedFriends, socket, route, setFriendSocket, currentSocket, username, showOnlineStatusToFriends, setRoute }) => {
     const [allFriends, setAllFriends] = useState([]);
     const [friendFilter, setFriendFilter] = useState('');
     const [friendSearch, setFriendSearch] = useState('');
@@ -234,7 +234,7 @@ const Friends = ({ opponentName, setOpponentName, unsortedFriends, setUnsortedFr
 //-----------------------------------------------------------------------------------
                         allFriends.map(f => {
                             if (f.name.toLowerCase().includes(friendFilter.toLowerCase())) {
-                                return <SingleFriend opponentName={opponentName} setOpponentName={setOpponentName} socket={socket} route={route} setFriendSocket={setFriendSocket} currentSocket={currentSocket} username={username} fetchFriends={fetchFriends} key={f.name} name={f.name} status={f.status} setRoute={setRoute} />
+                                return <SingleFriend friendSocket={friendSocket} opponentName={opponentName} setOpponentName={setOpponentName} socket={socket} route={route} setFriendSocket={setFriendSocket} currentSocket={currentSocket} username={username} fetchFriends={fetchFriends} key={f.name} name={f.name} status={f.status} setRoute={setRoute} />
                             } else return null
                         })
                     }

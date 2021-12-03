@@ -14,7 +14,6 @@ const Game = ({ opponentName, setRoute, setUnsortedFriends, socket, username, on
 
     useEffect(() => {
         // const gamePage = document.querySelector('.gamePage');
-        console.log(opponentName);
         socket.on('receive game over', () => {
             // gamePage.style.setProperty('--player-turn-text', '"You Won!"');
             // setTimeout(gameOver, 2000);

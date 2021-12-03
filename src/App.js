@@ -189,7 +189,7 @@ function App() {
             ?
             <div className='homePageLogged'>
                 <Navigation setUnsortedFriends={setUnsortedFriends} socket={socket} username={user.username} onRouteChange={onRouteChange} route={route} />
-                <Friends opponentName={opponentName} setOpponentName={setOpponentName} unsortedFriends={unsortedFriends} setUnsortedFriends={setUnsortedFriends} socket={socket} route={route} setFriendSocket={setFriendSocket} currentSocket={currentSocket} showOnlineStatusToFriends={showOnlineStatusToFriends} username={user.username} setRoute={setRoute} />
+                <Friends friendSocket={friendSocket} opponentName={opponentName} setOpponentName={setOpponentName} unsortedFriends={unsortedFriends} setUnsortedFriends={setUnsortedFriends} socket={socket} route={route} setFriendSocket={setFriendSocket} currentSocket={currentSocket} showOnlineStatusToFriends={showOnlineStatusToFriends} username={user.username} setRoute={setRoute} />
                 <div className='matchAndBoard'>
                     <FindMatch opponentName={opponentName} setOpponentName={setOpponentName} username={user.username} setFriendSocket={setFriendSocket} setRoute={setRoute} />
                     <HomeBoard route={route}/>

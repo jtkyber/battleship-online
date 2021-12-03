@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import './singleFriend.css';
 
-const SingleFriend = ({opponentName, setOpponentName, socket, route, setFriendSocket, currentSocket, username, fetchFriends, name, status, setRoute }) => {
-    let fSocket = '';
-    let opponent = '';
+const SingleFriend = ({ friendSocket, opponentName, setOpponentName, socket, route, setFriendSocket, currentSocket, username, fetchFriends, name, status, setRoute }) => {
 
     useEffect(() => {
         socket.on('receive go to game', () => {
             setRoute('game');
         })
+
+        socket.on('receive invite', data => handleInvite(data))
 
         return () => {
             socket.off('receive go to game');
@@ -16,7 +16,7 @@ const SingleFriend = ({opponentName, setOpponentName, socket, route, setFriendSo
         }
     },[])
 
-    socket.on('receive invite', data => {
+    const handleInvite = (data) => {
         const btn = document.querySelector(`.btn${data.username}`);
         if (route === 'loggedIn' && btn !== null) {
             if (btn.disabled === true) {
@@ -26,10 +26,9 @@ const SingleFriend = ({opponentName, setOpponentName, socket, route, setFriendSo
                 btn.disabled = false;
             }
             btn.childNodes[0].nodeValue = "Accept";
-            fSocket = data.socketid;
-            opponent = data.username;
+            setFriendSocket(data.socketid);
         }
-    })
+    }
 
     const sendInvite = async (e) => {
         const friend = e.target.id;
@@ -51,10 +50,9 @@ const SingleFriend = ({opponentName, setOpponentName, socket, route, setFriendSo
         }
     }
 
-    const acceptInvite = () => {
-        socket.emit('send go to game', fSocket);
-        setFriendSocket(fSocket);
-        setOpponentName(opponent);
+    const acceptInvite = (e) => {
+        socket.emit('send go to game', friendSocket);
+        setOpponentName(e.target.id);
         setRoute('game');
     }
 
@@ -62,7 +60,7 @@ const SingleFriend = ({opponentName, setOpponentName, socket, route, setFriendSo
         if (e.target.innerHTML === 'Invite') {
             sendInvite(e)
         } else if (e.target.innerHTML === 'Accept') {
-            acceptInvite()
+            acceptInvite(e)
         }
     }
 
