@@ -24,6 +24,25 @@ function App() {
     const [opponentName, setOpponentName] = useState('');
     const [unsortedFriends, setUnsortedFriends] = useState([]);
 
+    const updateLastOnline = async () => {
+        try {
+            const response = await fetch(`https://calm-ridge-60009.herokuapp.com/updateOnlineStatus`, {
+                method: 'put',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    username: user.username
+                })
+            })
+            if (!response.ok) {
+                throw new Error('Error');
+            }
+            const lastOnlineUpdated = await response.json();
+            console.log(lastOnlineUpdated);
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
     useEffect(() => {
         socket.on('connect', () => {
             setCurrentSocket(socket.id);
@@ -32,7 +51,21 @@ function App() {
         return () => {
             socket.off('connect');
         }
-    },[])
+    }, [])
+
+    useEffect(() => {
+        let myInterval;
+        if (user.username.length) {
+            myInterval = setInterval(updateLastOnline, 2000);
+        } else {
+            clearInterval(myInterval);
+        }
+
+        return () => {
+            clearInterval(myInterval);
+        }
+    }, [user])
+
     const onRouteChange = (e) => {
         switch(e.target.value) {
             case 'homeNotLogged':

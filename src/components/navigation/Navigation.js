@@ -16,6 +16,7 @@ const Navigation = ({ friendSocket, setUnsortedFriends, socket, username, onRout
             <>
                 <button value='goToLeaderboard' onClick={onRouteChange}>Leaderboard</button>
                 <button value='goToLogin' onClick={onRouteChange}>Log In</button>
+                <button value='goToRegister' onClick={onRouteChange}>Register</button>
             </>
             :
             route === 'login' || route === 'register'
