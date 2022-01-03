@@ -6,7 +6,7 @@ import ChatBox from './ChatBox';
 import Footer from '../footer/Footer';
 import ReadyButton from '../readyButton/ReadyButton';
 
-const Game = ({ checkOppStatusInterval, setCheckOppStatusInterval, opponentName, setRoute, setUnsortedFriends, socket, username, onRouteChange, route, friendSocket }) => {
+const Game = ({ setSearch, checkOppStatusInterval, setCheckOppStatusInterval, opponentName, setRoute, setUnsortedFriends, socket, username, onRouteChange, route, friendSocket }) => {
     const [gameRoute, setGameRoute] = useState('placeShips');
     const [playerIsReady, setPlayerIsReady] = useState(false);
     const [opponentIsReady, setOpponentIsReady] = useState(false);
@@ -25,6 +25,7 @@ const Game = ({ checkOppStatusInterval, setCheckOppStatusInterval, opponentName,
         })
 
         socket.on('receive exit game', () => {
+            setSearch(false);
             window.alert('Opponent has left the game');
             setRoute('loggedIn');
         })
@@ -136,7 +137,7 @@ const Game = ({ checkOppStatusInterval, setCheckOppStatusInterval, opponentName,
 
     return (
         <div className='gamePage'>
-            <Navigation friendSocket={friendSocket} setUnsortedFriends={setUnsortedFriends} socket={socket} username={username} onRouteChange={onRouteChange} route={route} />
+            <Navigation setSearch={setSearch} friendSocket={friendSocket} setUnsortedFriends={setUnsortedFriends} socket={socket} username={username} onRouteChange={onRouteChange} route={route} />
             <UserBoard yourTurn={yourTurn} setYourTurn={setYourTurn} gameRoute={gameRoute} socket={socket} friendSocket={friendSocket} route={route}/>
             {
             gameRoute === 'placeShips'

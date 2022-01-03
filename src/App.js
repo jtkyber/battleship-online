@@ -269,7 +269,7 @@ function App() {
                     <Footer />
                 </div>
                 :
-                <Game checkOppStatusInterval={checkOppStatusInterval} setCheckOppStatusInterval={setCheckOppStatusInterval} opponentName={opponentName} setRoute={setRoute} setUnsortedFriends={setUnsortedFriends} socket={socket} username={user.username} onRouteChange={onRouteChange} route={route} friendSocket={friendSocket} />
+                <Game setSearch={setSearch} checkOppStatusInterval={checkOppStatusInterval} setCheckOppStatusInterval={setCheckOppStatusInterval} opponentName={opponentName} setRoute={setRoute} setUnsortedFriends={setUnsortedFriends} socket={socket} username={user.username} onRouteChange={onRouteChange} route={route} friendSocket={friendSocket} />
                 }
             </>
             }

@@ -2,8 +2,9 @@ import React from 'react';
 import FriendRequests from './FriendRequests';
 import './navigation.css';
 
-const Navigation = ({ friendSocket, setUnsortedFriends, socket, username, onRouteChange, route }) => {
+const Navigation = ({ setSearch, friendSocket, setUnsortedFriends, socket, username, onRouteChange, route }) => {
     const handleExitClick = (e) => {
+        setSearch(false);
         onRouteChange(e);
         socket.emit('send exit game', friendSocket);
     }
