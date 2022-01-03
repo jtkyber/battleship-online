@@ -134,7 +134,17 @@
     flex-flow: nowrap column;
     align-items: center;
     padding: 1rem 0;
-    animation: 0.5s linear 0s 1 slideUp;
+    -webkit-animation: 0.5s linear 0s 1 slideUp;
+            animation: 0.5s linear 0s 1 slideUp;
+}
+
+@-webkit-keyframes slideUp {
+  0% {
+    transform: translateY(100vh);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }
 
 @keyframes slideUp {
@@ -168,6 +178,15 @@
     opacity: 0.8;
 }
 
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 @keyframes fadeIn {
   0% {
     opacity: 0;
@@ -194,7 +213,17 @@
     color: rgba(255,0,0,1);
     padding-top: 0rem;
     text-align: center;
-    animation: 1s ease fadeOut;
+    -webkit-animation: 1s ease fadeOut;
+            animation: 1s ease fadeOut;
+}
+
+@-webkit-keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
 @keyframes fadeOut {

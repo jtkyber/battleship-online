@@ -12,7 +12,10 @@
 }
 
 .gamePage {
-    user-select: none;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
     --player-turn-text: "";
 }
 
@@ -166,6 +169,22 @@
     text-align: center;
     font-weight: 600;
     color: rgba(255, 255, 255, 0.8);
+}
+
+.gamePage .chatInput::-webkit-input-placeholder {
+    color: black;
+}
+
+.gamePage .chatInput::-moz-placeholder {
+    color: black;
+}
+
+.gamePage .chatInput:-ms-input-placeholder {
+    color: black;
+}
+
+.gamePage .chatInput::-ms-input-placeholder {
+    color: black;
 }
 
 .gamePage .chatInput::placeholder {

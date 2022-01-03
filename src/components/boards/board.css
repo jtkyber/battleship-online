@@ -126,7 +126,17 @@
     font-weight: 600;
     text-align: center;
     transition: 1s ease;
-    animation: 0.5s linear 0s 1 fadeText;
+    -webkit-animation: 0.5s linear 0s 1 fadeText;
+            animation: 0.5s linear 0s 1 fadeText;
+}
+
+@-webkit-keyframes fadeText {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 @keyframes fadeText {

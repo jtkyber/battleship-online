@@ -71,7 +71,8 @@
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    filter: brightness(0);
+    -webkit-filter: brightness(0);
+            filter: brightness(0);
 
    /* content: "I";
     color: var(--ship-word-color);
