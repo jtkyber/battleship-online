@@ -15,7 +15,6 @@ const Friends = ({ friendSocket, opponentName, setOpponentName, unsortedFriends,
         showOnlineStatusToFriends();
 
         socket.on('update friend status', () => {
-            console.log('test')
             getOnlineFriends();
         });
 
@@ -174,7 +173,6 @@ const Friends = ({ friendSocket, opponentName, setOpponentName, unsortedFriends,
             }
             const selfAdded = await res3.json();
             if (selfAdded) {
-                console.log('self added to friends list');
                 socket.emit('send friend request', friendSocketId);
             }
         } catch(err) {

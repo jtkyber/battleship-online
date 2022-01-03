@@ -23,6 +23,84 @@ function App() {
     const [friendSocket, setFriendSocket] = useState(null);
     const [opponentName, setOpponentName] = useState('');
     const [unsortedFriends, setUnsortedFriends] = useState([]);
+    const [findMatchInterval, setFindMatchInterval] = useState(0);
+    const [checkOppStatusInterval, setCheckOppStatusInterval] = useState(0);
+    const [search, setSearch] = useState(false);
+
+    const onRouteChange = async (e) => {
+        switch(e.target.value) {
+            case 'homeNotLogged':
+                if (user.username) {
+                    await setSearch(false);
+                    await removeUserSocket(true);
+                }
+                setUser({username: '', wins: 0});
+                setRoute('index');
+                break;
+            case 'logOut':
+                if (user.username) {
+                    await setSearch(false);
+                    await removeUserSocket(true);
+                }
+                setUser({username: '', wins: 0});
+                setRoute('index');
+                break;
+            case 'goToRegister':
+                if (user.username) {
+                    await removeUserSocket(true);
+                }
+                setUser({username: '', wins: 0});
+                setRoute('register');
+                break;
+            case 'goToLogin':
+                if (user.username) {
+                    await removeUserSocket(true);
+                }
+                setUser({username: '', wins: 0});
+                setRoute('login');
+                break;
+            case 'goHome':
+                setRoute('loggedIn');
+                break;
+            case 'goToLeaderboard':
+                setRoute('leaderboard');
+                break;
+            case 'login':
+                setRoute('loggedIn');
+                break;
+            case 'register':
+                setRoute('loggedIn');
+                break;
+            case 'game':
+                if (user.username) {
+                    setSearch(false);
+                }
+                setRoute('game');
+                break;
+            default:
+                if (user.username) {
+                    setSearch(false);
+                    removeUserSocket(true);
+                }
+                setRoute('index');
+        }
+    }
+
+    const stopSearching = async () => {
+        try {
+           const response = await fetch('https://calm-ridge-60009.herokuapp.com/updateSearching', {
+               method: 'put',
+               headers: {'Content-Type': 'application/json'},
+               body: JSON.stringify({
+                   username: user.username,
+                   search: false
+               })
+           })
+           if (!response.ok) {throw new Error('Problem updating searching status')}
+       } catch(err) {
+           console.log(err);
+       }
+   }
 
     const updateLastOnline = async () => {
         try {
@@ -64,58 +142,21 @@ function App() {
         }
     }, [user])
 
-    const onRouteChange = (e) => {
-        switch(e.target.value) {
-            case 'homeNotLogged':
-                setUser({username: '', wins: 0});
-                setRoute('index');
-                if (user.username) {
-                    removeUserSocket(true);
-                }
-                break;
-            case 'logOut':
-                setUser({username: '', wins: 0});
-                setRoute('index');
-                if (user.username) {
-                    removeUserSocket(true);
-                }
-                break;
-            case 'goToRegister':
-                setUser({username: '', wins: 0});
-                setRoute('register');
-                if (user.username) {
-                    removeUserSocket(true);
-                }
-                break;
-            case 'goToLogin':
-                setUser({username: '', wins: 0});
-                setRoute('login');
-                if (user.username) {
-                    removeUserSocket(true);
-                }
-                break;
-            case 'goHome':
-                setRoute('loggedIn');
-                break;
-            case 'goToLeaderboard':
-                setRoute('leaderboard');
-                break;
-            case 'login':
-                setRoute('loggedIn');
-                break;
-            case 'register':
-                setRoute('loggedIn');
-                break;
-            case 'game':
-                setRoute('game');
-                break;
-            default:
-                setRoute('index');
-                if (user.username) {
-                    removeUserSocket(true);
-                }
+    useEffect(() => {
+        if (!search && findMatchInterval > 0) {
+            clearInterval(findMatchInterval);
+            stopSearching();
         }
-    }
+    }, [search])
+
+    useEffect(() => {
+        if (route !== 'game') {
+            clearInterval(checkOppStatusInterval);
+        } else {
+            clearInterval(findMatchInterval);
+        }
+    }, [route])
+
 
     const showOnlineStatusToFriends = async () => {
         try {
@@ -154,26 +195,13 @@ function App() {
         }
     }
 
-    const stopSearching = async () => {
-         try {
-            const response = await fetch('https://calm-ridge-60009.herokuapp.com/updateSearching', {
-                method: 'put',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({
-                    username: user.username,
-                    search: false
-                })
-            })
-            if (!response.ok) {throw new Error('Problem updating searching status')}
-        } catch(err) {
-            console.log(err);
-        }
-    }
-
     window.addEventListener('beforeunload', (e) => {
         e.preventDefault();
-        removeUserSocket(false);
         stopSearching();
+        if (route === 'game') {
+            socket.emit('send exit game', friendSocket);
+        }
+        removeUserSocket(false);
         e.returnValue = '';
     })
 
@@ -226,7 +254,7 @@ function App() {
                 <Navigation setUnsortedFriends={setUnsortedFriends} socket={socket} username={user.username} onRouteChange={onRouteChange} route={route} />
                 <Friends friendSocket={friendSocket} opponentName={opponentName} setOpponentName={setOpponentName} unsortedFriends={unsortedFriends} setUnsortedFriends={setUnsortedFriends} socket={socket} route={route} setFriendSocket={setFriendSocket} currentSocket={currentSocket} showOnlineStatusToFriends={showOnlineStatusToFriends} username={user.username} setRoute={setRoute} />
                 <div className='matchAndBoard'>
-                    <FindMatch opponentName={opponentName} setOpponentName={setOpponentName} username={user.username} setFriendSocket={setFriendSocket} setRoute={setRoute} />
+                    <FindMatch currentSocket={currentSocket} setSearch={setSearch} search={search} findMatchInterval={findMatchInterval} setFindMatchInterval={setFindMatchInterval} socket={socket} setOpponentName={setOpponentName} username={user.username} setFriendSocket={setFriendSocket} setRoute={setRoute} />
                     <HomeBoard route={route}/>
                 </div>
                 <Footer />
@@ -241,7 +269,7 @@ function App() {
                     <Footer />
                 </div>
                 :
-                <Game opponentName={opponentName} setRoute={setRoute} setUnsortedFriends={setUnsortedFriends} socket={socket} username={user.username} onRouteChange={onRouteChange} route={route} friendSocket={friendSocket} />
+                <Game checkOppStatusInterval={checkOppStatusInterval} setCheckOppStatusInterval={setCheckOppStatusInterval} opponentName={opponentName} setRoute={setRoute} setUnsortedFriends={setUnsortedFriends} socket={socket} username={user.username} onRouteChange={onRouteChange} route={route} friendSocket={friendSocket} />
                 }
             </>
             }

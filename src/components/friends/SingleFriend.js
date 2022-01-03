@@ -4,7 +4,9 @@ import './singleFriend.css';
 const SingleFriend = ({ friendSocket, setOpponentName, socket, route, setFriendSocket, currentSocket, username, name, status, setRoute }) => {
 
     useEffect(() => {
-        socket.on('receive go to game', () => {
+        socket.on('receive go to game', data => {
+            setOpponentName(data.senderName);
+            setFriendSocket(data.senderSocket);
             setRoute('game');
         })
 
@@ -36,8 +38,6 @@ const SingleFriend = ({ friendSocket, setOpponentName, socket, route, setFriendS
             const response = await fetch(`https://calm-ridge-60009.herokuapp.com/findFriend?username=${friend}`)
             const user = await response.json();
             if (user.socketid) {
-                setFriendSocket(user.socketid);
-                setOpponentName(user.username);
                 socket.emit('send invite', {currentSocket: currentSocket, username: username, socketid: user.socketid});
                 e.target.childNodes[0].nodeValue = "Invite sent";
                 e.target.style.backgroundColor = 'transparent';
@@ -51,7 +51,7 @@ const SingleFriend = ({ friendSocket, setOpponentName, socket, route, setFriendS
     }
 
     const acceptInvite = (e) => {
-        socket.emit('send go to game', friendSocket);
+        socket.emit('send go to game',  {receiverSocket: friendSocket, senderSocket: currentSocket, senderName: username});
         setOpponentName(e.target.id);
         setRoute('game');
     }

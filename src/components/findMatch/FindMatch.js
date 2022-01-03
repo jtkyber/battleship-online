@@ -1,26 +1,30 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import './findMatch.css';
 
-const FindMatch = ({ setOpponentName, opponentName, username, setFriendSocket, setRoute }) => {
-    const [search, setSearch] = useState(false);
-    const [intervalID, setIntervalID] = useState(0);
-    const prevIntID = useRef();
+const FindMatch = ({ currentSocket, setSearch, search, findMatchInterval, setFindMatchInterval, socket, setOpponentName, username, setFriendSocket, setRoute }) => {
+    
 
     useEffect(() => {
-        prevIntID.current = intervalID;
-    }, [intervalID])
+        socket.on('receive go to game', data => {
+            setOpponentName(data.senderName);
+            setFriendSocket(data.senderSocket);
+            setRoute('game');
+        })
 
-    useEffect(() => {
         return () => {
-            clearInterval(prevIntID.current);
-            setTimeout(() => {
-                stopSearching();
-            }, 1000)
+            socket.off('receive go to game');
         }
     }, [])
 
+    useEffect(() => {
+        if (search) {
+            setFindMatchInterval(setInterval(searchForMatch, 1000));
+        }
+    }, [search])
+
     const stopSearching = async () => {
          try {
+            clearInterval(findMatchInterval);
             const response = await fetch('https://calm-ridge-60009.herokuapp.com/updateSearching', {
                 method: 'put',
                 headers: {'Content-Type': 'application/json'},
@@ -48,11 +52,6 @@ const FindMatch = ({ setOpponentName, opponentName, username, setFriendSocket, s
             if (!response.ok) {throw new Error('Problem updating searching status')}
             const searchChanged = await response.json();
             if (searchChanged) {
-                if (!search) {
-                    setIntervalID(setInterval(searchForMatch, 1000));
-                } else {
-                    clearInterval(intervalID);
-                }
                 setSearch(!search);
             }
         } catch(err) {
@@ -66,8 +65,11 @@ const FindMatch = ({ setOpponentName, opponentName, username, setFriendSocket, s
             if (!response.ok) {throw new Error('Could not find match')}
             const match = await response.json();
             if (match) {
-                setFriendSocket(match.socketid);
-                setOpponentName(match.username);
+                await setFriendSocket(match.socketid);
+                await setOpponentName(match.username);
+                await stopSearching();
+                await socket.emit('send go to game',  {receiverSocket: match.socketid, senderSocket: currentSocket, senderName: username});
+                await setSearch(false);
                 setRoute('game');
             }
         } catch(err) {

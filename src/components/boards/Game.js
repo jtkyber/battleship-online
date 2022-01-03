@@ -6,7 +6,7 @@ import ChatBox from './ChatBox';
 import Footer from '../footer/Footer';
 import ReadyButton from '../readyButton/ReadyButton';
 
-const Game = ({ opponentName, setRoute, setUnsortedFriends, socket, username, onRouteChange, route, friendSocket }) => {
+const Game = ({ checkOppStatusInterval, setCheckOppStatusInterval, opponentName, setRoute, setUnsortedFriends, socket, username, onRouteChange, route, friendSocket }) => {
     const [gameRoute, setGameRoute] = useState('placeShips');
     const [playerIsReady, setPlayerIsReady] = useState(false);
     const [opponentIsReady, setOpponentIsReady] = useState(false);
@@ -29,11 +29,13 @@ const Game = ({ opponentName, setRoute, setUnsortedFriends, socket, username, on
             setRoute('loggedIn');
         })
 
+        setCheckOppStatusInterval(setInterval(checkIfOpponentIsOnline, 3000));
+
         return () => {
+            clearInterval(checkOppStatusInterval);
             socket.off('receive ready status');
             socket.off('receive game over');
             socket.off('receive exit game');
-            socket.emit('send exit game', friendSocket);
         }
     },[])
 
@@ -68,6 +70,28 @@ const Game = ({ opponentName, setRoute, setUnsortedFriends, socket, username, on
             }
         }
     },[yourTurn])
+
+    const checkIfOpponentIsOnline = async () => {
+        try {
+            let friendIsOnline = false;
+            const response = await fetch(`https://calm-ridge-60009.herokuapp.com/getFriendsOnline?username=${username}`)
+            if (!response.ok) {
+                throw new Error('Error')
+            }
+            const onlineFriends = await response.json();
+            await onlineFriends.forEach(f => {
+                if ((f.username === opponentName)) {
+                    return friendIsOnline = true;
+                }
+            })
+            if (!friendIsOnline) {
+                window.alert('Opponent has left the game');
+                setRoute('loggedIn');
+            }
+        } catch(err) {
+            console.log(err);
+        }
+   }
 
     const addWin = async () => {
         try {
