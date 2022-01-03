@@ -1,25 +1,25 @@
 {
   "files": {
     "main.css": "/battleship-online/static/css/main.0ce233d5.chunk.css",
-    "main.js": "/battleship-online/static/js/main.4dc01498.chunk.js",
-    "main.js.map": "/battleship-online/static/js/main.4dc01498.chunk.js.map",
+    "main.js": "/battleship-online/static/js/main.ad4bf950.chunk.js",
+    "main.js.map": "/battleship-online/static/js/main.ad4bf950.chunk.js.map",
     "runtime-main.js": "/battleship-online/static/js/runtime-main.ba8f50fe.js",
     "runtime-main.js.map": "/battleship-online/static/js/runtime-main.ba8f50fe.js.map",
-    "static/js/2.224640d5.chunk.js": "/battleship-online/static/js/2.224640d5.chunk.js",
-    "static/js/2.224640d5.chunk.js.map": "/battleship-online/static/js/2.224640d5.chunk.js.map",
+    "static/js/2.120a4c98.chunk.js": "/battleship-online/static/js/2.120a4c98.chunk.js",
+    "static/js/2.120a4c98.chunk.js.map": "/battleship-online/static/js/2.120a4c98.chunk.js.map",
     "static/js/3.7c3fd58f.chunk.js": "/battleship-online/static/js/3.7c3fd58f.chunk.js",
     "static/js/3.7c3fd58f.chunk.js.map": "/battleship-online/static/js/3.7c3fd58f.chunk.js.map",
     "index.html": "/battleship-online/index.html",
     "static/css/main.0ce233d5.chunk.css.map": "/battleship-online/static/css/main.0ce233d5.chunk.css.map",
-    "static/js/2.224640d5.chunk.js.LICENSE.txt": "/battleship-online/static/js/2.224640d5.chunk.js.LICENSE.txt",
+    "static/js/2.120a4c98.chunk.js.LICENSE.txt": "/battleship-online/static/js/2.120a4c98.chunk.js.LICENSE.txt",
     "static/media/index.css": "/battleship-online/static/media/background.f30097d9.jpg",
     "static/media/board.css": "/battleship-online/static/media/waterbg.ade23eca.gif",
     "static/media/msg-icon.b63e7a13.png": "/battleship-online/static/media/msg-icon.b63e7a13.png"
   },
   "entrypoints": [
     "static/js/runtime-main.ba8f50fe.js",
-    "static/js/2.224640d5.chunk.js",
+    "static/js/2.120a4c98.chunk.js",
     "static/css/main.0ce233d5.chunk.css",
-    "static/js/main.4dc01498.chunk.js"
+    "static/js/main.ad4bf950.chunk.js"
   ]
 }
