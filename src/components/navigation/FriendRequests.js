@@ -123,18 +123,15 @@ const FriendRequests = ({ setUnsortedFriends, socket, username }) => {
                 const res2 = await fetch(`https://calm-ridge-60009.herokuapp.com/getFriends?username=${username}`)
                 if (!res2.ok) {throw new Error('Problem accessing friends list')}
                 const friends = await res2.json();
-                if (friends !== null && friends !== '') {
-                    friendArray = friends.split(',');
-                    if (friendArray.includes(friend)) {
-                        throw new Error('User already your friendddddddd');
-                    }
+                if (friends.length) {
+                    friends.forEach(f => {
+                        if (f.username === friend) {
+                            throw new Error('User already your friend');
+                        }
+                    })
                 }
                 friendArray.push(friend);
-                if (friendArray.length > 1) {
-                    friendList = friendArray.join(',');
-                } else {
-                    friendList = friendArray[0];
-                }
+                friendList = friendArray.join(',');
 
     //-----------------------------------------------------------------------------------
                 // Update the user's friend list with the new friends string

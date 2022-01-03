@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import './singleFriend.css';
 
-const SingleFriend = ({ friendSocket, opponentName, setOpponentName, socket, route, setFriendSocket, currentSocket, username, fetchFriends, name, status, setRoute }) => {
+const SingleFriend = ({ friendSocket, setOpponentName, socket, route, setFriendSocket, currentSocket, username, name, status, setRoute }) => {
 
     useEffect(() => {
         socket.on('receive go to game', () => {

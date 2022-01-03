@@ -6,7 +6,7 @@ const Friends = ({ friendSocket, opponentName, setOpponentName, unsortedFriends,
     const [allFriends, setAllFriends] = useState([]);
     const [friendFilter, setFriendFilter] = useState('');
     const [friendSearch, setFriendSearch] = useState('');
-    const [friendsOnline, setFriendOnline] = useState(0);
+    const [friendsOnline, setFriendsOnline] = useState([]);
 
     // Start fetching friends on component mount
 // -----------------------------------------------------------------------------------
@@ -14,16 +14,16 @@ const Friends = ({ friendSocket, opponentName, setOpponentName, unsortedFriends,
         fetchFriends();
         showOnlineStatusToFriends();
 
-        let timer = setInterval(checkFriendStatus, 5000);
-
         socket.on('update friend status', () => {
-            clearInterval(timer);
-            fetchFriends();
-            timer = setInterval(checkFriendStatus, 5000);
+            console.log('test')
+            getOnlineFriends();
         });
+
+        const timer = setInterval(getOnlineFriends, 3000);
 
         return () => {
             socket.off('update friend status');
+            clearInterval(timer);
         }
     }, [])
 //-----------------------------------------------------------------------------------
@@ -31,95 +31,65 @@ const Friends = ({ friendSocket, opponentName, setOpponentName, unsortedFriends,
 //-----------------------------------------------------------------------------------
     useEffect(() => {
         sortFriends();
-    },[unsortedFriends])
-
-    useEffect(() => {
-        fetchFriends();
-    },[friendsOnline])
+    },[unsortedFriends, friendsOnline])
+    
 //-----------------------------------------------------------------------------------
     // Sort friends. Online at top
 //-----------------------------------------------------------------------------------
     const sortFriends = () => {
-        const onlineFriends = [];
         const offlineFriends = [];
         const justAdded = [];
         unsortedFriends.forEach(f => {
-            if (f.name === friendSearch) {
-                if (f.status === 'online') {
-                    justAdded.push(f)
-                } else {
-                    justAdded.push(f)
-                }
+            if (f.username === friendSearch) {
+                justAdded.push(f)
             } else {
-                if (f.status === 'online') {
-                    onlineFriends.push(f)
-                } else {
-                    offlineFriends.push(f)
+                let addFriendToOffline = true;
+                friendsOnline.forEach(olF => {
+                    if (olF.username === f.username) {
+                        return addFriendToOffline = false;
+                    }
+                })
+
+                if (addFriendToOffline) {
+                    offlineFriends.push(f);
                 }
             }
         })
         if (justAdded.length) {
-            setAllFriends(justAdded.concat(onlineFriends).concat(offlineFriends));
+            setAllFriends(justAdded.concat(friendsOnline).concat(offlineFriends));
         } else {
-            setAllFriends(onlineFriends.concat(offlineFriends));
+            setAllFriends(friendsOnline.concat(offlineFriends));
         }
     }
 
-    const checkFriendStatus = async () => {
+    const getOnlineFriends = async () => {
          try {
             const response = await fetch(`https://calm-ridge-60009.herokuapp.com/getFriendsOnline?username=${username}`)
             const onlineFriends = await response.json();
-            if (friendsOnline !== onlineFriends) {
-                setFriendOnline(onlineFriends);
-            }
+            setFriendsOnline(onlineFriends);
         } catch(err) {
             console.log(err);
         }
     }
 
 //-----------------------------------------------------------------------------------
-    // Get the string of friends that is stored in the database for the user
-    // Convert to array of friends
-    // Pass the array to 'fetchFriendData()'
+    // Get array of friends
 // -----------------------------------------------------------------------------------
     const fetchFriends = async () => {
-        let allFriendNames = [];
+
         try {
             const response = await fetch(`https://calm-ridge-60009.herokuapp.com/getFriends?username=${username}`)
             if (!response.ok) {throw new Error('Problem accessing friends list')}
             const friends = await response.json();
-            if (friends !== null && friends !== '') {
-                allFriendNames = friends.split(',');
-                fetchUserFriendData(allFriendNames);
+            if (friends.length) {
+                setUnsortedFriends(friends);
+                getOnlineFriends();
             } else {
                 setAllFriends([]);
             }
         } catch(err) {
             console.log(err);
         }
-    }
-//-----------------------------------------------------------------------------------
-    // Search the database for each of the user's friends
-    // Return those users, and add their username & online status to a temporary array
-    // Assign that array to the unsortedFriends useState hook
-//-----------------------------------------------------------------------------------
-    const fetchUserFriendData = async (allFriendNames) => {
-        let allF = [];
-        for (let friend of allFriendNames) {
-            try {
-                const response = await fetch(`https://calm-ridge-60009.herokuapp.com/findFriend?username=${friend}`);
-                if (!response.ok) {throw new Error('User does not exist')}
-                const user = await response.json();
-                if (user.socketid) {
-                    allF.push({name: user.username, status: 'online'})
-                } else {
-                    allF.push({name: user.username, status: 'offline'})
-                }
-            } catch(err) {
-                console.log(err);
-            }
-        }
-        setUnsortedFriends(allF);
     }
 //-----------------------------------------------------------------------------------
     // Send friend request
@@ -142,7 +112,6 @@ const Friends = ({ friendSocket, opponentName, setOpponentName, unsortedFriends,
             const requests = await res.json();
             if (requests !== null && requests !== '') {
                 const requestsArray = requests.split(',');
-                console.log(requestsArray);
                 if (requestsArray.includes(friendSearch)) {
                     friendAlert.style.setProperty('--add-friend-alert', '"User already sent you a request"');
                     throw new Error('User already sent you a request')
@@ -233,8 +202,8 @@ const Friends = ({ friendSocket, opponentName, setOpponentName, unsortedFriends,
                         // Return a single friend div w/ their username and status
 //-----------------------------------------------------------------------------------
                         allFriends.map(f => {
-                            if (f.name.toLowerCase().includes(friendFilter.toLowerCase())) {
-                                return <SingleFriend friendSocket={friendSocket} opponentName={opponentName} setOpponentName={setOpponentName} socket={socket} route={route} setFriendSocket={setFriendSocket} currentSocket={currentSocket} username={username} fetchFriends={fetchFriends} key={f.name} name={f.name} status={f.status} setRoute={setRoute} />
+                            if (f.username && f.username.toLowerCase().includes(friendFilter.toLowerCase())) {
+                                return <SingleFriend friendSocket={friendSocket} opponentName={opponentName} setOpponentName={setOpponentName} socket={socket} route={route} setFriendSocket={setFriendSocket} currentSocket={currentSocket} username={username} key={f.username} name={f.username} status={friendsOnline.includes(f) ? 'online' : 'offline'} setRoute={setRoute} />
                             } else return null
                         })
                     }

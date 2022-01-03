@@ -33,6 +33,7 @@ const Game = ({ opponentName, setRoute, setUnsortedFriends, socket, username, on
             socket.off('receive ready status');
             socket.off('receive game over');
             socket.off('receive exit game');
+            socket.emit('send exit game', friendSocket);
         }
     },[])
 

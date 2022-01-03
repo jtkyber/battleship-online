@@ -4,8 +4,8 @@ import './navigation.css';
 
 const Navigation = ({ friendSocket, setUnsortedFriends, socket, username, onRouteChange, route }) => {
     const handleExitClick = (e) => {
-        onRouteChange(e);
-        socket.emit('send exit game', friendSocket);
+        // onRouteChange(e);
+        // socket.emit('send exit game', friendSocket);
     }
 
     return (
@@ -52,7 +52,7 @@ const Navigation = ({ friendSocket, setUnsortedFriends, socket, username, onRout
                 :
                 <>
                     <FriendRequests setUnsortedFriends={setUnsortedFriends} socket={socket} username={username} />
-                    <button value='goHome' onClick={handleExitClick}>Exit</button>
+                    <button value='goHome' onClick={onRouteChange}>Exit</button>
                     <button value='logOut' onClick={onRouteChange}>Log Out</button>
                 </>
                 }

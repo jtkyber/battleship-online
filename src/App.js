@@ -36,8 +36,6 @@ function App() {
             if (!response.ok) {
                 throw new Error('Error');
             }
-            const lastOnlineUpdated = await response.json();
-            console.log(lastOnlineUpdated);
         } catch(err) {
             console.log(err);
         }
@@ -56,7 +54,7 @@ function App() {
     useEffect(() => {
         let myInterval;
         if (user.username.length) {
-            myInterval = setInterval(updateLastOnline, 2000);
+            myInterval = setInterval(updateLastOnline, 1000);
         } else {
             clearInterval(myInterval);
         }
@@ -69,7 +67,11 @@ function App() {
     const onRouteChange = (e) => {
         switch(e.target.value) {
             case 'homeNotLogged':
+                setUser({username: '', wins: 0});
                 setRoute('index');
+                if (user.username) {
+                    removeUserSocket(true);
+                }
                 break;
             case 'logOut':
                 setUser({username: '', wins: 0});
@@ -79,10 +81,18 @@ function App() {
                 }
                 break;
             case 'goToRegister':
+                setUser({username: '', wins: 0});
                 setRoute('register');
+                if (user.username) {
+                    removeUserSocket(true);
+                }
                 break;
             case 'goToLogin':
+                setUser({username: '', wins: 0});
                 setRoute('login');
+                if (user.username) {
+                    removeUserSocket(true);
+                }
                 break;
             case 'goHome':
                 setRoute('loggedIn');
@@ -108,25 +118,17 @@ function App() {
     }
 
     const showOnlineStatusToFriends = async () => {
-        let allFriendNames = [];
         try {
             const response1 = await fetch(`https://calm-ridge-60009.herokuapp.com/getFriends?username=${user.username}`)
             if (!response1.ok) {
                 throw new Error('Error')
             }
             const friends = await response1.json();
-            if (friends !== null && friends !== '') {
-                allFriendNames = friends.split(',');
-            }
-
-            for (let friend of allFriendNames) {
-                const response2 = await fetch(`https://calm-ridge-60009.herokuapp.com/findFriend?username=${friend}`)
-                if (!response2.ok) {
-                    throw new Error('Error')
-                }
-                const user = await response2.json();
-                if (user.socketid) {
-                    socket.emit('update user status', user.socketid);
+            if (friends.length) {
+                for (let f of friends) {
+                    if (f.socketid) {
+                        socket.emit('update user status', f.socketid);
+                    }
                 }
             }
         } catch(err) {
@@ -180,13 +182,13 @@ function App() {
         const registerBtn = document.querySelector('.registerBtn');
         const friendRequestBtn = document.querySelector('.friendRequestBtn');
 
-        if ((e.keyCode === 13) && (route === 'login')) {
+        if ((e.code === 'Enter') && (route === 'login')) {
             e.preventDefault();
             loginBtn.click();
-        } else if ((e.keyCode === 13) && (route === 'register')) {
+        } else if ((e.code === 'Enter') && (route === 'register')) {
             e.preventDefault();
             registerBtn.click();
-        } else if ((e.keyCode === 13) && (route === 'loggedIn')) {
+        } else if ((e.code === 'Enter') && (route === 'loggedIn')) {
             e.preventDefault();
             friendRequestBtn.click();
         }
