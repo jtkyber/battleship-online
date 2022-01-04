@@ -4,11 +4,11 @@
     height: 2.5rem;
     border: 2px solid rgb(0, 255, 26);
     border-radius: 10px;
-    box-shadow: 0 0 5px 1px rgb(204, 255, 218, 0.5);
+    box-shadow: 0 0 6px 1px rgb(204, 255, 218, 0.3);
     opacity: 0.8;
     transition: all 0.15s ease-out;
-    -webkit-animation: pulseGlow 2s linear infinite;
-            animation: pulseGlow 2s linear infinite;
+    -webkit-animation: pulseGlow 1.5s linear infinite;
+            animation: pulseGlow 1.5s linear infinite;
 }
 
 .findMatch {
@@ -21,31 +21,31 @@
     font-size: 1rem;
     font-weight: 400;
     text-transform: uppercase;
-    box-shadow: 0 0 5px 1px rgb(204, 255, 218, 0.5) inset;
-    -webkit-animation: pulseGlowInset 2s linear infinite;
-            animation: pulseGlowInset 2s linear infinite;
+    box-shadow: 0 0 6px 1px rgb(204, 255, 218, 0.3) inset;
+    -webkit-animation: pulseGlowInset 1.5s linear infinite;
+            animation: pulseGlowInset 1.5s linear infinite;
 }
 
 @-webkit-keyframes pulseGlow {
     50% {
-        box-shadow: 0 0 12px 1px rgb(204, 255, 218, 0.8);
+        box-shadow: 0 0 12px 1px rgb(204, 255, 218, 0.6);
         border: 2px solid rgb(112, 255, 126);
     }
 }
 
 @keyframes pulseGlow {
     50% {
-        box-shadow: 0 0 12px 1px rgb(204, 255, 218, 0.8);
+        box-shadow: 0 0 12px 1px rgb(204, 255, 218, 0.6);
         border: 2px solid rgb(112, 255, 126);
     }
 }
 
 @-webkit-keyframes pulseGlowInset {
-    50% {box-shadow: 0 0 10px 1px rgb(204, 255, 218, 0.8) inset;}
+    50% {box-shadow: 0 0 10px 1px rgb(204, 255, 218, 0.6) inset;}
 }
 
 @keyframes pulseGlowInset {
-    50% {box-shadow: 0 0 10px 1px rgb(204, 255, 218, 0.8) inset;}
+    50% {box-shadow: 0 0 10px 1px rgb(204, 255, 218, 0.6) inset;}
 }
 
 .findMatchContainer:hover {
