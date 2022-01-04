@@ -6,7 +6,7 @@
     border-radius: 10px;
     box-shadow: 0 0 5px 1px rgb(204, 255, 218, 0.5);
     opacity: 0.8;
-    transition: all 0.2s ease-out;
+    transition: all 0.15s ease-out;
     -webkit-animation: pulseGlow 2s linear infinite;
             animation: pulseGlow 2s linear infinite;
 }
@@ -22,7 +22,6 @@
     font-weight: 400;
     text-transform: uppercase;
     box-shadow: 0 0 5px 1px rgb(204, 255, 218, 0.5) inset;
-    transition: all 0.2s ease-out;
     -webkit-animation: pulseGlowInset 2s linear infinite;
             animation: pulseGlowInset 2s linear infinite;
 }
@@ -50,10 +49,5 @@
 }
 
 .findMatchContainer:hover {
-    box-shadow: 0 0 5px 1px rgb(204, 255, 218, 0.8) !important;
-    transform: scale(1.03);
-}
-
-.findMatch:hover {
-    box-shadow: 0 0 5px 1px rgb(204, 255, 218, 0.8) inset !important;
+    transform: scale(1.04);
 }
