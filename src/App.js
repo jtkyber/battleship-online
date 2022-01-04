@@ -17,7 +17,7 @@ import './gamePage.css';
 import './leaderboard.css';
 
 function App() {
-    const [route, setRoute] = useState('loggedIn');
+    const [route, setRoute] = useState('index');
     const [user, setUser] = useState({username: '', wins: 0});
     const [currentSocket, setCurrentSocket] = useState(null);
     const [friendSocket, setFriendSocket] = useState(null);
