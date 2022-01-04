@@ -78,7 +78,9 @@ const FindMatch = ({ currentSocket, setSearch, search, findMatchInterval, setFin
     }
 
     return (
-        <button onClick={updateSearching} className='findMatch'>{search === false ? 'Find Match' : 'Searching...'}</button>
+        <div className='findMatchContainer'>
+            <button onClick={updateSearching} className='findMatch'>{search === false ? 'Find Match' : 'Searching...'}</button>
+        </div>
     )
 }
 

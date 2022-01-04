@@ -1,22 +1,37 @@
 .friendBlock {
-    border: 2px solid black;
-    width: 9.5rem;
-    height: 4rem;
-    margin: 0.5rem 0;
-    background: rgba(0,0,0,0.3);
-    border: 2px dashed white;
-    border-radius: 20px;
-    transition: 0.2s ease;
-    opacity: 0.8;
     display: flex;
     flex-flow: nowrap row;
     justify-content: flex-end;
     align-items: center;
+    width: 9.5rem;
+    height: 4rem;
+    margin: 0.5rem 0;
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.3);
+    border: 3px solid rgb(0, 0, 0);
+    border-radius: 10px;
+    box-shadow: 0 0 2px 1px rgba(255, 255, 255, 0.7);
+    transition: all 0.3s ease-out;
+}
+
+.friendBlock:after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    box-shadow: 0 0 2px 1px rgba(255, 255, 255, 0.4) inset;
+    transition: all 0.3s ease-out;
+    z-index: -1;
 }
 
 .friendBlock:hover {
-    box-shadow: 0 0 20px 1px rgba(255,255,255,0.5);
-    transition: 0.2s ease;
+    box-shadow: 0 0 5px 1px rgba(255, 255, 255, 0.7);
+}
+
+.friendBlock:hover:after {
+    box-shadow: 0 0 4px 1px rgba(255, 255, 255, 0.7) inset;
 }
 
 .friendText {
@@ -28,47 +43,50 @@
 }
 
 .friendBlock > .online {
-    /*background-color: rgba(0,255,50,0.7);*/
-    background-image: linear-gradient(-45deg, rgba(0,255,50,0.4), rgba(0,255,50,0.7), rgba(0,255,50,1));
     height: 1rem;
     width: 1rem;
     margin-right: 1rem;
     border-radius: 50%;
+    border: 1px solid rgb(0, 255, 26, 0.9);
 }
 
 .friendBlock > .offline {
-    /*background-color: rgba(255,0,0,0.7);*/
-    background-image: linear-gradient(-45deg, rgba(255,0,0,0.4), rgba(255,0,0,0.7), rgba(255,0,0,1));
     height: 1rem;
     width: 1rem;
     margin-right: 1rem;
     border-radius: 50%;
+    border: 1px solid rgba(220, 0, 0, 0.9);
 }
 
 .friendText > h3 {
-    color: white;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 400;
 }
 
 .friendText > button {
     margin-top: 0.3rem;
-    /*background-color: rgba(0,255,50,0.7);*/
-    /*border: none;*/
-    background-image: linear-gradient(-45deg, rgba(0,150,0,1), rgba(0,255,0,1));
-    border: 2px solid rgba(0,0,0,0.5);
-    border-radius: 7px;
-    font-weight: 600;
-    color: rgba(0,0,0,1);
-    transition: 0.2s ease;
-    /*height: 1.3rem;*/
-    opacity: 0.9;
+    font-weight: 400;
     padding: 0.2rem 0.3rem;
-    transition: 0.2s ease;
+    position: relative;
+    background-color: transparent;
+    color: rgb(0, 255, 26);
+    border: 1px solid rgb(0, 255, 26);
+    border-radius: 7px;
+    box-shadow: 0 0 1px 1px rgb(204, 255, 218, 0.6);
+    opacity: 0.8;
+    transition: all 0.2s ease-out;
+}
+
+.friendText > button:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 0 1px 1px rgb(204, 255, 218, 0.6) inset;
 }
 
 .friendText > button:hover {
-    /*background-color: transparent;*/
-    /*border: 2px solid rgba(255,255,255,0.5);*/
-    /*color: rgba(0,255,0,0.7);*/
-    transition: 0.2s ease;
-    opacity: 0.5;
+    opacity: 0.6;
 }

@@ -22,9 +22,7 @@ const SingleFriend = ({ friendSocket, setOpponentName, socket, route, setFriendS
         const btn = document.querySelector(`.btn${data.username}`);
         if (route === 'loggedIn' && btn !== null) {
             if (btn.disabled === true) {
-                btn.style.backgroundColor = 'rgba(0,255,50,0.7)';
-                btn.style.border = '2px solid rgba(255,255,255,0.5)';
-                btn.style.color = 'rgba(0,0,0,1)';
+                btn.style.opacity = '0.8';
                 btn.disabled = false;
             }
             btn.childNodes[0].nodeValue = "Accept";
@@ -40,9 +38,8 @@ const SingleFriend = ({ friendSocket, setOpponentName, socket, route, setFriendS
             if (user.socketid) {
                 socket.emit('send invite', {currentSocket: currentSocket, username: username, socketid: user.socketid});
                 e.target.childNodes[0].nodeValue = "Invite sent";
-                e.target.style.backgroundColor = 'transparent';
-                e.target.style.border = 'none';
-                e.target.style.color = 'rgba(0,255,0,0.8)';
+                e.target.style.opacity = '0.4';
+                e.target.style.cursor = 'default';
                 e.target.disabled = true;
             }
         } catch(err) {
