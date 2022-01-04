@@ -9,6 +9,14 @@ nav {
     --notification-color: transparent;
 }
 
+nav > *:hover {
+    transition: 0.15s ease-out all;
+}
+
+nav > *:hover {
+    opacity: 0.5;
+}
+
 nav button {
     background: transparent;
     border: none;
