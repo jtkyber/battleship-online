@@ -8,11 +8,8 @@ const FriendsHome = ({onRouteChange}) => {
             <h2>Friends</h2>
         </div>
         <div className='logToSeeFriendsText'>
-            <h3>Log in to see your friends here</h3>
+            <h3>Log in to add and view friends here</h3>
         </div>
-        {/*<div className='homeLeaderboard'>
-            <button value='goToLeaderboard' onClick={onRouteChange}>Leaderboard</button>
-        </div>*/}
     </div>
     )
 }

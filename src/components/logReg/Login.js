@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import './logReg.css';
 
 const Login = ({onRouteChange, loadUser, currentSocket}) => {
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
-    const logReg = document.querySelector('.logReg');
+    const login = document.querySelector('.login');
 
     const onSubmitLogin = async (e) => {
         try {
@@ -22,9 +21,9 @@ const Login = ({onRouteChange, loadUser, currentSocket}) => {
                 loadUser(user);
                 onRouteChange(e);
             } else if (user === 'no socketid') {
-                logReg.style.setProperty("--reg-log-alert", '"Server error. Please try again"');
-            } else if (logReg !== null) {
-                logReg.style.setProperty("--reg-log-alert", '"The username or password you entered is incorrect"');
+                login.style.setProperty("--reg-log-alert", '"Server error. Please try again"');
+            } else if (login !== null) {
+                login.style.setProperty("--reg-log-alert", '"The username or password you entered is incorrect"');
             }
         } catch(err) {
             console.log(err);
@@ -33,7 +32,7 @@ const Login = ({onRouteChange, loadUser, currentSocket}) => {
     }
 
     return (
-        <div className='logReg'>
+        <div className='login'>
             <h1>Log In</h1>
             <div className='username'>
                 <h4>Username</h4>

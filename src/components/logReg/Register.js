@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
-import './logReg.css';
 
 const Register = ({onRouteChange, loadUser, currentSocket}) => {
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
-    const logReg = document.querySelector('.logReg');
+    const register = document.querySelector('.register');
 
     const onSubmitRegister = (e) => {
         if (userName.length < 5) {
-            logReg.style.setProperty("--reg-log-alert", '"Username must be at least 5 characters"');
+            register.style.setProperty("--reg-log-alert", '"Username must be at least 5 characters"');
         } else if (userName.length > 10) {
-            logReg.style.setProperty("--reg-log-alert", '"Username cannot be more than 10 characters"');
+            register.style.setProperty("--reg-log-alert", '"Username cannot be more than 10 characters"');
         } else if (password.length < 5) {
-            logReg.style.setProperty("--reg-log-alert", '"Password must be at least 5 characters"');
+            register.style.setProperty("--reg-log-alert", '"Password must be at least 5 characters"');
         } else {
             fetch('https://calm-ridge-60009.herokuapp.com/register', {
               method: 'post',
@@ -29,10 +28,10 @@ const Register = ({onRouteChange, loadUser, currentSocket}) => {
                 loadUser(user);
                 onRouteChange(e);
               } else if (user === 'no socketid') {
-                    logReg.style.setProperty("--reg-log-alert", '"Server error. Please try again"');
+                register.style.setProperty("--reg-log-alert", '"Server error. Please try again"');
                 }
                 else if (!user.ok) {
-                    logReg.style.setProperty("--reg-log-alert", '"Username has already been taken"');
+                    register.style.setProperty("--reg-log-alert", '"Username has already been taken"');
                     console.log(user);
               }
             })
@@ -40,7 +39,7 @@ const Register = ({onRouteChange, loadUser, currentSocket}) => {
     }
 
     return (
-        <div className='logReg'>
+        <div className='register'>
             <h1>Register</h1>
             <div className='username'>
                 <h4>Username</h4>

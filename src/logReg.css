@@ -1,0 +1,165 @@
+.logRegPage {
+    background-color: rgba(0,0,0,0.7);
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 15rem 1fr;
+    grid-template-rows: 3rem 8rem 1fr 2rem;
+    grid-template-areas:
+            "nav nav"
+            "friends homeText"
+            "friends logReg"
+            "footer footer";
+}
+
+.homeText {
+    justify-self: center;
+    align-self: center;
+}
+
+.homeText > h1 {
+    position: relative;
+    color: rgb(0, 0, 0);
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 5rem;
+    letter-spacing: 0.5rem;
+    -webkit-text-stroke: 1px rgba(0, 255, 42, 0.6);
+}
+
+.logReg {
+    width: 100%;
+    height: 100%;
+    grid-area: logReg;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 5vh;
+}
+
+.logRegPage nav {
+    grid-area: nav;
+}
+
+.logRegPage .friendsContainer {
+    grid-area: friends;
+    z-index: 2;
+}
+
+.login, .register {
+    width: 18rem;
+    height: 20rem;
+    border: 2px solid white;
+    display: flex;
+    flex-flow: nowrap column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: rgba(0,0,0,0.6);
+    --reg-log-alert: "";
+    border-radius: 10px;
+}
+
+.login h1, .register h1 {
+    color: white;
+    font-size: 2rem;
+}
+
+.login .username:before, .register .username:before {
+    content: var(--reg-log-alert);
+    position: relative;
+    color: rgba(255,0,0,0.8);
+    font-size: 0.9rem;
+    font-weight: 400;
+    text-align: center;
+}
+
+.login .username, .register .username {
+    min-height: 6.5rem;
+    display: flex;
+    flex-flow: nowrap column;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 0.5rem;
+}
+
+.login .password, .register .password {
+    min-height: 3rem;
+    display: flex;
+    flex-flow: nowrap column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 0.5rem;
+}
+
+.login h4, .register h4 {
+    color: white;
+}
+
+.login input, .register input {
+    min-height: 2rem;
+    width: 12rem;
+    margin-bottom: 1rem;
+}
+
+.loginBtn, .registerBtn {
+    height: 1.7rem;
+    min-height: 1.2rem;
+    width: 4.2rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.changeLogReg {
+    background: transparent;
+    color: white;
+    font-size: 0.7rem;
+    border: none;
+    margin-top: 0.3rem;
+    width: 4rem;
+    height: 1rem;
+}
+
+.loginBtn:hover, .registerBtn:hover {
+    opacity: 0.8;
+}
+
+.logRegPage footer {
+    grid-area: footer;
+}
+
+@media only screen and (min-width: 651px) and (max-width: 855px) {
+    .homeText > h1 {
+        transform: scale(0.70);
+    }
+}
+
+@media only screen and (min-width: 500px) and (max-width: 650px) {
+    .logReg {
+        transform: scale(0.8);
+    }
+    .homeText > h1 {
+        transform: scale(0.60);
+    }
+}
+
+@media only screen and (max-width: 499px) {
+    .logReg {
+        transform: scale(0.8);
+    }
+    .logRegPage {
+        background-color: rgba(0,0,0,0.7);
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: 15rem 1fr;
+        grid-template-rows: 3rem 1fr 2rem;
+        grid-template-areas:
+                "nav nav"
+                "friends logReg"
+                "footer footer";
+    }
+    .homeText > h1 {
+        transform: scale(0.50);
+    }
+}

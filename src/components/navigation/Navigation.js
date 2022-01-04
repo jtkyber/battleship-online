@@ -12,19 +12,17 @@ const Navigation = ({ setSearch, friendSocket, setUnsortedFriends, socket, usern
     return (
         <nav className='nav'>
             {
-            route === 'index'
-            ?
-            <>
-                <button value='goToLeaderboard' onClick={onRouteChange}>Leaderboard</button>
-                <button value='goToLogin' onClick={onRouteChange}>Log In</button>
-                <button value='goToRegister' onClick={onRouteChange}>Register</button>
-            </>
-            :
+            // route === 'index'
+            // ?
+            // <>
+            //     <button value='goToLeaderboard' onClick={onRouteChange}>Leaderboard</button>
+            // </>
+            // :
             route === 'login' || route === 'register'
             ?
             <>
                 <button value='goToLeaderboard' onClick={onRouteChange}>Leaderboard</button>
-                <button value='homeNotLogged' onClick={onRouteChange}>Back</button>
+                {/* <button value='homeNotLogged' onClick={onRouteChange}>Back</button> */}
             </>
             :
             route === 'loggedIn'
@@ -48,7 +46,7 @@ const Navigation = ({ setSearch, friendSocket, setUnsortedFriends, socket, usern
                     </>
                     :
                     <>
-                        <button value='index' onClick={onRouteChange}>Back</button>
+                        <button value='goToLogin' onClick={onRouteChange}>Back</button>
                     </>
                 : //route === 'game'
                 <>

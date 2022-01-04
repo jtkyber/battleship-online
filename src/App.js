@@ -4,20 +4,19 @@ import HomeBoard from './components/homeBoard/HomeBoard';
 import FindMatch from './components/findMatch/FindMatch';
 import Friends from './components/friends/Friends';
 import FriendsHome from './components/friends/FriendsHome';
-import HomeText from './components/homeText/HomeText';
 import Login from './components/logReg/Login';
 import Register from './components/logReg/Register';
 import Leaderboard from './components/leaderboard/Leaderboard';
 import Navigation from './components/navigation/Navigation';
 import Footer from './components/footer/Footer';
 import { socket } from './socket/socketImport';
-import './homePage.css';
+import './logReg.css';
 import './homePageLogged.css';
 import './gamePage.css';
 import './leaderboard.css';
 
 function App() {
-    const [route, setRoute] = useState('index');
+    const [route, setRoute] = useState('login');
     const [user, setUser] = useState({username: '', wins: 0});
     const [currentSocket, setCurrentSocket] = useState(null);
     const [friendSocket, setFriendSocket] = useState(null);
@@ -29,21 +28,13 @@ function App() {
 
     const onRouteChange = async (e) => {
         switch(e.target.value) {
-            case 'homeNotLogged':
-                if (user.username) {
-                    await setSearch(false);
-                    await removeUserSocket(true);
-                }
-                setUser({username: '', wins: 0});
-                setRoute('index');
-                break;
             case 'logOut':
                 if (user.username) {
                     await setSearch(false);
                     await removeUserSocket(true);
                 }
                 setUser({username: '', wins: 0});
-                setRoute('index');
+                setRoute('login');
                 break;
             case 'goToRegister':
                 if (user.username) {
@@ -82,7 +73,7 @@ function App() {
                     setSearch(false);
                     removeUserSocket(true);
                 }
-                setRoute('index');
+                setRoute('login');
         }
     }
 
@@ -208,14 +199,19 @@ function App() {
     document.onkeydown = (e) => {
         const loginBtn = document.querySelector('.loginBtn');
         const registerBtn = document.querySelector('.registerBtn');
+        const logUsername = document.querySelector('.login > .username > input');
+        const registerUsername = document.querySelector('.register > .username > input');
+        const logPassword = document.querySelector('.login > .password > input');
+        const registerPassword = document.querySelector('.register > .password > input');
         const friendRequestBtn = document.querySelector('.friendRequestBtn');
 
-        if ((e.code === 'Enter') && (route === 'login')) {
+        if ((e.code === 'Enter') && (route === 'login' || route === 'register')) {
             e.preventDefault();
-            loginBtn.click();
-        } else if ((e.code === 'Enter') && (route === 'register')) {
-            e.preventDefault();
-            registerBtn.click();
+            if ((logUsername?.value?.length && logPassword?.value?.length) || (registerUsername?.value?.length && registerPassword?.value?.length)) {
+                route === 'login'
+                ? loginBtn.click()
+                : registerBtn.click()
+            }
         } else if ((e.code === 'Enter') && (route === 'loggedIn')) {
             e.preventDefault();
             friendRequestBtn.click();
@@ -223,26 +219,21 @@ function App() {
     };
 
     return (
-        route === 'index'
-        ?
-        <div className='homePage'>
-            <Navigation setUnsortedFriends={setUnsortedFriends} socket={socket} username={user.username} onRouteChange={onRouteChange} route={route} />
-            <FriendsHome onRouteChange={onRouteChange}/>
-            <HomeBoard route={route}/>
-            <HomeText />
-            <Footer />
-        </div>
-        :
         route === 'login' || route === 'register'
         ?
         <div className='logRegPage'>
             <Navigation setUnsortedFriends={setUnsortedFriends} socket={socket} username={user.username} onRouteChange={onRouteChange} route={route} />
             <FriendsHome onRouteChange={onRouteChange}/>
-            {
-            route === 'login'
-                ? <Login currentSocket={currentSocket} loadUser={loadUser} onRouteChange={onRouteChange}/>
-                : <Register currentSocket={currentSocket} loadUser={loadUser} onRouteChange={onRouteChange}/>
-            }
+            <div className='homeText'>
+                <h1>Battleship</h1>
+            </div>
+            <div className='logReg'>
+                {
+                    route === 'login'
+                    ? <Login currentSocket={currentSocket} loadUser={loadUser} onRouteChange={onRouteChange}/>
+                    : <Register currentSocket={currentSocket} loadUser={loadUser} onRouteChange={onRouteChange}/>
+                }
+            </div>
             <Footer />
         </div>
         :
