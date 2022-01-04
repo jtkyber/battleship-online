@@ -1,14 +1,14 @@
 .findMatchContainer {
     position: relative;
-    width: 7rem;
-    height: 3rem;
+    width: 8rem;
+    height: 2.5rem;
     border: 2px solid rgb(0, 255, 26);
     border-radius: 10px;
-    box-shadow: 0 0 2px 1px rgb(204, 255, 218, 0.8);
+    box-shadow: 0 0 5px 1px rgb(204, 255, 218, 0.5);
     opacity: 0.8;
     transition: all 0.2s ease-out;
-    -webkit-animation: pulseGlow 3s ease-out infinite;
-            animation: pulseGlow 3s ease-out infinite;
+    -webkit-animation: pulseGlow 2s linear infinite;
+            animation: pulseGlow 2s linear infinite;
 }
 
 .findMatch {
@@ -19,40 +19,41 @@
     border: none;
     outline: none;
     font-size: 1rem;
-    font-weight: 600;
-    box-shadow: 0 0 2px 1px rgb(204, 255, 218, 0.8) inset;
+    font-weight: 400;
+    text-transform: uppercase;
+    box-shadow: 0 0 5px 1px rgb(204, 255, 218, 0.5) inset;
     transition: all 0.2s ease-out;
-    -webkit-animation: pulseGlowInset 3s ease-out infinite;
-            animation: pulseGlowInset 3s ease-out infinite;
+    -webkit-animation: pulseGlowInset 2s linear infinite;
+            animation: pulseGlowInset 2s linear infinite;
 }
 
 @-webkit-keyframes pulseGlow {
     50% {
-        box-shadow: 0 0 15px 1px rgb(204, 255, 218, 0.8);
+        box-shadow: 0 0 12px 1px rgb(204, 255, 218, 0.8);
         border: 2px solid rgb(112, 255, 126);
     }
 }
 
 @keyframes pulseGlow {
     50% {
-        box-shadow: 0 0 15px 1px rgb(204, 255, 218, 0.8);
+        box-shadow: 0 0 12px 1px rgb(204, 255, 218, 0.8);
         border: 2px solid rgb(112, 255, 126);
     }
 }
 
 @-webkit-keyframes pulseGlowInset {
-    50% {box-shadow: 0 0 12px 1px rgb(204, 255, 218, 0.8) inset;}
+    50% {box-shadow: 0 0 10px 1px rgb(204, 255, 218, 0.8) inset;}
 }
 
 @keyframes pulseGlowInset {
-    50% {box-shadow: 0 0 12px 1px rgb(204, 255, 218, 0.8) inset;}
+    50% {box-shadow: 0 0 10px 1px rgb(204, 255, 218, 0.8) inset;}
 }
 
 .findMatchContainer:hover {
-    box-shadow: 0 0 7px 2px rgb(204, 255, 218, 0.6) !important;
+    box-shadow: 0 0 5px 1px rgb(204, 255, 218, 0.8) !important;
     transform: scale(1.03);
 }
 
 .findMatch:hover {
-    box-shadow: 0 0 7px 2px rgb(204, 255, 218, 0.6) inset !important;
+    box-shadow: 0 0 5px 1px rgb(204, 255, 218, 0.8) inset !important;
 }
