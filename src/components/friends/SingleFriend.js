@@ -50,7 +50,7 @@ const SingleFriend = ({ socket, name, status }) => {
             const response = await fetch(`https://calm-ridge-60009.herokuapp.com/findFriend?username=${friend}`)
             const user1 = await response.json();
             if (user1.socketid) {
-                socket.emit('send invite', {currentSocket: currentSocket, username: user1.username, socketid: user1.socketid});
+                socket.emit('send invite', {currentSocket: currentSocket, username: user.username, socketid: user1.socketid});
                 e.target.childNodes[0].nodeValue = "Invite sent";
                 e.target.style.opacity = '0.4';
                 e.target.style.cursor = 'default';

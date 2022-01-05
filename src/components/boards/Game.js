@@ -8,9 +8,8 @@ import Footer from '../footer/Footer';
 
 const Game = ({ socket, onRouteChange }) => {
     
-    const { friendSocket, route, opponentName, user, checkOppStatusInterval, gameRoute, playerIsReady, opponentIsReady, yourTurn } = useStoreState(state => ({
+    const { friendSocket, opponentName, user, checkOppStatusInterval, gameRoute, playerIsReady, opponentIsReady, yourTurn } = useStoreState(state => ({
         friendSocket: state.friendSocket,
-        route: state.route,
         opponentName: state.opponentName,
         user: state.user,
         checkOppStatusInterval: state.checkOppStatusInterval,
@@ -20,11 +19,10 @@ const Game = ({ socket, onRouteChange }) => {
         yourTurn: state.yourTurn
     }));
 
-    const { setSearch, setCheckOppStatusInterval, setRoute, setUnsortedFriends, setGameRoute, setPlayerIsReady, setOpponentIsReady, setYourTurn } = useStoreActions(actions => ({
+    const { setSearch, setCheckOppStatusInterval, setRoute, setGameRoute, setPlayerIsReady, setOpponentIsReady, setYourTurn } = useStoreActions(actions => ({
         setSearch: actions.setSearch,
         setCheckOppStatusInterval: actions.setCheckOppStatusInterval,
         setRoute: actions.setRoute,
-        setUnsortedFriends: actions.setUnsortedFriends,
         setGameRoute: actions.setGameRoute,
         setPlayerIsReady: actions.setPlayerIsReady,
         setOpponentIsReady: actions.setOpponentIsReady,
@@ -158,8 +156,8 @@ const Game = ({ socket, onRouteChange }) => {
 
     return (
         <div className='gamePage'>
-            <Navigation setSearch={setSearch} friendSocket={friendSocket} setUnsortedFriends={setUnsortedFriends} socket={socket} username={user.username} onRouteChange={onRouteChange} route={route} />
-            <UserBoard yourTurn={yourTurn} setYourTurn={setYourTurn} gameRoute={gameRoute} socket={socket} friendSocket={friendSocket} route={route}/>
+            <Navigation socket={socket} onRouteChange={onRouteChange} />
+            <UserBoard socket={socket} />
             {
             gameRoute === 'placeShips'
             ? 
@@ -168,8 +166,8 @@ const Game = ({ socket, onRouteChange }) => {
             </div>
             : (null)
             }
-            <OpponentBoard yourTurn={yourTurn} setYourTurn={setYourTurn} gameRoute={gameRoute} socket={socket} friendSocket={friendSocket} route={route}/>
-            <ChatBox opponentName={opponentName} friendSocket={friendSocket} socket={socket} />
+            <OpponentBoard socket={socket} />
+            <ChatBox socket={socket} />
             <Footer />
         </div>
     )

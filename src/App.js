@@ -17,22 +17,24 @@ import './gamePage.css';
 import './leaderboard.css';
 
 function App() {
-    const { route, user, friendSocket, findMatchInterval, checkOppStatusInterval, search, inviteSent, inviteReceived } = useStoreState(state => ({
+    const { route, user, friendSocket, findMatchInterval, checkOppStatusInterval, search, updatLastOnlineInterval, inviteSent, inviteReceived } = useStoreState(state => ({
         route: state.route,
         user: state.user,
         friendSocket: state.friendSocket,
         findMatchInterval: state.findMatchInterval,
         checkOppStatusInterval: state.checkOppStatusInterval,
         search: state.search,
+        updatLastOnlineInterval: state.updatLastOnlineInterval,
         inviteSent: state.inviteSent,
         inviteReceived: state.inviteReceived
     }));
 
-    const { setRoute, setUser, setCurrentSocket, setSearch, setInviteSent, setInviteReceived } = useStoreActions(actions => ({
+    const { setRoute, setUser, setCurrentSocket, setSearch, setUpdatLastOnlineInterval, setInviteSent, setInviteReceived } = useStoreActions(actions => ({
         setRoute: actions.setRoute,
         setUser: actions.setUser,
         setCurrentSocket: actions.setCurrentSocket,
         setSearch: actions.setSearch,
+        setUpdatLastOnlineInterval: actions.setUpdatLastOnlineInterval,
         setInviteSent: actions.setInviteSent,
         setInviteReceived: actions.setInviteReceived
     }));
@@ -106,6 +108,7 @@ function App() {
 
     const updateLastOnline = async () => {
         try {
+            console.log('test')
             const response = await fetch(`https://calm-ridge-60009.herokuapp.com/updateOnlineStatus`, {
                 method: 'put',
                 headers: {'Content-Type': 'application/json'},
@@ -132,15 +135,15 @@ function App() {
     }, [])
 
     useEffect(() => {
-        let myInterval;
         if (user.username.length) {
-            myInterval = setInterval(updateLastOnline, 1000);
+            stopSearching();
+            setUpdatLastOnlineInterval(setInterval(updateLastOnline, 1000));
         } else {
-            clearInterval(myInterval);
+            clearInterval(updatLastOnlineInterval);
         }
 
         return () => {
-            clearInterval(myInterval);
+            clearInterval(updatLastOnlineInterval);
         }
     }, [user])
 

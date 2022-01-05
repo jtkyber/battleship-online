@@ -25,6 +25,7 @@ const model = {
     unsortedFriends: [],
     findMatchInterval: 0,
     checkOppStatusInterval: 0,
+    updatLastOnlineInterval: 0,
     search: false,
     friendRequests: [],
     userName: '',
@@ -74,6 +75,10 @@ const model = {
 
     setCheckOppStatusInterval: action((state, input) => {
         state.checkOppStatusInterval = input;
+    }),
+
+    setUpdatLastOnlineInterval: action((state, input) => {
+        state.updatLastOnlineInterval = input;
     }),
 
     setSearch: action((state, input) => {
