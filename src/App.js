@@ -29,38 +29,30 @@ function App() {
         inviteReceived: state.inviteReceived
     }));
 
-    const { setRoute, setUser, setCurrentSocket, setSearch, setUpdatLastOnlineInterval, setInviteSent, setInviteReceived } = useStoreActions(actions => ({
+    const { setRoute, setUser, setCurrentSocket, setSearch, setUpdatLastOnlineInterval, setAllFriends, setInviteSent, setInviteReceived } = useStoreActions(actions => ({
         setRoute: actions.setRoute,
         setUser: actions.setUser,
         setCurrentSocket: actions.setCurrentSocket,
         setSearch: actions.setSearch,
         setUpdatLastOnlineInterval: actions.setUpdatLastOnlineInterval,
         setInviteSent: actions.setInviteSent,
-        setInviteReceived: actions.setInviteReceived
+        setInviteReceived: actions.setInviteReceived,
+        setAllFriends: actions.setAllFriends
     }));
 
     const onRouteChange = async (e) => {
         switch(e.target.value) {
             case 'logOut':
-                if (user.username) {
-                    await setSearch(false);
-                    await removeUserSocket(true);
+                if (user?.username) {
+                    setSearch(false);
+                    removeUserSocket(true);
                 }
-                setUser({username: '', wins: 0});
                 setRoute('login');
                 break;
             case 'goToRegister':
-                if (user.username) {
-                    await removeUserSocket(true);
-                }
-                setUser({username: '', wins: 0});
                 setRoute('register');
                 break;
             case 'goToLogin':
-                if (user.username) {
-                    await removeUserSocket(true);
-                }
-                setUser({username: '', wins: 0});
                 setRoute('login');
                 break;
             case 'goHome':
@@ -76,13 +68,13 @@ function App() {
                 setRoute('loggedIn');
                 break;
             case 'game':
-                if (user.username) {
+                if (user?.username) {
                     setSearch(false);
                 }
                 setRoute('game');
                 break;
             default:
-                if (user.username) {
+                if (user?.username) {
                     setSearch(false);
                     removeUserSocket(true);
                 }
@@ -96,7 +88,7 @@ function App() {
                method: 'put',
                headers: {'Content-Type': 'application/json'},
                body: JSON.stringify({
-                   username: user.username,
+                   username: user?.username,
                    search: false
                })
            })
@@ -108,12 +100,11 @@ function App() {
 
     const updateLastOnline = async () => {
         try {
-            console.log('test')
             const response = await fetch(`https://calm-ridge-60009.herokuapp.com/updateOnlineStatus`, {
                 method: 'put',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
-                    username: user.username
+                    username: user?.username
                 })
             })
             if (!response.ok) {
@@ -135,7 +126,7 @@ function App() {
     }, [])
 
     useEffect(() => {
-        if (user.username.length) {
+        if (user?.username?.length) {
             stopSearching();
             setUpdatLastOnlineInterval(setInterval(updateLastOnline, 1000));
         } else {
@@ -160,6 +151,10 @@ function App() {
         } else {
             clearInterval(findMatchInterval);
         }
+
+        if ((route === 'login') || (route === 'register')) {
+            setUser(null);
+        }
     }, [route])
 
 
@@ -182,9 +177,9 @@ function App() {
         }
     }
 
-    const loadUser = (user) => {
-        setUser({ username: user.username, wins: user.wins })
-    }
+    // const loadUser = (user) => {
+    //     setUser({ username: user.username, wins: user.wins })
+    // }
 
     const removeUserSocket = async (show) => {
         const res = await fetch('https://calm-ridge-60009.herokuapp.com/removeUserSocket', {
@@ -244,8 +239,8 @@ function App() {
             <div className='logReg'>
                 {
                     route === 'login'
-                    ? <Login loadUser={loadUser} onRouteChange={onRouteChange}/>
-                    : <Register loadUser={loadUser} onRouteChange={onRouteChange}/>
+                    ? <Login onRouteChange={onRouteChange}/>
+                    : <Register onRouteChange={onRouteChange}/>
                 }
             </div>
             <Footer />

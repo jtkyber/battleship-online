@@ -15,10 +15,7 @@ const model = {
     ),
 
     route: 'login',
-    user: {
-        username: '',
-        wins: 0
-    },
+    user: null,
     currentSocket: null,
     friendSocket: null,
     opponentName: '',

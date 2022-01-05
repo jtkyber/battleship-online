@@ -1,6 +1,6 @@
 import { useStoreState, useStoreActions } from 'easy-peasy';
 
-const Login = ({onRouteChange, loadUser }) => {
+const Login = ({onRouteChange }) => {
     
     const { currentSocket, userName, password } = useStoreState(state => ({
         currentSocket: state.currentSocket,
@@ -8,9 +8,10 @@ const Login = ({onRouteChange, loadUser }) => {
         password: state.password
     }));
 
-    const { setUserName, setPassword } = useStoreActions(actions => ({
+    const { setUserName, setPassword, setUser } = useStoreActions(actions => ({
         setUserName: actions.setUserName,
-        setPassword: actions.setPassword
+        setPassword: actions.setPassword,
+        setUser: actions.setUser
     }));
     
     const login = document.querySelector('.login');
@@ -26,11 +27,11 @@ const Login = ({onRouteChange, loadUser }) => {
                 socketid: currentSocket
               })
             })
-            const user = await res.json();
-            if (user.username) {
-                loadUser(user);
+            const user1 = await res.json();
+            if (user1.username) {
+                setUser(user1);
                 onRouteChange(e);
-            } else if (user === 'no socketid') {
+            } else if (user1 === 'no socketid') {
                 login.style.setProperty("--reg-log-alert", '"Server error. Please try again"');
             } else if (login !== null) {
                 login.style.setProperty("--reg-log-alert", '"The username or password you entered is incorrect"');

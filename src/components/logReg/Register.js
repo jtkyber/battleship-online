@@ -1,6 +1,6 @@
 import { useStoreState, useStoreActions } from 'easy-peasy';
 
-const Register = ({ onRouteChange, loadUser }) => {
+const Register = ({ onRouteChange }) => {
 
     const { currentSocket, userName, password } = useStoreState(state => ({
         currentSocket: state.currentSocket,
@@ -8,9 +8,10 @@ const Register = ({ onRouteChange, loadUser }) => {
         password: state.password
     }));
 
-    const { setUserName, setPassword } = useStoreActions(actions => ({
+    const { setUserName, setPassword, setUser } = useStoreActions(actions => ({
         setUserName: actions.setUserName,
-        setPassword: actions.setPassword
+        setPassword: actions.setPassword,
+        setUser: actions.setUser
     }));
 
     const register = document.querySelector('.register');
@@ -33,16 +34,15 @@ const Register = ({ onRouteChange, loadUser }) => {
               })
             })
             .then(response => response.json())
-            .then(user => {
-              if (user.username) {
-                loadUser(user);
+            .then(user1 => {
+              if (user1.username) {
+                setUser(user1);
                 onRouteChange(e);
-              } else if (user === 'no socketid') {
+              } else if (user1 === 'no socketid') {
                 register.style.setProperty("--reg-log-alert", '"Server error. Please try again"');
                 }
-                else if (!user.ok) {
+                else if (!user1.ok) {
                     register.style.setProperty("--reg-log-alert", '"Username has already been taken"');
-                    console.log(user);
               }
             })
         }

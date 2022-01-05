@@ -99,6 +99,7 @@ const Friends = ({ socket, showOnlineStatusToFriends }) => {
                 getOnlineFriends();
             } else {
                 setAllFriends([]);
+                setUnsortedFriends([]);
             }
         } catch(err) {
             console.log(err);
