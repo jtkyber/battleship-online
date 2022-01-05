@@ -1,8 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { useStoreState, useStoreActions } from 'easy-peasy';
 import './findMatch.css';
 
-const FindMatch = ({ currentSocket, setSearch, search, findMatchInterval, setFindMatchInterval, socket, setOpponentName, username, setFriendSocket, setRoute }) => {
+const FindMatch = ({ socket }) => {
     
+    const { currentSocket, search, findMatchInterval, user } = useStoreState(state => ({
+        currentSocket: state.currentSocket,
+        search: state.search,
+        findMatchInterval: state.search,
+        user: state.user
+    }));
+
+    const { setSearch, setFindMatchInterval, setOpponentName, setFriendSocket, setRoute } = useStoreActions(actions => ({
+        setSearch: actions.setSearch,
+        setFindMatchInterval: actions.setFindMatchInterval,
+        setOpponentName: actions.setOpponentName,
+        setFriendSocket: actions.setFriendSocket,
+        setRoute: actions.setRoute
+    }));
 
     useEffect(() => {
         socket.on('receive go to game', data => {
@@ -29,7 +44,7 @@ const FindMatch = ({ currentSocket, setSearch, search, findMatchInterval, setFin
                 method: 'put',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
-                    username: username,
+                    username: user.username,
                     search: false
                 })
             })
@@ -45,7 +60,7 @@ const FindMatch = ({ currentSocket, setSearch, search, findMatchInterval, setFin
                 method: 'put',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
-                    username: username,
+                    username: user.username,
                     search: !search
                 })
             })
@@ -61,14 +76,14 @@ const FindMatch = ({ currentSocket, setSearch, search, findMatchInterval, setFin
 
     const searchForMatch = async () => {
         try {
-            const response = await fetch(`https://calm-ridge-60009.herokuapp.com/findMatch?username=${username}`)
+            const response = await fetch(`https://calm-ridge-60009.herokuapp.com/findMatch?username=${user.username}`)
             if (!response.ok) {throw new Error('Could not find match')}
             const match = await response.json();
             if (match) {
                 await setFriendSocket(match.socketid);
                 await setOpponentName(match.username);
                 await stopSearching();
-                await socket.emit('send go to game',  {receiverSocket: match.socketid, senderSocket: currentSocket, senderName: username});
+                await socket.emit('send go to game',  {receiverSocket: match.socketid, senderSocket: currentSocket, senderName: user.username});
                 await setSearch(false);
                 setRoute('game');
             }

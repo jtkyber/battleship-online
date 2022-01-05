@@ -1,9 +1,22 @@
 import React, { useEffect } from 'react';
+import { useStoreState, useStoreActions } from 'easy-peasy';
 import Board from './Board';
 import './board.css';
 
-const OpponentBoard = ({ yourTurn, setYourTurn, gameRoute, socket, friendSocket, route }) => {
-    // const [squareClicked, setSquareClicked] = useState('');
+const OpponentBoard = ({ socket }) => {
+
+    const { gameRoute, friendSocket, route, yourTurn } = useStoreState(state => ({
+        gameRoute: state.gameRoute,
+        friendSocket: state.friendSocket,
+        route: state.route,
+        yourTurn: state.yourTurn
+    }));
+
+    const { setYourTurn } = useStoreActions(actions => ({
+        setYourTurn: actions.setYourTurn
+    }));
+    
+    
     const hitSquares = [];
     const countHitsOnShip = (ship) => {
         let count = 0;

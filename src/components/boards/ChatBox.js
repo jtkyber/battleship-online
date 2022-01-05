@@ -1,7 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { useStoreState, useStoreActions } from 'easy-peasy';
 
-const ChatBox = ({ opponentName, friendSocket, socket }) => {
-    const [chatText, setChatText] = useState('');
+const ChatBox = ({ socket }) => {
+
+    const { friendSocket, opponentName, chatText } = useStoreState(state => ({
+        friendSocket: state.friendSocket,
+        opponentName: state.opponentName,
+        chatText: state.chatText
+    }));
+
+    const { setChatText } = useStoreActions(actions => ({
+        setChatText: actions.setChatText
+    }));
 
     const chatBox = document.querySelector('.chatBox');
 

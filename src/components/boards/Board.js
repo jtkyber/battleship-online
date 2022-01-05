@@ -1,7 +1,15 @@
 import React from 'react';
+import { useStoreState } from 'easy-peasy';
+
 import './board.css';
 
-const AssembleBoard = ({gameRoute, route, onSquareClicked}) => {
+const AssembleBoard = ({ onSquareClicked }) => {
+
+    const { gameRoute } = useStoreState(state => ({
+        gameRoute: state.gameRoute,
+        route: state.route
+    }));
+
     const allSquares = [];
     for (let i = 1; i < 11; i++) {
         for (let j = 0; j < 10; j++) {

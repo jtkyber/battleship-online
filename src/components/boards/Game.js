@@ -1,15 +1,36 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { useStoreState, useStoreActions } from 'easy-peasy';
 import UserBoard from './UserBoard';
 import OpponentBoard from './OpponentBoard';
 import Navigation from '../navigation/Navigation';
 import ChatBox from './ChatBox';
 import Footer from '../footer/Footer';
 
-const Game = ({ setSearch, checkOppStatusInterval, setCheckOppStatusInterval, opponentName, setRoute, setUnsortedFriends, socket, username, onRouteChange, route, friendSocket }) => {
-    const [gameRoute, setGameRoute] = useState('placeShips');
-    const [playerIsReady, setPlayerIsReady] = useState(false);
-    const [opponentIsReady, setOpponentIsReady] = useState(false);
-    const [yourTurn, setYourTurn] = useState(false);
+const Game = ({ socket, onRouteChange }) => {
+    
+    const { friendSocket, route, opponentName, user, checkOppStatusInterval, gameRoute, playerIsReady, opponentIsReady, yourTurn } = useStoreState(state => ({
+        friendSocket: state.friendSocket,
+        route: state.route,
+        opponentName: state.opponentName,
+        user: state.user,
+        checkOppStatusInterval: state.checkOppStatusInterval,
+        gameRoute: state.gameRoute,
+        playerIsReady: state.playerIsReady,
+        opponentIsReady: state.opponentIsReady,
+        yourTurn: state.yourTurn
+    }));
+
+    const { setSearch, setCheckOppStatusInterval, setRoute, setUnsortedFriends, setGameRoute, setPlayerIsReady, setOpponentIsReady, setYourTurn } = useStoreActions(actions => ({
+        setSearch: actions.setSearch,
+        setCheckOppStatusInterval: actions.setCheckOppStatusInterval,
+        setRoute: actions.setRoute,
+        setUnsortedFriends: actions.setUnsortedFriends,
+        setGameRoute: actions.setGameRoute,
+        setPlayerIsReady: actions.setPlayerIsReady,
+        setOpponentIsReady: actions.setOpponentIsReady,
+        setYourTurn: actions.setYourTurn
+    }));
+    
     const instructions = 'Place your ships!';
 
     useEffect(() => {
@@ -75,7 +96,7 @@ const Game = ({ setSearch, checkOppStatusInterval, setCheckOppStatusInterval, op
     const checkIfOpponentIsOnline = async () => {
         try {
             let friendIsOnline = false;
-            const response = await fetch(`https://calm-ridge-60009.herokuapp.com/getFriendsOnline?username=${username}`)
+            const response = await fetch(`https://calm-ridge-60009.herokuapp.com/getFriendsOnline?username=${user.username}`)
             if (!response.ok) {
                 throw new Error('Error')
             }
@@ -100,7 +121,7 @@ const Game = ({ setSearch, checkOppStatusInterval, setCheckOppStatusInterval, op
                 method: 'put',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
-                    username: username
+                    username: user.username
                 })
             })
             const winsUpdated = await res.json();
@@ -137,7 +158,7 @@ const Game = ({ setSearch, checkOppStatusInterval, setCheckOppStatusInterval, op
 
     return (
         <div className='gamePage'>
-            <Navigation setSearch={setSearch} friendSocket={friendSocket} setUnsortedFriends={setUnsortedFriends} socket={socket} username={username} onRouteChange={onRouteChange} route={route} />
+            <Navigation setSearch={setSearch} friendSocket={friendSocket} setUnsortedFriends={setUnsortedFriends} socket={socket} username={user.username} onRouteChange={onRouteChange} route={route} />
             <UserBoard yourTurn={yourTurn} setYourTurn={setYourTurn} gameRoute={gameRoute} socket={socket} friendSocket={friendSocket} route={route}/>
             {
             gameRoute === 'placeShips'

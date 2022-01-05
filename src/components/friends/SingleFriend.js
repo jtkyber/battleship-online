@@ -1,7 +1,21 @@
 import React, { useEffect } from 'react';
+import { useStoreState, useStoreActions } from 'easy-peasy';
 import './singleFriend.css';
 
-const SingleFriend = ({ friendSocket, setOpponentName, socket, route, setFriendSocket, currentSocket, username, name, status, setRoute }) => {
+const SingleFriend = ({ socket, name, status }) => {
+
+    const { friendSocket, route, currentSocket, user } = useStoreState(state => ({
+        friendSocket: state.friendSocket,
+        route: state.route,
+        currentSocket: state.currentSocket,
+        user: state.user
+    }));
+
+    const { setOpponentName, setFriendSocket, setRoute } = useStoreActions(actions => ({
+        setOpponentName: actions.setOpponentName,
+        setFriendSocket: actions.setFriendSocket,
+        setRoute: actions.setRoute
+    }));    
 
     useEffect(() => {
         socket.on('receive go to game', data => {
@@ -34,9 +48,9 @@ const SingleFriend = ({ friendSocket, setOpponentName, socket, route, setFriendS
         const friend = e.target.id;
         try {
             const response = await fetch(`https://calm-ridge-60009.herokuapp.com/findFriend?username=${friend}`)
-            const user = await response.json();
-            if (user.socketid) {
-                socket.emit('send invite', {currentSocket: currentSocket, username: username, socketid: user.socketid});
+            const user1 = await response.json();
+            if (user1.socketid) {
+                socket.emit('send invite', {currentSocket: currentSocket, username: user1.username, socketid: user1.socketid});
                 e.target.childNodes[0].nodeValue = "Invite sent";
                 e.target.style.opacity = '0.4';
                 e.target.style.cursor = 'default';
@@ -48,7 +62,7 @@ const SingleFriend = ({ friendSocket, setOpponentName, socket, route, setFriendS
     }
 
     const acceptInvite = (e) => {
-        socket.emit('send go to game',  {receiverSocket: friendSocket, senderSocket: currentSocket, senderName: username});
+        socket.emit('send go to game',  {receiverSocket: friendSocket, senderSocket: currentSocket, senderName: user.username});
         setOpponentName(e.target.id);
         setRoute('game');
     }

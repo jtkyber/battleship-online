@@ -1,9 +1,14 @@
-// import react from 'react';
+import { useStoreState } from 'easy-peasy';
 import $ from 'jquery';
 import './ships.css';
 import '../boards/board.css';
 
-const Ships = ({gameRoute, route}) => {
+const Ships = () => {
+
+    const { gameRoute } = useStoreState(state => ({
+        gameRoute: state.gameRoute
+    }));
+
     let rotating = false;
     let orientation = 'hor';
     let selectedShip = '';

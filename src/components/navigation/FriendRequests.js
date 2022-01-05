@@ -1,10 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { useStoreState, useStoreActions } from 'easy-peasy';
 import './navigation.css';
 import msgIcon from './msg-icon.png';
 import { Dropdown } from 'react-bootstrap';
 
-const FriendRequests = ({ setUnsortedFriends, socket, username }) => {
-    const [friendRequests, setFriendRequests] = useState([]);
+const FriendRequests = ({ socket }) => {
+
+    const { user, friendRequests } = useStoreState(state => ({
+        user: state.user,
+        friendRequests: state.friendRequests
+    }));
+
+    const { setUnsortedFriends, setFriendRequests } = useStoreActions(actions => ({
+        setUnsortedFriends: actions.setUnsortedFriends,
+        setFriendRequests: actions.setFriendRequests
+    }));
 
     useEffect(() => {
         updateRequests();
@@ -21,7 +31,7 @@ const FriendRequests = ({ setUnsortedFriends, socket, username }) => {
     const updateRequests = async () => {
         const navBar = document.querySelector('nav');
         try {
-            const res = await fetch(`https://calm-ridge-60009.herokuapp.com/getFriendRequests?username=${username}`);
+            const res = await fetch(`https://calm-ridge-60009.herokuapp.com/getFriendRequests?username=${user.username}`);
             if (!res.ok) {
                 throw new Error('Could not get friend requests')
             }
@@ -41,7 +51,7 @@ const FriendRequests = ({ setUnsortedFriends, socket, username }) => {
     const removeRequest = async (friend) => {
         let newRequestList = '';
         try {
-            const res = await fetch(`https://calm-ridge-60009.herokuapp.com/getFriendRequests?username=${username}`);
+            const res = await fetch(`https://calm-ridge-60009.herokuapp.com/getFriendRequests?username=${user.username}`);
             if (!res.ok) {
                 throw new Error('Could not get friend requests')
             }
@@ -64,7 +74,7 @@ const FriendRequests = ({ setUnsortedFriends, socket, username }) => {
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({
                         requestlist: newRequestList,
-                        username: username
+                        username: user.username
                     })
             });
             if (!res2.ok) {
@@ -98,19 +108,19 @@ const FriendRequests = ({ setUnsortedFriends, socket, username }) => {
             if (!res.ok) {
                 throw new Error('User does not exist')
             }
-            const user = await res.json();
-            if (user.username === username) {
+            const user1 = await res.json();
+            if (user.username === user.username) {
                 throw new Error('Cannot add self as friend')
-            } else if (user.username) {
+            } else if (user1.username) {
                 let friendlistOfFriendsArray = [];
-                friendSocketId = user.socketid;
-                if (user.friends !== null && user.friends !== '') {
-                    friendlistOfFriendsArray = user.friends.split(',');
-                    if (friendlistOfFriendsArray.includes(username)) {
+                friendSocketId = user1.socketid;
+                if (user1.friends !== null && user1.friends !== '') {
+                    friendlistOfFriendsArray = user1.friends.split(',');
+                    if (friendlistOfFriendsArray.includes(user.username)) {
                         throw new Error('You are already a friend of the user');
                     }
                 }
-                friendlistOfFriendsArray.push(username);
+                friendlistOfFriendsArray.push(user.username);
                 if (friendlistOfFriendsArray.length > 1) {
                     friendlistOfFriends = friendlistOfFriendsArray.join(',');
                 } else {
@@ -120,7 +130,7 @@ const FriendRequests = ({ setUnsortedFriends, socket, username }) => {
                 // If friend exists, grab the user's friend list string
                 // Make a temporary string and array with the new friend
     //-----------------------------------------------------------------------------------
-                const res2 = await fetch(`https://calm-ridge-60009.herokuapp.com/getFriends?username=${username}`)
+                const res2 = await fetch(`https://calm-ridge-60009.herokuapp.com/getFriends?username=${user.username}`)
                 if (!res2.ok) {throw new Error('Problem accessing friends list')}
                 const friends = await res2.json();
                 if (friends.length) {
@@ -141,7 +151,7 @@ const FriendRequests = ({ setUnsortedFriends, socket, username }) => {
                     method: 'put',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({
-                        username: username,
+                        username: user.username,
                         friendlist: friendList
                     })
                 })
@@ -153,11 +163,11 @@ const FriendRequests = ({ setUnsortedFriends, socket, username }) => {
                         try {
                             const response = await fetch(`https://calm-ridge-60009.herokuapp.com/findFriend?username=${friend}`);
                             if (!response.ok) {throw new Error('User does not exist')}
-                            const user = await response.json();
-                            if (user.socketid) {
-                                allF.push({name: user.username, status: 'online'})
+                            const user1 = await response.json();
+                            if (user1.socketid) {
+                                allF.push({name: user1.username, status: 'online'})
                             } else {
-                                allF.push({name: user.username, status: 'offline'})
+                                allF.push({name: user1.username, status: 'offline'})
                             }
                         } catch(err) {
                             console.log(err);
@@ -190,8 +200,8 @@ const FriendRequests = ({ setUnsortedFriends, socket, username }) => {
             if (!res.ok) {
                 throw new Error('User does not exist')
             }
-            const user = await res.json();
-            if (user.username) {
+            const user1 = await res.json();
+            if (user1.username) {
                 removeRequest(e.target.id);
                 // socket.emit('send add friend', {socketid: user.socketid, user: username})
                 addFriend(e.target.id);

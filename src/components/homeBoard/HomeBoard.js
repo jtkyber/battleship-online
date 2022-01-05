@@ -1,8 +1,14 @@
 import React from 'react';
+import { useStoreState } from 'easy-peasy';
 import Board from '../boards/Board';
 import './homeBoard.css';
 
-const HomeBoard = ({route}) => {
+const HomeBoard = () => {
+
+    const { route } = useStoreState(state => ({
+        route: state.route
+    }));
+
     return (
         <div className='board homeBoard'>
 {/*            <div className='rows'>

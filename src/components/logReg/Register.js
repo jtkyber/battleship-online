@@ -1,8 +1,18 @@
-import React, { useState } from 'react';
+import { useStoreState, useStoreActions } from 'easy-peasy';
 
-const Register = ({onRouteChange, loadUser, currentSocket}) => {
-    const [userName, setUserName] = useState('');
-    const [password, setPassword] = useState('');
+const Register = ({ onRouteChange, loadUser }) => {
+
+    const { currentSocket, userName, password } = useStoreState(state => ({
+        currentSocket: state.currentSocket,
+        userName: state.userName,
+        password: state.password
+    }));
+
+    const { setUserName, setPassword } = useStoreActions(actions => ({
+        setUserName: actions.setUserName,
+        setPassword: actions.setPassword
+    }));
+
     const register = document.querySelector('.register');
 
     const onSubmitRegister = (e) => {

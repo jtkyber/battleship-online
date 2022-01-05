@@ -1,8 +1,18 @@
-import React, { useState } from 'react';
+import { useStoreState, useStoreActions } from 'easy-peasy';
 
-const Login = ({onRouteChange, loadUser, currentSocket}) => {
-    const [userName, setUserName] = useState('');
-    const [password, setPassword] = useState('');
+const Login = ({onRouteChange, loadUser }) => {
+    
+    const { currentSocket, userName, password } = useStoreState(state => ({
+        currentSocket: state.currentSocket,
+        userName: state.userName,
+        password: state.password
+    }));
+
+    const { setUserName, setPassword } = useStoreActions(actions => ({
+        setUserName: actions.setUserName,
+        setPassword: actions.setPassword
+    }));
+    
     const login = document.querySelector('.login');
 
     const onSubmitLogin = async (e) => {

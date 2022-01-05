@@ -1,13 +1,34 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { useStoreState, useStoreActions } from 'easy-peasy';
 import SingleFriend from './SingleFriend';
 import './friends.css';
 
-const Friends = ({ friendSocket, opponentName, setOpponentName, unsortedFriends, setUnsortedFriends, socket, route, setFriendSocket, currentSocket, username, showOnlineStatusToFriends, setRoute }) => {
-    const [allFriends, setAllFriends] = useState([]);
-    const [friendFilter, setFriendFilter] = useState('');
-    const [friendSearch, setFriendSearch] = useState('');
-    const [friendsOnline, setFriendsOnline] = useState([]);
+const Friends = ({ socket, showOnlineStatusToFriends }) => {
+    
+    const { friendSocket, opponentName, unsortedFriends, route, currentSocket, user, allFriends, friendFilter, friendSearch, friendsOnline } = useStoreState(state => ({
+        friendSocket: state.friendSocket,
+        opponentName: state.opponentName,
+        unsortedFriends: state.unsortedFriends,
+        route: state.route,
+        currentSocket: state.currentSocket,
+        user: state.user,
+        allFriends: state.allFriends,
+        friendFilter: state.friendFilter,
+        friendSearch: state.friendSearch,
+        friendsOnline: state.friendsOnline
+    }));
 
+    const { setOpponentName, setUnsortedFriends, setFriendSocket, setRoute, setAllFriends, setFriendFilter, setFriendSearch, setFriendsOnline } = useStoreActions(actions => ({
+        setOpponentName: actions.setOpponentName,
+        setUnsortedFriends: actions.setUnsortedFriends,
+        setFriendSocket: actions.setFriendSocket,
+        setRoute: actions.setRoute,
+        setAllFriends: actions.setAllFriends,
+        setFriendFilter: actions.setFriendFilter,
+        setFriendSearch: actions.setFriendSearch,
+        setFriendsOnline: actions.setFriendsOnline
+    }));
+    
     // Start fetching friends on component mount
 // -----------------------------------------------------------------------------------
     useEffect(() => {
@@ -63,7 +84,7 @@ const Friends = ({ friendSocket, opponentName, setOpponentName, unsortedFriends,
 
     const getOnlineFriends = async () => {
          try {
-            const response = await fetch(`https://calm-ridge-60009.herokuapp.com/getFriendsOnline?username=${username}`)
+            const response = await fetch(`https://calm-ridge-60009.herokuapp.com/getFriendsOnline?username=${user.username}`)
             const onlineFriends = await response.json();
             setFriendsOnline(onlineFriends);
         } catch(err) {
@@ -77,7 +98,7 @@ const Friends = ({ friendSocket, opponentName, setOpponentName, unsortedFriends,
     const fetchFriends = async () => {
 
         try {
-            const response = await fetch(`https://calm-ridge-60009.herokuapp.com/getFriends?username=${username}`)
+            const response = await fetch(`https://calm-ridge-60009.herokuapp.com/getFriends?username=${user.username}`)
             if (!response.ok) {throw new Error('Problem accessing friends list')}
             const friends = await response.json();
             if (friends.length) {
@@ -104,7 +125,7 @@ const Friends = ({ friendSocket, opponentName, setOpponentName, unsortedFriends,
         // Check to see if friend already sent user request
 //-----------------------------------------------------------------------------------
         try {
-            const res = await fetch(`https://calm-ridge-60009.herokuapp.com/getFriendRequests?username=${username}`);
+            const res = await fetch(`https://calm-ridge-60009.herokuapp.com/getFriendRequests?username=${user.username}`);
             if (!res.ok) {
                 throw new Error('Could not get friend requests')
             }
@@ -124,39 +145,39 @@ const Friends = ({ friendSocket, opponentName, setOpponentName, unsortedFriends,
                 friendAlert.style.setProperty('--add-friend-alert', '"User does not exist"');
                 throw new Error('User does not exist')
             }
-            const user = await res2.json();
-            if (user.username === username) {
+            const user1 = await res2.json();
+            if (user1.username === user.username) {
                 friendAlert.style.setProperty('--add-friend-alert', '"Cannot add yourself as a friend"');
                 throw new Error('Cannot add self as friend')
-            } else if (user.username) {
-                friendName = user.username;
-                friendSocketId = user.socketid;
+            } else if (user1.username) {
+                friendName = user1.username;
+                friendSocketId = user1.socketid;
 //-----------------------------------------------------------------------------------
                 // Add user to friend's friendrequests
 //-----------------------------------------------------------------------------------
                 let friendList = [];
-                if (user.friends !== null && user.friends !== '') {
-                    friendList = user.friends.split(',');
+                if (user1.friends !== null && user1.friends !== '') {
+                    friendList = user1.friends.split(',');
                 }
-                if (user.friendrequests !== null && user.friendrequests !== '') {
-                    friendsRequestsArray = user.friendrequests.split(',');
-                    if (friendsRequestsArray.includes(username)) {
+                if (user1.friendrequests !== null && user1.friendrequests !== '') {
+                    friendsRequestsArray = user1.friendrequests.split(',');
+                    if (friendsRequestsArray.includes(user.username)) {
                         friendAlert.style.setProperty('--add-friend-alert', '"You have already sent them a request"');
                         throw new Error('You have already sent them a request');
-                    } else if (friendList.includes(username)) {
+                    } else if (friendList.includes(user.username)) {
                         friendAlert.style.setProperty('--add-friend-alert', '"User is already your friend"');
                         throw new Error('User is already your friend');
                     } else {
-                        friendsRequestsArray.push(username);
-                        friendsRequests = user.friendrequests.concat(`,${username}`);
+                        friendsRequestsArray.push(user.username);
+                        friendsRequests = user1.friendrequests.concat(`,${user.username}`);
                     }
                 } else {
-                    if (friendList.includes(username)) {
+                    if (friendList.includes(user.username)) {
                         friendAlert.style.setProperty('--add-friend-alert', '"User is already your friend"');
                         throw new Error('User is already your friend');
                     }
-                    friendsRequests = username;
-                    friendsRequestsArray = [username];
+                    friendsRequests = user.username;
+                    friendsRequestsArray = [user.username];
                 }
             }
             friendAlert.style.setProperty('--add-friend-alert', '""');
@@ -201,7 +222,7 @@ const Friends = ({ friendSocket, opponentName, setOpponentName, unsortedFriends,
 //-----------------------------------------------------------------------------------
                         allFriends.map(f => {
                             if (f.username && f.username.toLowerCase().includes(friendFilter.toLowerCase())) {
-                                return <SingleFriend friendSocket={friendSocket} opponentName={opponentName} setOpponentName={setOpponentName} socket={socket} route={route} setFriendSocket={setFriendSocket} currentSocket={currentSocket} username={username} key={f.username} name={f.username} status={friendsOnline.includes(f) ? 'online' : 'offline'} setRoute={setRoute} />
+                                return <SingleFriend friendSocket={friendSocket} opponentName={opponentName} setOpponentName={setOpponentName} socket={socket} route={route} setFriendSocket={setFriendSocket} currentSocket={currentSocket} username={user.username} key={f.username} name={f.username} status={friendsOnline.includes(f) ? 'online' : 'offline'} setRoute={setRoute} />
                             } else return null
                         })
                     }

@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useStoreState, useStoreActions } from 'easy-peasy';
 import Board from './Board';
 import Ships from '../ships/Ships';
 // import useSound from 'use-sound';
@@ -6,7 +7,18 @@ import Ships from '../ships/Ships';
 import $ from 'jquery';
 import './board.css';
 
-const UserBoard = ({yourTurn, setYourTurn, gameRoute, socket, friendSocket, route}) => {
+const UserBoard = ({ socket }) => {
+
+    const { gameRoute, friendSocket, route } = useStoreState(state => ({
+        gameRoute: state.gameRoute,
+        friendSocket: state.friendSocket,
+        route: state.route
+    }));
+
+    const { setYourTurn } = useStoreActions(actions => ({
+        setYourTurn: actions.setYourTurn
+    }));
+
     let shipHit = '';
     // const [play] = useSound(hitMissSounds, {
     //     soundEnabled: true,

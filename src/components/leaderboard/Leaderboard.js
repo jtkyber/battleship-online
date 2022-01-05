@@ -1,8 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { useStoreState, useStoreActions } from 'easy-peasy';
+
 import Navigation from '../navigation/Navigation';
 
-const Leaderboard = ({ route, onRouteChange, setUnsortedFriends, socket, username }) => {
-    const [topFive, setTopFive] = useState([]);
+const Leaderboard = ({ onRouteChange, socket }) => {
+
+    const { route, user, topFive } = useStoreState(state => ({
+        route: state.route,
+        user: state.user,
+        topFive: state.topFive
+    }));
+
+    const { setUnsortedFriends, setTopFive } = useStoreActions(actions => ({
+        setUnsortedFriends: actions.setUnsortedFriends,
+        setTopFive: actions.setTopFive
+    }));
 
     useEffect(() => {
         getTopPlayers();
@@ -15,15 +27,15 @@ const Leaderboard = ({ route, onRouteChange, setUnsortedFriends, socket, usernam
             if (!response.ok) {
                 throw new Error('Error')
             }
-            const user = await response.json();
-            tempArr.push({name: user.username, wins: user.wins});
+            const user1 = await response.json();
+            tempArr.push({name: user1.username, wins: user1.wins});
         }
         setTopFive(tempArr);
     }
 
     return (
         <>
-            <Navigation route={route} onRouteChange={onRouteChange} setUnsortedFriends={setUnsortedFriends} socket={socket} username={username} />
+            <Navigation route={route} onRouteChange={onRouteChange} setUnsortedFriends={setUnsortedFriends} socket={socket} username={user.username} />
             {
             topFive.length
             ?

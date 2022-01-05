@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { useStoreState, useStoreActions } from 'easy-peasy';
 import Game from './components/boards/Game';
 import HomeBoard from './components/homeBoard/HomeBoard';
 import FindMatch from './components/findMatch/FindMatch';
@@ -16,15 +17,33 @@ import './gamePage.css';
 import './leaderboard.css';
 
 function App() {
-    const [route, setRoute] = useState('login');
-    const [user, setUser] = useState({username: '', wins: 0});
-    const [currentSocket, setCurrentSocket] = useState(null);
-    const [friendSocket, setFriendSocket] = useState(null);
-    const [opponentName, setOpponentName] = useState('');
-    const [unsortedFriends, setUnsortedFriends] = useState([]);
-    const [findMatchInterval, setFindMatchInterval] = useState(0);
-    const [checkOppStatusInterval, setCheckOppStatusInterval] = useState(0);
-    const [search, setSearch] = useState(false);
+    const { route, user, currentSocket, friendSocket, opponentName, unsortedFriends, findMatchInterval, checkOppStatusInterval, search, inviteSent, inviteReceived } = useStoreState(state => ({
+        route: state.route,
+        user: state.user,
+        currentSocket: state.currentSocket,
+        friendSocket: state.friendSocket,
+        opponentName: state.opponentName,
+        unsortedFriends: state.unsortedFriends,
+        findMatchInterval: state.findMatchInterval,
+        checkOppStatusInterval: state.checkOppStatusInterval,
+        search: state.search,
+        inviteSent: state.inviteSent,
+        inviteReceived: state.inviteReceived
+    }));
+
+    const { setRoute, setUser, setCurrentSocket, setFriendSocket, setOpponentName, setUnsortedFriends, setFindMatchInterval, setCheckOppStatusInterval, setSearch, setInviteSent, setInviteReceived } = useStoreActions(actions => ({
+        setRoute: actions.setRoute,
+        setUser: actions.setUser,
+        setCurrentSocket: actions.setCurrentSocket,
+        setFriendSocket: actions.setFriendSocket,
+        setOpponentName: actions.setOpponentName,
+        setUnsortedFriends: actions.setUnsortedFriends,
+        setFindMatchInterval: actions.setFindMatchInterval,
+        setCheckOppStatusInterval: actions.setCheckOppStatusInterval,
+        setSearch: actions.setSearch,
+        setInviteSent: actions.setInviteSent,
+        setInviteReceived: actions.setInviteReceived
+    }));
 
     const onRouteChange = async (e) => {
         switch(e.target.value) {
