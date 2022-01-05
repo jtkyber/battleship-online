@@ -29,15 +29,14 @@ function App() {
         inviteReceived: state.inviteReceived
     }));
 
-    const { setRoute, setUser, setCurrentSocket, setSearch, setUpdatLastOnlineInterval, setAllFriends, setInviteSent, setInviteReceived } = useStoreActions(actions => ({
+    const { setRoute, setUser, setCurrentSocket, setSearch, setUpdatLastOnlineInterval, setInviteSent, setInviteReceived } = useStoreActions(actions => ({
         setRoute: actions.setRoute,
         setUser: actions.setUser,
         setCurrentSocket: actions.setCurrentSocket,
         setSearch: actions.setSearch,
         setUpdatLastOnlineInterval: actions.setUpdatLastOnlineInterval,
         setInviteSent: actions.setInviteSent,
-        setInviteReceived: actions.setInviteReceived,
-        setAllFriends: actions.setAllFriends
+        setInviteReceived: actions.setInviteReceived
     }));
 
     const onRouteChange = async (e) => {

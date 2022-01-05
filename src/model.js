@@ -102,7 +102,7 @@ const model = {
         state.allFriends = input;
     }),
 
-    setFriendsFilter: action((state, input) => {
+    setFriendFilter: action((state, input) => {
         state.friendFilter = input;
     }),
 
