@@ -92,7 +92,7 @@
     justify-self: center;
     align-self: center;
     margin-top: var(--square-size);
-    padding-top: 1rem;
+    padding-top: 1.5rem;
 }
 
 .gamePage .chatContainer:before {
