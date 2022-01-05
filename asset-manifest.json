@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/battleship-online/static/css/main.83582c47.chunk.css",
-    "main.js": "/battleship-online/static/js/main.815836d8.chunk.js",
-    "main.js.map": "/battleship-online/static/js/main.815836d8.chunk.js.map",
+    "main.js": "/battleship-online/static/js/main.b56ce48b.chunk.js",
+    "main.js.map": "/battleship-online/static/js/main.b56ce48b.chunk.js.map",
     "runtime-main.js": "/battleship-online/static/js/runtime-main.0b62f8a5.js",
     "runtime-main.js.map": "/battleship-online/static/js/runtime-main.0b62f8a5.js.map",
     "static/js/2.e455ac6e.chunk.js": "/battleship-online/static/js/2.e455ac6e.chunk.js",
@@ -20,6 +20,6 @@
     "static/js/runtime-main.0b62f8a5.js",
     "static/js/2.e455ac6e.chunk.js",
     "static/css/main.83582c47.chunk.css",
-    "static/js/main.815836d8.chunk.js"
+    "static/js/main.b56ce48b.chunk.js"
   ]
 }
