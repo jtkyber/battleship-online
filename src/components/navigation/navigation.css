@@ -9,11 +9,11 @@ nav {
     --notification-color: transparent;
 }
 
-nav > *:hover {
+nav button {
     transition: 0.15s ease-out all;
 }
 
-nav > *:hover {
+nav button:hover{
     opacity: 0.5;
 }
 

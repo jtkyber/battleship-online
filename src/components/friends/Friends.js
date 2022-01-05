@@ -44,7 +44,7 @@ const Friends = ({ socket, showOnlineStatusToFriends }) => {
 //-----------------------------------------------------------------------------------
     useEffect(() => {
         sortFriends();
-    },[friendsOnline])
+    },[friendsOnline, unsortedFriends])
     
 //-----------------------------------------------------------------------------------
     // Sort friends. Online at top

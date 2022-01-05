@@ -93,14 +93,14 @@ const FriendRequests = ({ socket }) => {
         removeRequest(e.target.id);
     }
 
-    const opponentIsOnline = (opp) => {
-        const curTime = Date.now();
-        if ((opp.lastonline > (curTime - 5000)) && opp.socketid) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+    // const opponentIsOnline = (opp) => {
+    //     const curTime = Date.now();
+    //     if ((opp.lastonline > (curTime - 5000)) && opp.socketid) {
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
 
      const addFriend = async (friend) => {
         console.log('friend added');
@@ -123,7 +123,7 @@ const FriendRequests = ({ socket }) => {
             } else if (user1.username) {
                 let friendlistOfFriendsArray = [];
                 friendSocketId = user1.socketid;
-                if (user1.friends !== null && user1.friends !== '') {
+                if (user1?.friends?.length) {
                     friendlistOfFriendsArray = user1.friends.split(',');
                     if (friendlistOfFriendsArray.includes(user.username)) {
                         throw new Error('You are already a friend of the user');
@@ -142,8 +142,9 @@ const FriendRequests = ({ socket }) => {
                 const res2 = await fetch(`https://calm-ridge-60009.herokuapp.com/getFriends?username=${user.username}`)
                 if (!res2.ok) {throw new Error('Problem accessing friends list')}
                 const friends = await res2.json();
-                if (friends.length) {
+                if (friends?.length) {
                     friends.forEach(f => {
+                        friendArray.push(f.username);
                         if (f.username === friend) {
                             throw new Error('User already your friend');
                         }
@@ -168,16 +169,17 @@ const FriendRequests = ({ socket }) => {
                 const userAdded = await res3.json();
                 if (userAdded) {
                     const allF = [];
-                    for (let friend of friendArray) {
+                    for (let f of friendArray) {
                         try {
-                            const response = await fetch(`https://calm-ridge-60009.herokuapp.com/findFriend?username=${friend}`);
+                            const response = await fetch(`https://calm-ridge-60009.herokuapp.com/findFriend?username=${f}`);
                             if (!response.ok) {throw new Error('User does not exist')}
                             const user1 = await response.json();
-                            if (opponentIsOnline(user1)) {
-                                allF.push({name: user1.username, status: 'online'})
-                            } else {
-                                allF.push({name: user1.username, status: 'offline'})
-                            }
+                            // if (opponentIsOnline(user1)) {
+                            //     allF.push({name: user1.username, status: 'online'})
+                            // } else {
+                            //     allF.push({name: user1.username, status: 'offline'})
+                            // }
+                            allF.push(user1);
                         } catch(err) {
                             console.log(err);
                         }

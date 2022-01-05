@@ -29,7 +29,7 @@ function App() {
         inviteReceived: state.inviteReceived
     }));
 
-    const { setRoute, setUser, setCurrentSocket, setSearch, setUpdatLastOnlineInterval, setInviteSent, setInviteReceived, setAllFriends, setUnsortedFriends, setFriendsOnline } = useStoreActions(actions => ({
+    const { setRoute, setUser, setCurrentSocket, setSearch, setUpdatLastOnlineInterval, setInviteSent, setInviteReceived, setAllFriends, setUnsortedFriends, setFriendsOnline, setFriendSearch } = useStoreActions(actions => ({
         setRoute: actions.setRoute,
         setUser: actions.setUser,
         setCurrentSocket: actions.setCurrentSocket,
@@ -39,7 +39,8 @@ function App() {
         setInviteReceived: actions.setInviteReceived,
         setAllFriends: actions.setAllFriends,
         setUnsortedFriends: actions.setUnsortedFriends,
-        setFriendsOnline: actions.setFriendsOnline
+        setFriendsOnline: actions.setFriendsOnline,
+        setFriendSearch: actions.setFriendSearch
     }));
 
     const onRouteChange = async (e) => {
@@ -159,6 +160,7 @@ function App() {
             setAllFriends([]);
             setUnsortedFriends([]);
             setFriendsOnline([]);
+            setFriendSearch('');
         }
     }, [route])
 
