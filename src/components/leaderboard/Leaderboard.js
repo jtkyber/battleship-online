@@ -5,15 +5,12 @@ import Navigation from '../navigation/Navigation';
 
 const Leaderboard = ({ onRouteChange, socket }) => {
 
-    const { route, user, topFive } = useStoreState(state => ({
-        route: state.route,
-        user: state.user,
+    const { topFive } = useStoreState(state => ({
         topFive: state.topFive
     }));
 
-    const { setUnsortedFriends, setTopFive } = useStoreActions(actions => ({
-        setUnsortedFriends: actions.setUnsortedFriends,
-        setTopFive: actions.setTopFive
+    const { setTopFive } = useStoreActions(actions => ({
+        setUnsortedFriends: actions.setUnsortedFriends
     }));
 
     useEffect(() => {
@@ -35,7 +32,7 @@ const Leaderboard = ({ onRouteChange, socket }) => {
 
     return (
         <>
-            <Navigation route={route} onRouteChange={onRouteChange} setUnsortedFriends={setUnsortedFriends} socket={socket} username={user.username} />
+            <Navigation onRouteChange={onRouteChange} socket={socket} />
             {
             topFive.length
             ?

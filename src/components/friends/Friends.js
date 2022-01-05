@@ -5,12 +5,8 @@ import './friends.css';
 
 const Friends = ({ socket, showOnlineStatusToFriends }) => {
     
-    const { friendSocket, opponentName, unsortedFriends, route, currentSocket, user, allFriends, friendFilter, friendSearch, friendsOnline } = useStoreState(state => ({
-        friendSocket: state.friendSocket,
-        opponentName: state.opponentName,
+    const { unsortedFriends, user, allFriends, friendFilter, friendSearch, friendsOnline } = useStoreState(state => ({
         unsortedFriends: state.unsortedFriends,
-        route: state.route,
-        currentSocket: state.currentSocket,
         user: state.user,
         allFriends: state.allFriends,
         friendFilter: state.friendFilter,
@@ -18,11 +14,8 @@ const Friends = ({ socket, showOnlineStatusToFriends }) => {
         friendsOnline: state.friendsOnline
     }));
 
-    const { setOpponentName, setUnsortedFriends, setFriendSocket, setRoute, setAllFriends, setFriendFilter, setFriendSearch, setFriendsOnline } = useStoreActions(actions => ({
-        setOpponentName: actions.setOpponentName,
+    const { setUnsortedFriends, setAllFriends, setFriendFilter, setFriendSearch, setFriendsOnline } = useStoreActions(actions => ({
         setUnsortedFriends: actions.setUnsortedFriends,
-        setFriendSocket: actions.setFriendSocket,
-        setRoute: actions.setRoute,
         setAllFriends: actions.setAllFriends,
         setFriendFilter: actions.setFriendFilter,
         setFriendSearch: actions.setFriendSearch,
@@ -222,7 +215,7 @@ const Friends = ({ socket, showOnlineStatusToFriends }) => {
 //-----------------------------------------------------------------------------------
                         allFriends.map(f => {
                             if (f.username && f.username.toLowerCase().includes(friendFilter.toLowerCase())) {
-                                return <SingleFriend friendSocket={friendSocket} opponentName={opponentName} setOpponentName={setOpponentName} socket={socket} route={route} setFriendSocket={setFriendSocket} currentSocket={currentSocket} username={user.username} key={f.username} name={f.username} status={friendsOnline.includes(f) ? 'online' : 'offline'} setRoute={setRoute} />
+                                return <SingleFriend socket={socket} key={f.username} name={f.username} status={friendsOnline.includes(f) ? 'online' : 'offline'} />
                             } else return null
                         })
                     }

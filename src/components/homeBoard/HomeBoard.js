@@ -1,14 +1,8 @@
 import React from 'react';
-import { useStoreState } from 'easy-peasy';
 import Board from '../boards/Board';
 import './homeBoard.css';
 
 const HomeBoard = () => {
-
-    const { route } = useStoreState(state => ({
-        route: state.route
-    }));
-
     return (
         <div className='board homeBoard'>
 {/*            <div className='rows'>
@@ -39,7 +33,7 @@ const HomeBoard = () => {
 
             <div className='grid'>
                 <div className='allSqaures'>
-                    <Board route={route}/>
+                    <Board />
                 </div>
             </div>
         </div>
