@@ -29,14 +29,17 @@ function App() {
         inviteReceived: state.inviteReceived
     }));
 
-    const { setRoute, setUser, setCurrentSocket, setSearch, setUpdatLastOnlineInterval, setInviteSent, setInviteReceived } = useStoreActions(actions => ({
+    const { setRoute, setUser, setCurrentSocket, setSearch, setUpdatLastOnlineInterval, setInviteSent, setInviteReceived, setAllFriends, setUnsortedFriends, setFriendsOnline } = useStoreActions(actions => ({
         setRoute: actions.setRoute,
         setUser: actions.setUser,
         setCurrentSocket: actions.setCurrentSocket,
         setSearch: actions.setSearch,
         setUpdatLastOnlineInterval: actions.setUpdatLastOnlineInterval,
         setInviteSent: actions.setInviteSent,
-        setInviteReceived: actions.setInviteReceived
+        setInviteReceived: actions.setInviteReceived,
+        setAllFriends: actions.setAllFriends,
+        setUnsortedFriends: actions.setUnsortedFriends,
+        setFriendsOnline: actions.setFriendsOnline
     }));
 
     const onRouteChange = async (e) => {
@@ -153,6 +156,9 @@ function App() {
 
         if ((route === 'login') || (route === 'register')) {
             setUser(null);
+            setAllFriends([]);
+            setUnsortedFriends([]);
+            setFriendsOnline([]);
         }
     }, [route])
 
@@ -164,7 +170,7 @@ function App() {
                 throw new Error('Error')
             }
             const friends = await response1.json();
-            if (friends.length) {
+            if (friends?.length) {
                 for (let f of friends) {
                     if (f.socketid) {
                         socket.emit('update user status', f.socketid);

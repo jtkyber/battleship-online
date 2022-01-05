@@ -44,7 +44,7 @@ const Friends = ({ socket, showOnlineStatusToFriends }) => {
 //-----------------------------------------------------------------------------------
     useEffect(() => {
         sortFriends();
-    },[unsortedFriends, friendsOnline])
+    },[friendsOnline])
     
 //-----------------------------------------------------------------------------------
     // Sort friends. Online at top
@@ -89,17 +89,17 @@ const Friends = ({ socket, showOnlineStatusToFriends }) => {
     // Get array of friends
 // -----------------------------------------------------------------------------------
     const fetchFriends = async () => {
-
         try {
             const response = await fetch(`https://calm-ridge-60009.herokuapp.com/getFriends?username=${user.username}`)
             if (!response.ok) {throw new Error('Problem accessing friends list')}
             const friends = await response.json();
-            if (friends.length) {
-                setUnsortedFriends(friends);
+            if (user?.friends?.length && friends?.length) {
+                await setUnsortedFriends(friends);
                 getOnlineFriends();
             } else {
-                setAllFriends([]);
-                setUnsortedFriends([]);
+                await setAllFriends([]);
+                await setUnsortedFriends([]);
+                setFriendsOnline([]);
             }
         } catch(err) {
             console.log(err);

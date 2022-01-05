@@ -93,6 +93,15 @@ const FriendRequests = ({ socket }) => {
         removeRequest(e.target.id);
     }
 
+    const opponentIsOnline = (opp) => {
+        const curTime = Date.now();
+        if ((opp.lastonline > (curTime - 5000)) && opp.socketid) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
      const addFriend = async (friend) => {
         console.log('friend added');
         document.querySelector('.addFriendInput').value = '';
@@ -109,7 +118,7 @@ const FriendRequests = ({ socket }) => {
                 throw new Error('User does not exist')
             }
             const user1 = await res.json();
-            if (user.username === user.username) {
+            if (user1.username === user.username) {
                 throw new Error('Cannot add self as friend')
             } else if (user1.username) {
                 let friendlistOfFriendsArray = [];
@@ -158,13 +167,13 @@ const FriendRequests = ({ socket }) => {
                 if (!res3.ok) {throw new Error('Problem adding friend')}
                 const userAdded = await res3.json();
                 if (userAdded) {
-                    let allF = [];
+                    const allF = [];
                     for (let friend of friendArray) {
                         try {
                             const response = await fetch(`https://calm-ridge-60009.herokuapp.com/findFriend?username=${friend}`);
                             if (!response.ok) {throw new Error('User does not exist')}
                             const user1 = await response.json();
-                            if (user1.socketid) {
+                            if (opponentIsOnline(user1)) {
                                 allF.push({name: user1.username, status: 'online'})
                             } else {
                                 allF.push({name: user1.username, status: 'offline'})

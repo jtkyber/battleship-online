@@ -11,9 +11,8 @@ const Navigation = ({ socket, onRouteChange }) => {
         route: state.route
     }));
 
-    const { setSearch, setUnsortedFriends } = useStoreActions(actions => ({
-        setSearch: actions.setSearch,
-        setUnsortedFriends: actions.setUnsortedFriends
+    const { setSearch } = useStoreActions(actions => ({
+        setSearch: actions.setSearch
     }));
 
     const handleExitClick = (e) => {
@@ -34,7 +33,7 @@ const Navigation = ({ socket, onRouteChange }) => {
             route === 'loggedIn'
             ?
             <>
-                <FriendRequests setUnsortedFriends={setUnsortedFriends} socket={socket} username={user.username} />
+                <FriendRequests socket={socket} />
                 <button value='goToLeaderboard' onClick={onRouteChange}>Leaderboard</button>
                 <button value='logOut' onClick={onRouteChange}>Log Out</button>
             </>
@@ -43,10 +42,10 @@ const Navigation = ({ socket, onRouteChange }) => {
                 {
                 route === 'leaderboard'
                 ?
-                    user.username
+                    user?.username
                     ?
                     <>
-                        <FriendRequests setUnsortedFriends={setUnsortedFriends} socket={socket} username={user.username} />
+                        <FriendRequests socket={socket} />
                         <button value='goHome' onClick={onRouteChange}>Back</button>
                         <button value='logOut' onClick={onRouteChange}>Log Out</button>
                     </>
@@ -56,7 +55,7 @@ const Navigation = ({ socket, onRouteChange }) => {
                     </>
                 : //route === 'game'
                 <>
-                    <FriendRequests setUnsortedFriends={setUnsortedFriends} socket={socket} username={user.username} />
+                    <FriendRequests socket={socket} />
                     <button value='goHome' onClick={handleExitClick}>Exit</button>
                     <button value='logOut' onClick={handleExitClick}>Log Out</button>
                 </>
