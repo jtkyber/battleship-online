@@ -10,7 +10,7 @@ const Leaderboard = ({ onRouteChange, socket }) => {
     }));
 
     const { setTopFive } = useStoreActions(actions => ({
-        setUnsortedFriends: actions.setUnsortedFriends
+        setTopFive: actions.setTopFive
     }));
 
     useEffect(() => {
