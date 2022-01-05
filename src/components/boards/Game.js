@@ -4,13 +4,13 @@ import OpponentBoard from './OpponentBoard';
 import Navigation from '../navigation/Navigation';
 import ChatBox from './ChatBox';
 import Footer from '../footer/Footer';
-import ReadyButton from '../readyButton/ReadyButton';
 
 const Game = ({ setSearch, checkOppStatusInterval, setCheckOppStatusInterval, opponentName, setRoute, setUnsortedFriends, socket, username, onRouteChange, route, friendSocket }) => {
     const [gameRoute, setGameRoute] = useState('placeShips');
     const [playerIsReady, setPlayerIsReady] = useState(false);
     const [opponentIsReady, setOpponentIsReady] = useState(false);
     const [yourTurn, setYourTurn] = useState(false);
+    const instructions = 'Place your ships!';
 
     useEffect(() => {
         // const gamePage = document.querySelector('.gamePage');
@@ -43,7 +43,7 @@ const Game = ({ setSearch, checkOppStatusInterval, setCheckOppStatusInterval, op
     useEffect(() => {
         const gameInstructions = document.querySelector('.gamePage');
         if (gameRoute === 'placeShips') {
-            gameInstructions.style.setProperty('--player-turn-text', '"Place your ships!"');
+            gameInstructions.style.setProperty('--player-turn-text', `"${instructions}"`);
         } else if (yourTurn) {
             gameInstructions.style.setProperty('--player-turn-text', '"Your Turn!"');
         } else {
@@ -141,7 +141,10 @@ const Game = ({ setSearch, checkOppStatusInterval, setCheckOppStatusInterval, op
             <UserBoard yourTurn={yourTurn} setYourTurn={setYourTurn} gameRoute={gameRoute} socket={socket} friendSocket={friendSocket} route={route}/>
             {
             gameRoute === 'placeShips'
-            ? <ReadyButton handleReadyButton={handleReadyButton} />
+            ? 
+            <div className='readyBtn'>
+                <button onClick={handleReadyButton} className='btn'>Ready</button>
+            </div>
             : (null)
             }
             <OpponentBoard yourTurn={yourTurn} setYourTurn={setYourTurn} gameRoute={gameRoute} socket={socket} friendSocket={friendSocket} route={route}/>
