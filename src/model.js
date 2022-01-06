@@ -39,6 +39,7 @@ const model = {
     chatText: '',
     inviteSent: false,
     inviteReceived: false,
+    inGame: false,
 
     //Actions
 
@@ -140,6 +141,10 @@ const model = {
 
     setInviteReceived: action((state, input) => {
         state.inviteReceived = input;
+    }),
+
+    setInGame: action((state, input) => {
+        state.inGame = input;
     }),
 }
 
