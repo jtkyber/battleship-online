@@ -28,7 +28,7 @@
     height: 100%;
     display: flex;
     flex-flow: column nowrap;
-    gap:  3rem;
+    gap:  2rem;
     justify-self: center;
     align-self: center;
     justify-content: center;
@@ -37,11 +37,16 @@
 }
 
 .matchAndBoard .homeBoard {
-    padding: 0.5rem;
+    
+}
+
+.homeBoard .singleSquare {
+    text-align: center;
+    border: 1px solid rgba(0,0,0,0.3);
 }
 
 .matchAndBoard .homeBoard .grid {
-    border: 1px solid rgba(0, 255, 72, 0.9);
+    border: 2px solid rgb(0, 0, 0);
     border-radius: 5px;
 }
 

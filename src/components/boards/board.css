@@ -3,24 +3,18 @@
     --square-size: calc(var(--board-size) / 10);
 }
 
-.userBoard {
-    width: 100%;
-    height: 100%;
-    align-content: center;
-    display: grid;
-    grid-template-columns: 3rem var(--board-size);
-    grid-template-rows: 3rem var(--board-size);
-    gap: 0;
-    grid-template-areas:
-    "rows cols"
-    "rows board";
+.board {
     padding: 0.5rem;
 }
 
-.opponentBoard {
-    width: 100%;
-    height: 100%;
+.homeBoard {
     align-content: center;
+    justify-content: center;
+    height: var(--board-size);
+    width: var(--board-size);
+}
+
+.userBoard {
     display: grid;
     grid-template-columns: 3rem var(--board-size);
     grid-template-rows: 3rem var(--board-size);
@@ -29,6 +23,19 @@
     "rows cols"
     "rows board";
     padding: 0.5rem;
+    align-content: center;
+}
+
+.opponentBoard {
+    display: grid;
+    grid-template-columns: 3rem var(--board-size);
+    grid-template-rows: 3rem var(--board-size);
+    gap: 0;
+    grid-template-areas:
+    "rows cols"
+    "rows board";
+    padding: 0.5rem;
+    align-content: center;
 }
 
 .rows {
@@ -66,9 +73,6 @@
     grid-area: board;
     background: url('./waterbg.gif');
     opacity: 0.7;
-    /* box-shadow: 20px 20px 25px 4px rgba(0, 0, 0, 0.5); */
-    border: 3px solid black;
-    border-radius: 5px;
 }
 
 .allSqaures {
@@ -91,28 +95,17 @@
     "j1 j2 j3 j4 j5 j6 j7 j8 j9 j10";
 }
 
-.homeBoard .singleSquare {
-    text-align: center;
-    border: 1px solid rgba(0,0,0,0.3);
-    /*padding-top: 0.7rem;*/
-}
-
 .userBoard .singleSquare {
-    text-align: center;
+    /* text-align: center; */
     border: 1px solid rgba(0,255,0,0.3);
-    /*padding-top: 0.7rem;*/
 }
 
 .opponentBoard .singleSquare {
-    text-align: center;
+    /* text-align: center; */
     border: 1px solid rgba(255,0,0,0.4);
-    /*padding-top: 0.7rem;*/
 }
 
 .opponentBoard .singleSquare:hover {
-    /*background-color: rgba(0, 150, 255, 0.5);*/
-    /*border: 2px dashed rgba(0, 0, 0, 0.8);*/
-    /*outline: 2px dashed rgba(0, 0, 0, 0.8);*/
     box-shadow: 0px 0px 6px 2px rgba(0, 0, 0, 0.5);
 }
 

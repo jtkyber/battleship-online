@@ -1,19 +1,20 @@
 :root {
     --battle-word-color: rgba(0,170,200,1);
     --ship-word-color: rgba(0,170,200,1);
-    --letter-size: 4vh;
-    --thickness: 600;
+    --letter-size: calc(var(--board-size) / 8);
+    --thickness: 400;
 }
 
-.homeBoard {
-    /*transition: 0.2s ease;*/
+.singleSquare {
+    position: relative;
 }
 
-/*@media only screen and (max-width: 1080px) {
-    .homeBoard {
-        transform: scale(0.8);
-    }
-}*/
+.singleSquare:before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
 
 .homeBoard .e3:before {
     content: "B";
@@ -25,7 +26,6 @@
     content: "A";
     color: var(--battle-word-color);
     font-size: var(--letter-size);
-    font-weight: var(--thickness);
     font-weight: var(--thickness);
 }
 .homeBoard .e5:before {
