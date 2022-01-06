@@ -93,15 +93,6 @@ const FriendRequests = ({ socket }) => {
         removeRequest(e.target.id);
     }
 
-    // const opponentIsOnline = (opp) => {
-    //     const curTime = Date.now();
-    //     if ((opp.lastonline > (curTime - 5000)) && opp.socketid) {
-    //         return true;
-    //     } else {
-    //         return false;
-    //     }
-    // }
-
      const addFriend = async (friend) => {
         console.log('friend added');
         document.querySelector('.addFriendInput').value = '';

@@ -3,23 +3,25 @@ import { useStoreState, useStoreActions } from 'easy-peasy';
 import SingleFriend from './SingleFriend';
 import './friends.css';
 
-const Friends = ({ socket, showOnlineStatusToFriends }) => {
+const Friends = ({ socket }) => {
     
-    const { unsortedFriends, user, allFriends, friendFilter, friendSearch, friendsOnline } = useStoreState(state => ({
+    const { unsortedFriends, user, allFriends, friendFilter, friendSearch, friendsOnline, getOnlineFriendsInterval } = useStoreState(state => ({
         unsortedFriends: state.unsortedFriends,
         user: state.user,
         allFriends: state.allFriends,
         friendFilter: state.friendFilter,
         friendSearch: state.friendSearch,
-        friendsOnline: state.friendsOnline
+        friendsOnline: state.friendsOnline,
+        getOnlineFriendsInterval: state.getOnlineFriendsInterval
     }));
 
-    const { setUnsortedFriends, setAllFriends, setFriendFilter, setFriendSearch, setFriendsOnline } = useStoreActions(actions => ({
+    const { setUnsortedFriends, setAllFriends, setFriendFilter, setFriendSearch, setFriendsOnline, setGetOnlineFriendsInterval } = useStoreActions(actions => ({
         setUnsortedFriends: actions.setUnsortedFriends,
         setAllFriends: actions.setAllFriends,
         setFriendFilter: actions.setFriendFilter,
         setFriendSearch: actions.setFriendSearch,
-        setFriendsOnline: actions.setFriendsOnline
+        setFriendsOnline: actions.setFriendsOnline,
+        setGetOnlineFriendsInterval: actions.setGetOnlineFriendsInterval
     }));
     
     // Start fetching friends on component mount
@@ -32,11 +34,11 @@ const Friends = ({ socket, showOnlineStatusToFriends }) => {
             getOnlineFriends();
         });
 
-        const timer = setInterval(getOnlineFriends, 3000);
+        setGetOnlineFriendsInterval(setInterval(getOnlineFriends, 1000));
 
         return () => {
             socket.off('update friend status');
-            clearInterval(timer);
+            clearInterval(getOnlineFriendsInterval);
         }
     }, [])
 //-----------------------------------------------------------------------------------
@@ -52,6 +54,9 @@ const Friends = ({ socket, showOnlineStatusToFriends }) => {
     const sortFriends = () => {
         const offlineFriends = [];
         const justAdded = [];
+        let onlineSorted = [];
+        let offlineSorted = [];
+
         unsortedFriends.forEach(f => {
             if (f.username === friendSearch) {
                 justAdded.push(f)
@@ -68,16 +73,26 @@ const Friends = ({ socket, showOnlineStatusToFriends }) => {
                 }
             }
         })
+
+        onlineSorted = friendsOnline.sort((a, b) => {
+            return a.username.toLowerCase() > b.username.toLowerCase() ? 1 : -1;
+        })
+
+        offlineSorted = offlineFriends.sort((a, b) => {
+            return a.username.toLowerCase() > b.username.toLowerCase() ? 1 : -1;
+        })
+        
         if (justAdded.length) {
-            setAllFriends(justAdded.concat(friendsOnline).concat(offlineFriends));
+            setAllFriends(justAdded.concat(onlineSorted).concat(offlineSorted));
         } else {
-            setAllFriends(friendsOnline.concat(offlineFriends));
+            setAllFriends(onlineSorted.concat(offlineSorted));
         }
     }
 
     const getOnlineFriends = async () => {
          try {
             const response = await fetch(`https://calm-ridge-60009.herokuapp.com/getFriendsOnline?username=${user.username}`)
+            if (!response.ok) {throw new Error('Could not get online friends')}
             const onlineFriends = await response.json();
             setFriendsOnline(onlineFriends);
         } catch(err) {
@@ -195,6 +210,15 @@ const Friends = ({ socket, showOnlineStatusToFriends }) => {
         }
     }
 
+    const friendIsOnline = (last) => {
+        const curTime = Date.now();
+        if ((last > (curTime - 5000)) && last) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     return (
         <div className='friendsContainer'>
             <div className='friendsContainerHeader'>
@@ -216,7 +240,13 @@ const Friends = ({ socket, showOnlineStatusToFriends }) => {
 //-----------------------------------------------------------------------------------
                         allFriends.map(f => {
                             if (f.username && f.username.toLowerCase().includes(friendFilter.toLowerCase())) {
-                                return <SingleFriend socket={socket} key={f.username} name={f.username} status={friendsOnline.includes(f) ? 'online' : 'offline'} />
+                                if (friendIsOnline(f.lastonline)) {
+                                    return <SingleFriend friendInGame={f.ingame} socket={socket} key={f.username} name={f.username} 
+                                    status='online' />
+                                } else {
+                                    return <SingleFriend friendInGame={f.ingame} socket={socket} key={f.username} name={f.username} 
+                                    status='offline' />
+                                }
                             } else return null
                         })
                     }

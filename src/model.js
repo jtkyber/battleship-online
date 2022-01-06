@@ -23,6 +23,7 @@ const model = {
     findMatchInterval: 0,
     checkOppStatusInterval: 0,
     updatLastOnlineInterval: 0,
+    getOnlineFriendsInterval: 0,
     search: false,
     friendRequests: [],
     userName: '',
@@ -39,7 +40,6 @@ const model = {
     chatText: '',
     inviteSent: false,
     inviteReceived: false,
-    inGame: false,
 
     //Actions
 
@@ -77,6 +77,10 @@ const model = {
 
     setUpdatLastOnlineInterval: action((state, input) => {
         state.updatLastOnlineInterval = input;
+    }),
+
+    setGetOnlineFriendsInterval: action((state, input) => {
+        state.getOnlineFriendsInterval = input;
     }),
 
     setSearch: action((state, input) => {
@@ -141,10 +145,6 @@ const model = {
 
     setInviteReceived: action((state, input) => {
         state.inviteReceived = input;
-    }),
-
-    setInGame: action((state, input) => {
-        state.inGame = input;
     }),
 }
 

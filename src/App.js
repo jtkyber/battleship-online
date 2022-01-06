@@ -17,7 +17,8 @@ import './gamePage.css';
 import './leaderboard.css';
 
 function App() {
-    const { route, user, friendSocket, findMatchInterval, checkOppStatusInterval, search, updatLastOnlineInterval, inGame, inviteSent, inviteReceived } = useStoreState(state => ({
+    const { getOnlineFriendsInterval, route, user, friendSocket, findMatchInterval, checkOppStatusInterval, search, updatLastOnlineInterval, inviteSent, inviteReceived } = useStoreState(state => ({
+        getOnlineFriendsInterval: state.getOnlineFriendsInterval,
         route: state.route,
         user: state.user,
         friendSocket: state.friendSocket,
@@ -25,12 +26,11 @@ function App() {
         checkOppStatusInterval: state.checkOppStatusInterval,
         search: state.search,
         updatLastOnlineInterval: state.updatLastOnlineInterval,
-        inGame: state.inGame,
         inviteSent: state.inviteSent,
         inviteReceived: state.inviteReceived
     }));
 
-    const { setRoute, setUser, setCurrentSocket, setSearch, setUpdatLastOnlineInterval, setInviteSent, setInviteReceived, setAllFriends, setUnsortedFriends, setFriendsOnline, setFriendSearch, setInGame } = useStoreActions(actions => ({
+    const { setRoute, setUser, setCurrentSocket, setSearch, setUpdatLastOnlineInterval, setInviteSent, setInviteReceived, setAllFriends, setUnsortedFriends, setFriendsOnline, setFriendSearch } = useStoreActions(actions => ({
         setRoute: actions.setRoute,
         setUser: actions.setUser,
         setCurrentSocket: actions.setCurrentSocket,
@@ -41,8 +41,7 @@ function App() {
         setAllFriends: actions.setAllFriends,
         setUnsortedFriends: actions.setUnsortedFriends,
         setFriendsOnline: actions.setFriendsOnline,
-        setFriendSearch: actions.setFriendSearch,
-        setInGame: actions.setInGame
+        setFriendSearch: actions.setFriendSearch
     }));
 
     const onRouteChange = async (e) => {
@@ -133,7 +132,7 @@ function App() {
     useEffect(() => {
         if (user?.username?.length) {
             stopSearching();
-            setInGame(false);
+            updateInGameStatus(false);
             setUpdatLastOnlineInterval(setInterval(updateLastOnline, 1000));
         } else {
             clearInterval(updatLastOnlineInterval);
@@ -142,7 +141,7 @@ function App() {
         return () => {
             clearInterval(updatLastOnlineInterval);
         }
-    }, [user])
+    }, [user?.username])
 
     useEffect(() => {
         if (!search && findMatchInterval > 0) {
@@ -152,15 +151,19 @@ function App() {
     }, [search])
 
     useEffect(() => {
-        if (route !== 'game') {
-            clearInterval(checkOppStatusInterval);
-        } else {
-            setInGame(true);
+        if (route === 'game') {
+            updateInGameStatus(true);
             clearInterval(findMatchInterval);
+        } else {
+            if (user?.username?.length) {
+                updateInGameStatus(false);
+            }
+            clearInterval(checkOppStatusInterval);
         }
 
         if ((route === 'login') || (route === 'register')) {
             setUser(null);
+            clearInterval(getOnlineFriendsInterval);
             setAllFriends([]);
             setUnsortedFriends([]);
             setFriendsOnline([]);
@@ -168,14 +171,24 @@ function App() {
         }
     }, [route])
 
-    useEffect(() => {
-        // if (inGame === false) {
 
-        // } else {
-
-        // }
-    }, [inGame])
-
+    const updateInGameStatus = async (inGame) => {
+        try {
+            const response = await fetch(`https://calm-ridge-60009.herokuapp.com/setInGame`, {
+                method: 'put',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    username: user?.username,
+                    isInGame: inGame
+                })
+            })
+            if (!response.ok) {
+                throw new Error('Error');
+            }
+        } catch(err) {
+            console.log(err);
+        }
+    }
 
     // const showOnlineStatusToFriends = async () => {
     //     try {
@@ -216,7 +229,10 @@ function App() {
 
     window.addEventListener('beforeunload', (e) => {
         e.preventDefault();
-        stopSearching();
+        if (user?.username) {
+            stopSearching();
+            updateInGameStatus(false);
+        }
         if (route === 'game') {
             socket.emit('send exit game', friendSocket);
         }
@@ -267,30 +283,43 @@ function App() {
         :
         <>
             {
-            route === 'loggedIn'
+            route === 'loggedIn' || route === 'leaderboard'
             ?
-            <div className='homePageLogged'>
-                <Navigation socket={socket} onRouteChange={onRouteChange} />
-                <Friends socket={socket} />
-                <div className='matchAndBoard'>
-                    <FindMatch socket={socket} />
-                    <HomeBoard />
-                </div>
-                <Footer />
-            </div>
-            :
-            <>
-                {
-                route === 'leaderboard'
+                user?.username?.length
                 ?
-                <div className='leaderboard'>
+                <>
+                    <div className={`homePageLogged ${route === 'leaderboard' ? 'hide' : null}`}>
+                        <Navigation socket={socket} onRouteChange={onRouteChange} />
+                        <Friends socket={socket} />
+                        <div className='matchAndBoard'>
+                            <FindMatch socket={socket} />
+                            <HomeBoard />
+                        </div>
+                        <Footer />
+                    </div>
+                    <div className={`leaderboard ${route === 'loggedIn' ? 'hide' : null}`}>
+                        <Leaderboard onRouteChange={onRouteChange} socket={socket} />
+                        <Footer />
+                    </div>
+                </>
+                :
+                <div className={`leaderboard`}>
                     <Leaderboard onRouteChange={onRouteChange} socket={socket} />
                     <Footer />
                 </div>
-                :
-                <Game socket={socket} onRouteChange={onRouteChange} />
-                }
-            </>
+            : <Game socket={socket} onRouteChange={onRouteChange} />
+            // <>
+            //     {
+            //     route === 'leaderboard'
+            //     ?
+            //     <div className='leaderboard'>
+            //         <Leaderboard onRouteChange={onRouteChange} socket={socket} />
+            //         <Footer />
+            //     </div>
+            //     :
+            //     <Game socket={socket} onRouteChange={onRouteChange} />
+            //     }
+            // </>
             }
         </>
     );

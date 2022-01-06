@@ -10,6 +10,10 @@
         "footer footer";
 }
 
+.homePageLogged.hide {
+    display: none;
+}
+
 .homePageLogged nav {
     grid-area: nav;
 }

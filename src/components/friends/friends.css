@@ -9,6 +9,10 @@
     --add-friend-alert: "";
 }
 
+.leaderboard > .friendsContainer {
+  display: none;
+}
+
 .friendsSection {
     height: 100vh;
     display: flex;

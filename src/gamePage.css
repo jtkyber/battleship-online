@@ -13,6 +13,10 @@
         "footer footer footer footer footer footer";
 }
 
+.gamePage.hide {
+    display: none;
+}
+
 .gamePage {
     -webkit-user-select: none;
        -moz-user-select: none;

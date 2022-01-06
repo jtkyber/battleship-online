@@ -69,12 +69,10 @@
     padding: 0.2rem 0.3rem;
     position: relative;
     background-color: transparent;
-    color: rgb(0, 255, 26);
-    border: 1px solid rgb(0, 255, 26);
     border-radius: 7px;
-    box-shadow: 0 0 1px 1px rgb(204, 255, 218, 0.6);
     opacity: 0.8;
     transition: all 0.2s ease-out;
+    letter-spacing: 0.1rem;
 }
 
 .friendText > button:after {
@@ -84,9 +82,30 @@
     left: 0;
     width: 100%;
     height: 100%;
-    box-shadow: 0 0 1px 1px rgb(204, 255, 218, 0.6) inset;
 }
 
 .friendText > button:hover {
     opacity: 0.6;
+}
+
+.friendInGameBtn {
+    color: rgba(0, 255, 26, 0.7);
+    border: none;
+    pointer-events: none;
+}
+
+.friendOnlineBtn {
+    color: rgb(0, 255, 26);
+    border: 1px solid rgb(0, 255, 26);
+    box-shadow: 0 0 1px 1px rgb(204, 255, 218, 0.6);
+}
+
+.friendOfflineBtn {
+    color: rgba(255, 0, 0, 0.9);
+    border: none;
+    pointer-events: none;
+}
+
+.friendOnlineBtn > button:after {
+    box-shadow: 0 0 1px 1px rgb(204, 255, 218, 0.6) inset;
 }

@@ -10,6 +10,10 @@
             "footer";
 }
 
+.leaderboard.hide {
+    display: none;
+}
+
 .leaderboard nav {
     grid-area: nav;
 }

@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import './singleFriend.css';
 
-const SingleFriend = ({ socket, name, status }) => {
+const SingleFriend = ({ friendInGame, socket, name, status }) => {
 
     const { friendSocket, route, currentSocket, user } = useStoreState(state => ({
         friendSocket: state.friendSocket,
@@ -31,6 +31,15 @@ const SingleFriend = ({ socket, name, status }) => {
             socket.off('receive invite');
         }
     },[])
+
+    useEffect(() => {
+        const btn = document.querySelector(`.btn${name}`);
+        if (status !== 'offline' && !friendInGame) {
+            btn.style.opacity = '0.8';
+            btn.disabled = false;
+            btn.childNodes[0].nodeValue = "Invite";
+        }
+    },[status, friendInGame])
 
     const handleInvite = (data) => {
         const btn = document.querySelector(`.btn${data.username}`);
@@ -79,7 +88,14 @@ const SingleFriend = ({ socket, name, status }) => {
         <div id={name} value={name} className='friendBlock'>
             <div className='friendText'>
                 <h3>{name}</h3>
-                <button className={'btn' + name} onClick={handleOnClick} id={name}>Invite</button>
+                {
+                    friendInGame && status === 'online'
+                    ? <button disabled className={`btn${name} friendInGameBtn`}>In Game</button>
+                    : 
+                        status === 'online'
+                        ? <button className={`btn${name} friendOnlineBtn`} onClick={handleOnClick} id={name}>Invite</button>
+                        : <button disabled className={`btn${name} friendOfflineBtn`}>Offline</button>
+                }
             </div>
             <div id={status} className={status}></div>
         </div>
