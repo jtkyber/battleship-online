@@ -71,7 +71,7 @@
     background-color: transparent;
     border-radius: 7px;
     opacity: 0.8;
-    transition: all 0.2s ease-out;
+    transition: all 0.15s ease-out;
     letter-spacing: 0.1rem;
 }
 
@@ -85,7 +85,7 @@
 }
 
 .friendText > button:hover {
-    opacity: 0.6;
+    opacity: 0.4 !important;
 }
 
 .friendInGameBtn {
