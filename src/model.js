@@ -40,6 +40,12 @@ const model = {
     chatText: '',
     inviteSent: false,
     inviteReceived: false,
+    shipIsSelected: false,
+    rotating: false,
+    orientation: 'hor',
+    selectedShip: '',
+    selectedShipName: '',
+    setManualGridLocation: false,
 
     //Actions
 
@@ -145,6 +151,30 @@ const model = {
 
     setInviteReceived: action((state, input) => {
         state.inviteReceived = input;
+    }),
+    
+    setShipIsSelected: action((state, input) => {
+        state.shipIsSelected = input;
+    }),
+
+    setRotating: action((state, input) => {
+        state.rotating = input;
+    }),
+
+    setOrientation: action((state, input) => {
+        state.orientation = input;
+    }),
+
+    setSelectedShip: action((state, input) => {
+        state.selectedShip = input;
+    }),
+
+    setSelectedShipName: action((state, input) => {
+        state.selectedShipName = input;
+    }),
+
+    setToggleManualGridLocation: action((state, input) => {
+        state.toggleManualGridLocation = input;
     }),
 }
 

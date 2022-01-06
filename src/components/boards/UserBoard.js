@@ -2,17 +2,13 @@ import React, { useEffect } from 'react';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import Board from './Board';
 import Ships from '../ships/Ships';
-// import useSound from 'use-sound';
-// import hitMissSounds from './hit-miss-sounds.mp3';
 import $ from 'jquery';
 import './board.css';
 
 const UserBoard = ({ socket }) => {
 
-    const { gameRoute, friendSocket, route } = useStoreState(state => ({
-        gameRoute: state.gameRoute,
-        friendSocket: state.friendSocket,
-        route: state.route
+    const { friendSocket } = useStoreState(state => ({
+        friendSocket: state.friendSocket
     }));
 
     const { setYourTurn } = useStoreActions(actions => ({
@@ -20,14 +16,6 @@ const UserBoard = ({ socket }) => {
     }));
 
     let shipHit = '';
-    // const [play] = useSound(hitMissSounds, {
-    //     soundEnabled: true,
-    //     volume: 0.5,
-    //     sprite: {
-    //         miss: [1, 2000],
-    //         hit: [2001, 1500]
-    //     }
-    // });
     useEffect(() => {
         socket.on('receive shot', shot => {
             const oppShot = document.getElementById(shot);
@@ -114,8 +102,8 @@ const UserBoard = ({ socket }) => {
 
             <div className='grid'>
                 <div className='allSqaures'>
-                    <Board gameRoute={gameRoute} />
-                    <Ships gameRoute={gameRoute} route={route}/>
+                    <Board />
+                    <Ships />
                 </div>
             </div>
         </div>

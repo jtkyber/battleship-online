@@ -144,7 +144,7 @@ function App() {
     }, [user?.username])
 
     useEffect(() => {
-        if (!search && findMatchInterval > 0) {
+        if (!search) {
             clearInterval(findMatchInterval);
             stopSearching();
         }
@@ -152,8 +152,10 @@ function App() {
 
     useEffect(() => {
         if (route === 'game') {
+            stopSearching();
             updateInGameStatus(true);
             clearInterval(findMatchInterval);
+            clearInterval(getOnlineFriendsInterval);
         } else {
             if (user?.username?.length) {
                 updateInGameStatus(false);

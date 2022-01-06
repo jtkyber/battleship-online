@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react';
 import { useStoreState } from 'easy-peasy';
 import $ from 'jquery';
 import './ships.css';
@@ -15,6 +16,10 @@ const Ships = () => {
     let selectedShipName = '';
     let shipIsSelected = false;
     let setManualGridLocation = false;
+
+    // useEffect(() => {
+    //     console.log('')
+    // }, [])
 
     // Decide what happens when a ship is selected to move
 
@@ -118,12 +123,12 @@ const Ships = () => {
     // Decide what happens on various key-press events
 
     document.addEventListener('keydown', (e) => {
-        if (e.keyCode === 13) {
+        if (e.code === 'Enter') {
             e.preventDefault();
         }
         // Rotate the selected ship by pressing the 'space' key
 
-        if (e.keyCode === 32 && selectedShip.style !== undefined && shipIsSelected) {
+        if (e.code === 'Space' && selectedShip.style !== undefined && shipIsSelected) {
             if (orientation === 'hor') {
                 selectedShip.style.transform = 'rotate(-90deg)';
                 orientation = 'vert';

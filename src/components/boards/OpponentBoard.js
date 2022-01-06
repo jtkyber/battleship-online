@@ -91,7 +91,7 @@ const OpponentBoard = ({ socket }) => {
 
             <div className='grid'>
                 <div className='allSqaures'>
-                    <Board gameRoute={gameRoute} route={route} onSquareClicked={onSquareClicked} />
+                    <Board onSquareClicked={onSquareClicked} />
                 </div>
             </div>
         </div>
