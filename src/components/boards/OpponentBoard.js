@@ -1,9 +1,25 @@
 import React, { useEffect } from 'react';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import Board from './Board';
+import { Howl, Howler } from 'howler';
+import hitSound from './audioclips/hit-sound.mp3';
+import missSound from './audioclips/miss-sound.mp3';
 import './board.css';
 
 const OpponentBoard = ({ socket }) => {
+
+    const audioClips = [
+        {sound: hitSound, label: 'hit'},
+        {sound: missSound, label: 'miss'}
+    ]
+
+    const soundPlay = (src) => {
+        const sound = new Howl({
+            src,
+            volume: 0.5
+        })
+        sound.play();
+    }
 
     const { gameRoute, friendSocket, route, yourTurn } = useStoreState(state => ({
         gameRoute: state.gameRoute,
@@ -14,8 +30,25 @@ const OpponentBoard = ({ socket }) => {
 
     const { setYourTurn } = useStoreActions(actions => ({
         setYourTurn: actions.setYourTurn
+        
     }));
-    
+
+    // useEffect(() => {
+    //     console.log(shotSoundEffect);
+    //     audioClips.forEach(clip => {
+    //         if (clip.label === shotSoundEffect) {
+    //             soundPlay(clip.sound);
+    //         }
+    //     })
+    // }, [yourTurn])
+
+    const playShotSound = (soundEffect) => {
+        audioClips.forEach(clip => {
+            if (clip.label === soundEffect ) {
+                soundPlay(clip.sound);
+            }
+        })
+    }
     
     const hitSquares = [];
     const countHitsOnShip = (ship) => {
@@ -33,6 +66,7 @@ const OpponentBoard = ({ socket }) => {
             const clickedSquare = document.querySelector(`.opponentBoard [id='${data.shotSquare}']`);
             if (data.result === 'hit' && clickedSquare.classList !== undefined) {
                 clickedSquare.classList.add('hit');
+                playShotSound('hit');
                 hitSquares.push(data.shipHit);
                 clickedSquare.classList.add(`_${data.shipHit}`)
                 if (countHitsOnShip(data.shipHit) === parseInt(document.querySelector(`.${data.shipHit}`).id)) {
@@ -45,6 +79,7 @@ const OpponentBoard = ({ socket }) => {
                 }
             } else if (data.result === 'miss' && clickedSquare.classList !== undefined) {
                 clickedSquare.classList.add('miss');
+                playShotSound('miss');
             }
         })
 

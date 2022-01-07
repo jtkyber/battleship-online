@@ -3,17 +3,42 @@ import { useStoreState, useStoreActions } from 'easy-peasy';
 import Board from './Board';
 import Ships from '../ships/Ships';
 import $ from 'jquery';
+import { Howl, Howler } from 'howler';
+import hitSound from './audioclips/hit-sound.mp3';
+import missSound from './audioclips/miss-sound.mp3';
 import './board.css';
 
 const UserBoard = ({ socket }) => {
 
-    const { friendSocket } = useStoreState(state => ({
-        friendSocket: state.friendSocket
+    const audioClips = [
+        {sound: hitSound, label: 'hit'},
+        {sound: missSound, label: 'miss'}
+    ]
+
+    const soundPlay = (src) => {
+        const sound = new Howl({
+            src,
+            volume: 0.5
+        })
+        sound.play();
+    }
+
+    const { friendSocket, yourTurn } = useStoreState(state => ({
+        friendSocket: state.friendSocket,
+        yourTurn: state.yourTurn
     }));
 
     const { setYourTurn } = useStoreActions(actions => ({
         setYourTurn: actions.setYourTurn
     }));
+
+    const playShotSound = (soundEffect) => {
+        audioClips.forEach(clip => {
+            if (clip.label === soundEffect) {
+                soundPlay(clip.sound);
+            }
+        })
+    }
 
     let shipHit = '';
     useEffect(() => {
@@ -47,16 +72,12 @@ const UserBoard = ({ socket }) => {
 
     const applyHitOrMiss = (oppShot) => {
         if (matchOppShotToBoard(oppShot)) {
-            // play({id: 'hit'});
-            // setTimeout(() => {
-                oppShot.classList.add('hit');
-            // }, 300)
+            oppShot.classList.add('hit');
+            playShotSound('hit');
             socket.emit('send result to opponent board', {shotSquare: oppShot.id, shot: 'hit', socketid: friendSocket, shipHit: shipHit});
         } else {
-            // play({id: 'miss'});
-            // setTimeout(() => {
-                oppShot.classList.add('miss');
-            // }, 300)
+            oppShot.classList.add('miss');
+            playShotSound('miss');
             socket.emit('send result to opponent board', {shotSquare: oppShot.id, shot: 'miss', socketid: friendSocket, shipHit: shipHit});
         }
     }
