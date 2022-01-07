@@ -132,7 +132,6 @@ function App() {
     }
 
     useEffect(() => {
-        
         socket.on('connect', () => {
             setCurrentSocket(socket.id);
         })
@@ -152,6 +151,7 @@ function App() {
             setUpdatLastOnlineInterval(setInterval(updateLastOnline, 1000));
         } else {
             clearInterval(updatLastOnlineInterval);
+            clearInterval(findMatchInterval);
         }
 
         return () => {
@@ -168,10 +168,10 @@ function App() {
 
     useEffect(() => {
         if (route === 'game') {
-            stopSearching();
-            updateInGameStatus(true);
             clearInterval(findMatchInterval);
             clearInterval(getOnlineFriendsInterval);
+            stopSearching();
+            updateInGameStatus(true);
         } else {
             if (user?.username?.length) {
                 updateInGameStatus(false);
@@ -180,7 +180,9 @@ function App() {
         }
 
         if ((route === 'login') || (route === 'register')) {
-            setUser(null);
+            if (user?.hash !== 'guest') {
+                setUser(null);
+            }
             clearInterval(getOnlineFriendsInterval);
             setAllFriends([]);
             setUnsortedFriends([]);

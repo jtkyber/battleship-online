@@ -19,8 +19,7 @@ const Game = ({ socket, onRouteChange }) => {
         yourTurn: state.yourTurn
     }));
 
-    const { setSearch, setCheckOppStatusInterval, setRoute, setGameRoute, setPlayerIsReady, setOpponentIsReady, setYourTurn } = useStoreActions(actions => ({
-        setSearch: actions.setSearch,
+    const { setCheckOppStatusInterval, setRoute, setGameRoute, setPlayerIsReady, setOpponentIsReady, setYourTurn } = useStoreActions(actions => ({
         setCheckOppStatusInterval: actions.setCheckOppStatusInterval,
         setRoute: actions.setRoute,
         setGameRoute: actions.setGameRoute,
@@ -39,14 +38,13 @@ const Game = ({ socket, onRouteChange }) => {
             addWin();
             setTimeout(() => {
                 window.alert('You Won!!!');
-                setRoute('loggedIn');
+                user.hash === 'guest' ? setRoute('login') : setRoute('loggedIn');
             }, 300);
         })
 
         socket.on('receive exit game', () => {
-            setSearch(false);
             window.alert('Opponent has left the game');
-            setRoute('loggedIn');
+            user.hash === 'guest' ? setRoute('login') : setRoute('loggedIn');
         })
 
         setCheckOppStatusInterval(setInterval(checkIfOpponentIsOnline, 3000));
@@ -85,7 +83,7 @@ const Game = ({ socket, onRouteChange }) => {
                 socket.emit('game over', friendSocket);
                 setTimeout(() => {
                     window.alert('You Lose');
-                    setRoute('loggedIn');
+                    user.hash === 'guest' ? setRoute('login') : setRoute('loggedIn');
                 }, 300);
             }
         }
@@ -100,7 +98,7 @@ const Game = ({ socket, onRouteChange }) => {
             const isOnline = await response.json();
             if (!isOnline) {
                 window.alert('Opponent has left the game');
-                setRoute('loggedIn');
+                user.hash === 'guest' ? setRoute('login') : setRoute('loggedIn');
             }
         } catch(err) {
             console.log(err);

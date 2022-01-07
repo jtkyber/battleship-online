@@ -54,11 +54,17 @@ const Navigation = ({ socket, onRouteChange }) => {
                         <button value='goToLogin' onClick={onRouteChange}>Back</button>
                     </>
                 : //route === 'game'
-                <>
-                    <FriendRequests socket={socket} />
-                    <button value='goHome' onClick={handleExitClick}>Exit</button>
-                    <button value='logOut' onClick={handleExitClick}>Log Out</button>
-                </>
+                    user.hash === 'guest'
+                    ?
+                    <>
+                        <button value='logOut' onClick={handleExitClick}>Exit</button>
+                    </>
+                    :
+                    <>
+                        <FriendRequests socket={socket} />
+                        <button value='goHome' onClick={handleExitClick}>Exit</button>
+                        <button value='logOut' onClick={handleExitClick}>Log Out</button>
+                    </>
                 }
             </>
             }

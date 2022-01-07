@@ -4,11 +4,12 @@ import './findMatch.css';
 
 const FindMatch = ({ socket }) => {
     
-    const { currentSocket, search, user, route } = useStoreState(state => ({
+    const { currentSocket, search, user, route, findMatchInterval } = useStoreState(state => ({
         currentSocket: state.currentSocket,
         search: state.search,
         user: state.user,
-        route: state.route
+        route: state.route,
+        findMatchInterval: state.findMatchInterval
     }));
 
     const { setSearch, setFindMatchInterval, setOpponentName, setFriendSocket, setRoute, setUser } = useStoreActions(actions => ({
@@ -21,6 +22,11 @@ const FindMatch = ({ socket }) => {
     }));
 
     useEffect(() => {
+        if ((route === 'login' || route === 'register')) {
+            if (user?.hash === 'guest') {
+                removeGuest();
+            }
+        }
         socket.on('receive go to game', data => {
             setOpponentName(data.senderName);
             setFriendSocket(data.senderSocket);
@@ -38,11 +44,12 @@ const FindMatch = ({ socket }) => {
         }
     }, [search])
 
-    useEffect(() => {
-        if (user?.username?.length && (route === 'login' || route === 'register')) {
-            updateSearching();
-        }
-    }, [user])
+    // useEffect(() => {
+    //     if (user?.username?.length && (route === 'login' || route === 'register')) {
+    //         console.log(user);
+    //         updateSearching();
+    //     }
+    // }, [user?.username])
 
     const stopSearching = async () => {
          try {
@@ -62,7 +69,6 @@ const FindMatch = ({ socket }) => {
 
     const updateSearching = async () => {
         try {
-            console.log(user.username);
             const response = await fetch('https://calm-ridge-60009.herokuapp.com/updateSearching', {
                 method: 'put',
                 headers: {'Content-Type': 'application/json'},
@@ -109,7 +115,7 @@ const FindMatch = ({ socket }) => {
                 })
             })
             if (!response.ok) {throw new Error('Problem removing guest')}
-            await updateSearching();
+            setSearch(false);
             setUser(null);
         } catch(err) {
             console.log(err);
@@ -127,7 +133,8 @@ const FindMatch = ({ socket }) => {
             })
             if (!response.ok) {throw new Error('Problem adding guest')}
             const data = await response.json();
-            setUser(data);
+            await setUser(data);
+            setSearch(true);
         } catch(err) {
             console.log(err);
         }
