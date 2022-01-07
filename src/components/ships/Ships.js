@@ -17,10 +17,6 @@ const Ships = () => {
     let shipIsSelected = false;
     let setManualGridLocation = false;
 
-    // useEffect(() => {
-    //     console.log('')
-    // }, [])
-
     // Decide what happens when a ship is selected to move
 
     const onShipSelect = (e) => {
