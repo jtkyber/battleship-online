@@ -3,16 +3,18 @@ import { useStoreState, useStoreActions } from 'easy-peasy';
 import Board from './Board';
 import Ships from '../ships/Ships';
 import $ from 'jquery';
-import { Howl, Howler } from 'howler';
+import { Howl } from 'howler';
 import hitSound from './audioclips/hit-sound.mp3';
 import missSound from './audioclips/miss-sound.mp3';
+import shipSunkSound from './audioclips/ship-sunk.mp3';
 import './board.css';
 
 const UserBoard = ({ socket }) => {
 
     const audioClips = [
         {sound: hitSound, label: 'hit'},
-        {sound: missSound, label: 'miss'}
+        {sound: missSound, label: 'miss'},
+        {sound: shipSunkSound, label: 'sunk'}
     ]
 
     const soundPlay = (src) => {
@@ -23,9 +25,8 @@ const UserBoard = ({ socket }) => {
         sound.play();
     }
 
-    const { friendSocket, yourTurn } = useStoreState(state => ({
-        friendSocket: state.friendSocket,
-        yourTurn: state.yourTurn
+    const { friendSocket } = useStoreState(state => ({
+        friendSocket: state.friendSocket
     }));
 
     const { setYourTurn } = useStoreActions(actions => ({

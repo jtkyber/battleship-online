@@ -1,16 +1,18 @@
 import React, { useEffect } from 'react';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import Board from './Board';
-import { Howl, Howler } from 'howler';
+import { Howl } from 'howler';
 import hitSound from './audioclips/hit-sound.mp3';
 import missSound from './audioclips/miss-sound.mp3';
+import shipSunkSound from './audioclips/ship-sunk.mp3';
 import './board.css';
 
 const OpponentBoard = ({ socket }) => {
 
     const audioClips = [
         {sound: hitSound, label: 'hit'},
-        {sound: missSound, label: 'miss'}
+        {sound: missSound, label: 'miss'},
+        {sound: shipSunkSound, label: 'sunk'}
     ]
 
     const soundPlay = (src) => {
@@ -21,10 +23,8 @@ const OpponentBoard = ({ socket }) => {
         sound.play();
     }
 
-    const { gameRoute, friendSocket, route, yourTurn } = useStoreState(state => ({
-        gameRoute: state.gameRoute,
+    const { friendSocket, yourTurn } = useStoreState(state => ({
         friendSocket: state.friendSocket,
-        route: state.route,
         yourTurn: state.yourTurn
     }));
 
@@ -32,15 +32,6 @@ const OpponentBoard = ({ socket }) => {
         setYourTurn: actions.setYourTurn
         
     }));
-
-    // useEffect(() => {
-    //     console.log(shotSoundEffect);
-    //     audioClips.forEach(clip => {
-    //         if (clip.label === shotSoundEffect) {
-    //             soundPlay(clip.sound);
-    //         }
-    //     })
-    // }, [yourTurn])
 
     const playShotSound = (soundEffect) => {
         audioClips.forEach(clip => {
