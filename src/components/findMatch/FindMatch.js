@@ -27,7 +27,6 @@ const FindMatch = ({ socket }) => {
             }
         }
         socket.on('receive go to game', data => {
-            console.log(data.senderName, user.username);
             setOpponentName(data.senderName);
             setFriendSocket(data.senderSocket);
             setRoute('game');

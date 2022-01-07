@@ -162,7 +162,9 @@ function App() {
     useEffect(() => {
         if (!search) {
             clearInterval(findMatchInterval);
-            stopSearching();
+            if (user?.username) {
+                stopSearching();
+            }
         }
     }, [search])
 
