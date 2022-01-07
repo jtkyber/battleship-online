@@ -1,25 +1,25 @@
 {
   "files": {
-    "main.css": "/battleship-online/static/css/main.76aad029.chunk.css",
-    "main.js": "/battleship-online/static/js/main.0b8d7594.chunk.js",
-    "main.js.map": "/battleship-online/static/js/main.0b8d7594.chunk.js.map",
+    "main.css": "/battleship-online/static/css/main.9b1ffb83.chunk.css",
+    "main.js": "/battleship-online/static/js/main.f03136aa.chunk.js",
+    "main.js.map": "/battleship-online/static/js/main.f03136aa.chunk.js.map",
     "runtime-main.js": "/battleship-online/static/js/runtime-main.697a73c6.js",
     "runtime-main.js.map": "/battleship-online/static/js/runtime-main.697a73c6.js.map",
-    "static/js/2.9a781a16.chunk.js": "/battleship-online/static/js/2.9a781a16.chunk.js",
-    "static/js/2.9a781a16.chunk.js.map": "/battleship-online/static/js/2.9a781a16.chunk.js.map",
+    "static/js/2.bcf1302b.chunk.js": "/battleship-online/static/js/2.bcf1302b.chunk.js",
+    "static/js/2.bcf1302b.chunk.js.map": "/battleship-online/static/js/2.bcf1302b.chunk.js.map",
     "static/js/3.2117b4e1.chunk.js": "/battleship-online/static/js/3.2117b4e1.chunk.js",
     "static/js/3.2117b4e1.chunk.js.map": "/battleship-online/static/js/3.2117b4e1.chunk.js.map",
     "index.html": "/battleship-online/index.html",
-    "static/css/main.76aad029.chunk.css.map": "/battleship-online/static/css/main.76aad029.chunk.css.map",
-    "static/js/2.9a781a16.chunk.js.LICENSE.txt": "/battleship-online/static/js/2.9a781a16.chunk.js.LICENSE.txt",
+    "static/css/main.9b1ffb83.chunk.css.map": "/battleship-online/static/css/main.9b1ffb83.chunk.css.map",
+    "static/js/2.bcf1302b.chunk.js.LICENSE.txt": "/battleship-online/static/js/2.bcf1302b.chunk.js.LICENSE.txt",
     "static/media/index.css": "/battleship-online/static/media/background.f30097d9.jpg",
     "static/media/board.css": "/battleship-online/static/media/waterbg.ade23eca.gif",
     "static/media/msg-icon.b63e7a13.png": "/battleship-online/static/media/msg-icon.b63e7a13.png"
   },
   "entrypoints": [
     "static/js/runtime-main.697a73c6.js",
-    "static/js/2.9a781a16.chunk.js",
-    "static/css/main.76aad029.chunk.css",
-    "static/js/main.0b8d7594.chunk.js"
+    "static/js/2.bcf1302b.chunk.js",
+    "static/css/main.9b1ffb83.chunk.css",
+    "static/js/main.f03136aa.chunk.js"
   ]
 }
