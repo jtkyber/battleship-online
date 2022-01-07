@@ -55,7 +55,7 @@
 
 .readyBtn {
     grid-area: readyBtn;
-    margin-left: calc(var(--square-size) / 2);
+    /* transform: translate(3rem); */
     opacity: 0.9;
     transition: all 0.2s ease-out;
     justify-self: center;

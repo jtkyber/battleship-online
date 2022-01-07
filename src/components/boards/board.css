@@ -1,40 +1,85 @@
 :root {
-    --board-size: 30vw;
-    --square-size: calc(var(--board-size) / 10);
+    --home-board-size: 40rem;
+    --game-board-size: 40rem;
+}
+
+@media only screen and (min-width: 1650px) and (max-width: 1920px) {
+    :root {
+        --game-board-size: 35rem;
+    }
+}
+
+@media only screen and (min-width: 1480px) and (max-width: 1649px) {
+    :root {
+        --game-board-size: 30rem;
+    }
+}
+
+@media only screen and (min-width: 1260px) and (max-width: 1479px) {
+    :root {
+        --game-board-size: 25rem;
+    }
+}
+
+@media only screen and (min-width: 1120px) and (max-width: 1259px) {
+    :root {
+        --home-board-size: 40rem;
+        --game-board-size: 20rem;
+    }
+}
+
+@media only screen and (min-width: 1000px) and (max-width: 1119px) {
+    :root {
+        --home-board-size: 35rem;
+        --game-board-size: 17rem;
+    }
+}
+
+@media only screen and (min-width: 750px) and (max-width: 999px) {
+    :root {
+        --home-board-size: 30rem;
+        --game-board-size: 14rem;
+    }
+}
+
+@media only screen and (min-width: 400px) and (max-width: 749px) {
+    :root {
+        --home-board-size: 25rem;
+        --game-board-size: 25rem;
+    }
 }
 
 .board {
-    padding: 0.5rem;
+    position: relative;
+    padding: 1rem;
 }
 
 .homeBoard {
     align-content: center;
     justify-content: center;
-    height: var(--board-size);
-    width: var(--board-size);
+    height: var(--home-board-size);
+    width: var(--home-board-size);
 }
 
 .userBoard {
     display: grid;
-    grid-template-columns: 3rem var(--board-size);
-    grid-template-rows: 3rem var(--board-size);
+    grid-template-columns: 2rem var(--game-board-size);
+    grid-template-rows: 2rem var(--game-board-size);
     gap: 0;
     grid-template-areas:
     "rows cols"
     "rows board";
-    padding: 0.5rem;
     align-content: center;
 }
 
 .opponentBoard {
     display: grid;
-    grid-template-columns: 3rem var(--board-size);
-    grid-template-rows: 3rem var(--board-size);
+    grid-template-columns: 2rem var(--game-board-size);
+    grid-template-rows: 2rem var(--game-board-size);
     gap: 0;
     grid-template-areas:
     "rows cols"
     "rows board";
-    padding: 0.5rem;
     align-content: center;
 }
 
@@ -79,8 +124,8 @@
     width: 100%;
     height: 100%;
     display: grid;
-    grid-template-columns: repeat(10, var(--square-size));
-    grid-template-rows: repeat(10, var(--square-size));
+    grid-template-columns: repeat(10, auto);
+    grid-template-rows: repeat(10, auto);
     gap: 0;
     grid-template-areas:
     "a1 a2 a3 a4 a5 a6 a7 a8 a9 a10"
@@ -109,10 +154,6 @@
     box-shadow: 0px 0px 6px 2px rgba(0, 0, 0, 0.5);
 }
 
-.singleSquare {
-    /* z-index: 3; */
-}
-
 .hit {
     background: url('./hit.png');
     background-size: contain;
@@ -124,21 +165,22 @@
 }
 
 .opponentBoard::before {
-    position: relative;
+    position: absolute;
     content: var(--sqaure-already-selected);
     color: rgba(255,0,0,0.9);
-    top: -10px;
-    width: 37vw;
-    /*margin-left: 4rem;*/
+    top: -0.8rem;
+    width: var(--game-board-size);
+    transform: translateX(2rem);
     text-align: center;
 }
 
 .userBoard::before {
-    position: relative;
+    position: absolute;
     content: var(--winner-text);
     color: rgba(0,255,0,0.9);
-    top: -10px;
-    width: 37vw;
+    top: -0.8rem;
+    width: var(--game-board-size);
+    transform: translateX(2rem);
     font-size: 1.4rem;
     font-weight: 600;
     text-align: center;

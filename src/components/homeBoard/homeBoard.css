@@ -1,7 +1,7 @@
 :root {
     --battle-word-color: rgba(0,170,200,1);
     --ship-word-color: rgba(0,170,200,1);
-    --letter-size: calc(var(--board-size) / 8);
+    --letter-size: calc(var(--home-board-size) / 10);
     --thickness: 400;
 }
 
@@ -14,57 +14,44 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    font-size: var(--letter-size);
+    font-weight: var(--thickness);
 }
 
 .homeBoard .e3:before {
     content: "B";
     color: var(--battle-word-color);
-    font-size: var(--letter-size);
-    font-weight: var(--thickness);
+    
 }
 .homeBoard .e4:before {
     content: "A";
     color: var(--battle-word-color);
-    font-size: var(--letter-size);
-    font-weight: var(--thickness);
 }
 .homeBoard .e5:before {
     content: "T";
     color: var(--battle-word-color);
-    font-size: var(--letter-size);
-    font-weight: var(--thickness);
 }
 .homeBoard .e6:before {
     content: "T";
     color: var(--battle-word-color);
-    font-size: var(--letter-size);
-    font-weight: var(--thickness);
 }
 .homeBoard .e7:before {
     content: "L";
     color: var(--battle-word-color);
-    font-size: var(--letter-size);
-    font-weight: var(--thickness);
 }
 .homeBoard .e8:before {
     content: "E";
     color: var(--battle-word-color);
-    font-size: var(--letter-size);
-    font-weight: var(--thickness);
 }
 
 
 .homeBoard .f4:before {
     content: "S";
     color: var(--ship-word-color);
-    font-size: var(--letter-size);
-    font-weight: var(--thickness);
 }
 .homeBoard .f5:before {
     content: "H";
     color: var(--ship-word-color);
-    font-size: var(--letter-size);
-    font-weight: var(--thickness);
 }
 .homeBoard .f6 {
     background: url('../ships/submarine-vert.png');
@@ -82,6 +69,4 @@
 .homeBoard .f7:before {
     content: "P";
     color: var(--ship-word-color);
-    font-size: var(--letter-size);
-    font-weight: var(--thickness);
 }
