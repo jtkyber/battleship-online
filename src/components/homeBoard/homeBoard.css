@@ -54,12 +54,12 @@
     color: var(--ship-word-color);
 }
 .homeBoard .f6 {
-    background: url('../ships/submarine-vert.png');
+    background: url('../ships/submarine-vert-home.svg');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    -webkit-filter: brightness(0);
-            filter: brightness(0);
+    /* -webkit-filter: brightness(0);
+            filter: brightness(0); */
 
    /* content: "I";
     color: var(--ship-word-color);
