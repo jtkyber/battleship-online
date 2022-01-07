@@ -91,7 +91,6 @@ const Friends = ({ socket }) => {
 
     const getOnlineFriends = async () => {
          try {
-            console.log('test');
             const response = await fetch(`https://calm-ridge-60009.herokuapp.com/getFriendsOnline?username=${user.username}`)
             if (!response.ok) {throw new Error('Could not get online friends')}
             const onlineFriends = await response.json();
