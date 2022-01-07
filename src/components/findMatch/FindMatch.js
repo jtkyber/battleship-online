@@ -27,6 +27,7 @@ const FindMatch = ({ socket }) => {
             }
         }
         socket.on('receive go to game', data => {
+            console.log(data.senderName, user.username);
             setOpponentName(data.senderName);
             setFriendSocket(data.senderSocket);
             setRoute('game');
@@ -91,7 +92,7 @@ const FindMatch = ({ socket }) => {
             const response = await fetch(`https://calm-ridge-60009.herokuapp.com/findMatch?username=${user.username}`)
             if (!response.ok) {throw new Error('Could not find match')}
             const match = await response.json();
-            if (match) {
+            if (match?.username) {
                 await setFriendSocket(match.socketid);
                 await setOpponentName(match.username);
                 await stopSearching();
