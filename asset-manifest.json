@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/battleship-online/static/css/main.9b1ffb83.chunk.css",
+    "main.css": "/battleship-online/static/css/main.96ba2ebe.chunk.css",
     "main.js": "/battleship-online/static/js/main.f03136aa.chunk.js",
     "main.js.map": "/battleship-online/static/js/main.f03136aa.chunk.js.map",
     "runtime-main.js": "/battleship-online/static/js/runtime-main.697a73c6.js",
@@ -10,7 +10,7 @@
     "static/js/3.2117b4e1.chunk.js": "/battleship-online/static/js/3.2117b4e1.chunk.js",
     "static/js/3.2117b4e1.chunk.js.map": "/battleship-online/static/js/3.2117b4e1.chunk.js.map",
     "index.html": "/battleship-online/index.html",
-    "static/css/main.9b1ffb83.chunk.css.map": "/battleship-online/static/css/main.9b1ffb83.chunk.css.map",
+    "static/css/main.96ba2ebe.chunk.css.map": "/battleship-online/static/css/main.96ba2ebe.chunk.css.map",
     "static/js/2.bcf1302b.chunk.js.LICENSE.txt": "/battleship-online/static/js/2.bcf1302b.chunk.js.LICENSE.txt",
     "static/media/index.css": "/battleship-online/static/media/background.f30097d9.jpg",
     "static/media/board.css": "/battleship-online/static/media/waterbg.ade23eca.gif",
@@ -19,7 +19,7 @@
   "entrypoints": [
     "static/js/runtime-main.697a73c6.js",
     "static/js/2.bcf1302b.chunk.js",
-    "static/css/main.9b1ffb83.chunk.css",
+    "static/css/main.96ba2ebe.chunk.css",
     "static/js/main.f03136aa.chunk.js"
   ]
 }
