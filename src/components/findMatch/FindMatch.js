@@ -4,19 +4,20 @@ import './findMatch.css';
 
 const FindMatch = ({ socket }) => {
     
-    const { currentSocket, search, findMatchInterval, user } = useStoreState(state => ({
+    const { currentSocket, search, user, route } = useStoreState(state => ({
         currentSocket: state.currentSocket,
         search: state.search,
-        findMatchInterval: state.search,
-        user: state.user
+        user: state.user,
+        route: state.route
     }));
 
-    const { setSearch, setFindMatchInterval, setOpponentName, setFriendSocket, setRoute } = useStoreActions(actions => ({
+    const { setSearch, setFindMatchInterval, setOpponentName, setFriendSocket, setRoute, setUser } = useStoreActions(actions => ({
         setSearch: actions.setSearch,
         setFindMatchInterval: actions.setFindMatchInterval,
         setOpponentName: actions.setOpponentName,
         setFriendSocket: actions.setFriendSocket,
-        setRoute: actions.setRoute
+        setRoute: actions.setRoute,
+        setUser: actions.setUser
     }));
 
     useEffect(() => {
@@ -37,9 +38,14 @@ const FindMatch = ({ socket }) => {
         }
     }, [search])
 
+    useEffect(() => {
+        if (user?.username?.length && (route === 'login' || route === 'register')) {
+            updateSearching();
+        }
+    }, [user])
+
     const stopSearching = async () => {
          try {
-            clearInterval(findMatchInterval);
             const response = await fetch('https://calm-ridge-60009.herokuapp.com/updateSearching', {
                 method: 'put',
                 headers: {'Content-Type': 'application/json'},
@@ -56,6 +62,7 @@ const FindMatch = ({ socket }) => {
 
     const updateSearching = async () => {
         try {
+            console.log(user.username);
             const response = await fetch('https://calm-ridge-60009.herokuapp.com/updateSearching', {
                 method: 'put',
                 headers: {'Content-Type': 'application/json'},
@@ -92,9 +99,47 @@ const FindMatch = ({ socket }) => {
         }
     }
 
+    const removeGuest = async () => {
+        try {
+            const response = await fetch('https://calm-ridge-60009.herokuapp.com/removeGuestUser', {
+                method: 'delete',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    username: user?.username
+                })
+            })
+            if (!response.ok) {throw new Error('Problem removing guest')}
+            await updateSearching();
+            setUser(null);
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
+    const addGuest = async () => {
+        try {
+            const response = await fetch('https://calm-ridge-60009.herokuapp.com/addGuestUser', {
+                method: 'post',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    socketid: currentSocket
+                })
+            })
+            if (!response.ok) {throw new Error('Problem adding guest')}
+            const data = await response.json();
+            setUser(data);
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
     return (
-        <div className='findMatchContainer'>
-            <button onClick={updateSearching} className='findMatch'>{search === false ? 'Find Match' : 'Searching...'}</button>
+        <div className={`findMatchContainer ${(route === 'login' || route === 'register') ? 'playAsGuest' : null}`}>
+            {
+                route === 'login' || route === 'register'
+                ? <button onClick={!search ? addGuest : removeGuest} className='findMatch'>{!search ? 'Play as Guest' : 'Searching...'}</button>
+                : <button onClick={updateSearching} className='findMatch'>{!search ? 'Find Match' : 'Searching...'}</button>
+            }
         </div>
     )
 }

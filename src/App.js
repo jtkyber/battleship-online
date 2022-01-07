@@ -119,10 +119,24 @@ function App() {
         }
     }
 
+    const guestCleanup = async () => {
+        try {
+            const response = await fetch('https://calm-ridge-60009.herokuapp.com/guestCleanup', {
+                method: 'delete',
+                headers: {'Content-Type': 'application/json'}
+            })
+            if (!response.ok) {throw new Error('Problem adding guest')}
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
     useEffect(() => {
+        
         socket.on('connect', () => {
             setCurrentSocket(socket.id);
         })
+        guestCleanup();
 
         return () => {
             socket.off('connect');
@@ -131,8 +145,10 @@ function App() {
 
     useEffect(() => {
         if (user?.username?.length) {
-            stopSearching();
-            updateInGameStatus(false);
+            if (route !== 'login' && route !== 'register') {
+                stopSearching();
+                updateInGameStatus(false);
+            }
             setUpdatLastOnlineInterval(setInterval(updateLastOnline, 1000));
         } else {
             clearInterval(updatLastOnlineInterval);
@@ -273,6 +289,7 @@ function App() {
             <div className='homeText'>
                 <h1>Battleship</h1>
             </div>
+            <FindMatch socket={socket} />
             <div className='logReg'>
                 {
                     route === 'login'

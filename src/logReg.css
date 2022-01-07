@@ -3,12 +3,19 @@
     min-height: 100vh;
     display: grid;
     grid-template-columns: 15rem 1fr;
-    grid-template-rows: 3rem 8rem 1fr 2rem;
+    grid-template-rows: 3rem fit-content fit-content 1fr 2rem;
     grid-template-areas:
             "nav nav"
             "friends homeText"
+            "friends playAsGuest"
             "friends logReg"
             "footer footer";
+}
+
+.playAsGuest {
+    grid-area: playAsGuest;
+    justify-self: center;
+    align-self: start;
 }
 
 .homeText {

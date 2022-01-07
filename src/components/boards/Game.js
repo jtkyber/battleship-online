@@ -93,18 +93,12 @@ const Game = ({ socket, onRouteChange }) => {
 
     const checkIfOpponentIsOnline = async () => {
         try {
-            let friendIsOnline = false;
-            const response = await fetch(`https://calm-ridge-60009.herokuapp.com/getFriendsOnline?username=${user.username}`)
+            const response = await fetch(`https://calm-ridge-60009.herokuapp.com/checkIfOppOnline?username=${opponentName}`)
             if (!response.ok) {
                 throw new Error('Error')
             }
-            const onlineFriends = await response.json();
-            await onlineFriends.forEach(f => {
-                if ((f.username === opponentName)) {
-                    return friendIsOnline = true;
-                }
-            })
-            if (!friendIsOnline) {
+            const isOnline = await response.json();
+            if (!isOnline) {
                 window.alert('Opponent has left the game');
                 setRoute('loggedIn');
             }
