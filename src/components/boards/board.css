@@ -1,5 +1,5 @@
 :root {
-    --home-board-size: 40rem;
+    --home-board-size: 30vw;
     --game-board-size: 40rem;
 }
 
@@ -23,28 +23,28 @@
 
 @media only screen and (min-width: 1120px) and (max-width: 1259px) {
     :root {
-        --home-board-size: 40rem;
+        /* --home-board-size: 40rem; */
         --game-board-size: 20rem;
     }
 }
 
 @media only screen and (min-width: 1000px) and (max-width: 1119px) {
     :root {
-        --home-board-size: 35rem;
+        /* --home-board-size: 35rem; */
         --game-board-size: 17rem;
     }
 }
 
 @media only screen and (min-width: 750px) and (max-width: 999px) {
     :root {
-        --home-board-size: 30rem;
+        /* --home-board-size: 30rem; */
         --game-board-size: 14rem;
     }
 }
 
-@media only screen and (min-width: 400px) and (max-width: 749px) {
+@media only screen and (max-width: 749px) {
     :root {
-        --home-board-size: 25rem;
+        /* --home-board-size: 25rem; */
         --game-board-size: 25rem;
     }
 }
@@ -59,6 +59,8 @@
     justify-content: center;
     height: var(--home-board-size);
     width: var(--home-board-size);
+    max-width: 40rem;
+    max-height: 40rem;
 }
 
 .userBoard {

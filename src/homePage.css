@@ -1,4 +1,4 @@
-.homePage {
+/* .homePage {
     background-color: rgba(0,0,0,0.7);
     height: 100vh;
     display: grid;
@@ -53,13 +53,13 @@
     "j1 j2 j3 j4 j5 j6 j7 j8 j9 j10";
 }
 
-/*.homePage .logReg {
+.homePage .logReg {
     grid-area: logReg;
     justify-self: center;
     align-self: start;
     z-index: 2;
-}*/
+}
 
 .homePage footer {
     grid-area: footer;
-}
+} */
