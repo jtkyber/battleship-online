@@ -168,7 +168,7 @@ function App() {
 
     useEffect(() => {
         if (route === 'game') {
-            clearInterval(findMatchInterval);
+            setSearch(false);
             clearInterval(getOnlineFriendsInterval);
             stopSearching();
             updateInGameStatus(true);

@@ -35,6 +35,7 @@ const Game = ({ socket, onRouteChange }) => {
         socket.on('receive game over', () => {
             // gamePage.style.setProperty('--player-turn-text', '"You Won!"');
             // setTimeout(gameOver, 2000);
+            clearInterval(checkOppStatusInterval);
             addWin();
             setTimeout(() => {
                 window.alert('You Won!!!');

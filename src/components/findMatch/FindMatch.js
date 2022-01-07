@@ -4,12 +4,11 @@ import './findMatch.css';
 
 const FindMatch = ({ socket }) => {
     
-    const { currentSocket, search, user, route, findMatchInterval } = useStoreState(state => ({
+    const { currentSocket, search, user, route } = useStoreState(state => ({
         currentSocket: state.currentSocket,
         search: state.search,
         user: state.user,
-        route: state.route,
-        findMatchInterval: state.findMatchInterval
+        route: state.route
     }));
 
     const { setSearch, setFindMatchInterval, setOpponentName, setFriendSocket, setRoute, setUser } = useStoreActions(actions => ({
