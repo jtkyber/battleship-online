@@ -71,13 +71,38 @@ const UserBoard = ({ socket }) => {
         return colliding;
     }
 
+    const hitSquares = [];
+    const countHitsOnShip = (ship) => {
+        let count = 0;
+        for (let hit of hitSquares) {
+            if (hit === ship) {
+                count += 1;
+            }
+        }
+        return count;
+    }
+
     const applyHitOrMiss = (oppShot) => {
         if (matchOppShotToBoard(oppShot)) {
             oppShot.classList.add('hit');
+            oppShot.classList.add('hitMarker');
             playShotSound('hit');
+            hitSquares.push(shipHit);
+            oppShot.classList.add(`_${shipHit}_userboard`)
+            if (countHitsOnShip(shipHit) === parseInt(document.querySelector(`.${shipHit}`).id)) {
+                const sunkShipIcon = document.querySelector(`.${shipHit}Icon`);
+                const squares = document.querySelectorAll('.singleSquare');
+                playShotSound('sunk');
+                for (let square of squares) {
+                    if (square.classList.contains(`_${shipHit}_userboard`)) {
+                        square.classList.remove('hitMarker');
+                    }
+                }
+                sunkShipIcon.classList.add('shipSunkUser');
+            }
             socket.emit('send result to opponent board', {shotSquare: oppShot.id, shot: 'hit', socketid: friendSocket, shipHit: shipHit});
         } else {
-            oppShot.classList.add('miss');
+            oppShot.classList.add('missMarker');
             playShotSound('miss');
             socket.emit('send result to opponent board', {shotSquare: oppShot.id, shot: 'miss', socketid: friendSocket, shipHit: shipHit});
         }

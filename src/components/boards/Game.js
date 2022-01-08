@@ -71,15 +71,23 @@ const Game = ({ socket, onRouteChange }) => {
 
     useEffect(() => {
         // const gamePage = document.querySelector('.gamePage');
-        const squares = document.querySelectorAll('.userBoard .singleSquare');
+        // const squares = document.querySelectorAll('.userBoard .singleSquare');
+        const shipContainers = document.querySelectorAll('.userBoard .ship');
         let score = 0;
         if (yourTurn) {
-            for (let square of squares) {
-                if (square.classList.contains('hit')) {
+            // for (let square of squares) {
+            //     if (square.classList.contains('hit')) {
+            //         score += 1;
+            //     }
+            // }
+
+            shipContainers.forEach(shipContainer => {
+                if (shipContainer.childNodes[0].classList.contains('shipSunkUser')) {
                     score += 1;
                 }
-            }
-            if (score >= 17) {
+            })
+
+            if (score >= 5) {
                 // gamePage.style.setProperty('--player-turn-text', '"You Lose"');
                 socket.emit('game over', friendSocket);
                 setTimeout(() => {

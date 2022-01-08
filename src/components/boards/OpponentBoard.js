@@ -56,12 +56,13 @@ const OpponentBoard = ({ socket }) => {
         socket.on('show result on opponent board', data => {
             const clickedSquare = document.querySelector(`.opponentBoard [id='${data.shotSquare}']`);
             if (data.result === 'hit' && clickedSquare.classList !== undefined) {
-                clickedSquare.classList.add('hit');
+                clickedSquare.classList.add('hitMarker');
                 playShotSound('hit');
                 hitSquares.push(data.shipHit);
                 clickedSquare.classList.add(`_${data.shipHit}`)
                 if (countHitsOnShip(data.shipHit) === parseInt(document.querySelector(`.${data.shipHit}`).id)) {
                     const squares = document.querySelectorAll('.singleSquare');
+                    playShotSound('sunk');
                     for (let square of squares) {
                         if (square.classList.contains(`_${data.shipHit}`)) {
                             square.classList.add('shipSunk');
@@ -69,7 +70,7 @@ const OpponentBoard = ({ socket }) => {
                     }
                 }
             } else if (data.result === 'miss' && clickedSquare.classList !== undefined) {
-                clickedSquare.classList.add('miss');
+                clickedSquare.classList.add('missMarker');
                 playShotSound('miss');
             }
         })
