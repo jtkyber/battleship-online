@@ -36,7 +36,9 @@ const Game = ({ socket, onRouteChange }) => {
             // gamePage.style.setProperty('--player-turn-text', '"You Won!"');
             // setTimeout(gameOver, 2000);
             clearInterval(checkOppStatusInterval);
-            addWin();
+            if (user?.hash !== 'guest') {
+                addWin();
+            }
             setTimeout(() => {
                 window.alert('You Won!!!');
                 user.hash === 'guest' ? setRoute('login') : setRoute('loggedIn');
