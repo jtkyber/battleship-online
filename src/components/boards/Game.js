@@ -31,6 +31,9 @@ const Game = ({ socket, onRouteChange }) => {
     const instructions = 'Place your ships!';
 
     useEffect(() => {
+        setPlayerIsReady(false);
+        setOpponentIsReady(false);
+        setGameRoute('placeShips');
         // const gamePage = document.querySelector('.gamePage');
         socket.on('receive game over', () => {
             // gamePage.style.setProperty('--player-turn-text', '"You Won!"');

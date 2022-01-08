@@ -30,7 +30,7 @@ function App() {
         inviteReceived: state.inviteReceived
     }));
 
-    const { setRoute, setUser, setCurrentSocket, setSearch, setUpdatLastOnlineInterval, setInviteSent, setInviteReceived, setAllFriends, setUnsortedFriends, setFriendsOnline, setFriendSearch } = useStoreActions(actions => ({
+    const { setRoute, setUser, setCurrentSocket, setSearch, setUpdatLastOnlineInterval, setInviteSent, setInviteReceived, setAllFriends, setUnsortedFriends, setFriendsOnline, setFriendSearch, setPlayerIsReady } = useStoreActions(actions => ({
         setRoute: actions.setRoute,
         setUser: actions.setUser,
         setCurrentSocket: actions.setCurrentSocket,
@@ -41,7 +41,8 @@ function App() {
         setAllFriends: actions.setAllFriends,
         setUnsortedFriends: actions.setUnsortedFriends,
         setFriendsOnline: actions.setFriendsOnline,
-        setFriendSearch: actions.setFriendSearch
+        setFriendSearch: actions.setFriendSearch,
+        setPlayerIsReady: actions.setPlayerIsReady
     }));
 
     const onRouteChange = async (e) => {
@@ -175,6 +176,7 @@ function App() {
             stopSearching();
             updateInGameStatus(true);
         } else {
+            setPlayerIsReady(false);
             if (user?.username?.length) {
                 updateInGameStatus(false);
             }
