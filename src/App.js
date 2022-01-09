@@ -63,7 +63,6 @@ function App() {
     ]
 
     const soundPlay = (src) => {
-        console.log(src)
         const sound = new Howl({
             src: src.sound,
             volume: src.volume,
@@ -189,7 +188,6 @@ function App() {
             || 
             e.target.parentElement.classList.contains('readyBtn')
         ) {
-            console.log(e.target.classList);
             playSound('hover');
         }
     }

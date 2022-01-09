@@ -40,17 +40,12 @@ const model = {
     chatText: '',
     inviteSent: false,
     inviteReceived: false,
-    shipIsSelected: false,
-    rotating: false,
-    orientation: 'hor',
-    selectedShip: '',
-    selectedShipName: '',
-    setManualGridLocation: false,
     playGameAudio: false,
     playLobbyMusic: false,
     waveSound: null,
     lobbyMusic: null,
     gameMusic: null,
+    playerTurnText: '',
 
     //Actions
 
@@ -157,30 +152,6 @@ const model = {
     setInviteReceived: action((state, input) => {
         state.inviteReceived = input;
     }),
-    
-    setShipIsSelected: action((state, input) => {
-        state.shipIsSelected = input;
-    }),
-
-    setRotating: action((state, input) => {
-        state.rotating = input;
-    }),
-
-    setOrientation: action((state, input) => {
-        state.orientation = input;
-    }),
-
-    setSelectedShip: action((state, input) => {
-        state.selectedShip = input;
-    }),
-
-    setSelectedShipName: action((state, input) => {
-        state.selectedShipName = input;
-    }),
-
-    setToggleManualGridLocation: action((state, input) => {
-        state.toggleManualGridLocation = input;
-    }),
 
     setPlayGameAudio: action((state, input) => {
         state.playGameAudio = input;
@@ -200,6 +171,10 @@ const model = {
 
     setGameMusic: action((state, input) => {
         state.gameMusic = input;
+    }),
+    
+    setPlayerTurnText: action((state, input) => {
+        state.playerTurnText = input;
     }),
 }
 

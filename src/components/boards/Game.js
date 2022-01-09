@@ -7,8 +7,11 @@ import ChatBox from './ChatBox';
 import Footer from '../footer/Footer';
 
 const Game = ({ socket, onRouteChange }) => {
+    const pickUpShipInstructions = "To pick up a ship, left click on it";
+    const rotateShipInstructions = "To rotate a ship, right click or press 'enter'";
+    const dropShipInstructions = "To drop the ship, left click";
     
-    const { friendSocket, opponentName, user, checkOppStatusInterval, gameRoute, playerIsReady, opponentIsReady, yourTurn } = useStoreState(state => ({
+    const { friendSocket, opponentName, user, checkOppStatusInterval, gameRoute, playerIsReady, opponentIsReady, yourTurn, playerTurnText } = useStoreState(state => ({
         friendSocket: state.friendSocket,
         opponentName: state.opponentName,
         user: state.user,
@@ -16,19 +19,19 @@ const Game = ({ socket, onRouteChange }) => {
         gameRoute: state.gameRoute,
         playerIsReady: state.playerIsReady,
         opponentIsReady: state.opponentIsReady,
-        yourTurn: state.yourTurn
+        yourTurn: state.yourTurn,
+        playerTurnText: state.playerTurnText
     }));
 
-    const { setCheckOppStatusInterval, setRoute, setGameRoute, setPlayerIsReady, setOpponentIsReady, setYourTurn } = useStoreActions(actions => ({
+    const { setCheckOppStatusInterval, setRoute, setGameRoute, setPlayerIsReady, setOpponentIsReady, setYourTurn, setPlayerTurnText } = useStoreActions(actions => ({
         setCheckOppStatusInterval: actions.setCheckOppStatusInterval,
         setRoute: actions.setRoute,
         setGameRoute: actions.setGameRoute,
         setPlayerIsReady: actions.setPlayerIsReady,
         setOpponentIsReady: actions.setOpponentIsReady,
-        setYourTurn: actions.setYourTurn
+        setYourTurn: actions.setYourTurn,
+        setPlayerTurnText: actions.setPlayerTurnText
     }));
-    
-    const instructions = 'Place your ships!';
 
     useEffect(() => {
         setPlayerIsReady(false);
@@ -63,43 +66,36 @@ const Game = ({ socket, onRouteChange }) => {
         }
     },[])
 
-    useEffect(() => {
-        const gameInstructions = document.querySelector('.gamePage');
-        if (gameRoute === 'placeShips') {
-            gameInstructions.style.setProperty('--player-turn-text', `"${instructions}"`);
-        } else if (yourTurn) {
-            gameInstructions.style.setProperty('--player-turn-text', '"Your Turn!"');
-        } else {
-            gameInstructions.style.setProperty('--player-turn-text', `"${opponentName}'s Turn!"`);
-        }
-    },[yourTurn, gameRoute])
+    // useEffect(() => {
+    //     const gameInstructions = document.querySelector('.gamePage');
+    //     if (gameRoute === 'placeShips') {
+    //         gameInstructions.style.setProperty('--player-turn-text', `"${instructions}"`);
+    //     } else if (yourTurn) {
+    //         gameInstructions.style.setProperty('--player-turn-text', '"Your Turn!"');
+    //     } else {
+    //         gameInstructions.style.setProperty('--player-turn-text', `"${opponentName}'s Turn!"`);
+    //     }
+    // },[yourTurn, gameRoute])
 
     useEffect(() => {
-        // const gamePage = document.querySelector('.gamePage');
-        // const squares = document.querySelectorAll('.userBoard .singleSquare');
         const shipContainers = document.querySelectorAll('.userBoard .ship');
         let score = 0;
         if (yourTurn) {
-            // for (let square of squares) {
-            //     if (square.classList.contains('hit')) {
-            //         score += 1;
-            //     }
-            // }
-
+            setPlayerTurnText('Your Turn')
             shipContainers.forEach(shipContainer => {
                 if (shipContainer.childNodes[0].classList.contains('shipSunkUser')) {
                     score += 1;
                 }
             })
-
             if (score >= 5) {
-                // gamePage.style.setProperty('--player-turn-text', '"You Lose"');
                 socket.emit('game over', friendSocket);
                 setTimeout(() => {
                     window.alert('You Lose');
                     user.hash === 'guest' ? setRoute('login') : setRoute('loggedIn');
                 }, 300);
             }
+        } else {
+            setPlayerTurnText(`${opponentName}'s Turn!`)
         }
     },[yourTurn])
 
@@ -147,6 +143,9 @@ const Game = ({ socket, onRouteChange }) => {
     const handleReadyButton = () => {
         const ships = document.querySelectorAll('.ship');
         const readyBtn = document.querySelector('.readyBtn');
+        const instructionsList = document.querySelector('.instructions');
+        instructionsList.classList.add('hide');
+        readyBtn.childNodes[0].innerText = 'Waiting...';
         for (let ship of ships) {
             ship.style.cursor = 'default';
         }
@@ -164,6 +163,12 @@ const Game = ({ socket, onRouteChange }) => {
         <div className='gamePage'>
             <Navigation socket={socket} onRouteChange={onRouteChange} />
             <UserBoard socket={socket} />
+            <div className={'instructions'}>
+                <h5>○ {pickUpShipInstructions}</h5>
+                <h5>○ {rotateShipInstructions}</h5>
+                <h5>○ {dropShipInstructions}</h5>
+            </div>
+            <h3 className='playerTurnText'>{`${gameRoute === 'gameInProgress' ? playerTurnText : ''}`}</h3>
             {
             gameRoute === 'placeShips'
             ? 

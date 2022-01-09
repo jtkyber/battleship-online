@@ -184,7 +184,7 @@
     background-color: rgba(0,150,255,0.7);
 }
 
-.opponentBoard::before {
+/* .opponentBoard:before {
     position: absolute;
     content: var(--sqaure-already-selected);
     color: rgba(255,0,0,0.9);
@@ -192,22 +192,17 @@
     width: var(--game-board-size);
     transform: translateX(2rem);
     text-align: center;
-}
+} */
 
-.userBoard::before {
+/* .userBoard:before {
     position: absolute;
-    content: var(--winner-text);
-    color: rgba(0,255,0,0.9);
+    content: var(--sqaure-already-selected);
+    color: rgba(255,0,0,0.9);
     top: -0.8rem;
     width: var(--game-board-size);
     transform: translateX(2rem);
-    font-size: 1.4rem;
-    font-weight: 600;
     text-align: center;
-    transition: 1s ease;
-    -webkit-animation: 0.5s linear 0s 1 fadeText;
-            animation: 0.5s linear 0s 1 fadeText;
-}
+} */
 
 @-webkit-keyframes fadeText {
   0% {

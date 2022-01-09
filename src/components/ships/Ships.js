@@ -7,7 +7,7 @@ import '../boards/board.css';
 const Ships = () => {
 
     const { gameRoute } = useStoreState(state => ({
-        gameRoute: state.gameRoute
+        gameRoute: state.gameRoute,
     }));
 
     let rotating = false;
@@ -26,7 +26,6 @@ const Ships = () => {
             selectedShip = e.target.parentElement;
             userBoard.style.cursor = 'pointer';
             selectedShip.style.zIndex = '-2';
-            // selectedShip.style.backgroundColor = 'rgba(0,0,0,0.2)';
             selectedShip.style.border = '2px solid rgba(0, 250, 0, 0.5)';
 
             if (parseInt(e.target.parentElement.offsetWidth) > parseInt(e.target.parentElement.offsetHeight)) {
@@ -64,13 +63,13 @@ const Ships = () => {
         let d2Left = d2Offset.left + d2Width;
 
         const colliding = !(d1Top <= d2Offset.top + 2 || d1Offset.top >= d2Top - 2 || d1Left <= d2Offset.left + 2 || d1Offset.left >= d2Left - 2);
-
+        
         return colliding;
     }
 
     // Place a ship down that is currently selected
 
-    document.addEventListener('click', e => {
+    window.onclick = (e) => {
         if (shipIsSelected && e.target.classList.contains('singleSquare') && rotating === false && areaIsClear()) {
             selectedShip.style.zIndex = '3';
             document.querySelector('.userBoard').style.cursor = 'default';
@@ -78,21 +77,14 @@ const Ships = () => {
             selectedShip.style.border = null;
             shipIsSelected = false;
         }
-    })
-
-    // Locate opponents shot on user board
-
-    // const matchOppShotToBoard = () => {
-    //     if
-    // }
-
+    }
+    
     // Check to see if player is placing the ship in an open space
 
     const areaIsClear = () => {
         const ships = document.querySelectorAll('.ship');
          for (let ship of ships) {
             if (!ship.classList.contains(selectedShipName) && collisionDetection(selectedShip, ship)) {
-                console.log(ship.className);
                 return false;
             }
         }
@@ -118,7 +110,7 @@ const Ships = () => {
 
     // Decide what happens on various key-press events
 
-    document.addEventListener('keydown', (e) => {
+    window.onkeydown = (e) => {
         if (e.code === 'Enter') {
             e.preventDefault();
         }
@@ -135,12 +127,11 @@ const Ships = () => {
             setManualGridLocation = true;
             rotating = true;
         }
-    })
+    }
 
     // Change the grid-row and grid-column of the selected ship mouse is over the user's board
 
     window.onmouseover = (e) => {
-        // const sub = document.querySelector(`.submarine`);
         if (shipIsSelected) {
             rotating = false;
             selectedShip.style.transform = null;
