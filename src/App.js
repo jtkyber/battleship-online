@@ -11,13 +11,19 @@ import Leaderboard from './components/leaderboard/Leaderboard';
 import Navigation from './components/navigation/Navigation';
 import Footer from './components/footer/Footer';
 import { socket } from './socket/socketImport';
+import { Howl } from 'howler';
+import ambientWaves from './audioclips/ambient-waves.mp3';
+import lobbyTheme from './audioclips/lobby-theme.mp3';
+import gameTheme from './audioclips/game-theme.mp3';
+import buttonClick from './audioclips/button-click.mp3';
+import hoverSound from './audioclips/hover-sound.mp3';
 import './logReg.css';
 import './homePageLogged.css';
 import './gamePage.css';
 import './leaderboard.css';
 
 function App() {
-    const { getOnlineFriendsInterval, route, user, friendSocket, findMatchInterval, checkOppStatusInterval, search, updatLastOnlineInterval, inviteSent, inviteReceived } = useStoreState(state => ({
+    const { getOnlineFriendsInterval, route, user, friendSocket, findMatchInterval, checkOppStatusInterval, search, updatLastOnlineInterval, playGameAudio, playLobbyMusic, waveSound, lobbyMusic, gameMusic } = useStoreState(state => ({
         getOnlineFriendsInterval: state.getOnlineFriendsInterval,
         route: state.route,
         user: state.user,
@@ -26,24 +32,53 @@ function App() {
         checkOppStatusInterval: state.checkOppStatusInterval,
         search: state.search,
         updatLastOnlineInterval: state.updatLastOnlineInterval,
-        inviteSent: state.inviteSent,
-        inviteReceived: state.inviteReceived
+        playGameAudio: state.playGameAudio,
+        playLobbyMusic: state.playLobbyMusic,
+        waveSound: state.waveSound,
+        lobbyMusic: state.lobbyMusic,
+        gameMusic: state.gameMusic
     }));
 
-    const { setRoute, setUser, setCurrentSocket, setSearch, setUpdatLastOnlineInterval, setInviteSent, setInviteReceived, setAllFriends, setUnsortedFriends, setFriendsOnline, setFriendSearch, setPlayerIsReady } = useStoreActions(actions => ({
+    const { setRoute, setUser, setCurrentSocket, setSearch, setUpdatLastOnlineInterval, setAllFriends, setUnsortedFriends, setFriendsOnline, setFriendSearch, setPlayerIsReady, setPlayGameAudio, setPlayLobbyMusic, setWaveSound, setLobbyMusic, setGameMusic } = useStoreActions(actions => ({
         setRoute: actions.setRoute,
         setUser: actions.setUser,
         setCurrentSocket: actions.setCurrentSocket,
         setSearch: actions.setSearch,
         setUpdatLastOnlineInterval: actions.setUpdatLastOnlineInterval,
-        setInviteSent: actions.setInviteSent,
-        setInviteReceived: actions.setInviteReceived,
         setAllFriends: actions.setAllFriends,
         setUnsortedFriends: actions.setUnsortedFriends,
         setFriendsOnline: actions.setFriendsOnline,
         setFriendSearch: actions.setFriendSearch,
-        setPlayerIsReady: actions.setPlayerIsReady
+        setPlayerIsReady: actions.setPlayerIsReady,
+        setPlayGameAudio: actions.setPlayGameAudio,
+        setPlayLobbyMusic: actions.setPlayLobbyMusic,
+        setWaveSound: actions.setWaveSound,
+        setLobbyMusic: actions.setLobbyMusic,
+        setGameMusic: actions.setGameMusic
     }));
+
+    const audioClips = [
+        {sound: buttonClick, label: 'btn', volume: 1},
+        {sound: hoverSound, label: 'hover', volume: 1}
+    ]
+
+    const soundPlay = (src) => {
+        console.log(src)
+        const sound = new Howl({
+            src: src.sound,
+            volume: src.volume,
+            html5: true
+        })
+        sound.play();
+    }
+
+    const playSound = (soundEffect) => {
+        audioClips.forEach(clip => {
+            if (clip.label === soundEffect ) {
+                soundPlay(clip);
+            }
+        })
+    }
 
     const onRouteChange = async (e) => {
         switch(e.target.value) {
@@ -132,7 +167,39 @@ function App() {
         }
     }
 
+    const handleMouseDown = (e) => {
+        if (!lobbyMusic && !playLobbyMusic && route !== 'game') {
+            setPlayLobbyMusic(true);
+        }
+    }
+
+    const handleBtnPress = (e) => {
+        if (e.target.tagName === 'BUTTON') {
+            playSound('btn');
+        }
+    }
+
+    const handleMouseOver = (e) => {
+        if (
+            e.target.parentElement.classList.contains('findMatchContainer') || e.target.parentElement.classList.contains('playAsGuest') 
+            || 
+            e.target.classList.contains('friendRequestBtn') 
+            || 
+            e.target.classList.contains('friendOnlineBtn')
+            || 
+            e.target.parentElement.classList.contains('readyBtn')
+        ) {
+            console.log(e.target.classList);
+            playSound('hover');
+        }
+    }
+
     useEffect(() => {
+        const page = document.querySelector('.logRegPage');
+        page.addEventListener('mousedown', handleMouseDown);
+        document.addEventListener('mousedown', handleBtnPress);
+        document.addEventListener('mouseover', handleMouseOver);
+
         socket.on('connect', () => {
             setCurrentSocket(socket.id);
         })
@@ -140,8 +207,82 @@ function App() {
 
         return () => {
             socket.off('connect');
+            page.removeEventListener('mousedown', handleMouseDown);
+            document.removeEventListener('mousedown', handleBtnPress);
+            document.removeEventListener('mouseover', handleMouseOver);
         }
     }, [])
+
+    useEffect(() => {
+        if (waveSound) {
+            waveSound.play();
+            waveSound.fade(0, 0.2, 1000);
+        }
+
+    }, [waveSound])
+
+    useEffect(() => {
+        if (lobbyMusic) {
+            lobbyMusic.play();
+        }
+
+    }, [lobbyMusic])
+
+    useEffect(() => {
+        if (gameMusic) {
+            gameMusic.play();
+        }
+
+    }, [gameMusic])
+    
+    useEffect(() => {
+        if (playGameAudio) {
+            if (!waveSound) {
+                setWaveSound(new Howl({
+                    src: ambientWaves,
+                    loop: true,
+                    volume: 0.3
+                }))
+            }
+            if (!gameMusic) {
+                setGameMusic(new Howl({
+                    src: gameTheme,
+                    loop: true,
+                    volume: 0.3,
+                    html5: true
+                }))
+            }
+        } else {
+            if (waveSound) {
+                waveSound.fade(0.3, 0, 1000);
+                setWaveSound(null);
+            }
+            if (gameMusic) {
+                gameMusic.fade(0.3, 0, 2000);
+                setGameMusic(null);
+            }
+        }
+
+    }, [playGameAudio])
+
+    useEffect(() => {
+        if (playLobbyMusic) {
+            if (!lobbyMusic) {
+                setLobbyMusic(new Howl({
+                    src: lobbyTheme,
+                    loop: true,
+                    volume: 0.3,
+                    html5: true
+                }))
+            } 
+        } else {
+            if (lobbyMusic) {
+                lobbyMusic.fade(0.3, 0, 2000);
+                setLobbyMusic(null);
+            }
+        }
+
+    }, [playLobbyMusic])
 
     useEffect(() => {
         if (user?.username?.length) {
@@ -171,11 +312,19 @@ function App() {
 
     useEffect(() => {
         if (route === 'game') {
+            setPlayLobbyMusic(false);
+            if (!playGameAudio) {
+                setPlayGameAudio(true);
+            }
             setSearch(false);
             clearInterval(getOnlineFriendsInterval);
             stopSearching();
             updateInGameStatus(true);
         } else {
+            setPlayGameAudio(false);
+            if (!playLobbyMusic) {
+                setPlayLobbyMusic(true);
+            }
             setPlayerIsReady(false);
             if (user?.username?.length) {
                 updateInGameStatus(false);

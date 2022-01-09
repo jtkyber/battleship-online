@@ -46,6 +46,11 @@ const model = {
     selectedShip: '',
     selectedShipName: '',
     setManualGridLocation: false,
+    playGameAudio: false,
+    playLobbyMusic: false,
+    waveSound: null,
+    lobbyMusic: null,
+    gameMusic: null,
 
     //Actions
 
@@ -175,6 +180,26 @@ const model = {
 
     setToggleManualGridLocation: action((state, input) => {
         state.toggleManualGridLocation = input;
+    }),
+
+    setPlayGameAudio: action((state, input) => {
+        state.playGameAudio = input;
+    }),
+
+    setPlayLobbyMusic: action((state, input) => {
+        state.playLobbyMusic = input;
+    }),
+
+    setWaveSound: action((state, input) => {
+        state.waveSound = input;
+    }),
+
+    setLobbyMusic: action((state, input) => {
+        state.lobbyMusic = input;
+    }),
+
+    setGameMusic: action((state, input) => {
+        state.gameMusic = input;
     }),
 }
 

@@ -2,23 +2,24 @@ import React, { useEffect } from 'react';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import Board from './Board';
 import { Howl } from 'howler';
-import hitSound from './audioclips/hit-sound.mp3';
-import missSound from './audioclips/miss-sound.mp3';
-import shipSunkSound from './audioclips/ship-sunk.mp3';
+import hitSound from '../../audioclips/hit-sound.mp3';
+import missSound from '../../audioclips/miss-sound.mp3';
+import shipSunkSound from '../../audioclips/ship-sunk.mp3';
 import './board.css';
 
 const OpponentBoard = ({ socket }) => {
 
     const audioClips = [
-        {sound: hitSound, label: 'hit'},
-        {sound: missSound, label: 'miss'},
-        {sound: shipSunkSound, label: 'sunk'}
+        {sound: hitSound, label: 'hit', volume: 1},
+        {sound: missSound, label: 'miss', volume: 0.5},
+        {sound: shipSunkSound, label: 'sunk', volume: 1}
     ]
 
     const soundPlay = (src) => {
         const sound = new Howl({
-            src,
-            volume: 0.5
+            src: src.sound,
+            volume: src.volume,
+            html5: true
         })
         sound.play();
     }
@@ -36,7 +37,7 @@ const OpponentBoard = ({ socket }) => {
     const playShotSound = (soundEffect) => {
         audioClips.forEach(clip => {
             if (clip.label === soundEffect ) {
-                soundPlay(clip.sound);
+                soundPlay(clip);
             }
         })
     }
@@ -57,7 +58,6 @@ const OpponentBoard = ({ socket }) => {
             const clickedSquare = document.querySelector(`.opponentBoard [id='${data.shotSquare}']`);
             if (data.result === 'hit' && clickedSquare.classList !== undefined) {
                 clickedSquare.classList.add('hitMarker');
-                playShotSound('hit');
                 hitSquares.push(data.shipHit);
                 clickedSquare.classList.add(`_${data.shipHit}`)
                 if (countHitsOnShip(data.shipHit) === parseInt(document.querySelector(`.${data.shipHit}`).id)) {
@@ -68,6 +68,8 @@ const OpponentBoard = ({ socket }) => {
                             square.classList.add('shipSunk');
                         }
                     }
+                } else {
+                    playShotSound('hit');
                 }
             } else if (data.result === 'miss' && clickedSquare.classList !== undefined) {
                 clickedSquare.classList.add('missMarker');
