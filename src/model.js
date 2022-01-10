@@ -1,5 +1,12 @@
 import { action, persist } from 'easy-peasy';
 
+const isMobileDevice = () => {
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        return true
+    }
+    return false
+}
+
 const model = {
 
     //State
@@ -8,6 +15,7 @@ const model = {
         {
             soundOn: true,
             musicOn: true,
+            isMobile: isMobileDevice()
         },
         {
             storage: 'localStorage',
@@ -159,6 +167,10 @@ const model = {
 
     setMusicOn: action((state, input) => {
         state.stored.musicOn = input;
+    }),
+
+    setIsMobile: action((state, input) => {
+        state.stored.isMobile = input;
     }),
 }
 

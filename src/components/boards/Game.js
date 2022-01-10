@@ -160,7 +160,7 @@ const Game = ({ socket, onRouteChange }) => {
     }
 
     return (
-        <div className='gamePage'>
+        <>
             <Navigation socket={socket} onRouteChange={onRouteChange} />
             <UserBoard socket={socket} />
             <div className={'instructions'}>
@@ -180,7 +180,7 @@ const Game = ({ socket, onRouteChange }) => {
             <OpponentBoard socket={socket} />
             <ChatBox socket={socket} />
             <Footer />
-        </div>
+        </>
     )
 }
 

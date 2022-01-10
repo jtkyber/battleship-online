@@ -18,7 +18,7 @@ import './gamePage.css';
 import './leaderboard.css';
 
 function App() {
-    const { getOnlineFriendsInterval, route, user, friendSocket, findMatchInterval, checkOppStatusInterval, search, updatLastOnlineInterval, soundOn, musicOn } = useStoreState(state => ({
+    const { getOnlineFriendsInterval, route, user, friendSocket, findMatchInterval, checkOppStatusInterval, search, updatLastOnlineInterval, soundOn, musicOn, isMobile } = useStoreState(state => ({
         getOnlineFriendsInterval: state.getOnlineFriendsInterval,
         route: state.route,
         user: state.user,
@@ -28,10 +28,11 @@ function App() {
         search: state.search,
         updatLastOnlineInterval: state.updatLastOnlineInterval,
         soundOn: state.stored.soundOn,
-        musicOn: state.stored.musicOn
+        musicOn: state.stored.musicOn,
+        isMobile: state.stored.isMobile
     }));
 
-    const { setRoute, setUser, setCurrentSocket, setSearch, setUpdatLastOnlineInterval, setAllFriends, setUnsortedFriends, setFriendsOnline, setFriendSearch, setPlayerIsReady, setSoundOn, setMusicOn } = useStoreActions(actions => ({
+    const { setRoute, setUser, setCurrentSocket, setSearch, setUpdatLastOnlineInterval, setAllFriends, setUnsortedFriends, setFriendsOnline, setFriendSearch, setPlayerIsReady, setSoundOn, setMusicOn, setIsMobile } = useStoreActions(actions => ({
         setRoute: actions.setRoute,
         setUser: actions.setUser,
         setCurrentSocket: actions.setCurrentSocket,
@@ -44,6 +45,7 @@ function App() {
         setPlayerIsReady: actions.setPlayerIsReady,
         setSoundOn: actions.setSoundOn,
         setMusicOn: actions.setMusicOn,
+        setIsMobile: actions.setIsMobile
     }));
 
     useEffect(() => {
@@ -376,9 +378,13 @@ function App() {
     return (
         route === 'login' || route === 'register'
         ?
-        <div className='logRegPage'>
+        <div className={`logRegPage ${isMobile ? 'mobile' : null}`}>
             <Navigation socket={socket} onRouteChange={onRouteChange} />
-            <FriendsHome onRouteChange={onRouteChange}/>
+            {
+                !isMobile 
+                ? <FriendsHome onRouteChange={onRouteChange}/>
+                : null
+            }
             <div className='homeText'>
                 <h1>Battleship</h1>
             </div>
@@ -400,7 +406,7 @@ function App() {
                 user?.username?.length
                 ?
                 <>
-                    <div className={`homePageLogged ${route === 'leaderboard' ? 'hide' : null}`}>
+                    <div className={`homePageLogged ${route === 'leaderboard' ? 'hide' : null} ${isMobile ? 'mobile' : null}`}>
                         <Navigation socket={socket} onRouteChange={onRouteChange} />
                         <Friends socket={socket} />
                         <div className='matchAndBoard'>
@@ -415,23 +421,14 @@ function App() {
                     </div>
                 </>
                 :
-                <div className={`leaderboard`}>
+                <div className={`leaderboard ${isMobile ? 'mobile' : null}`}>
                     <Leaderboard onRouteChange={onRouteChange} socket={socket} />
                     <Footer />
                 </div>
-            : <Game socket={socket} onRouteChange={onRouteChange} />
-            // <>
-            //     {
-            //     route === 'leaderboard'
-            //     ?
-            //     <div className='leaderboard'>
-            //         <Leaderboard onRouteChange={onRouteChange} socket={socket} />
-            //         <Footer />
-            //     </div>
-            //     :
-            //     <Game socket={socket} onRouteChange={onRouteChange} />
-            //     }
-            // </>
+            : 
+            <div className={`gamePage ${isMobile ? 'mobile' : null}`}>
+                <Game socket={socket} onRouteChange={onRouteChange} />
+            </div>
             }
         </>
     );
