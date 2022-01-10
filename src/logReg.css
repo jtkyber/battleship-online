@@ -61,6 +61,7 @@
 .logRegPage.mobile > .logReg {
     position: absolute;
     align-items: center;
+    transition: all 0.3s ease-out;
 }
 
 .logRegPage nav {
