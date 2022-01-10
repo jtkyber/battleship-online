@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useStoreState, useStoreActions } from 'easy-peasy';
+import { audio } from '../../audio';
 
 const ChatBox = ({ socket }) => {
 
@@ -31,6 +32,7 @@ const ChatBox = ({ socket }) => {
     const handleReceivedMessage = (message) => {
         const chatBox = document.querySelector('.chatBox');
         if (chatBox !== null) {
+            audio.buttonClick.play();
             const msgNode = document.createElement("DIV");
             msgNode.classList.add('message');
             const textNode = document.createElement("H4");
@@ -51,6 +53,7 @@ const ChatBox = ({ socket }) => {
     const handleEnterBtn = (e) => {
             if (e.keyCode === 13 && chatBox !== null && chatText !== '') {
                 e.preventDefault();
+                audio.buttonClick.play();
                 const msgNode = document.createElement("DIV");
                 msgNode.classList.add('message');
                 const textNode = document.createElement("H4");

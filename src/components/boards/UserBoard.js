@@ -3,29 +3,10 @@ import { useStoreState, useStoreActions } from 'easy-peasy';
 import Board from './Board';
 import Ships from '../ships/Ships';
 import $ from 'jquery';
-import { Howl } from 'howler';
-import hitSound from '../../audioclips/hit-sound.mp3';
-import missSound from '../../audioclips/miss-sound.mp3';
-import shipSunkSound from '../../audioclips/ship-sunk.mp3';
+import { audio } from '../../audio';
 import './board.css';
 
 const UserBoard = ({ socket }) => {
-
-    const audioClips = [
-        {sound: hitSound, label: 'hit', volume: 1},
-        {sound: missSound, label: 'miss', volume: 0.5},
-        {sound: shipSunkSound, label: 'sunk', volume: 1}
-    ]
-
-    const soundPlay = (src) => {
-        const sound = new Howl({
-            src: src.sound,
-            volume: src.volume,
-            html5: true
-        })
-        sound.play();
-    }
-
     const { friendSocket } = useStoreState(state => ({
         friendSocket: state.friendSocket
     }));
@@ -33,14 +14,6 @@ const UserBoard = ({ socket }) => {
     const { setYourTurn } = useStoreActions(actions => ({
         setYourTurn: actions.setYourTurn
     }));
-
-    const playShotSound = (soundEffect) => {
-        audioClips.forEach(clip => {
-            if (clip.label === soundEffect) {
-                soundPlay(clip);
-            }
-        })
-    }
 
     let shipHit = '';
     useEffect(() => {
@@ -92,7 +65,7 @@ const UserBoard = ({ socket }) => {
             if (countHitsOnShip(shipHit) === parseInt(document.querySelector(`.${shipHit}`).id)) {
                 const sunkShipIcon = document.querySelector(`.${shipHit}Icon`);
                 const squares = document.querySelectorAll('.singleSquare');
-                playShotSound('sunk');
+                audio.shipSunkSound.play();
                 for (let square of squares) {
                     if (square.classList.contains(`_${shipHit}_userboard`)) {
                         square.classList.remove('hitMarker');
@@ -100,12 +73,12 @@ const UserBoard = ({ socket }) => {
                 }
                 sunkShipIcon.classList.add('shipSunkUser');
             } else {
-                playShotSound('hit');
+                audio.hitSound.play();
             }
             socket.emit('send result to opponent board', {shotSquare: oppShot.id, shot: 'hit', socketid: friendSocket, shipHit: shipHit});
         } else {
             oppShot.classList.add('missMarker');
-            playShotSound('miss');
+            audio.missSound.play();
             socket.emit('send result to opponent board', {shotSquare: oppShot.id, shot: 'miss', socketid: friendSocket, shipHit: shipHit});
         }
     }

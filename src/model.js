@@ -6,7 +6,8 @@ const model = {
 
     stored: persist(
         {
-            
+            soundOn: true,
+            musicOn: true,
         },
         {
             storage: 'localStorage',
@@ -40,11 +41,6 @@ const model = {
     chatText: '',
     inviteSent: false,
     inviteReceived: false,
-    playGameAudio: false,
-    playLobbyMusic: false,
-    waveSound: null,
-    lobbyMusic: null,
-    gameMusic: null,
     playerTurnText: '',
 
     //Actions
@@ -152,29 +148,17 @@ const model = {
     setInviteReceived: action((state, input) => {
         state.inviteReceived = input;
     }),
-
-    setPlayGameAudio: action((state, input) => {
-        state.playGameAudio = input;
-    }),
-
-    setPlayLobbyMusic: action((state, input) => {
-        state.playLobbyMusic = input;
-    }),
-
-    setWaveSound: action((state, input) => {
-        state.waveSound = input;
-    }),
-
-    setLobbyMusic: action((state, input) => {
-        state.lobbyMusic = input;
-    }),
-
-    setGameMusic: action((state, input) => {
-        state.gameMusic = input;
-    }),
     
     setPlayerTurnText: action((state, input) => {
         state.playerTurnText = input;
+    }),
+
+    setSoundOn: action((state, input) => {
+        state.stored.soundOn = input;
+    }),
+
+    setMusicOn: action((state, input) => {
+        state.stored.musicOn = input;
     }),
 }
 

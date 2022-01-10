@@ -1,13 +1,68 @@
 nav {
+    grid-area: nav;
     background-color: rgba(0,0,0,0.3);
     border-bottom: 2px solid rgba(255,255,255,0.2);
     color: green;
-    display: flex;
-    justify-content: flex-end;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     align-items: center;
     padding-right: 1.5rem;
+    padding-left: 1.5rem;
     --notification-color: transparent;
 }
+
+.leftNav {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-self: start;
+    gap: 1rem;
+}
+
+.rightNav {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-self: end;
+}
+
+.audioToggle {
+    opacity: 0.5;
+    transition: all 0.15s ease-out;
+    cursor: pointer;
+}
+
+.audioToggle:hover {
+    opacity: 0.3;
+}
+
+
+.soundOn {
+    
+}
+
+.musicOn {
+    
+}
+
+.soundOff {
+    opacity: 0.3;
+    background: linear-gradient(to top left,
+           rgba(0,0,0,0) 0%,
+           rgba(0,0,0,0) calc(50% - 0.8px),
+           rgba(0,0,0,1) 50%,
+           rgba(0,0,0,0) calc(50% + 0.8px),
+           rgba(0,0,0,0) 100%)
+}
+
+.musicOff {
+    opacity: 0.3;
+    background: linear-gradient(to top left,
+           rgba(0,0,0,0) 0%,
+           rgba(0,0,0,0) calc(50% - 0.8px),
+           rgba(0,0,0,1) 50%,
+           rgba(0,0,0,0) calc(50% + 0.8px),
+           rgba(0,0,0,0) 100%)
+}
+
 
 nav button {
     transition: 0.15s ease-out all;

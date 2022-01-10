@@ -24,6 +24,7 @@
     font-weight: 600;
     font-size: 2.5vmin;
     transform: translateX(-50%);
+    width: max-content;
 }
 
 .instructions.hide{
@@ -247,10 +248,4 @@
 
 .gamePage footer {
     grid-area: footer;
-    width: 100vw;
-}
-
-.gamePage nav {
-    grid-area: nav;
-    width: 100vw;
 }

@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
 import { useStoreState } from 'easy-peasy';
+import { audio } from '../../audio';
 import $ from 'jquery';
 import './ships.css';
 import '../boards/board.css';
@@ -21,6 +21,7 @@ const Ships = () => {
 
     const onShipSelect = (e) => {
         if (!shipIsSelected && gameRoute === 'placeShips') {
+            audio.buttonClick.play();
             const userBoard = document.querySelector('.userBoard');
             shipIsSelected = true;
             selectedShip = e.target.parentElement;
@@ -71,6 +72,7 @@ const Ships = () => {
 
     window.onclick = (e) => {
         if (shipIsSelected && e.target.classList.contains('singleSquare') && rotating === false && areaIsClear()) {
+            audio.buttonClick.play();
             selectedShip.style.zIndex = '3';
             document.querySelector('.userBoard').style.cursor = 'default';
             // selectedShip.style.backgroundColor = null;
@@ -95,6 +97,7 @@ const Ships = () => {
 
     window.oncontextmenu = (e) => {
          if (shipIsSelected) {
+            audio.hoverSound.play();
             if (orientation === 'hor') {
                 selectedShip.style.transform = 'rotate(-90deg)';
                 orientation = 'vert';
@@ -117,6 +120,7 @@ const Ships = () => {
         // Rotate the selected ship by pressing the 'space' key
 
         if (e.code === 'Space' && selectedShip.style !== undefined && shipIsSelected) {
+            audio.hoverSound.play();
             if (orientation === 'hor') {
                 selectedShip.style.transform = 'rotate(-90deg)';
                 orientation = 'vert';

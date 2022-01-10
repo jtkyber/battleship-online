@@ -1,29 +1,10 @@
 import React, { useEffect } from 'react';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import Board from './Board';
-import { Howl } from 'howler';
-import hitSound from '../../audioclips/hit-sound.mp3';
-import missSound from '../../audioclips/miss-sound.mp3';
-import shipSunkSound from '../../audioclips/ship-sunk.mp3';
+import { audio } from '../../audio';
 import './board.css';
 
 const OpponentBoard = ({ socket }) => {
-
-    const audioClips = [
-        {sound: hitSound, label: 'hit', volume: 1},
-        {sound: missSound, label: 'miss', volume: 0.5},
-        {sound: shipSunkSound, label: 'sunk', volume: 1}
-    ]
-
-    const soundPlay = (src) => {
-        const sound = new Howl({
-            src: src.sound,
-            volume: src.volume,
-            html5: true
-        })
-        sound.play();
-    }
-
     const { friendSocket, yourTurn } = useStoreState(state => ({
         friendSocket: state.friendSocket,
         yourTurn: state.yourTurn
@@ -33,14 +14,6 @@ const OpponentBoard = ({ socket }) => {
         setYourTurn: actions.setYourTurn
         
     }));
-
-    const playShotSound = (soundEffect) => {
-        audioClips.forEach(clip => {
-            if (clip.label === soundEffect ) {
-                soundPlay(clip);
-            }
-        })
-    }
     
     const hitSquares = [];
     const countHitsOnShip = (ship) => {
@@ -62,18 +35,18 @@ const OpponentBoard = ({ socket }) => {
                 clickedSquare.classList.add(`_${data.shipHit}`)
                 if (countHitsOnShip(data.shipHit) === parseInt(document.querySelector(`.${data.shipHit}`).id)) {
                     const squares = document.querySelectorAll('.singleSquare');
-                    playShotSound('sunk');
+                    audio.shipSunkSound.play();
                     for (let square of squares) {
                         if (square.classList.contains(`_${data.shipHit}`)) {
                             square.classList.add('shipSunk');
                         }
                     }
                 } else {
-                    playShotSound('hit');
+                    audio.hitSound.play();
                 }
             } else if (data.result === 'miss' && clickedSquare.classList !== undefined) {
                 clickedSquare.classList.add('missMarker');
-                playShotSound('miss');
+                audio.missSound.play();
             }
         })
 

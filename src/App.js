@@ -11,19 +11,14 @@ import Leaderboard from './components/leaderboard/Leaderboard';
 import Navigation from './components/navigation/Navigation';
 import Footer from './components/footer/Footer';
 import { socket } from './socket/socketImport';
-import { Howl } from 'howler';
-import ambientWaves from './audioclips/ambient-waves.mp3';
-import lobbyTheme from './audioclips/lobby-theme.mp3';
-import gameTheme from './audioclips/game-theme.mp3';
-import buttonClick from './audioclips/button-click.mp3';
-import hoverSound from './audioclips/hover-sound.mp3';
+import { audio } from './audio';
 import './logReg.css';
 import './homePageLogged.css';
 import './gamePage.css';
 import './leaderboard.css';
 
 function App() {
-    const { getOnlineFriendsInterval, route, user, friendSocket, findMatchInterval, checkOppStatusInterval, search, updatLastOnlineInterval, playGameAudio, playLobbyMusic, waveSound, lobbyMusic, gameMusic } = useStoreState(state => ({
+    const { getOnlineFriendsInterval, route, user, friendSocket, findMatchInterval, checkOppStatusInterval, search, updatLastOnlineInterval, soundOn, musicOn } = useStoreState(state => ({
         getOnlineFriendsInterval: state.getOnlineFriendsInterval,
         route: state.route,
         user: state.user,
@@ -32,14 +27,11 @@ function App() {
         checkOppStatusInterval: state.checkOppStatusInterval,
         search: state.search,
         updatLastOnlineInterval: state.updatLastOnlineInterval,
-        playGameAudio: state.playGameAudio,
-        playLobbyMusic: state.playLobbyMusic,
-        waveSound: state.waveSound,
-        lobbyMusic: state.lobbyMusic,
-        gameMusic: state.gameMusic
+        soundOn: state.stored.soundOn,
+        musicOn: state.stored.musicOn
     }));
 
-    const { setRoute, setUser, setCurrentSocket, setSearch, setUpdatLastOnlineInterval, setAllFriends, setUnsortedFriends, setFriendsOnline, setFriendSearch, setPlayerIsReady, setPlayGameAudio, setPlayLobbyMusic, setWaveSound, setLobbyMusic, setGameMusic } = useStoreActions(actions => ({
+    const { setRoute, setUser, setCurrentSocket, setSearch, setUpdatLastOnlineInterval, setAllFriends, setUnsortedFriends, setFriendsOnline, setFriendSearch, setPlayerIsReady, setSoundOn, setMusicOn } = useStoreActions(actions => ({
         setRoute: actions.setRoute,
         setUser: actions.setUser,
         setCurrentSocket: actions.setCurrentSocket,
@@ -50,34 +42,127 @@ function App() {
         setFriendsOnline: actions.setFriendsOnline,
         setFriendSearch: actions.setFriendSearch,
         setPlayerIsReady: actions.setPlayerIsReady,
-        setPlayGameAudio: actions.setPlayGameAudio,
-        setPlayLobbyMusic: actions.setPlayLobbyMusic,
-        setWaveSound: actions.setWaveSound,
-        setLobbyMusic: actions.setLobbyMusic,
-        setGameMusic: actions.setGameMusic
+        setSoundOn: actions.setSoundOn,
+        setMusicOn: actions.setMusicOn,
     }));
 
-    const audioClips = [
-        {sound: buttonClick, label: 'btn', volume: 1},
-        {sound: hoverSound, label: 'hover', volume: 1}
-    ]
+    useEffect(() => {
+        const page = document.querySelector('.logRegPage');
+        page.addEventListener('mousedown', handleMouseDown);
+        document.addEventListener('mousedown', handleBtnPress);
+        document.addEventListener('mouseover', handleMouseOver);
 
-    const soundPlay = (src) => {
-        const sound = new Howl({
-            src: src.sound,
-            volume: src.volume,
-            html5: true
+        socket.on('connect', () => {
+            setCurrentSocket(socket.id);
         })
-        sound.play();
-    }
+        guestCleanup();
 
-    const playSound = (soundEffect) => {
-        audioClips.forEach(clip => {
-            if (clip.label === soundEffect ) {
-                soundPlay(clip);
+        return () => {
+            socket.off('connect');
+            page.removeEventListener('mousedown', handleMouseDown);
+            document.removeEventListener('mousedown', handleBtnPress);
+            document.removeEventListener('mouseover', handleMouseOver);
+        }
+    }, [])
+
+    useEffect(() => {
+        if (soundOn) {
+            audio.ambientWaves.mute(false);
+            audio.buttonClick.mute(false);
+            audio.hoverSound.mute(false);
+            audio.hitSound.mute(false);
+            audio.missSound.mute(false);
+            audio.shipSunkSound.mute(false);
+        } else {
+            audio.ambientWaves.mute(true);
+            audio.buttonClick.mute(true);
+            audio.hoverSound.mute(true);
+            audio.hitSound.mute(true);
+            audio.missSound.mute(true);
+            audio.shipSunkSound.mute(true);
+        }
+    }, [soundOn])
+
+    useEffect(() => {
+        if (musicOn) {
+            audio.lobbyTheme.mute(false);
+            audio.gameTheme.mute(false);
+        } else {
+            audio.lobbyTheme.mute(true);
+            audio.gameTheme.mute(true);
+        }
+    }, [musicOn])
+
+    useEffect(() => {
+        if (user?.username?.length) {
+            if (route !== 'login' && route !== 'register') {
+                stopSearching();
+                updateInGameStatus(false);
             }
-        })
-    }
+            setUpdatLastOnlineInterval(setInterval(updateLastOnline, 1000));
+        } else {
+            clearInterval(updatLastOnlineInterval);
+            clearInterval(findMatchInterval);
+        }
+
+        return () => {
+            clearInterval(updatLastOnlineInterval);
+        }
+    }, [user?.username])
+
+    useEffect(() => {
+        if (!search) {
+            clearInterval(findMatchInterval);
+            if (user?.username) {
+                stopSearching();
+            }
+        }
+    }, [search])
+
+    useEffect(() => {
+        if (route === 'game') {
+            if (audio.lobbyTheme.playing()) {
+                audio.lobbyTheme.fade(0.5, 0, 2000);
+            } 
+            if (!audio.gameTheme.playing()) {
+                console.log('test')
+                audio.gameTheme.fade(0, 0.3, 0);
+            }
+            if (!audio.ambientWaves.playing()) {
+                audio.ambientWaves.fade(0, 0.2, 1000);
+            }
+            setSearch(false);
+            clearInterval(getOnlineFriendsInterval);
+            stopSearching();
+            updateInGameStatus(true);
+        } else {
+            if (!audio.lobbyTheme.playing()) {
+                audio.lobbyTheme.fade(0, 0.5, 0);
+            } 
+            if (audio.gameTheme.playing()) {
+                audio.gameTheme.fade(0.3, 0, 2000);
+            }
+            if (audio.ambientWaves.playing()) {
+                audio.ambientWaves.fade(0.2, 0, 2000);
+            }
+            setPlayerIsReady(false);
+            if (user?.username?.length) {
+                updateInGameStatus(false);
+            }
+            clearInterval(checkOppStatusInterval);
+        }
+
+        if ((route === 'login') || (route === 'register')) {
+            if (user?.hash !== 'guest') {
+                setUser(null);
+            }
+            clearInterval(getOnlineFriendsInterval);
+            setAllFriends([]);
+            setUnsortedFriends([]);
+            setFriendsOnline([]);
+            setFriendSearch('');
+        }
+    }, [route])
 
     const onRouteChange = async (e) => {
         switch(e.target.value) {
@@ -167,181 +252,34 @@ function App() {
     }
 
     const handleMouseDown = (e) => {
-        if (!lobbyMusic && !playLobbyMusic && route !== 'game') {
-            setPlayLobbyMusic(true);
+        if (!audio.lobbyTheme.playing() && route !== 'game') {
+            audio.lobbyTheme.play();
         }
     }
 
     const handleBtnPress = (e) => {
-        if (e.target.tagName === 'BUTTON') {
-            playSound('btn');
+        if (
+            ((e.target.tagName === 'BUTTON') && (!e.target.classList.contains('messageToggle')))
+            ||
+            (e.target?.alt === 'Message Icon')
+            ||
+            (e.target.classList.contains('audioToggle'))
+        ) {
+            audio.buttonClick.play();
         }
     }
 
     const handleMouseOver = (e) => {
         if (
-            e.target.parentElement.classList.contains('findMatchContainer') || e.target.parentElement.classList.contains('playAsGuest') 
-            || 
-            e.target.classList.contains('friendRequestBtn') 
-            || 
-            e.target.classList.contains('friendOnlineBtn')
-            || 
-            e.target.parentElement.classList.contains('readyBtn')
+            ((e.target.tagName === 'BUTTON') && (!e.target.classList.contains('messageToggle')))
+            ||
+            (e.target?.alt === 'Message Icon')
+            ||
+            (e.target.classList.contains('audioToggle'))
         ) {
-            playSound('hover');
+            audio.hoverSound.play();
         }
     }
-
-    useEffect(() => {
-        const page = document.querySelector('.logRegPage');
-        page.addEventListener('mousedown', handleMouseDown);
-        document.addEventListener('mousedown', handleBtnPress);
-        document.addEventListener('mouseover', handleMouseOver);
-
-        socket.on('connect', () => {
-            setCurrentSocket(socket.id);
-        })
-        guestCleanup();
-
-        return () => {
-            socket.off('connect');
-            page.removeEventListener('mousedown', handleMouseDown);
-            document.removeEventListener('mousedown', handleBtnPress);
-            document.removeEventListener('mouseover', handleMouseOver);
-        }
-    }, [])
-
-    useEffect(() => {
-        if (waveSound) {
-            waveSound.play();
-            waveSound.fade(0, 0.2, 1000);
-        }
-
-    }, [waveSound])
-
-    useEffect(() => {
-        if (lobbyMusic) {
-            lobbyMusic.play();
-        }
-
-    }, [lobbyMusic])
-
-    useEffect(() => {
-        if (gameMusic) {
-            gameMusic.play();
-        }
-
-    }, [gameMusic])
-    
-    useEffect(() => {
-        if (playGameAudio) {
-            if (!waveSound) {
-                setWaveSound(new Howl({
-                    src: ambientWaves,
-                    loop: true,
-                    volume: 0.3
-                }))
-            }
-            if (!gameMusic) {
-                setGameMusic(new Howl({
-                    src: gameTheme,
-                    loop: true,
-                    volume: 0.3,
-                    html5: true
-                }))
-            }
-        } else {
-            if (waveSound) {
-                waveSound.fade(0.3, 0, 1000);
-                setWaveSound(null);
-            }
-            if (gameMusic) {
-                gameMusic.fade(0.3, 0, 2000);
-                setGameMusic(null);
-            }
-        }
-
-    }, [playGameAudio])
-
-    useEffect(() => {
-        if (playLobbyMusic) {
-            if (!lobbyMusic) {
-                setLobbyMusic(new Howl({
-                    src: lobbyTheme,
-                    loop: true,
-                    volume: 0.3,
-                    html5: true
-                }))
-            } 
-        } else {
-            if (lobbyMusic) {
-                lobbyMusic.fade(0.3, 0, 2000);
-                setLobbyMusic(null);
-            }
-        }
-
-    }, [playLobbyMusic])
-
-    useEffect(() => {
-        if (user?.username?.length) {
-            if (route !== 'login' && route !== 'register') {
-                stopSearching();
-                updateInGameStatus(false);
-            }
-            setUpdatLastOnlineInterval(setInterval(updateLastOnline, 1000));
-        } else {
-            clearInterval(updatLastOnlineInterval);
-            clearInterval(findMatchInterval);
-        }
-
-        return () => {
-            clearInterval(updatLastOnlineInterval);
-        }
-    }, [user?.username])
-
-    useEffect(() => {
-        if (!search) {
-            clearInterval(findMatchInterval);
-            if (user?.username) {
-                stopSearching();
-            }
-        }
-    }, [search])
-
-    useEffect(() => {
-        if (route === 'game') {
-            setPlayLobbyMusic(false);
-            if (!playGameAudio) {
-                setPlayGameAudio(true);
-            }
-            setSearch(false);
-            clearInterval(getOnlineFriendsInterval);
-            stopSearching();
-            updateInGameStatus(true);
-        } else {
-            setPlayGameAudio(false);
-            if (!playLobbyMusic) {
-                setPlayLobbyMusic(true);
-            }
-            setPlayerIsReady(false);
-            if (user?.username?.length) {
-                updateInGameStatus(false);
-            }
-            clearInterval(checkOppStatusInterval);
-        }
-
-        if ((route === 'login') || (route === 'register')) {
-            if (user?.hash !== 'guest') {
-                setUser(null);
-            }
-            clearInterval(getOnlineFriendsInterval);
-            setAllFriends([]);
-            setUnsortedFriends([]);
-            setFriendsOnline([]);
-            setFriendSearch('');
-        }
-    }, [route])
-
 
     const updateInGameStatus = async (inGame) => {
         try {
@@ -423,12 +361,14 @@ function App() {
         if ((e.code === 'Enter') && (route === 'login' || route === 'register')) {
             e.preventDefault();
             if ((logUsername?.value?.length && logPassword?.value?.length) || (registerUsername?.value?.length && registerPassword?.value?.length)) {
+                audio.buttonClick.play();
                 route === 'login'
                 ? loginBtn.click()
                 : registerBtn.click()
             }
         } else if ((e.code === 'Enter') && (route === 'loggedIn')) {
             e.preventDefault();
+            audio.buttonClick.play();
             friendRequestBtn.click();
         }
     };
