@@ -59,7 +59,8 @@
 }
 
 .logRegPage.mobile > .logReg {
-    
+    position: absolute;
+    align-items: center;
 }
 
 .logRegPage nav {

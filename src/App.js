@@ -49,6 +49,7 @@ function App() {
     }));
 
     useEffect(() => {
+        setIsMobile(true);
         const page = document.querySelector('.logRegPage');
         page.addEventListener('mousedown', handleMouseDown);
         document.addEventListener('mousedown', handleBtnPress);
