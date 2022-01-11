@@ -3,6 +3,7 @@
     height: 100vh;
     display: grid;
     grid-template-columns: 15rem 1fr;
+    grid-template-rows: 3rem -webkit-max-content -webkit-max-content 1fr 2rem;
     grid-template-rows: 3rem max-content max-content 1fr 2rem;
     grid-template-areas:
             "nav nav"
@@ -17,6 +18,7 @@
     min-height: 100vh;
     display: grid;
     grid-template-columns: 1fr;
+    grid-template-rows: 3rem -webkit-max-content -webkit-max-content 1fr 2rem;
     grid-template-rows: 3rem max-content max-content 1fr 2rem;
     grid-template-areas:
             "nav"
@@ -49,7 +51,11 @@
 }
 
 .logReg {
+    width: -webkit-max-content;
+    width: -moz-max-content;
     width: max-content;
+    height: -webkit-max-content;
+    height: -moz-max-content;
     height: max-content;
     grid-area: logReg;
     display: flex;
@@ -94,13 +100,10 @@
     opacity: 0.9;
 }
 
-.logRegPage.mobile .login, .logRegPage.mobile .register {
-    /* margin-top: 40% */
-}
-
 .login h1, .register h1 {
     color: white;
     font-size: 3rem;
+    margin-bottom: 1rem;
 }
 
 .login .username:before, .register .username:before {
@@ -113,24 +116,35 @@
 }
 
 .login .username, .register .username {
-    min-height: 6.5rem;
+    position: relative;
+    height: max-content;
+    width: 13rem;
+    max-width: 90vw;
     display: flex;
     flex-flow: nowrap column;
     justify-content: flex-end;
     align-items: center;
-    padding: 0 0.5rem;
+    margin-bottom: 1rem;
 }
 
 .login .password, .register .password {
-    min-height: 3rem;
+    position: relative;
+    height: max-content;
+    width: 13rem;
+    max-width: 90vw;
     display: flex;
     flex-flow: nowrap column;
     justify-content: flex-start;
     align-items: center;
-    padding: 0 0.5rem;
+    margin-bottom: 1rem;
 }
 
-.login h4, .register h4 {
+.login h4 {
+    color: white;
+    font-size: 1.2rem;
+}
+
+.register h4 {
     color: white;
     font-size: 1.2rem;
 }
@@ -138,11 +152,13 @@
 .login input, .register input {
     box-sizing: border-box;
     min-height: 2.5rem;
-    width: 13rem;
-    margin-bottom: 1rem;
+    width: 100%;
     background-color: rgba(0, 0, 0, 0.4);
     border: 1px solid rgba(255, 255, 255, 1);
     outline: none;
+    color: white;
+    caret-color: white;
+    padding: 0.5rem;
 }
 
 .login input:hover, .register input:hover {
@@ -151,6 +167,16 @@
 
 .login input:focus, .register input:focus {
     border: 3px solid rgba(255, 255, 255, 1);
+}
+
+.logRegPage.mobile .login input:focus, .logRegPage.mobile .register input:focus {
+    position: fixed;
+    width: 90vw;
+    height: 4rem;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 6px solid rgba(255, 255, 255, 1);
 }
 
 .loginBtn, .registerBtn {
@@ -184,6 +210,7 @@
     grid-area: footer;
 }
 
+
 @media only screen and (min-width: 651px) and (max-width: 855px) {
     .homeText > h1 {
         transform: scale(0.70);
@@ -192,7 +219,7 @@
 
 @media only screen and (min-width: 500px) and (max-width: 650px) {
     .logReg {
-        transform: scale(0.8) translate(0, -4rem);
+        /* transform: scale(0.8) translate(0, -4rem); */
     }
     .homeText > h1 {
         transform: scale(0.60);
@@ -201,7 +228,7 @@
 
 @media only screen and (max-width: 499px) {
     .logReg {
-        transform: scale(0.8) translate(0, -4rem);
+        /* transform: scale(0.8) translate(0, -4rem); */
     }
     .homeText > h1 {
         transform: scale(0.50);
@@ -213,24 +240,7 @@
 
 
 @media only screen and (max-height: 499px) {
-    .logRegPage.mobile > .logReg {
-        /* bottom: 20%; */
-    }
     .logReg {
-        transform: scale(0.6) translate(0, -6rem);
-    }
-    /* .logRegPage {
-        background-color: rgba(0,0,0,0.7);
-        min-height: 100vh;
-        display: grid;
-        grid-template-columns: 15rem 1fr;
-        grid-template-rows: 3rem 1fr 2rem;
-        grid-template-areas:
-                "nav nav"
-                "friends logReg"
-                "footer footer";
-    } */
-    .homeText > h1 {
-        transform: scale(0.50);
+        transform: scale(0.8) translate(0, -4rem);
     }
 }

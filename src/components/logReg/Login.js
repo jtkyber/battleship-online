@@ -47,11 +47,11 @@ const Login = ({onRouteChange }) => {
             <h1>Log In</h1>
             <div className='username'>
                 <h4>Username</h4>
-                <input onChange={(e) => setUserName(e.target.value)} type='text' />
+                <input placeholder='Username...' onChange={(e) => setUserName(e.target.value)} type='text' />
             </div>
             <div className='password'>
                 <h4>Password</h4>
-                <input onChange={(e) => setPassword(e.target.value)} type='password' />
+                <input placeholder='Password...' onChange={(e) => setPassword(e.target.value)} type='password' />
             </div>
             <button className='loginBtn' value='login' onClick={onSubmitLogin}>Login</button>
             <button value='goToRegister' onClick={onRouteChange} className='changeLogReg'>Register</button>
