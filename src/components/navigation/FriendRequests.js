@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import './navigation.css';
-import msgIcon from './msg-icon.png';
+// import msgIcon from './msg-icon.png';
+import notificationIcon from './notification.png';
 import { Dropdown } from 'react-bootstrap';
+import 'animate.css';
 
 const FriendRequests = ({ socket }) => {
 
@@ -217,7 +219,7 @@ const FriendRequests = ({ socket }) => {
     return (
         <>
             <Dropdown className='dropdown'>
-              <Dropdown.Toggle variant="success" className='messageToggle' id="dropdown-basic"><img src={msgIcon} alt='Message Icon' /></Dropdown.Toggle>
+              <Dropdown.Toggle variant="success" className='messageToggle' id="dropdown-basic"><img src={notificationIcon} alt='Message Icon' /></Dropdown.Toggle>
               <Dropdown.Menu id='dropdowns'>
               {
                 friendRequests !== null
@@ -226,7 +228,7 @@ const FriendRequests = ({ socket }) => {
                     return (
                         <div key={request} className='dropdownItem'>
                             <div className='text'>Friend request from <h3 className="requesterName">{request}</h3></div>
-                            <div>
+                            <div className='acceptReject'>
                                 <button onClick={addFriendStart} id={request} className='acceptInvite'>Accept</button>
                                 <button onClick={onRemoveRequest} id={request} className='rejectInvite'>Reject</button>
                             </div>

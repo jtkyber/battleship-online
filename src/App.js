@@ -50,6 +50,49 @@ function App() {
         setPassword: actions.setPassword
     }));
 
+    const onRouteChange = async (e) => {
+        const value = e.target.getAttribute('value');
+        switch(value) {
+            case 'logOut':
+                if (user?.username) {
+                    setSearch(false);
+                    // removeUserSocket(true);
+                }
+                setRoute('login');
+                break;
+            case 'goToRegister':
+                setRoute('register');
+                break;
+            case 'goToLogin':
+                setRoute('login');
+                break;
+            case 'goHome':
+                setRoute('loggedIn');
+                break;
+            case 'goToLeaderboard':
+                setRoute('leaderboard');
+                break;
+            case 'login':
+                setRoute('loggedIn');
+                break;
+            case 'register':
+                setRoute('loggedIn');
+                break;
+            case 'game':
+                if (user?.username) {
+                    setSearch(false);
+                }
+                setRoute('game');
+                break;
+            default:
+                if (user?.username) {
+                    setSearch(false);
+                    // removeUserSocket(true);
+                }
+                setRoute('login');
+        }
+    }
+
     useEffect(() => {
         document.addEventListener('mousedown', handleMouseDown);
         document.addEventListener('mouseover', handleMouseOver);
@@ -170,48 +213,6 @@ function App() {
             setFriendSearch('');
         }
     }, [route])
-
-    const onRouteChange = async (e) => {
-        switch(e.target.value) {
-            case 'logOut':
-                if (user?.username) {
-                    setSearch(false);
-                    // removeUserSocket(true);
-                }
-                setRoute('login');
-                break;
-            case 'goToRegister':
-                setRoute('register');
-                break;
-            case 'goToLogin':
-                setRoute('login');
-                break;
-            case 'goHome':
-                setRoute('loggedIn');
-                break;
-            case 'goToLeaderboard':
-                setRoute('leaderboard');
-                break;
-            case 'login':
-                setRoute('loggedIn');
-                break;
-            case 'register':
-                setRoute('loggedIn');
-                break;
-            case 'game':
-                if (user?.username) {
-                    setSearch(false);
-                }
-                setRoute('game');
-                break;
-            default:
-                if (user?.username) {
-                    setSearch(false);
-                    // removeUserSocket(true);
-                }
-                setRoute('login');
-        }
-    }
 
     const stopSearching = async () => {
         try {

@@ -3,6 +3,10 @@ import { useStoreState, useStoreActions } from 'easy-peasy';
 import FriendRequests from './FriendRequests';
 import soundIcon from './sound-icon.png';
 import musicIcon from './music-icon.png';
+import leaderboardIcon from './leaderboard.png';
+import logOutIcon from './log-out.png';
+import homeIcon from './home-icon.png';
+import backArrow from './back-arrow.png';
 import './navigation.css';
 
 const Navigation = ({ socket, onRouteChange }) => {
@@ -55,24 +59,35 @@ const Navigation = ({ socket, onRouteChange }) => {
     return (
         <nav className='nav'>
             <div className='leftNav'>
-                <img alt='sound icon' src={soundIcon} onClick={setSoundClick} onTouchStart={setSoundTouch} className={`audioToggle ${soundOn ? 'soundOn' : 'soundOff'}`} />
-                <img alt='music icon' src={musicIcon} onClick={setMusicClick} onTouchStart={setMusicTouch} className={`audioToggle ${musicOn ? 'musicOn' : 'musicOff'}`} />
+                <img alt='sound icon' src={soundIcon} onClick={setSoundClick} onTouchStart={setSoundTouch} className={`audioToggle soundToggle ${soundOn ? 'soundOn' : 'soundOff'}`} />
+                <img alt='music icon' src={musicIcon} onClick={setMusicClick} onTouchStart={setMusicTouch} className={`audioToggle musicToggle ${musicOn ? 'musicOn' : 'musicOff'}`} />
             </div>
             <div className='rightNav'>
                 {
                 route === 'login' || route === 'register'
                 ?
                 <>
-                    <button value='goToLeaderboard' onClick={onRouteChange}>Leaderboard</button>
+                    <img className='leaderboardIcon' src={leaderboardIcon} alt='leaderboard' value='goToLeaderboard' onClick={onRouteChange} />
                 </>
                 :
                 route === 'loggedIn'
                 ?
-                <>
-                    <FriendRequests socket={socket} />
-                    <button value='goToLeaderboard' onClick={onRouteChange}>Leaderboard</button>
-                    <button value='logOut' onClick={onRouteChange}>Log Out</button>
-                </>
+                    !isMobile
+                    ?
+                    <>
+                        {/* <FriendRequests socket={socket} />
+                        <button value='goToLeaderboard' onClick={onRouteChange}>Leaderboard</button>
+                        <button value='logOut' onClick={onRouteChange}>Log Out</button> */}
+                        <FriendRequests socket={socket} />
+                        <img className='leaderboardIcon' src={leaderboardIcon} alt='leaderboard' value='goToLeaderboard' onClick={onRouteChange} />
+                        <img className='logOutIcon' src={logOutIcon} alt='log out' value='logOut' onClick={onRouteChange} />
+                    </>
+                    :
+                    <>
+                        <FriendRequests socket={socket} />
+                        <img className='leaderboardIcon' src={leaderboardIcon} alt='leaderboard' value='goToLeaderboard' onClick={onRouteChange} />
+                        <img className='logOutIcon' src={logOutIcon} alt='log out' value='logOut' onClick={onRouteChange} />
+                    </>
                 :
                 <>
                     {
@@ -81,25 +96,24 @@ const Navigation = ({ socket, onRouteChange }) => {
                         user?.username
                         ?
                         <>
-                            <FriendRequests socket={socket} />
-                            <button value='goHome' onClick={onRouteChange}>Back</button>
-                            <button value='logOut' onClick={onRouteChange}>Log Out</button>
+                            {/* <FriendRequests socket={socket} /> */}
+                            <img className='goHomeIcon' src={homeIcon} alt='go home' value='goHome' onClick={onRouteChange} />
+                            <img className='logOutIcon' src={logOutIcon} alt='log out' value='logOut' onClick={onRouteChange} />
                         </>
                         :
                         <>
-                            <button value='goToLogin' onClick={onRouteChange}>Back</button>
+                            <img className='goBackIcon' src={backArrow} alt='go back' value='goToLogin' onClick={onRouteChange} />
                         </>
                     : //route === 'game'
                         user.hash === 'guest'
                         ?
                         <>
-                            <button value='logOut' onClick={handleExitClick}>Exit</button>
+                            <img className='logOutIcon' src={logOutIcon} alt='log out' value='logOut' onClick={handleExitClick} />
                         </>
                         :
                         <>
-                            <FriendRequests socket={socket} />
-                            <button value='goHome' onClick={handleExitClick}>Exit</button>
-                            <button value='logOut' onClick={handleExitClick}>Log Out</button>
+                            <img className='goHomeIcon' src={homeIcon} alt='go home' value='goHome' onClick={handleExitClick} />
+                            <img className='logOutIcon' src={logOutIcon} alt='log out' value='logOut' onClick={handleExitClick} />
                         </>
                     }
                 </>

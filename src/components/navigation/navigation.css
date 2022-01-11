@@ -5,9 +5,10 @@ nav {
     color: green;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    align-items: center;
+    align-items: end;
     padding-right: 1.5rem;
     padding-left: 1.5rem;
+    padding-bottom: 0.5rem;
     --notification-color: transparent;
 }
 
@@ -15,32 +16,39 @@ nav {
     display: flex;
     flex-flow: row nowrap;
     justify-self: start;
+    align-items: flex-end;
     gap: 1rem;
+    height: 2rem;
+    overflow: visible;
 }
 
 .rightNav {
     display: flex;
     flex-flow: row nowrap;
     justify-self: end;
+    align-items: flex-end;
+    gap: 0.5rem;
+    height: 2rem;
+    overflow: visible;
 }
 
 .audioToggle {
     opacity: 0.5;
     transition: all 0.15s ease-out;
     cursor: pointer;
+    height: min-content;
 }
 
 .audioToggle:hover {
     opacity: 0.3;
 }
 
-
-.soundOn {
-    
+.soundToggle {
+    /* margin-bottom: -0.2rem; */
 }
 
-.musicOn {
-    
+.musicToggle {
+    margin-bottom: -0.1rem;
 }
 
 .soundOff {
@@ -63,11 +71,6 @@ nav {
            rgba(0,0,0,0) 100%)
 }
 
-
-nav button {
-    transition: 0.15s ease-out all;
-}
-
 nav button:hover{
     opacity: 0.5;
 }
@@ -77,26 +80,33 @@ nav button {
     border: none;
     color: rgba(0,200,20,0.8);
     font-size: 1rem;
-    margin: 0 0.1rem;
+    display: flex;
+    align-content: flex-end;
+    transition: 0.15s ease-out all;
 }
 
 #dropdown-basic {
-    width: 2.5rem;
-    height: 2.5rem;
-    margin-right: 0.3rem;
-    margin-top: 0.2rem;
+    opacity: 0.5;
 }
 
-nav #dropdown-basic::before {
+nav #dropdown-basic {
+    position: relative;
+}
+
+nav #dropdown-basic:before {
     position: absolute;
     content: "";
     width: 0.5rem;
     height: 0.5rem;
     background-color: var(--notification-color);
     border-radius: 50%;
-    margin-top: 0.3rem;
-    margin-left: 0.2rem;
+    top: 0;
+    left: 0.6rem;
     z-index: 100;
+}
+
+nav #dropdown-basic > img {
+    margin-bottom: -0.2rem;
 }
 
 nav img {
@@ -107,28 +117,75 @@ nav img {
        object-fit: contain;
     -webkit-filter: invert(100%);
             filter: invert(100%);
+    cursor: pointer;
+    transition: all 0.15s ease-out;
 }
 
-#dropdowns {
-    background: rgba(0,0,0,0.6);
+nav img:hover {
+    opacity: 0.3;
+}
+
+.leaderboardIcon {
+    opacity: 0.5;
+    height: min-content;
+}
+
+.logOutIcon {
+    opacity: 0.5;
+    margin-left: 0.5rem;
+    height: min-content;
+}
+
+.goHomeIcon {
+    opacity: 0.5;
+    height: min-content;
+    /* margin-left: 0.5rem; */
+}
+
+.goBackIcon {
+    opacity: 0.5;
+    height: min-content;
+}
+
+.dropdown {
+    /* position: relative; */
+}
+
+.dropdown-menu {
+    position: fixed !important;
+    background: rgba(0,0,0,0.4);
+    border-left: 3px solid rgb(255, 255, 255, 0.3);
     display: flex;
     flex-flow: wrap column;
-    margin-top: 0.2rem;
-    width: 12rem;
+    width: -webkit-max-content;
+    width: -moz-max-content;
+    width: max-content;
     z-index: 1000;
+    transform: translate(calc(100vw - 100%), 3rem) !important;
+    transition: max-height 1s linear;
+    max-height: 0;
+    display: block;
+    overflow: hidden;
+    opacity: 0;
+}
+
+.dropdown-menu.show {
+    opacity: 1;
+    max-height: 100%;
 }
 
 .dropdownItem {
     /*padding: 1rem;*/
-    border: 2px solid black;
+    border-bottom: 3px solid rgb(255, 255, 255, 0.3);
     border-top: none;
     height: 4.2rem;
+    width: 12rem;
     display: flex;
-    flex-flow: wrap column;
+    flex-flow: nowrap column;
     justify-content: center;
     align-items: center;
     opacity: 0.8;
-    padding: 0.2rem;
+    padding: 0.5rem 0.2rem;
 }
 
 .text {
@@ -141,6 +198,13 @@ nav img {
 
 .requesterName {
     font-weight: 600;
+}
+
+.acceptReject {
+    display: flex;
+    flex-flow: nowrap row;
+    gap: 1rem;
+    opacity: 0.8;
 }
 
 .acceptInvite {
