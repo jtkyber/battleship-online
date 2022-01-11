@@ -268,8 +268,8 @@ function App() {
             logReg.classList.add('raisedTextBox')
             
         } else {
-            if (logReg.classList.contains('raisedTextBox')) {
-                logReg.classList.remove('raisedTextBox');
+            if (logReg?.classList.contains('raisedTextBox')) {
+                logReg?.classList.remove('raisedTextBox');
             }
         }
     }
