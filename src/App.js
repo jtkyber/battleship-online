@@ -51,11 +51,13 @@ function App() {
     }));
 
     useEffect(() => {
+        if (isMobile) {
+            audio.hoverSound.mute(true);
+        }
         const page = document.querySelector('.logRegPage');
         page.addEventListener('mousedown', handleMouseDown);
         document.addEventListener('mousedown', handleBtnPress);
         document.addEventListener('mouseover', handleMouseOver);
-        window.addEventListener('resize', handleViewportResize);
 
         socket.on('connect', () => {
             setCurrentSocket(socket.id);
@@ -73,7 +75,9 @@ function App() {
     useEffect(() => {
         if (soundOn) {
             audio.ambientWaves.mute(false);
-            audio.buttonClick.mute(false);
+            if (!isMobile) {
+                audio.buttonClick.mute(false);
+            }
             audio.hoverSound.mute(false);
             audio.hitSound.mute(false);
             audio.missSound.mute(false);
@@ -81,7 +85,9 @@ function App() {
         } else {
             audio.ambientWaves.mute(true);
             audio.buttonClick.mute(true);
-            audio.hoverSound.mute(true);
+            if (!isMobile) {
+                audio.hoverSound.mute(true);
+            }
             audio.hitSound.mute(true);
             audio.missSound.mute(true);
             audio.shipSunkSound.mute(true);
@@ -255,15 +261,6 @@ function App() {
             if (!response.ok) {throw new Error('Problem adding guest')}
         } catch(err) {
             console.log(err);
-        }
-    }
-
-    const handleViewportResize = () => {
-        const logReg = document.querySelector('.logReg');
-        const username = document.querySelector('.username input');
-        const password = document.querySelector('.password input');
-        if (isMobile && (route === 'login' || route === 'register') && logReg.classList.contains('raisedTextBox') && (username !== document.activeElement && password !== document.activeElement)) {
-            logReg.classList.remove('raisedTextBox');
         }
     }
 
