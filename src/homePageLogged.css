@@ -10,6 +10,18 @@
         "footer footer";
 }
 
+.homePageLogged.mobile {
+    background-color: rgba(0,0,0,0.7);
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 3rem 1fr 2rem;
+    grid-template-areas:
+        "nav"
+        "matchAndBoard"
+        "footer";
+}
+
 .homePageLogged.hide {
     display: none;
 }
@@ -34,10 +46,16 @@
     justify-content: center;
     align-items: center;
     grid-area: matchAndBoard;
+    animation: fadeInMatchAndBoard 0.3s ease-out;
 }
 
-.matchAndBoard .homeBoard {
-    
+@keyframes fadeInMatchAndBoard {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+}
+
+.matchAndBoard.hide {
+    display: none;
 }
 
 .homeBoard .singleSquare {

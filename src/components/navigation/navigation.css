@@ -1,4 +1,5 @@
 nav {
+    position: relative;
     grid-area: nav;
     background-color: rgba(0,0,0,0.3);
     border-bottom: 2px solid rgba(255,255,255,0.2);
@@ -145,6 +146,14 @@ nav img:hover {
 .goBackIcon {
     opacity: 0.5;
     height: min-content;
+}
+
+.friendsIcon {
+    position: absolute;
+    opacity: 0.5;
+    height: min-content;
+    left: 50%;
+    transform: translate(-50%);
 }
 
 .dropdown {

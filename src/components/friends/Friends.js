@@ -5,14 +5,16 @@ import './friends.css';
 
 const Friends = ({ socket }) => {
     
-    const { unsortedFriends, user, allFriends, friendFilter, friendSearch, friendsOnline, getOnlineFriendsInterval } = useStoreState(state => ({
+    const { unsortedFriends, user, allFriends, friendFilter, friendSearch, friendsOnline, getOnlineFriendsInterval, isMobile, showFriendsMobile } = useStoreState(state => ({
         unsortedFriends: state.unsortedFriends,
         user: state.user,
         allFriends: state.allFriends,
         friendFilter: state.friendFilter,
         friendSearch: state.friendSearch,
         friendsOnline: state.friendsOnline,
-        getOnlineFriendsInterval: state.getOnlineFriendsInterval
+        getOnlineFriendsInterval: state.getOnlineFriendsInterval,
+        isMobile: state.stored.isMobile,
+        showFriendsMobile: state.showFriendsMobile
     }));
 
     const { setUnsortedFriends, setAllFriends, setFriendFilter, setFriendSearch, setFriendsOnline, setGetOnlineFriendsInterval } = useStoreActions(actions => ({
@@ -220,14 +222,12 @@ const Friends = ({ socket }) => {
     }
 
     return (
-        <div className='friendsContainer'>
+        <div className={`friendsContainer ${isMobile ? 'mobile' : null} ${!showFriendsMobile ? 'hide' : null}`}>
             <div className='friendsContainerHeader'>
                     <h2>Friends</h2>
                     <input className='friendSearch' onChange={(e) => setFriendFilter(e.target.value)} type='text' placeholder='Enter a username'/>
             </div>
             <div className='friendsSection'>
-
-
                 <div className='friendsListContainer'>
                 {
                     allFriends.length

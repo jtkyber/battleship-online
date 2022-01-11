@@ -50,6 +50,7 @@ const model = {
     inviteSent: false,
     inviteReceived: false,
     playerTurnText: '',
+    showFriendsMobile: false,
 
     //Actions
 
@@ -171,6 +172,10 @@ const model = {
 
     setIsMobile: action((state, input) => {
         state.stored.isMobile = input;
+    }),
+
+    setShowFriendsMobile: action((state) => {
+        state.showFriendsMobile = !state.showFriendsMobile;
     }),
 }
 

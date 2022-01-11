@@ -7,6 +7,7 @@ import leaderboardIcon from './leaderboard.png';
 import logOutIcon from './log-out.png';
 import homeIcon from './home-icon.png';
 import backArrow from './back-arrow.png';
+import friendsIcon from './friends-icon.png';
 import './navigation.css';
 
 const Navigation = ({ socket, onRouteChange }) => {
@@ -20,10 +21,11 @@ const Navigation = ({ socket, onRouteChange }) => {
         isMobile: state.stored.isMobile
     }));
 
-    const { setSearch, setSoundOn, setMusicOn } = useStoreActions(actions => ({
+    const { setSearch, setSoundOn, setMusicOn, setShowFriendsMobile } = useStoreActions(actions => ({
         setSearch: actions.setSearch,
         setSoundOn: actions.setSoundOn,
-        setMusicOn: actions.setMusicOn
+        setMusicOn: actions.setMusicOn,
+        setShowFriendsMobile: actions.setShowFriendsMobile
     }));
 
     const handleExitClick = (e) => {
@@ -84,6 +86,7 @@ const Navigation = ({ socket, onRouteChange }) => {
                     </>
                     :
                     <>
+                        <img className='hasSound friendsIcon' src={friendsIcon} alt='friends' onClick={setShowFriendsMobile} />
                         <FriendRequests socket={socket} />
                         <img className='hasSound leaderboardIcon' src={leaderboardIcon} alt='leaderboard' value='goToLeaderboard' onClick={onRouteChange} />
                         <img className='hasSound logOutIcon' src={logOutIcon} alt='log out' value='logOut' onClick={onRouteChange} />

@@ -9,6 +9,30 @@
     --add-friend-alert: "";
 }
 
+.friendsContainer.mobile {
+  position: absolute;
+  width: 100vw;
+  /* height: calc(100vh - 5rem); */
+  top: 3rem;
+  bottom: 2rem;
+  background-color: rgba(0,0,0,0.4);
+  border: 2px solid rgba(255,255,255,0.4);
+  border-left: none;
+  border-top: none;
+  border-bottom: none;
+  --add-friend-alert: "";
+  animation: slideDownFriends 0.5s ease-out;
+}
+
+@keyframes slideDownFriends {
+  0% {bottom: 100vh;}
+  100% {bottom: 2rem;}
+}
+
+.friendsContainer.hide {
+  display: none;
+}
+
 .leaderboard > .friendsContainer {
   display: none;
 }
@@ -19,6 +43,10 @@
     flex-flow: nowrap column;
     align-items: center;
     justify-content: flex-start;
+}
+
+.friendsContainer.mobile .friendsSection {
+
 }
 
 .logToSeeFriendsText {
@@ -84,6 +112,12 @@
     overflow-x: hidden;
     width: 15rem;
     margin-bottom: 18.5rem;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.friendsContainer.mobile .friendsListContainer::-webkit-scrollbar {
+  display: none;
 }
 
 .friendsListContainer::-webkit-scrollbar {
@@ -117,6 +151,10 @@
     padding: 1rem 0;
     -webkit-animation: 0.5s linear 0s 1 slideUp;
             animation: 0.5s linear 0s 1 slideUp;
+}
+
+.friendsContainer.mobile .friendsList {
+  
 }
 
 @-webkit-keyframes slideUp {
@@ -155,6 +193,24 @@
     background-color: rgba(0,0,0,0.3);
     z-index: 99;
 }
+/* 
+.friendsContainer.mobile .addFriend {
+    width: 13rem;
+    height: 8rem;
+    display: flex;
+    flex-flow: wrap column;
+    justify-content: center;
+    align-items: center;
+    bottom: 0;
+    position: absolute;
+    border: 1px solid rgba(255,255,255,0.8);
+    border-bottom: none;
+    border-radius: 15px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    background-color: rgba(0,0,0,0.3);
+    z-index: 99;
+} */
 
 .addFriend > h3 {
     height: 3.5rem;

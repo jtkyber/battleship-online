@@ -18,7 +18,7 @@ import './gamePage.css';
 import './leaderboard.css';
 
 function App() {
-    const { getOnlineFriendsInterval, route, user, friendSocket, findMatchInterval, checkOppStatusInterval, search, updatLastOnlineInterval, soundOn, musicOn, isMobile } = useStoreState(state => ({
+    const { getOnlineFriendsInterval, route, user, friendSocket, findMatchInterval, checkOppStatusInterval, search, updatLastOnlineInterval, soundOn, musicOn, isMobile, showFriendsMobile } = useStoreState(state => ({
         getOnlineFriendsInterval: state.getOnlineFriendsInterval,
         route: state.route,
         user: state.user,
@@ -29,7 +29,8 @@ function App() {
         updatLastOnlineInterval: state.updatLastOnlineInterval,
         soundOn: state.stored.soundOn,
         musicOn: state.stored.musicOn,
-        isMobile: state.stored.isMobile
+        isMobile: state.stored.isMobile,
+        showFriendsMobile: state.showFriendsMobile
     }));
 
     const { setRoute, setUser, setCurrentSocket, setSearch, setUpdatLastOnlineInterval, setAllFriends, setUnsortedFriends, setFriendsOnline, setFriendSearch, setPlayerIsReady, setSoundOn, setMusicOn, setIsMobile, setUserName, setPassword } = useStoreActions(actions => ({
@@ -431,7 +432,7 @@ function App() {
                     <div className={`homePageLogged ${route === 'leaderboard' ? 'hide' : null} ${isMobile ? 'mobile' : null}`}>
                         <Navigation socket={socket} onRouteChange={onRouteChange} />
                         <Friends socket={socket} />
-                        <div className='matchAndBoard'>
+                        <div className={`matchAndBoard ${showFriendsMobile ? 'hide' : null}`}>
                             <FindMatch socket={socket} />
                             <HomeBoard />
                         </div>
