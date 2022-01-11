@@ -4,10 +4,12 @@ import { audio } from '../../audio';
 
 const ChatBox = ({ socket }) => {
 
-    const { friendSocket, opponentName, chatText } = useStoreState(state => ({
+    const { friendSocket, opponentName, chatText, showChatMobile, isMobile } = useStoreState(state => ({
         friendSocket: state.friendSocket,
         opponentName: state.opponentName,
-        chatText: state.chatText
+        chatText: state.chatText,
+        showChatMobile: state.showChatMobile,
+        isMobile: state.stored.isMobile
     }));
 
     const { setChatText } = useStoreActions(actions => ({
@@ -75,7 +77,7 @@ const ChatBox = ({ socket }) => {
     }
 
     return (
-        <div className='chatContainer'>
+        <div className={`chatContainer ${showChatMobile ? 'hide' : null} ${isMobile ? 'mobile' : null}`}>
             <div className='chatBox'></div>
             <input onChange={(e) => setChatText(e.target.value)} type='text' className='chatInput' placeholder='Type Here...' />
         </div>

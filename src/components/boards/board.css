@@ -1,6 +1,7 @@
 :root {
     --home-board-size: 60vmin;
     --game-board-size: 40rem;
+    --game-board-size-mobile: 32vh;
 }
 
 @media only screen and (min-width: 1650px) and (max-width: 1920px) {
@@ -45,7 +46,7 @@
 @media only screen and (max-width: 749px) {
     :root {
         /* --home-board-size: 25rem; */
-        --game-board-size: 25rem;
+        --game-board-size: 14rem;
     }
 }
 
@@ -72,6 +73,18 @@
     align-content: center;
 }
 
+.gamePage.mobile .userBoard {
+    display: grid;
+    grid-template-columns: 2rem var(--game-board-size-mobile);
+    grid-template-rows: 2rem var(--game-board-size-mobile);
+    gap: 0;
+    grid-template-areas:
+    "rows cols"
+    "rows board";
+    align-content: center;
+    padding-top: 0;
+}
+
 .opponentBoard {
     display: grid;
     grid-template-columns: 2rem var(--game-board-size);
@@ -81,6 +94,19 @@
     "rows cols"
     "rows board";
     align-content: center;
+}
+
+.gamePage.mobile .opponentBoard {
+    display: grid;
+    grid-template-columns: 2rem var(--game-board-size-mobile);
+    grid-template-rows: 2rem var(--game-board-size-mobile);
+    gap: 0;
+    grid-template-areas:
+    "rows cols"
+    "rows board";
+    align-content: center;
+    padding-top: 0;
+    margin-bottom: 1rem;
 }
 
 .rows {
@@ -97,6 +123,10 @@
     font-weight: 400;
 }
 
+.gamePage.mobile .rows > h3 {
+    font-size: 0.7rem;
+}
+
 .cols {
     display: flex;
     grid-area: cols;
@@ -111,6 +141,10 @@
     color: white;
 }
 
+.gamePage.mobile .cols > h3 {
+    font-size: 0.7rem;
+}
+
 .grid {
     width: 100%;
     height: 100%;
@@ -118,6 +152,11 @@
     grid-area: board;
     background: url('./waterbg.gif');
     opacity: 0.7;
+}
+
+.gamePage.mobile .grid {
+    width: max-content;
+    height: max-content;
 }
 
 .allSqaures {
@@ -138,6 +177,11 @@
     "h1 h2 h3 h4 h5 h6 h7 h8 h9 h10"
     "i1 i2 i3 i4 i5 i6 i7 i8 i9 i10"
     "j1 j2 j3 j4 j5 j6 j7 j8 j9 j10";
+}
+
+.gamePage.mobile .allSqaures {
+    grid-template-columns: repeat(10, calc(var(--game-board-size-mobile) / 10));
+    grid-template-rows: repeat(10, calc(var(--game-board-size-mobile) / 10));
 }
 
 .homeBoard .allSqaures {

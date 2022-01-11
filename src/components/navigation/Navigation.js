@@ -8,6 +8,7 @@ import logOutIcon from './log-out.png';
 import homeIcon from './home-icon.png';
 import backArrow from './back-arrow.png';
 import friendsIcon from './friends-icon.png';
+import chatIcon from './chat-icon.png';
 import './navigation.css';
 
 const Navigation = ({ socket, onRouteChange }) => {
@@ -21,11 +22,12 @@ const Navigation = ({ socket, onRouteChange }) => {
         isMobile: state.stored.isMobile
     }));
 
-    const { setSearch, setSoundOn, setMusicOn, setShowFriendsMobile } = useStoreActions(actions => ({
+    const { setSearch, setSoundOn, setMusicOn, setShowFriendsMobile, setShowChatMobile } = useStoreActions(actions => ({
         setSearch: actions.setSearch,
         setSoundOn: actions.setSoundOn,
         setMusicOn: actions.setMusicOn,
-        setShowFriendsMobile: actions.setShowFriendsMobile
+        setShowFriendsMobile: actions.setShowFriendsMobile,
+        setShowChatMobile: actions.setShowChatMobile
     }));
 
     const handleExitClick = (e) => {
@@ -111,10 +113,12 @@ const Navigation = ({ socket, onRouteChange }) => {
                         user.hash === 'guest'
                         ?
                         <>
+                            <img className='hasSound chatIcon' src={chatIcon} alt='chat' onClick={setShowChatMobile} />
                             <img className='hasSound logOutIcon' src={logOutIcon} alt='log out' value='logOut' onClick={handleExitClick} />
                         </>
                         :
                         <>
+                            <img className='hasSound chatIcon' src={chatIcon} alt='chat' onClick={setShowChatMobile} />
                             <img className='hasSound goHomeIcon' src={homeIcon} alt='go home' value='goHome' onClick={handleExitClick} />
                             <img className='hasSound logOutIcon' src={logOutIcon} alt='log out' value='logOut' onClick={handleExitClick} />
                         </>

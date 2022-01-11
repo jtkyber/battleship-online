@@ -160,6 +160,14 @@ nav .soundToggle:hover {
     transform: translate(-50%);
 }
 
+.chatIcon {
+    position: absolute;
+    opacity: 0.5;
+    height: min-content;
+    left: 50%;
+    transform: translate(-50%);
+}
+
 .dropdown {
     /* position: relative; */
 }

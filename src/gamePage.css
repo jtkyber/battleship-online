@@ -15,21 +15,20 @@
         "footer footer footer footer footer footer";
 }
 
-.gamePage {
+.gamePage.mobile {
     position: relative;
     background-color: rgba(0,0,0,0.7);
     height: 100vh;
     width: 100vw;
     display: grid;
-    grid-template-columns: 2rem -webkit-max-content 1fr -webkit-max-content 15rem 2rem;
-    grid-template-columns: 2rem max-content 1fr max-content 15rem 2rem;
-    grid-template-rows: 3rem 0.1fr 0.9fr 3.5rem;
-    /* gap: 0 1rem; */
+    grid-template-columns: 1fr;
+    grid-template-rows: 3rem max-content 1fr max-content 3.5rem;
     grid-template-areas:
-        "nav nav nav nav nav nav"
-        ". playerTurnText playerTurnText playerTurnText chatContainer ."
-        ". userBoard readyBtn opponentBoard chatContainer ."
-        "footer footer footer footer footer footer";
+        "nav"
+        "userBoard"
+        "readyBtn"
+        "opponentBoard"
+        "footer";
 }
 
 .instructions {
@@ -55,6 +54,17 @@
     color: rgba(196, 2, 2, 0.8);
     text-transform: uppercase;
     font-weight: 600;
+    transform: translateX(calc((var(--game-board-size) / 10) / 2));
+}
+
+.gamePage.mobile .playerTurnText {
+    grid-area: readyBtn;
+    justify-self: center;
+    align-self: center;
+    color: rgba(196, 2, 2, 0.8);
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 1rem;
     transform: translateX(calc((var(--game-board-size) / 10) / 2));
 }
 
@@ -147,6 +157,33 @@
     align-self: center;
     margin-top: var(--square-size);
     padding-top: 1.5rem;
+}
+
+.gamePage .chatContainer.mobile {
+    position: absolute;
+    display: flex;
+    flex-flow: nowrap column;
+    grid-area: chatContainer;
+    top: 3rem;
+    height: 40vh;
+    max-height: 15rem;
+    width: 90%;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-top: none;
+    background-color: rgba(0,0,0,0.6);
+    margin-top: 0;
+    padding-top: 1.5rem;
+    z-index: 100;
+    animation: slideDownChat 0.8s ease-out;
+}
+
+@keyframes slideDownChat {
+    0% {height: 0;}
+    100% {height: 100%;}
+}
+
+.gamePage .chatContainer.hide {
+    display: none;
 }
 
 .gamePage .chatContainer:before {

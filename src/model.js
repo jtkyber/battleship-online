@@ -15,7 +15,7 @@ const model = {
         {
             soundOn: true,
             musicOn: true,
-            isMobile: isMobileDevice()
+            isMobile: true
         },
         {
             storage: 'localStorage',
@@ -51,6 +51,7 @@ const model = {
     inviteReceived: false,
     playerTurnText: '',
     showFriendsMobile: false,
+    showChatMobile: false,
 
     //Actions
 
@@ -176,6 +177,10 @@ const model = {
 
     setShowFriendsMobile: action((state) => {
         state.showFriendsMobile = !state.showFriendsMobile;
+    }),
+
+    setShowChatMobile: action((state) => {
+        state.showChatMobile = !state.showChatMobile;
     }),
 }
 
