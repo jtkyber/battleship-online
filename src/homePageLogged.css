@@ -15,7 +15,7 @@
     height: 100vh;
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 3rem 1fr 3rem;
+    grid-template-rows: 3rem 1fr 3.5rem;
     grid-template-areas:
         "nav"
         "matchAndBoard"
