@@ -219,7 +219,7 @@ const FriendRequests = ({ socket }) => {
     return (
         <>
             <Dropdown className='dropdown'>
-              <Dropdown.Toggle variant="success" className='messageToggle' id="dropdown-basic"><img src={notificationIcon} alt='Message Icon' /></Dropdown.Toggle>
+              <Dropdown.Toggle variant="success" className='hasSound messageToggle' id="dropdown-basic"><img src={notificationIcon} alt='Message Icon' /></Dropdown.Toggle>
               <Dropdown.Menu id='dropdowns'>
               {
                 friendRequests !== null

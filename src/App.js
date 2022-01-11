@@ -277,9 +277,7 @@ function App() {
         if (
             ((e.target.tagName === 'BUTTON') && (!e.target.classList.contains('messageToggle')))
             ||
-            (e.target?.alt === 'Message Icon')
-            ||
-            (e.target.classList.contains('audioToggle'))
+            (e.target.classList.contains('hasSound'))
         ) {
             audio.buttonClick.play();
         }
@@ -301,9 +299,7 @@ function App() {
         if (
             ((e.target.tagName === 'BUTTON') && (!e.target.classList.contains('messageToggle')))
             ||
-            (e.target?.alt === 'Message Icon')
-            ||
-            (e.target.classList.contains('audioToggle'))
+            (e.target.classList.contains('hasSound'))
         ) {
             audio.hoverSound.play();
         }

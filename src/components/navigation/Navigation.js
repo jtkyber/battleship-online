@@ -59,15 +59,15 @@ const Navigation = ({ socket, onRouteChange }) => {
     return (
         <nav className='nav'>
             <div className='leftNav'>
-                <img alt='sound icon' src={soundIcon} onClick={setSoundClick} onTouchStart={setSoundTouch} className={`audioToggle soundToggle ${soundOn ? 'soundOn' : 'soundOff'}`} />
-                <img alt='music icon' src={musicIcon} onClick={setMusicClick} onTouchStart={setMusicTouch} className={`audioToggle musicToggle ${musicOn ? 'musicOn' : 'musicOff'}`} />
+                <img alt='sound icon' src={soundIcon} onClick={setSoundClick} onTouchStart={setSoundTouch} className={`hasSound audioToggle soundToggle ${soundOn ? 'soundOn' : 'soundOff'}`} />
+                <img alt='music icon' src={musicIcon} onClick={setMusicClick} onTouchStart={setMusicTouch} className={`hasSound audioToggle musicToggle ${musicOn ? 'musicOn' : 'musicOff'}`} />
             </div>
             <div className='rightNav'>
                 {
                 route === 'login' || route === 'register'
                 ?
                 <>
-                    <img className='leaderboardIcon' src={leaderboardIcon} alt='leaderboard' value='goToLeaderboard' onClick={onRouteChange} />
+                    <img className='hasSound leaderboardIcon' src={leaderboardIcon} alt='leaderboard' value='goToLeaderboard' onClick={onRouteChange} />
                 </>
                 :
                 route === 'loggedIn'
@@ -79,14 +79,14 @@ const Navigation = ({ socket, onRouteChange }) => {
                         <button value='goToLeaderboard' onClick={onRouteChange}>Leaderboard</button>
                         <button value='logOut' onClick={onRouteChange}>Log Out</button> */}
                         <FriendRequests socket={socket} />
-                        <img className='leaderboardIcon' src={leaderboardIcon} alt='leaderboard' value='goToLeaderboard' onClick={onRouteChange} />
-                        <img className='logOutIcon' src={logOutIcon} alt='log out' value='logOut' onClick={onRouteChange} />
+                        <img className='hasSound leaderboardIcon' src={leaderboardIcon} alt='leaderboard' value='goToLeaderboard' onClick={onRouteChange} />
+                        <img className='hasSound logOutIcon' src={logOutIcon} alt='log out' value='logOut' onClick={onRouteChange} />
                     </>
                     :
                     <>
                         <FriendRequests socket={socket} />
-                        <img className='leaderboardIcon' src={leaderboardIcon} alt='leaderboard' value='goToLeaderboard' onClick={onRouteChange} />
-                        <img className='logOutIcon' src={logOutIcon} alt='log out' value='logOut' onClick={onRouteChange} />
+                        <img className='hasSound leaderboardIcon' src={leaderboardIcon} alt='leaderboard' value='goToLeaderboard' onClick={onRouteChange} />
+                        <img className='hasSound logOutIcon' src={logOutIcon} alt='log out' value='logOut' onClick={onRouteChange} />
                     </>
                 :
                 <>
@@ -97,23 +97,23 @@ const Navigation = ({ socket, onRouteChange }) => {
                         ?
                         <>
                             {/* <FriendRequests socket={socket} /> */}
-                            <img className='goHomeIcon' src={homeIcon} alt='go home' value='goHome' onClick={onRouteChange} />
-                            <img className='logOutIcon' src={logOutIcon} alt='log out' value='logOut' onClick={onRouteChange} />
+                            <img className='hasSound goHomeIcon' src={homeIcon} alt='go home' value='goHome' onClick={onRouteChange} />
+                            <img className='hasSound logOutIcon' src={logOutIcon} alt='log out' value='logOut' onClick={onRouteChange} />
                         </>
                         :
                         <>
-                            <img className='goBackIcon' src={backArrow} alt='go back' value='goToLogin' onClick={onRouteChange} />
+                            <img className='hasSound goBackIcon' src={backArrow} alt='go back' value='goToLogin' onClick={onRouteChange} />
                         </>
                     : //route === 'game'
                         user.hash === 'guest'
                         ?
                         <>
-                            <img className='logOutIcon' src={logOutIcon} alt='log out' value='logOut' onClick={handleExitClick} />
+                            <img className='hasSound logOutIcon' src={logOutIcon} alt='log out' value='logOut' onClick={handleExitClick} />
                         </>
                         :
                         <>
-                            <img className='goHomeIcon' src={homeIcon} alt='go home' value='goHome' onClick={handleExitClick} />
-                            <img className='logOutIcon' src={logOutIcon} alt='log out' value='logOut' onClick={handleExitClick} />
+                            <img className='hasSound goHomeIcon' src={homeIcon} alt='go home' value='goHome' onClick={handleExitClick} />
+                            <img className='hasSound logOutIcon' src={logOutIcon} alt='log out' value='logOut' onClick={handleExitClick} />
                         </>
                     }
                 </>
