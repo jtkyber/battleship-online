@@ -32,6 +32,13 @@ const handleGameFade = () => {
     }
 }
 
+const isMobileDevice = () => {
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        return true
+    }
+    return false
+}
+
 export const audio = {
     ambientWaves: new Howl({
         src: ambientWaves,
@@ -66,7 +73,8 @@ export const audio = {
     hoverSound: new Howl({
         src: hoverSound,
         volume: 0.6,
-        html5: true
+        html5: true,
+        mute: isMobileDevice
     }),
 
     hitSound: new Howl({

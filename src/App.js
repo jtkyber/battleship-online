@@ -275,10 +275,6 @@ function App() {
                 logReg?.classList.remove('raisedTextBox');
             }
         }
-
-        if (isMobile) {
-            audio.hoverSound.mute(true);
-        }
     }
 
     const handleBtnPress = (e) => {
