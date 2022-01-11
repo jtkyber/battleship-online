@@ -10,6 +10,18 @@
             "footer";
 }
 
+.leaderboard.mobile {
+    background-color: rgba(0,0,0,0.7);
+    height: 100vh;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 3rem 1fr 3rem;
+        grid-template-areas:
+            "nav"
+            "topFive"
+            "footer";
+}
+
 .leaderboard.hide {
     display: none;
 }

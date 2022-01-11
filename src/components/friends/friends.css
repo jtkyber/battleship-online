@@ -14,7 +14,7 @@
   width: 100vw;
   /* height: calc(100vh - 5rem); */
   top: 3rem;
-  bottom: 2rem;
+  bottom: 3rem;
   background-color: rgba(0,0,0,0.4);
   border: 2px solid rgba(255,255,255,0.4);
   border-left: none;
@@ -26,7 +26,7 @@
 
 @keyframes slideDownFriends {
   0% {bottom: 100vh;}
-  100% {bottom: 2rem;}
+  100% {bottom: 3rem;}
 }
 
 .friendsContainer.hide {
