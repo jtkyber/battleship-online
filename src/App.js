@@ -51,9 +51,6 @@ function App() {
     }));
 
     useEffect(() => {
-        if (isMobile) {
-            audio.hoverSound.mute(true);
-        }
         const page = document.querySelector('.logRegPage');
         page.addEventListener('mousedown', handleMouseDown);
         document.addEventListener('mousedown', handleBtnPress);
@@ -75,10 +72,10 @@ function App() {
     useEffect(() => {
         if (soundOn) {
             audio.ambientWaves.mute(false);
+            audio.buttonClick.mute(false);
             if (!isMobile) {
-                audio.buttonClick.mute(false);
+                audio.hoverSound.mute(false);
             }
-            audio.hoverSound.mute(false);
             audio.hitSound.mute(false);
             audio.missSound.mute(false);
             audio.shipSunkSound.mute(false);
@@ -277,6 +274,10 @@ function App() {
             if (logReg?.classList.contains('raisedTextBox')) {
                 logReg?.classList.remove('raisedTextBox');
             }
+        }
+
+        if (isMobile) {
+            audio.hoverSound.mute(true);
         }
     }
 
