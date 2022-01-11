@@ -45,7 +45,7 @@ nav {
 }
 
 .soundToggle {
-    /* margin-bottom: -0.2rem; */
+    opacity: 0.6;
 }
 
 .musicToggle {
@@ -53,7 +53,7 @@ nav {
 }
 
 .soundOff {
-    opacity: 0.3;
+    opacity: 0.4;
     background: linear-gradient(to top left,
            rgba(0,0,0,0) 0%,
            rgba(0,0,0,0) calc(50% - 0.8px),
@@ -124,6 +124,10 @@ nav img {
 
 nav img:hover {
     opacity: 0.3;
+}
+
+nav .soundToggle:hover {
+    opacity: 0.4;
 }
 
 .leaderboardIcon {
