@@ -51,9 +51,7 @@ function App() {
     }));
 
     useEffect(() => {
-        const page = document.querySelector('.logRegPage');
-        page.addEventListener('mousedown', handleMouseDown);
-        document.addEventListener('mousedown', handleBtnPress);
+        document.addEventListener('mousedown', handleMouseDown);
         document.addEventListener('mouseover', handleMouseOver);
 
         socket.on('connect', () => {
@@ -63,8 +61,7 @@ function App() {
 
         return () => {
             socket.off('connect');
-            page.removeEventListener('mousedown', handleMouseDown);
-            document.removeEventListener('mousedown', handleBtnPress);
+            document.removeEventListener('mousedown', handleMouseDown);
             document.removeEventListener('mouseover', handleMouseOver);
         }
     }, [])
@@ -275,9 +272,7 @@ function App() {
                 logReg?.classList.remove('raisedTextBox');
             }
         }
-    }
 
-    const handleBtnPress = (e) => {
         if (
             ((e.target.tagName === 'BUTTON') && (!e.target.classList.contains('messageToggle')))
             ||
@@ -288,6 +283,18 @@ function App() {
             audio.buttonClick.play();
         }
     }
+
+    // const handleBtnPress = (e) => {
+    //     if (
+    //         ((e.target.tagName === 'BUTTON') && (!e.target.classList.contains('messageToggle')))
+    //         ||
+    //         (e.target?.alt === 'Message Icon')
+    //         ||
+    //         (e.target.classList.contains('audioToggle'))
+    //     ) {
+    //         audio.buttonClick.play();
+    //     }
+    // }
 
     const handleMouseOver = (e) => {
         if (

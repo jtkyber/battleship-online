@@ -7,12 +7,13 @@ import './navigation.css';
 
 const Navigation = ({ socket, onRouteChange }) => {
 
-    const { friendSocket, user, route, soundOn, musicOn} = useStoreState(state => ({
+    const { friendSocket, user, route, soundOn, musicOn, isMobile } = useStoreState(state => ({
         friendSocket: state.friendSocket,
         user: state.user,
         route: state.route,
         soundOn: state.stored.soundOn,
-        musicOn: state.stored.musicOn
+        musicOn: state.stored.musicOn,
+        isMobile: state.stored.isMobile
     }));
 
     const { setSearch, setSoundOn, setMusicOn } = useStoreActions(actions => ({
@@ -27,11 +28,35 @@ const Navigation = ({ socket, onRouteChange }) => {
         socket.emit('send exit game', friendSocket);
     }
 
+    const setSoundClick = () => {
+        if (!isMobile) {
+            setSoundOn();
+        }
+    }
+
+    const setSoundTouch = () => {
+        if (isMobile) {
+            setSoundOn();
+        }
+    }
+
+    const setMusicClick = () => {
+        if (!isMobile) {
+            setMusicOn();
+        }
+    }
+
+    const setMusicTouch = () => {
+        if (isMobile) {
+            setMusicOn();
+        }
+    }
+
     return (
         <nav className='nav'>
             <div className='leftNav'>
-                <img alt='sound icon' src={soundIcon} onClick={() => setSoundOn(!soundOn)} className={`audioToggle ${soundOn ? 'soundOn' : 'soundOff'}`} />
-                <img alt='music icon' src={musicIcon} onClick={() => setMusicOn(!musicOn)} className={`audioToggle ${musicOn ? 'musicOn' : 'musicOff'}`} />
+                <img alt='sound icon' src={soundIcon} onClick={setSoundClick} onTouchStart={setSoundTouch} className={`audioToggle ${soundOn ? 'soundOn' : 'soundOff'}`} />
+                <img alt='music icon' src={musicIcon} onClick={setMusicClick} onTouchStart={setMusicTouch} className={`audioToggle ${musicOn ? 'musicOn' : 'musicOff'}`} />
             </div>
             <div className='rightNav'>
                 {

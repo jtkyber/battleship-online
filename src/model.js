@@ -15,7 +15,7 @@ const model = {
         {
             soundOn: true,
             musicOn: true,
-            isMobile: isMobileDevice()
+            isMobile: true
         },
         {
             storage: 'localStorage',
@@ -161,12 +161,12 @@ const model = {
         state.playerTurnText = input;
     }),
 
-    setSoundOn: action((state, input) => {
-        state.stored.soundOn = input;
+    setSoundOn: action((state) => {
+        state.stored.soundOn = !state.stored.soundOn;
     }),
 
-    setMusicOn: action((state, input) => {
-        state.stored.musicOn = input;
+    setMusicOn: action((state) => {
+        state.stored.musicOn = !state.stored.musicOn;
     }),
 
     setIsMobile: action((state, input) => {
