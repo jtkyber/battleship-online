@@ -114,6 +114,7 @@
     text-align: center;
     width: 100%;
     top: 0;
+    line-height: 0.8rem;
 }
 
 .login .username, .register .username {
