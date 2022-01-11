@@ -86,7 +86,7 @@
 .login, .register {
     width: 18rem;
     max-width: 90vw;
-    height: 20rem;
+    height: 22rem;
     max-height: 90vh;
     border: 2px solid white;
     display: flex;
@@ -118,6 +118,8 @@
 
 .login .username, .register .username {
     position: relative;
+    height: -webkit-max-content;
+    height: -moz-max-content;
     height: max-content;
     width: 13rem;
     max-width: 90vw;
@@ -126,11 +128,13 @@
     justify-content: flex-end;
     align-items: center;
     margin-bottom: 1rem;
-    padding-top: 2.5rem;
+    padding-top: 3rem;
 }
 
 .login .password, .register .password {
     position: relative;
+    height: -webkit-max-content;
+    height: -moz-max-content;
     height: max-content;
     width: 13rem;
     max-width: 90vw;
@@ -144,11 +148,13 @@
 .login h4 {
     color: white;
     font-size: 1.2rem;
+    margin-bottom: 0.5rem;
 }
 
 .register h4 {
     color: white;
     font-size: 1.2rem;
+    margin-bottom: 0.5rem;
 }
 
 .login input, .register input {
