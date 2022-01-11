@@ -177,7 +177,7 @@
     border: 3px solid rgba(255, 255, 255, 1);
 }
 
-.logRegPage.mobile .login input:focus, .logRegPage.mobile .register input:focus {
+.raisedTextBox:focus {
     position: fixed;
     width: 90vw;
     height: 4rem;
