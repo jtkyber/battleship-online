@@ -103,16 +103,17 @@
 .login h1, .register h1 {
     color: white;
     font-size: 3rem;
-    margin-bottom: 1rem;
 }
 
 .login .username:before, .register .username:before {
     content: var(--reg-log-alert);
-    position: relative;
+    position: absolute;
     color: rgba(255,0,0,0.8);
     font-size: 0.9rem;
     font-weight: 400;
     text-align: center;
+    width: 100%;
+    top: 0;
 }
 
 .login .username, .register .username {
@@ -125,6 +126,7 @@
     justify-content: flex-end;
     align-items: center;
     margin-bottom: 1rem;
+    padding-top: 2.5rem;
 }
 
 .login .password, .register .password {
