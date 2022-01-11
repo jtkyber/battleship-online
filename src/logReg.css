@@ -178,14 +178,9 @@
     border: 3px solid rgba(255, 255, 255, 1);
 }
 
-.raisedTextBox:focus {
+.raisedTextBox {
     position: fixed;
-    width: 90vw;
-    height: 4rem;
-    top: 20%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border: 6px solid rgba(255, 255, 255, 1);
+    height: 100vh;
     z-index: 100;
 }
 

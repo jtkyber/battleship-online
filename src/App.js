@@ -259,15 +259,15 @@ function App() {
             audio.lobbyTheme.play();
         }
 
-        const allInputs = document.querySelectorAll('input');
-        if ((e.target.tagName === 'INPUT') && (isMobile)) {
-            e.target.classList.add('raisedTextBox')
+        const logReg = document.querySelector('.logReg');
+        console.log(e.target.parentNode)
+        if (isMobile && e.target.tagName === 'INPUT' && (e.target.parentNode?.classList.contains('username') || e.target.parentNode?.classList.contains('password'))) {
+            logReg.classList.add('raisedTextBox')
+            
         } else {
-            allInputs.forEach(input => {
-                if (input.classList.contains('raisedTextBox')) {
-                    input.classList.remove('raisedTextBox');
-                }
-            })
+            if (logReg.classList.contains('raisedTextBox')) {
+                logReg.classList.remove('raisedTextBox');
+            }
         }
     }
 
