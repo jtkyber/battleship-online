@@ -260,7 +260,9 @@ function App() {
 
     const handleViewportResize = () => {
         const logReg = document.querySelector('.logReg');
-        if (isMobile && (route === 'login' || route === 'register') && logReg.classList.contains('raisedTextBox')) {
+        const username = document.querySelector('.username input');
+        const password = document.querySelector('.password input');
+        if (isMobile && (route === 'login' || route === 'register') && logReg.classList.contains('raisedTextBox') && (username !== document.activeElement && password !== document.activeElement)) {
             logReg.classList.remove('raisedTextBox');
         }
     }
@@ -271,7 +273,6 @@ function App() {
         }
 
         const logReg = document.querySelector('.logReg');
-        console.log(isMobile)
         if (isMobile && e.target.tagName === 'INPUT' && (e.target.parentNode?.classList.contains('username') || e.target.parentNode?.classList.contains('password'))) {
             logReg.classList.add('raisedTextBox')
             
