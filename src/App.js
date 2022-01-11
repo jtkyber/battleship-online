@@ -55,6 +55,7 @@ function App() {
         page.addEventListener('mousedown', handleMouseDown);
         document.addEventListener('mousedown', handleBtnPress);
         document.addEventListener('mouseover', handleMouseOver);
+        window.addEventListener('resize', handleViewportResize);
 
         socket.on('connect', () => {
             setCurrentSocket(socket.id);
@@ -254,6 +255,13 @@ function App() {
             if (!response.ok) {throw new Error('Problem adding guest')}
         } catch(err) {
             console.log(err);
+        }
+    }
+
+    const handleViewportResize = () => {
+        const logReg = document.querySelector('.logReg');
+        if (isMobile && (route === 'login' || route === 'register') && logReg.classList.contains('raisedTextBox')) {
+            logReg.classList.remove('raisedTextBox');
         }
     }
 
