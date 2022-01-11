@@ -32,7 +32,7 @@ function App() {
         isMobile: state.stored.isMobile
     }));
 
-    const { setRoute, setUser, setCurrentSocket, setSearch, setUpdatLastOnlineInterval, setAllFriends, setUnsortedFriends, setFriendsOnline, setFriendSearch, setPlayerIsReady, setSoundOn, setMusicOn, setIsMobile } = useStoreActions(actions => ({
+    const { setRoute, setUser, setCurrentSocket, setSearch, setUpdatLastOnlineInterval, setAllFriends, setUnsortedFriends, setFriendsOnline, setFriendSearch, setPlayerIsReady, setSoundOn, setMusicOn, setIsMobile, setUserName, setPassword } = useStoreActions(actions => ({
         setRoute: actions.setRoute,
         setUser: actions.setUser,
         setCurrentSocket: actions.setCurrentSocket,
@@ -45,11 +45,12 @@ function App() {
         setPlayerIsReady: actions.setPlayerIsReady,
         setSoundOn: actions.setSoundOn,
         setMusicOn: actions.setMusicOn,
-        setIsMobile: actions.setIsMobile
+        setIsMobile: actions.setIsMobile,
+        setUserName: actions.setUserName,
+        setPassword: actions.setPassword
     }));
 
     useEffect(() => {
-        setIsMobile(true);
         const page = document.querySelector('.logRegPage');
         page.addEventListener('mousedown', handleMouseDown);
         document.addEventListener('mousedown', handleBtnPress);
@@ -104,6 +105,8 @@ function App() {
             }
             setUpdatLastOnlineInterval(setInterval(updateLastOnline, 1000));
         } else {
+            setUserName(null);
+            setPassword(null);
             clearInterval(updatLastOnlineInterval);
             clearInterval(findMatchInterval);
         }
@@ -260,7 +263,7 @@ function App() {
         }
 
         const logReg = document.querySelector('.logReg');
-        console.log(e.target.parentNode)
+        console.log(isMobile)
         if (isMobile && e.target.tagName === 'INPUT' && (e.target.parentNode?.classList.contains('username') || e.target.parentNode?.classList.contains('password'))) {
             logReg.classList.add('raisedTextBox')
             
