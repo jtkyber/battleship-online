@@ -258,6 +258,17 @@ function App() {
         if (!audio.lobbyTheme.playing() && route !== 'game') {
             audio.lobbyTheme.play();
         }
+
+        const allInputs = document.querySelectorAll('input');
+        if ((e.target.tagName === 'INPUT') && (isMobile)) {
+            e.target.classList.add('raisedTextBox')
+        } else {
+            allInputs.forEach(input => {
+                if (input.classList.contains('raisedTextBox')) {
+                    input.classList.remove('raisedTextBox');
+                }
+            })
+        }
     }
 
     const handleBtnPress = (e) => {
