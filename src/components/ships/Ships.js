@@ -119,6 +119,7 @@ const Ships = () => {
     // }
 
     const handleShipTouch = (e) => {
+        console.log(e.touches.length)
         if (isMobile && (e.touches.length === 2) && shipIsSelected) {
             audio.hoverSound.play();
             if (orientation === 'hor') {
