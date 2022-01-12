@@ -143,6 +143,7 @@
     margin-right: 0.5rem;
     margin-top: 1rem;
     align-self: start;
+    opacity: 0.7;
 }
 
 .readyBtn > .btn {

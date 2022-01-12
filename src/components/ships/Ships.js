@@ -6,8 +6,9 @@ import '../boards/board.css';
 
 const Ships = () => {
 
-    const { gameRoute } = useStoreState(state => ({
+    const { gameRoute, isMobile } = useStoreState(state => ({
         gameRoute: state.gameRoute,
+        isMobile: state.stored.isMobile
     }));
 
     let rotating = false;
@@ -71,7 +72,18 @@ const Ships = () => {
     // Place a ship down that is currently selected
 
     window.onclick = (e) => {
-        if (shipIsSelected && e.target.classList.contains('singleSquare') && rotating === false && areaIsClear()) {
+        if (!isMobile && shipIsSelected && e.target.classList.contains('singleSquare') && rotating === false && areaIsClear()) {
+            audio.buttonClick.play();
+            selectedShip.style.zIndex = '3';
+            document.querySelector('.userBoard').style.cursor = 'default';
+            // selectedShip.style.backgroundColor = null;
+            selectedShip.style.border = null;
+            shipIsSelected = false;
+        }
+    }
+
+    window.ontouchend = (e) => {
+        if (isMobile && shipIsSelected && e.target.classList.contains('singleSquare') && rotating === false && areaIsClear()) {
             audio.buttonClick.play();
             selectedShip.style.zIndex = '3';
             document.querySelector('.userBoard').style.cursor = 'default';
@@ -96,7 +108,7 @@ const Ships = () => {
     // Rotate the selected ship by right-clicking
 
     window.oncontextmenu = (e) => {
-         if (shipIsSelected) {
+         if (!isMobile && shipIsSelected) {
             audio.hoverSound.play();
             if (orientation === 'hor') {
                 selectedShip.style.transform = 'rotate(-90deg)';
@@ -148,6 +160,58 @@ const Ships = () => {
 
             if (userGrid.contains(e.target)
             && (e.target.classList.contains('singleSquare'))
+            && shipIsSelected === true) {
+                if (orientation === 'hor') {
+                    childShip.classList.remove(`rotate-${selectedShipName}`);
+                    if (colStart < (11 - parseInt(selectedShip.id) + 1)) {
+                        selectedShip.style.gridColumn = `${colStart} / ${parseInt(colStart) + parseInt(selectedShip.id)}`;
+                    } else if (colStart >= (11 - parseInt(selectedShip.id) + 1) && setManualGridLocation === true) {
+                        selectedShip.style.gridColumn = `11 / ${11 - parseInt(selectedShip.id)}`;
+                    } else setManualGridLocation = false;
+                    selectedShip.style.gridRow = `${rowStart} / ${parseInt(rowStart) + 1}`;
+                } else if (orientation === 'vert') {
+                    childShip.classList.add(`rotate-${selectedShipName}`);
+                    if (rowStart > (parseInt(selectedShip.id) - 1)) {
+                        selectedShip.style.gridRow = `${parseInt(rowStart) + 1} / ${parseInt(rowStart) - parseInt(selectedShip.id) + 1}`;
+                    } else if (rowStart <= (parseInt(selectedShip.id) - 1) && setManualGridLocation === true) {
+                        selectedShip.style.gridRow = `${parseInt(selectedShip.id) + 1} / 1`;
+                    } else setManualGridLocation = false;
+                    selectedShip.style.gridColumn = `${colStart} / ${parseInt(colStart) + 1}`;
+                }
+            }
+        }
+    };
+
+    const matchTouchToSquares = (x, y) => {
+        const squares = document.querySelectorAll('.userBoard .singleSquare');
+        let selectedSquare = null;
+        squares.forEach(square => {
+            const squareLeft = square.getBoundingClientRect().left;
+            const squareRight = square.getBoundingClientRect().right;
+            const squareTop = square.getBoundingClientRect().top;
+            const squareBottom = square.getBoundingClientRect().bottom;
+
+            if ((x > squareLeft) && (x < squareRight) && (y > squareTop) && (y < squareBottom)) {
+                selectedSquare = square;
+                return;
+            }
+        })
+        return selectedSquare;
+    }
+
+    window.ontouchmove = (e) => {
+        const square = matchTouchToSquares(e.touches[0].clientX, e.touches[0].clientY)
+        if (shipIsSelected && isMobile) {
+            rotating = false;
+            selectedShip.style.transform = null;
+            const userGrid = document.querySelector('.userBoard');
+            const childShip = document.querySelector(`.${selectedShipName}Icon`);
+            const targetId = square?.id;
+            const colStart = targetId?.substring(0, targetId.indexOf('-'));
+            const rowStart = targetId?.substring((targetId.indexOf('-') + 1), targetId?.length);
+
+            if (userGrid.contains(e.target)
+            && (square?.classList?.contains('singleSquare'))
             && shipIsSelected === true) {
                 if (orientation === 'hor') {
                     childShip.classList.remove(`rotate-${selectedShipName}`);
