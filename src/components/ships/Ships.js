@@ -30,7 +30,7 @@ const Ships = () => {
     // Decide what happens when a ship is selected to move
 
     const onShipSelect = (e) => {
-        if (!shipIsSelected && gameRoute === 'placeShips') {
+        if (!shipIsSelected && (gameRoute === 'placeShips')) {
             audio.buttonClick.play();
             const userBoard = document.querySelector('.userBoard');
             shipIsSelected = true;
@@ -92,6 +92,7 @@ const Ships = () => {
     }
 
     window.ontouchend = (e) => {
+        console.log('touch ended');
         if (isMobile && shipIsSelected && e.target.classList.contains('singleSquare') && rotating === false && areaIsClear()) {
             audio.buttonClick.play();
             selectedShip.style.zIndex = '3';
