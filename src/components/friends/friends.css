@@ -12,7 +12,6 @@
 .friendsContainer.mobile {
   position: absolute;
   width: 100vw;
-  /* height: calc(100vh - 5rem); */
   top: 3rem;
   bottom: 0;
   background-color: rgba(0,0,0,0.4);

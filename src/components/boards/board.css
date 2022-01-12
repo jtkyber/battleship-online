@@ -1,5 +1,6 @@
 :root {
     --home-board-size: 60vmin;
+    --home-board-size-mobile: 80vmin;
     --game-board-size: 40rem;
     --game-board-size-mobile: 35vh;
 }
@@ -60,6 +61,13 @@
     justify-content: center;
     height: var(--home-board-size);
     width: var(--home-board-size);
+}
+
+.homePageLogged.mobile .homeBoard {
+    align-content: center;
+    justify-content: center;
+    height: var(--home-board-size-mobile);
+    width: var(--home-board-size-mobile);
 }
 
 .userBoard {
