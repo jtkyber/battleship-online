@@ -1,7 +1,7 @@
 :root {
     --home-board-size: 60vmin;
     --game-board-size: 40rem;
-    --game-board-size-mobile: 32vh;
+    --game-board-size-mobile: 35vh;
 }
 
 @media only screen and (min-width: 1650px) and (max-width: 1920px) {
@@ -83,6 +83,7 @@
     "rows board";
     align-content: center;
     padding-top: 0;
+    /* margin-right: calc(var(--game-board-size-mobile) / 10); */
 }
 
 .opponentBoard {
@@ -107,6 +108,7 @@
     align-content: center;
     padding-top: 0;
     margin-bottom: 1rem;
+    /* margin-right: calc(var(--game-board-size-mobile) / 10); */
 }
 
 .rows {
@@ -184,8 +186,8 @@
 }
 
 .gamePage.mobile .allSqaures {
-    grid-template-columns: repeat(10, calc(var(--game-board-size-mobile) / 10));
-    grid-template-rows: repeat(10, calc(var(--game-board-size-mobile) / 10));
+    grid-template-columns: repeat(10, minmax(auto, calc(var(--game-board-size-mobile) / 10)));
+    grid-template-rows: repeat(10, minmax(auto, calc(var(--game-board-size-mobile) / 10)));
 }
 
 .homeBoard .allSqaures {

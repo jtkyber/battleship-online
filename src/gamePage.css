@@ -21,15 +21,15 @@
     height: 100vh;
     width: 100vw;
     display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 3rem -webkit-max-content 1fr -webkit-max-content 3.5rem;
-    grid-template-rows: 3rem max-content 1fr max-content 3.5rem;
+    grid-template-columns: 1fr -webkit-max-content;
+    grid-template-columns: 1fr max-content;
+    grid-template-rows: 3rem -webkit-max-content -webkit-max-content 3.5rem;
+    grid-template-rows: 3rem 1fr 1fr 3.5rem;
     grid-template-areas:
-        "nav"
-        "userBoard"
-        "readyBtn"
-        "opponentBoard"
-        "footer";
+        "nav nav"
+        "userBoard readyBtn"
+        "opponentBoard ."
+        "footer footer";
 }
 
 .instructions {
@@ -60,15 +60,21 @@
     transform: translateX(calc((var(--game-board-size) / 10) / 2));
 }
 
+.playerTurnText.hide {
+    display: none;
+}
+
 .gamePage.mobile .playerTurnText {
-    grid-area: readyBtn;
-    justify-self: center;
-    align-self: center;
+    position: absolute;
+    top: 6rem;
     color: rgba(196, 2, 2, 0.8);
+    background-color: rgba(0, 0, 0, 0.4);
+    padding: 0.4rem;
+    border-radius: 10px;
     text-transform: uppercase;
     font-weight: 600;
-    font-size: 1rem;
-    transform: translateX(calc((var(--game-board-size) / 10) / 2));
+    font-size: 0.8rem;
+    z-index: 100;
 }
 
 .gamePage {
@@ -113,7 +119,6 @@
 
 .readyBtn {
     grid-area: readyBtn;
-    /* transform: translate(3rem); */
     opacity: 0.9;
     transition: all 0.2s ease-out;
     justify-self: center;
@@ -126,6 +131,18 @@
     border-radius: 10px;
     box-shadow: 0 0 4px 1px rgb(204, 255, 218, 0.3);
     opacity: 0.8;
+}
+
+.gamePage.mobile .readyBtn {
+    height: -webkit-max-content;
+    height: -moz-max-content;
+    height: max-content;
+    width: -webkit-max-content;
+    width: -moz-max-content;
+    width: max-content;
+    margin-right: 0.5rem;
+    margin-top: 1rem;
+    align-self: start;
 }
 
 .readyBtn > .btn {

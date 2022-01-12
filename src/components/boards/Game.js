@@ -146,7 +146,7 @@ const Game = ({ socket, onRouteChange }) => {
         const readyBtn = document.querySelector('.readyBtn');
         const instructionsList = document.querySelector('.instructions');
         instructionsList.classList.add('hide');
-        readyBtn.childNodes[0].innerText = 'Waiting...';
+        readyBtn.childNodes[0].innerText = `${!isMobile ? 'Waiting...' : '•••'}`;
         for (let ship of ships) {
             ship.style.cursor = 'default';
         }
@@ -154,7 +154,7 @@ const Game = ({ socket, onRouteChange }) => {
             setGameRoute('gameInProgress');
             setYourTurn(true);
         } else {
-            readyBtn.style.opacity = '0.4';
+            readyBtn.style.opacity = '0.3';
         }
         setPlayerIsReady(true);
         socket.emit('send ready status', friendSocket);
@@ -169,12 +169,12 @@ const Game = ({ socket, onRouteChange }) => {
                 <h5>○ {rotateShipInstructions}</h5>
                 <h5>○ {dropShipInstructions}</h5>
             </div>
-            <h3 className='playerTurnText'>{`${gameRoute === 'gameInProgress' ? playerTurnText : ''}`}</h3>
+            <h3 className={`playerTurnText ${gameRoute === 'gameInProgress' ? null : 'hide'}`}>{`${gameRoute === 'gameInProgress' ? playerTurnText : ''}`}</h3>
             {
             gameRoute === 'placeShips'
             ? 
             <div className='readyBtn'>
-                <button onClick={handleReadyButton} className='btn'>Ready</button>
+                <button onClick={handleReadyButton} className='btn'>{isMobile ? '✔️' : 'Ready'}</button>
             </div>
             : (null)
             }
