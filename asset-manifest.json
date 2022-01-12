@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/battleship-online/static/css/main.b30de77a.chunk.css",
-    "main.js": "/battleship-online/static/js/main.2af58b90.chunk.js",
-    "main.js.map": "/battleship-online/static/js/main.2af58b90.chunk.js.map",
+    "main.css": "/battleship-online/static/css/main.aa8bfdab.chunk.css",
+    "main.js": "/battleship-online/static/js/main.dd802bdd.chunk.js",
+    "main.js.map": "/battleship-online/static/js/main.dd802bdd.chunk.js.map",
     "runtime-main.js": "/battleship-online/static/js/runtime-main.80409b32.js",
     "runtime-main.js.map": "/battleship-online/static/js/runtime-main.80409b32.js.map",
     "static/css/2.a1596f27.chunk.css": "/battleship-online/static/css/2.a1596f27.chunk.css",
@@ -12,7 +12,7 @@
     "static/js/3.0ecd3fdc.chunk.js.map": "/battleship-online/static/js/3.0ecd3fdc.chunk.js.map",
     "index.html": "/battleship-online/index.html",
     "static/css/2.a1596f27.chunk.css.map": "/battleship-online/static/css/2.a1596f27.chunk.css.map",
-    "static/css/main.b30de77a.chunk.css.map": "/battleship-online/static/css/main.b30de77a.chunk.css.map",
+    "static/css/main.aa8bfdab.chunk.css.map": "/battleship-online/static/css/main.aa8bfdab.chunk.css.map",
     "static/js/2.c4ed3515.chunk.js.LICENSE.txt": "/battleship-online/static/js/2.c4ed3515.chunk.js.LICENSE.txt",
     "static/media/ambient-waves.b96c967b.mp3": "/battleship-online/static/media/ambient-waves.b96c967b.mp3",
     "static/media/index.css": "/battleship-online/static/media/background.f30097d9.jpg",
@@ -31,7 +31,7 @@
     "static/js/runtime-main.80409b32.js",
     "static/css/2.a1596f27.chunk.css",
     "static/js/2.c4ed3515.chunk.js",
-    "static/css/main.b30de77a.chunk.css",
-    "static/js/main.2af58b90.chunk.js"
+    "static/css/main.aa8bfdab.chunk.css",
+    "static/js/main.dd802bdd.chunk.js"
   ]
 }
