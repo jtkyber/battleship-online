@@ -13,13 +13,15 @@ import './navigation.css';
 
 const Navigation = ({ socket, onRouteChange }) => {
 
-    const { friendSocket, user, route, soundOn, musicOn, isMobile } = useStoreState(state => ({
+    const { friendSocket, user, route, soundOn, musicOn, isMobile, showChatMobile, showFriendsMobile } = useStoreState(state => ({
         friendSocket: state.friendSocket,
         user: state.user,
         route: state.route,
         soundOn: state.stored.soundOn,
         musicOn: state.stored.musicOn,
-        isMobile: state.stored.isMobile
+        isMobile: state.stored.isMobile,
+        showChatMobile: state.showChatMobile,
+        showFriendsMobile: state.showFriendsMobile
     }));
 
     const { setSearch, setSoundOn, setMusicOn, setShowFriendsMobile, setShowChatMobile } = useStoreActions(actions => ({
@@ -88,7 +90,7 @@ const Navigation = ({ socket, onRouteChange }) => {
                     </>
                     :
                     <>
-                        <img className='hasSound friendsIcon' src={friendsIcon} alt='friends' onClick={setShowFriendsMobile} />
+                        <img className='hasSound friendsIcon' src={friendsIcon} alt='friends' onClick={() => setShowFriendsMobile(!showFriendsMobile)} />
                         <FriendRequests socket={socket} />
                         <img className='hasSound leaderboardIcon' src={leaderboardIcon} alt='leaderboard' value='goToLeaderboard' onClick={onRouteChange} />
                         <img className='hasSound logOutIcon' src={logOutIcon} alt='log out' value='logOut' onClick={onRouteChange} />
@@ -115,7 +117,7 @@ const Navigation = ({ socket, onRouteChange }) => {
                         <>
                             {
                                 isMobile
-                                ? <img className='hasSound chatIcon' src={chatIcon} alt='chat' onClick={setShowChatMobile} />
+                                ? <img className='hasSound chatIcon' src={chatIcon} alt='chat' onClick={() => setShowChatMobile(!showChatMobile)} />
                                 : null
                             }
                             <img className='hasSound logOutIcon' src={logOutIcon} alt='log out' value='logOut' onClick={handleExitClick} />
@@ -124,7 +126,7 @@ const Navigation = ({ socket, onRouteChange }) => {
                         <>
                         {
                                 isMobile
-                                ? <img className='hasSound chatIcon' src={chatIcon} alt='chat' onClick={setShowChatMobile} />
+                                ? <img className='hasSound chatIcon' src={chatIcon} alt='chat' onClick={() => setShowChatMobile(!showChatMobile)} />
                                 : null
                             }
                             <img className='hasSound goHomeIcon' src={homeIcon} alt='go home' value='goHome' onClick={handleExitClick} />

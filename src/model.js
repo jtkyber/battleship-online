@@ -176,12 +176,12 @@ const model = {
         state.stored.isMobile = input;
     }),
 
-    setShowFriendsMobile: action((state) => {
-        state.showFriendsMobile = !state.showFriendsMobile;
+    setShowFriendsMobile: action((state, input) => {
+        state.showFriendsMobile = input;
     }),
 
-    setShowChatMobile: action((state) => {
-        state.showChatMobile = !state.showChatMobile;
+    setShowChatMobile: action((state, input) => {
+        state.showChatMobile = input;
     }),
 
     setAudioStarted: action((state) => {

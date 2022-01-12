@@ -34,7 +34,7 @@ function App() {
         audioStarted: state.audioStarted
     }));
 
-    const { setRoute, setUser, setCurrentSocket, setSearch, setUpdatLastOnlineInterval, setAllFriends, setUnsortedFriends, setFriendsOnline, setFriendSearch, setPlayerIsReady, setSoundOn, setMusicOn, setIsMobile, setUserName, setPassword, setAudioStarted } = useStoreActions(actions => ({
+    const { setRoute, setUser, setCurrentSocket, setSearch, setUpdatLastOnlineInterval, setAllFriends, setUnsortedFriends, setFriendsOnline, setFriendSearch, setPlayerIsReady, setSoundOn, setMusicOn, setIsMobile, setUserName, setPassword, setAudioStarted, setShowFriendsMobile, setShowChatMobile } = useStoreActions(actions => ({
         setRoute: actions.setRoute,
         setUser: actions.setUser,
         setCurrentSocket: actions.setCurrentSocket,
@@ -50,7 +50,9 @@ function App() {
         setIsMobile: actions.setIsMobile,
         setUserName: actions.setUserName,
         setPassword: actions.setPassword,
-        setAudioStarted: actions.setAudioStarted
+        setAudioStarted: actions.setAudioStarted,
+        setShowFriendsMobile: actions.setShowFriendsMobile,
+        setShowChatMobile: actions.setShowChatMobile
     }));
 
     const onRouteChange = async (e) => {
@@ -174,6 +176,7 @@ function App() {
 
     useEffect(() => {
         if (route === 'game') {
+            setShowChatMobile(false);
             if (audio.lobbyTheme.playing()) {
                 audio.lobbyTheme.fade(0.5, 0, 2000);
             } 
@@ -216,6 +219,10 @@ function App() {
             setUnsortedFriends([]);
             setFriendsOnline([]);
             setFriendSearch('');
+        }
+
+        if (route === 'loggedIn') {
+            setShowFriendsMobile(false);
         }
 
         document.addEventListener('mousedown', handleMouseDown);
