@@ -283,15 +283,15 @@ function App() {
             setAudioStarted();
         }
 
-        const logReg = document.querySelector('.logReg');
-        if (isMobile && e.target.tagName === 'INPUT' && (e.target.parentNode?.classList.contains('username') || e.target.parentNode?.classList.contains('password'))) {
-            logReg.classList.add('raisedTextBox')
+        // const logReg = document.querySelector('.logReg');
+        // if (isMobile && e.target.tagName === 'INPUT' && (e.target.parentNode?.classList.contains('username') || e.target.parentNode?.classList.contains('password'))) {
+        //     logReg.classList.add('raisedTextBox')
             
-        } else {
-            if (logReg?.classList.contains('raisedTextBox')) {
-                logReg?.classList.remove('raisedTextBox');
-            }
-        }
+        // } else {
+        //     if (logReg?.classList.contains('raisedTextBox')) {
+        //         logReg?.classList.remove('raisedTextBox');
+        //     }
+        // }
 
         if (
             ((e.target.tagName === 'BUTTON') && (!e.target.classList.contains('messageToggle')))

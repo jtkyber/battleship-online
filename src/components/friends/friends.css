@@ -1,5 +1,13 @@
 .friendsContainer {
     width: 15rem;
+    display: grid;
+    grid-template-rows: -webkit-max-content 1fr -webkit-max-content;
+    grid-template-rows: max-content 1fr max-content;
+    grid-template-areas: 
+    "friendHeader"
+    "friendSection"
+    "addFriend";
+    justify-items: center;
     position: relative;
     background-color: rgba(0,0,0,0.4);
     border: 2px solid rgba(255,255,255,0.4);
@@ -11,6 +19,14 @@
 
 .friendsContainer.mobile {
   position: absolute;
+  display: grid;
+  grid-template-rows: -webkit-max-content 1fr -webkit-max-content;
+  grid-template-rows: max-content 1fr max-content;
+  grid-template-areas: 
+  "friendHeader"
+  "friendSection"
+  "addFriend";
+  justify-items: center;
   width: 100vw;
   top: 3rem;
   bottom: 0;
@@ -20,7 +36,13 @@
   border-top: none;
   border-bottom: none;
   --add-friend-alert: "";
-  animation: slideDownFriends 0.5s ease-out;
+  -webkit-animation: slideDownFriends 0.5s ease-out;
+          animation: slideDownFriends 0.5s ease-out;
+}
+
+@-webkit-keyframes slideDownFriends {
+  0% {bottom: 100vh;}
+  100% {bottom: 0;}
 }
 
 @keyframes slideDownFriends {
@@ -37,7 +59,8 @@
 }
 
 .friendsSection {
-    height: 100vh;
+    grid-area: friendSection;
+    height: 100%;
     display: flex;
     flex-flow: nowrap column;
     align-items: center;
@@ -72,6 +95,7 @@
 }
 
 .friendsContainerHeader {
+    grid-area: friendHeader;
     height: 5.5rem;
     display: flex;
     flex-flow: nowrap column;
@@ -110,13 +134,14 @@
     overflow: scroll;
     overflow-x: hidden;
     width: 15rem;
-    margin-bottom: 18.5rem;
+    height: 100%;
+    /* margin-bottom: 18.5rem; */
     scrollbar-width: none;
     -ms-overflow-style: none;
 }
 
 .friendsContainer.mobile .friendsListContainer {
-  margin-bottom: 16.5rem;
+  margin-bottom: 0;
 }
 
 .friendsContainer.mobile .friendsListContainer::-webkit-scrollbar {
@@ -156,6 +181,10 @@
             animation: 0.5s linear 0s 1 slideUp;
 }
 
+.friendsContainer.mobile .friendsList {
+  /* z-index: -1; */
+}
+
 @-webkit-keyframes slideUp {
   0% {
     transform: translateY(100vh);
@@ -176,14 +205,13 @@
 
 
 .addFriend {
+    grid-area: addFriend;
     width: 13rem;
     height: 8rem;
     display: flex;
     flex-flow: wrap column;
     justify-content: center;
     align-items: center;
-    bottom: 0;
-    position: absolute;
     border: 1px solid rgba(255,255,255,0.8);
     border-bottom: none;
     border-radius: 15px;
@@ -192,24 +220,6 @@
     background-color: rgba(0,0,0,0.3);
     z-index: 99;
 }
-/* 
-.friendsContainer.mobile .addFriend {
-    width: 13rem;
-    height: 8rem;
-    display: flex;
-    flex-flow: wrap column;
-    justify-content: center;
-    align-items: center;
-    bottom: 0;
-    position: absolute;
-    border: 1px solid rgba(255,255,255,0.8);
-    border-bottom: none;
-    border-radius: 15px;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-    background-color: rgba(0,0,0,0.3);
-    z-index: 99;
-} */
 
 .addFriend > h3 {
     height: 3.5rem;

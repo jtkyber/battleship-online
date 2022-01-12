@@ -66,14 +66,11 @@
     margin-top: 5vh;
 }
 
-/* .logRegPage.mobile > .logReg {
-    width: max-content;
-    height: max-content;
+.logRegPage.mobile .logReg {
     position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-} */
+    margin: 0;
+    bottom: 10vh;
+}
 
 .logRegPage nav {
     grid-area: nav;
@@ -224,9 +221,6 @@
 }
 
 @media only screen and (min-width: 500px) and (max-width: 650px) {
-    .logReg {
-        /* transform: scale(0.8) translate(0, -4rem); */
-    }
     .homeText > h1 {
         transform: scale(0.60);
     }
@@ -234,19 +228,9 @@
 
 @media only screen and (max-width: 499px) {
     .logReg {
-        transform: scale(0.8) translate(0, -4rem);
+        transform: scale(0.8);
     }
     .homeText > h1 {
         transform: scale(0.50);
     }
 }
-
-
-
-
-
-/* @media only screen and (max-height: 499px) {
-    .logReg {
-        transform: scale(0.8) translate(0, -4rem);
-    }
-} */

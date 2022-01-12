@@ -254,11 +254,11 @@ const Friends = ({ socket }) => {
                     : <h4 className='noFriends'>No friends have been added</h4>
                 }
                 </div>
-                <div className='addFriend'>
-                    <h3 className='addFriendText' >Add a friend</h3>
-                    <input className='addFriendInput' onChange={(e) => setFriendSearch(e.target.value)} type='text' placeholder='Enter a username'/>
-                    <button className='friendRequestBtn' onClick={sendFriendRequest}>Send Request</button>
-                </div>
+            </div>
+            <div className='addFriend'>
+                <h3 className='addFriendText' >Add a friend</h3>
+                <input className='addFriendInput' onChange={(e) => setFriendSearch(e.target.value)} type='text' placeholder='Enter a username'/>
+                <button className='friendRequestBtn' onClick={sendFriendRequest}>Send Request</button>
             </div>
         </div>
     )
