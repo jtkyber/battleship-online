@@ -15,7 +15,7 @@ const model = {
         {
             soundOn: true,
             musicOn: true,
-            isMobile: isMobileDevice()
+            isMobile: true
         },
         {
             storage: 'localStorage',

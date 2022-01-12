@@ -185,8 +185,8 @@
     flex-flow: nowrap column;
     grid-area: chatContainer;
     top: 3rem;
-    height: 40vh;
-    max-height: 15rem;
+    height: 22rem;
+    max-height: 70vh;
     width: 90%;
     border: 2px solid rgba(255,255,255,0.2);
     border-top: none;
@@ -200,12 +200,12 @@
 
 @-webkit-keyframes slideDownChat {
     0% {height: 0;}
-    100% {height: 100%;}
+    100% {height: 22rem;}
 }
 
 @keyframes slideDownChat {
     0% {height: 0;}
-    100% {height: 100%;}
+    100% {height: 22rem;}
 }
 
 .gamePage .chatContainer.hide {
