@@ -97,7 +97,7 @@ function App() {
     }
 
     useEffect(() => {
-        document.addEventListener('mousedown', handleMouseDown);
+        // document.addEventListener('mousedown', handleMouseDown);
         document.addEventListener('mouseover', handleMouseOver);
 
         socket.on('connect', () => {
@@ -107,7 +107,7 @@ function App() {
 
         return () => {
             socket.off('connect');
-            document.removeEventListener('mousedown', handleMouseDown);
+            // document.removeEventListener('mousedown', handleMouseDown);
             document.removeEventListener('mouseover', handleMouseOver);
         }
     }, [])
@@ -174,7 +174,6 @@ function App() {
 
     useEffect(() => {
         if (route === 'game') {
-            console.log(audioStarted)
             if (audio.lobbyTheme.playing()) {
                 audio.lobbyTheme.fade(0.5, 0, 2000);
             } 
@@ -189,7 +188,6 @@ function App() {
             stopSearching();
             updateInGameStatus(true);
         } else {
-            console.log(audioStarted)
             if (audioStarted && !audio.lobbyTheme.playing()) {
                 audio.lobbyTheme.fade(0, 0.5, 0);
             } 
@@ -215,6 +213,12 @@ function App() {
             setUnsortedFriends([]);
             setFriendsOnline([]);
             setFriendSearch('');
+        }
+
+        document.addEventListener('mousedown', handleMouseDown);
+
+        return () => {
+            document.removeEventListener('mousedown', handleMouseDown);
         }
     }, [route])
 
@@ -263,9 +267,8 @@ function App() {
         }
     }
 
-    const handleMouseDown = async (e) => {
+    const handleMouseDown = (e) => {
         if (!audioStarted && !audio.lobbyTheme.playing() && route !== 'game') {
-            console.log(audioStarted)
             audio.lobbyTheme.play();
             setAudioStarted();
         }

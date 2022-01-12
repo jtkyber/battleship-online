@@ -77,7 +77,7 @@ const ChatBox = ({ socket }) => {
     }
 
     return (
-        <div className={`chatContainer ${!showChatMobile && isMobile ? 'hide' : null} ${isMobile ? 'mobile' : null}`}>
+        <div className={`${!showChatMobile && isMobile ? 'hide' : null} ${isMobile ? 'chatContainerMobile' : 'chatContainer'}`}>
             <div className='chatBox'></div>
             <input onChange={(e) => setChatText(e.target.value)} type='text' className='chatInput' placeholder='Type Here...' />
         </div>

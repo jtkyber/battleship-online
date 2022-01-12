@@ -68,7 +68,7 @@
     position: absolute;
     top: 6rem;
     color: rgba(196, 2, 2, 0.8);
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.5);
     padding: 0.4rem;
     border-radius: 10px;
     text-transform: uppercase;
@@ -158,6 +158,10 @@
     white-space: pre-wrap;
 }
 
+.gamePage.mobile .readyBtn > .btn{
+    filter: grayscale(1) brightness(100);
+}
+
 
 .readyBtn:hover {
     transform: scale(1.04);
@@ -179,37 +183,53 @@
     padding-top: 1.5rem;
 }
 
-.gamePage .chatContainer.mobile {
+.chatContainerMobile {
     position: absolute;
     display: flex;
     flex-flow: nowrap column;
-    grid-area: chatContainer;
+    left: 50%;
+    transform: translate(-50%);
     top: 3rem;
-    height: 22rem;
-    max-height: 70vh;
-    width: 90%;
+    bottom: 5rem;
+    width: 100%;
+    max-width: 30rem;
     border: 2px solid rgba(255,255,255,0.2);
     border-top: none;
-    background-color: rgba(0,0,0,0.6);
+    background-color: rgba(0,0,0,0.8);
     margin-top: 0;
     padding-top: 1.5rem;
     z-index: 100;
-    -webkit-animation: slideDownChat 0.8s ease-out;
-            animation: slideDownChat 0.8s ease-out;
+    -webkit-animation: slideDownChat 0.3s ease-out;
+            animation: slideDownChat 0.3s ease-out;
 }
 
 @-webkit-keyframes slideDownChat {
-    0% {height: 0;}
-    100% {height: 22rem;}
+    0% {bottom: 100vh;}
+    100% {bottom: 5rem;}
 }
 
 @keyframes slideDownChat {
-    0% {height: 0;}
-    100% {height: 22rem;}
+    0% {bottom: 100vh;}
+    100% {bottom: 5rem;}
 }
 
-.gamePage .chatContainer.hide {
+.gamePage .chatContainerMobile.hide {
     display: none;
+}
+
+.gamePage .chatContainerMobile:before {
+    position: absolute;
+    left: 50%;
+    width: 90%;
+    text-align: center;
+    top: 0.5rem;
+    transform: translate(-50%, 0%);
+    content: 'Chat';
+    font-weight: 400;
+    color: rgba(0, 237, 39, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.2rem;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
 }
 
 .gamePage .chatContainer:before {
@@ -232,6 +252,10 @@
     height: 90%;
     overflow: scroll;
     padding: 0.5rem;
+}
+
+.chatContainerMobile .chatBox {
+    padding: 1rem;
 }
 
 .gamePage .chatBox::-webkit-scrollbar {
