@@ -113,12 +113,20 @@ const Navigation = ({ socket, onRouteChange }) => {
                         user.hash === 'guest'
                         ?
                         <>
-                            <img className='hasSound chatIcon' src={chatIcon} alt='chat' onClick={setShowChatMobile} />
+                            {
+                                isMobile
+                                ? <img className='hasSound chatIcon' src={chatIcon} alt='chat' onClick={setShowChatMobile} />
+                                : null
+                            }
                             <img className='hasSound logOutIcon' src={logOutIcon} alt='log out' value='logOut' onClick={handleExitClick} />
                         </>
                         :
                         <>
-                            <img className='hasSound chatIcon' src={chatIcon} alt='chat' onClick={setShowChatMobile} />
+                        {
+                                isMobile
+                                ? <img className='hasSound chatIcon' src={chatIcon} alt='chat' onClick={setShowChatMobile} />
+                                : null
+                            }
                             <img className='hasSound goHomeIcon' src={homeIcon} alt='go home' value='goHome' onClick={handleExitClick} />
                             <img className='hasSound logOutIcon' src={logOutIcon} alt='log out' value='logOut' onClick={handleExitClick} />
                         </>

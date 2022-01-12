@@ -18,7 +18,7 @@ import './gamePage.css';
 import './leaderboard.css';
 
 function App() {
-    const { getOnlineFriendsInterval, route, user, friendSocket, findMatchInterval, checkOppStatusInterval, search, updatLastOnlineInterval, soundOn, musicOn, isMobile, showFriendsMobile } = useStoreState(state => ({
+    const { getOnlineFriendsInterval, route, user, friendSocket, findMatchInterval, checkOppStatusInterval, search, updatLastOnlineInterval, soundOn, musicOn, isMobile, showFriendsMobile, audioStarted } = useStoreState(state => ({
         getOnlineFriendsInterval: state.getOnlineFriendsInterval,
         route: state.route,
         user: state.user,
@@ -30,10 +30,11 @@ function App() {
         soundOn: state.stored.soundOn,
         musicOn: state.stored.musicOn,
         isMobile: state.stored.isMobile,
-        showFriendsMobile: state.showFriendsMobile
+        showFriendsMobile: state.showFriendsMobile,
+        audioStarted: state.audioStarted
     }));
 
-    const { setRoute, setUser, setCurrentSocket, setSearch, setUpdatLastOnlineInterval, setAllFriends, setUnsortedFriends, setFriendsOnline, setFriendSearch, setPlayerIsReady, setSoundOn, setMusicOn, setIsMobile, setUserName, setPassword } = useStoreActions(actions => ({
+    const { setRoute, setUser, setCurrentSocket, setSearch, setUpdatLastOnlineInterval, setAllFriends, setUnsortedFriends, setFriendsOnline, setFriendSearch, setPlayerIsReady, setSoundOn, setMusicOn, setIsMobile, setUserName, setPassword, setAudioStarted } = useStoreActions(actions => ({
         setRoute: actions.setRoute,
         setUser: actions.setUser,
         setCurrentSocket: actions.setCurrentSocket,
@@ -48,7 +49,8 @@ function App() {
         setMusicOn: actions.setMusicOn,
         setIsMobile: actions.setIsMobile,
         setUserName: actions.setUserName,
-        setPassword: actions.setPassword
+        setPassword: actions.setPassword,
+        setAudioStarted: actions.setAudioStarted
     }));
 
     const onRouteChange = async (e) => {
@@ -172,12 +174,12 @@ function App() {
 
     useEffect(() => {
         if (route === 'game') {
+            console.log(audioStarted)
             if (audio.lobbyTheme.playing()) {
                 audio.lobbyTheme.fade(0.5, 0, 2000);
             } 
             if (!audio.gameTheme.playing()) {
-                console.log('test')
-                audio.gameTheme.fade(0, 0.3, 0);
+                audio.gameTheme.fade(0, 0.3, 500);
             }
             if (!audio.ambientWaves.playing()) {
                 audio.ambientWaves.fade(0, 0.2, 1000);
@@ -187,7 +189,8 @@ function App() {
             stopSearching();
             updateInGameStatus(true);
         } else {
-            if (!audio.lobbyTheme.playing()) {
+            console.log(audioStarted)
+            if (audioStarted && !audio.lobbyTheme.playing()) {
                 audio.lobbyTheme.fade(0, 0.5, 0);
             } 
             if (audio.gameTheme.playing()) {
@@ -260,9 +263,11 @@ function App() {
         }
     }
 
-    const handleMouseDown = (e) => {
-        if (!audio.lobbyTheme.playing() && route !== 'game') {
+    const handleMouseDown = async (e) => {
+        if (!audioStarted && !audio.lobbyTheme.playing() && route !== 'game') {
+            console.log(audioStarted)
             audio.lobbyTheme.play();
+            setAudioStarted();
         }
 
         const logReg = document.querySelector('.logReg');

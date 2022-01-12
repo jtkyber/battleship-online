@@ -52,6 +52,7 @@ const model = {
     playerTurnText: '',
     showFriendsMobile: false,
     showChatMobile: false,
+    audioStarted: false,
 
     //Actions
 
@@ -181,6 +182,10 @@ const model = {
 
     setShowChatMobile: action((state) => {
         state.showChatMobile = !state.showChatMobile;
+    }),
+
+    setAudioStarted: action((state) => {
+        state.audioStarted = true;
     }),
 }
 
