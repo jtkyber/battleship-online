@@ -225,7 +225,7 @@ const Friends = ({ socket }) => {
         <div className={`friendsContainer ${isMobile ? 'mobile' : null} ${(!showFriendsMobile && isMobile) ? 'hide' : null}`}>
             <div className='friendsContainerHeader'>
                     <h2>Friends</h2>
-                    <input className='friendSearch' onChange={(e) => setFriendFilter(e.target.value)} type='text' placeholder='Enter a username'/>
+                    <input className='friendSearch' onChange={(e) => setFriendFilter(e.target.value)} type='text' placeholder='Filter friends'/>
             </div>
             <div className='friendsSection'>
                 <div className='friendsListContainer'>
