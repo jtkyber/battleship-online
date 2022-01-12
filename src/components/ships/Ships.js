@@ -92,8 +92,8 @@ const Ships = () => {
     }
 
     window.ontouchend = (e) => {
-        console.log('touch ended');
-        if (isMobile && shipIsSelected && e.target.classList.contains('singleSquare') && rotating === false && areaIsClear()) {
+        console.log(e.changedTouches.length);
+        if (isMobile && (e.changedTouches.length < 2) && shipIsSelected && e.target.classList.contains('singleSquare') && rotating === false && areaIsClear()) {
             audio.buttonClick.play();
             selectedShip.style.zIndex = '3';
             document.querySelector('.userBoard').style.cursor = 'default';
@@ -120,7 +120,7 @@ const Ships = () => {
     // }
 
     const handleShipTouch = (e) => {
-        console.log(e.touches.length)
+        // console.log(e.touches.length)
         if (isMobile && (e.touches.length === 2) && shipIsSelected) {
             audio.hoverSound.play();
             if (orientation === 'hor') {
