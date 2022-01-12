@@ -11,12 +11,15 @@ const Ships = () => {
         gameRoute: state.gameRoute,
         isMobile: state.stored.isMobile
     }));
+    let doubleTapTimer = 0;
+    let lastTap = 0;
 
     useEffect(() => {
-        document.addEventListener('touchstart', handleShipTouch);
+        // document.addEventListener('touchstart', handleShipTouch);
+
 
         return () => {
-            document.removeEventListener('touchstart', handleShipTouch);
+            // document.removeEventListener('touchstart', handleShipTouch);
         }
     }, [])
 
@@ -92,15 +95,36 @@ const Ships = () => {
     }
 
     window.ontouchend = (e) => {
-        console.log(e.changedTouches.length);
-        if (isMobile && (e.changedTouches.length < 2) && shipIsSelected && e.target.classList.contains('singleSquare') && rotating === false && areaIsClear()) {
-            audio.buttonClick.play();
-            selectedShip.style.zIndex = '3';
-            document.querySelector('.userBoard').style.cursor = 'default';
-            // selectedShip.style.backgroundColor = null;
-            selectedShip.style.border = null;
-            shipIsSelected = false;
+        const currentTime = Date.now();
+        const tapLength = currentTime - lastTap;
+        clearTimeout(doubleTapTimer);
+        if (tapLength < 500 && tapLength > 0) {
+            if (isMobile && shipIsSelected) {
+                audio.hoverSound.play();
+                if (orientation === 'hor') {
+                    selectedShip.style.transform = 'rotate(-90deg)';
+                    orientation = 'vert';
+                } else if (orientation === 'vert') {
+                    selectedShip.style.transform = 'rotate(0deg)';
+                    orientation = 'hor';
+                }
+                setManualGridLocation = true;
+                rotating = true;
+            }
+        } else {
+            doubleTapTimer = setTimeout(() => {
+                clearTimeout(doubleTapTimer);
+            }, 500)
+
+            if (isMobile && shipIsSelected && e.target.classList.contains('singleSquare') && rotating === false && areaIsClear()) {
+                audio.buttonClick.play();
+                selectedShip.style.zIndex = '3';
+                document.querySelector('.userBoard').style.cursor = 'default';
+                selectedShip.style.border = null;
+                shipIsSelected = false;
+            }
         }
+        lastTap = currentTime;
     }
 
     // window.ontouchstart = (e) => {
@@ -119,22 +143,22 @@ const Ships = () => {
     //     return false;
     // }
 
-    const handleShipTouch = (e) => {
-        // console.log(e.touches.length)
-        if (isMobile && (e.touches.length === 2) && shipIsSelected) {
-            audio.hoverSound.play();
-            if (orientation === 'hor') {
-                selectedShip.style.transform = 'rotate(-90deg)';
-                orientation = 'vert';
-            } else if (orientation === 'vert') {
-                selectedShip.style.transform = 'rotate(0deg)';
-                orientation = 'hor';
-            }
-            setManualGridLocation = true;
-            rotating = true;
-        }
-        return false;
-    }
+    // const handleShipTouch = (e) => {
+    //     // console.log(e.touches.length)
+    //     if (isMobile && (e.touches.length === 2) && shipIsSelected) {
+    //         audio.hoverSound.play();
+    //         if (orientation === 'hor') {
+    //             selectedShip.style.transform = 'rotate(-90deg)';
+    //             orientation = 'vert';
+    //         } else if (orientation === 'vert') {
+    //             selectedShip.style.transform = 'rotate(0deg)';
+    //             orientation = 'hor';
+    //         }
+    //         setManualGridLocation = true;
+    //         rotating = true;
+    //     }
+    //     return false;
+    // }
     
     // Check to see if player is placing the ship in an open space
 
