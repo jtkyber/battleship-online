@@ -115,6 +115,10 @@
     -ms-overflow-style: none;
 }
 
+.friendsContainer.mobile .friendsListContainer {
+  margin-bottom: 16.5rem;
+}
+
 .friendsContainer.mobile .friendsListContainer::-webkit-scrollbar {
   display: none;
 }
@@ -150,10 +154,6 @@
     padding: 1rem 0;
     -webkit-animation: 0.5s linear 0s 1 slideUp;
             animation: 0.5s linear 0s 1 slideUp;
-}
-
-.friendsContainer.mobile .friendsList {
-  
 }
 
 @-webkit-keyframes slideUp {
