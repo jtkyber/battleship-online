@@ -30,8 +30,6 @@ const Friends = ({ socket }) => {
 // -----------------------------------------------------------------------------------
     useEffect(() => {
         fetchFriends();
-        // showOnlineStatusToFriends();
-
         socket.on('update friend status', () => {
             getOnlineFriends();
         });

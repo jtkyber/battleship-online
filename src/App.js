@@ -61,7 +61,6 @@ function App() {
             case 'logOut':
                 if (user?.username) {
                     setSearch(false);
-                    // removeUserSocket(true);
                 }
                 setRoute('login');
                 break;
@@ -92,14 +91,12 @@ function App() {
             default:
                 if (user?.username) {
                     setSearch(false);
-                    // removeUserSocket(true);
                 }
                 setRoute('login');
         }
     }
 
     useEffect(() => {
-        // document.addEventListener('mousedown', handleMouseDown);
         document.addEventListener('mouseover', handleMouseOver);
 
         socket.on('connect', () => {
@@ -109,7 +106,6 @@ function App() {
 
         return () => {
             socket.off('connect');
-            // document.removeEventListener('mousedown', handleMouseDown);
             document.removeEventListener('mouseover', handleMouseOver);
         }
     }, [])
@@ -283,16 +279,6 @@ function App() {
             setAudioStarted();
         }
 
-        // const logReg = document.querySelector('.logReg');
-        // if (isMobile && e.target.tagName === 'INPUT' && (e.target.parentNode?.classList.contains('username') || e.target.parentNode?.classList.contains('password'))) {
-        //     logReg.classList.add('raisedTextBox')
-            
-        // } else {
-        //     if (logReg?.classList.contains('raisedTextBox')) {
-        //         logReg?.classList.remove('raisedTextBox');
-        //     }
-        // }
-
         if (
             ((e.target.tagName === 'BUTTON') && (!e.target.classList.contains('messageToggle')))
             ||
@@ -301,18 +287,6 @@ function App() {
             audio.buttonClick.play();
         }
     }
-
-    // const handleBtnPress = (e) => {
-    //     if (
-    //         ((e.target.tagName === 'BUTTON') && (!e.target.classList.contains('messageToggle')))
-    //         ||
-    //         (e.target?.alt === 'Message Icon')
-    //         ||
-    //         (e.target.classList.contains('audioToggle'))
-    //     ) {
-    //         audio.buttonClick.play();
-    //     }
-    // }
 
     const handleMouseOver = (e) => {
         if (
@@ -342,43 +316,6 @@ function App() {
         }
     }
 
-    // const showOnlineStatusToFriends = async () => {
-    //     try {
-    //         const response1 = await fetch(`https://calm-ridge-60009.herokuapp.com/getFriends?username=${user.username}`)
-    //         if (!response1.ok) {
-    //             throw new Error('Error')
-    //         }
-    //         const friends = await response1.json();
-    //         if (friends?.length) {
-    //             for (let f of friends) {
-    //                 if (f.socketid) {
-    //                     socket.emit('update user status', f.socketid);
-    //                 }
-    //             }
-    //         }
-    //     } catch(err) {
-    //         console.log(err);
-    //     }
-    // }
-
-    // const loadUser = (user) => {
-    //     setUser({ username: user.username, wins: user.wins })
-    // }
-
-    // const removeUserSocket = async (show) => {
-    //     const res = await fetch('https://calm-ridge-60009.herokuapp.com/removeUserSocket', {
-    //       method: 'put',
-    //       headers: {'Content-Type': 'application/json'},
-    //       body: JSON.stringify({
-    //         username: user.username
-    //       })
-    //     })
-    //     const socketRemoved = await res.json();
-    //     if (socketRemoved && show) {
-    //         showOnlineStatusToFriends();
-    //     }
-    // }
-
     window.addEventListener('beforeunload', (e) => {
         e.preventDefault();
         if (user?.username) {
@@ -388,7 +325,6 @@ function App() {
         if (route === 'game') {
             socket.emit('send exit game', friendSocket);
         }
-        // removeUserSocket(false);
         e.returnValue = '';
     })
 
