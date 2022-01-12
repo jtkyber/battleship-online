@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react';
 import { useStoreState } from 'easy-peasy';
 import { audio } from '../../audio';
 import $ from 'jquery';
@@ -10,6 +11,14 @@ const Ships = () => {
         gameRoute: state.gameRoute,
         isMobile: state.stored.isMobile
     }));
+
+    useEffect(() => {
+        document.addEventListener('touchstart', handleShipTouch);
+
+        return () => {
+            document.removeEventListener('touchstart', handleShipTouch);
+        }
+    }, [])
 
     let rotating = false;
     let orientation = 'hor';
@@ -91,6 +100,38 @@ const Ships = () => {
             selectedShip.style.border = null;
             shipIsSelected = false;
         }
+    }
+
+    // window.ontouchstart = (e) => {
+    //     if (isMobile && (e.touches.length === 2) && shipIsSelected) {
+    //         audio.hoverSound.play();
+    //         if (orientation === 'hor') {
+    //             selectedShip.style.transform = 'rotate(-90deg)';
+    //             orientation = 'vert';
+    //         } else if (orientation === 'vert') {
+    //             selectedShip.style.transform = 'rotate(0deg)';
+    //             orientation = 'hor';
+    //         }
+    //         setManualGridLocation = true;
+    //         rotating = true;
+    //     }
+    //     return false;
+    // }
+
+    const handleShipTouch = (e) => {
+        if (isMobile && (e.touches.length === 2) && shipIsSelected) {
+            audio.hoverSound.play();
+            if (orientation === 'hor') {
+                selectedShip.style.transform = 'rotate(-90deg)';
+                orientation = 'vert';
+            } else if (orientation === 'vert') {
+                selectedShip.style.transform = 'rotate(0deg)';
+                orientation = 'hor';
+            }
+            setManualGridLocation = true;
+            rotating = true;
+        }
+        return false;
     }
     
     // Check to see if player is placing the ship in an open space
