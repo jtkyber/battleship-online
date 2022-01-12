@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react';
 import { useStoreState } from 'easy-peasy';
 import { audio } from '../../audio';
 import $ from 'jquery';
@@ -11,18 +10,9 @@ const Ships = () => {
         gameRoute: state.gameRoute,
         isMobile: state.stored.isMobile
     }));
+    
     let doubleTapTimer = 0;
     let lastTap = 0;
-
-    useEffect(() => {
-        // document.addEventListener('touchstart', handleShipTouch);
-
-
-        return () => {
-            // document.removeEventListener('touchstart', handleShipTouch);
-        }
-    }, [])
-
     let rotating = false;
     let orientation = 'hor';
     let selectedShip = '';
@@ -88,7 +78,6 @@ const Ships = () => {
             audio.buttonClick.play();
             selectedShip.style.zIndex = '3';
             document.querySelector('.userBoard').style.cursor = 'default';
-            // selectedShip.style.backgroundColor = null;
             selectedShip.style.border = null;
             shipIsSelected = false;
         }
@@ -101,7 +90,6 @@ const Ships = () => {
             clearTimeout(doubleTapTimer);
             if (tapLength < 500 && tapLength > 0) {
                 if (isMobile && shipIsSelected) {
-                    audio.hoverSound.play();
                     if (orientation === 'hor') {
                         selectedShip.style.transform = 'rotate(-90deg)';
                         orientation = 'vert';
@@ -128,39 +116,6 @@ const Ships = () => {
             lastTap = currentTime;
         }
     }
-
-    // window.ontouchstart = (e) => {
-    //     if (isMobile && (e.touches.length === 2) && shipIsSelected) {
-    //         audio.hoverSound.play();
-    //         if (orientation === 'hor') {
-    //             selectedShip.style.transform = 'rotate(-90deg)';
-    //             orientation = 'vert';
-    //         } else if (orientation === 'vert') {
-    //             selectedShip.style.transform = 'rotate(0deg)';
-    //             orientation = 'hor';
-    //         }
-    //         setManualGridLocation = true;
-    //         rotating = true;
-    //     }
-    //     return false;
-    // }
-
-    // const handleShipTouch = (e) => {
-    //     // console.log(e.touches.length)
-    //     if (isMobile && (e.touches.length === 2) && shipIsSelected) {
-    //         audio.hoverSound.play();
-    //         if (orientation === 'hor') {
-    //             selectedShip.style.transform = 'rotate(-90deg)';
-    //             orientation = 'vert';
-    //         } else if (orientation === 'vert') {
-    //             selectedShip.style.transform = 'rotate(0deg)';
-    //             orientation = 'hor';
-    //         }
-    //         setManualGridLocation = true;
-    //         rotating = true;
-    //     }
-    //     return false;
-    // }
     
     // Check to see if player is placing the ship in an open space
 

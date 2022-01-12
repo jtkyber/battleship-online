@@ -11,25 +11,19 @@ import shipSunkSound from './audioclips/ship-sunk.mp3';
 const handleWaveFade = () => {
     if (audio.ambientWaves.volume() === 0) {
         audio.ambientWaves.stop();
-    } else {
-        audio.ambientWaves.play();
-    }
+    } 
 }
 
 const handleLobbyFade = () => {
     if (audio.lobbyTheme.volume() === 0) {
         audio.lobbyTheme.stop();
-    } else {
-        audio.lobbyTheme.play();
-    }
+    } 
 }
 
 const handleGameFade = () => {
     if (audio.gameTheme.volume() === 0) {
         audio.gameTheme.stop();
-    } else {
-        audio.gameTheme.play();
-    }
+    } 
 }
 
 const isMobileDevice = () => {

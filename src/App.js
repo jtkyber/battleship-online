@@ -179,9 +179,11 @@ function App() {
             } 
             if (!audio.gameTheme.playing()) {
                 audio.gameTheme.fade(0, 0.3, 500);
+                audio.gameTheme.play();
             }
             if (!audio.ambientWaves.playing()) {
                 audio.ambientWaves.fade(0, 0.2, 1000);
+                audio.ambientWaves.play();
             }
             setSearch(false);
             clearInterval(getOnlineFriendsInterval);
@@ -189,7 +191,8 @@ function App() {
             updateInGameStatus(true);
         } else {
             if (audioStarted && !audio.lobbyTheme.playing()) {
-                audio.lobbyTheme.fade(0, 0.5, 0);
+                audio.lobbyTheme.fade(0, 0.5, 500);
+                audio.lobbyTheme.play();
             } 
             if (audio.gameTheme.playing()) {
                 audio.gameTheme.fade(0.3, 0, 2000);
