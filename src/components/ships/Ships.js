@@ -95,36 +95,38 @@ const Ships = () => {
     }
 
     window.ontouchend = (e) => {
-        const currentTime = Date.now();
-        const tapLength = currentTime - lastTap;
-        clearTimeout(doubleTapTimer);
-        if (tapLength < 500 && tapLength > 0) {
-            if (isMobile && shipIsSelected) {
-                audio.hoverSound.play();
-                if (orientation === 'hor') {
-                    selectedShip.style.transform = 'rotate(-90deg)';
-                    orientation = 'vert';
-                } else if (orientation === 'vert') {
-                    selectedShip.style.transform = 'rotate(0deg)';
-                    orientation = 'hor';
+        if (shipIsSelected) {
+            const currentTime = Date.now();
+            const tapLength = currentTime - lastTap;
+            clearTimeout(doubleTapTimer);
+            if (tapLength < 500 && tapLength > 0) {
+                if (isMobile && shipIsSelected) {
+                    audio.hoverSound.play();
+                    if (orientation === 'hor') {
+                        selectedShip.style.transform = 'rotate(-90deg)';
+                        orientation = 'vert';
+                    } else if (orientation === 'vert') {
+                        selectedShip.style.transform = 'rotate(0deg)';
+                        orientation = 'hor';
+                    }
+                    setManualGridLocation = true;
+                    rotating = true;
                 }
-                setManualGridLocation = true;
-                rotating = true;
+            } else {
+                doubleTapTimer = setTimeout(() => {
+                    clearTimeout(doubleTapTimer);
+                }, 500)
+    
+                if (isMobile && shipIsSelected && e.target.classList.contains('singleSquare') && rotating === false && areaIsClear()) {
+                    audio.buttonClick.play();
+                    selectedShip.style.zIndex = '3';
+                    document.querySelector('.userBoard').style.cursor = 'default';
+                    selectedShip.style.border = null;
+                    shipIsSelected = false;
+                }
             }
-        } else {
-            doubleTapTimer = setTimeout(() => {
-                clearTimeout(doubleTapTimer);
-            }, 500)
-
-            if (isMobile && shipIsSelected && e.target.classList.contains('singleSquare') && rotating === false && areaIsClear()) {
-                audio.buttonClick.play();
-                selectedShip.style.zIndex = '3';
-                document.querySelector('.userBoard').style.cursor = 'default';
-                selectedShip.style.border = null;
-                shipIsSelected = false;
-            }
+            lastTap = currentTime;
         }
-        lastTap = currentTime;
     }
 
     // window.ontouchstart = (e) => {

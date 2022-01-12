@@ -155,6 +155,7 @@ const Game = ({ socket, onRouteChange }) => {
             setYourTurn(true);
         } else {
             readyBtn.style.opacity = '0.3';
+            setGameRoute('waiting');
         }
         setPlayerIsReady(true);
         socket.emit('send ready status', friendSocket);
@@ -169,9 +170,9 @@ const Game = ({ socket, onRouteChange }) => {
                 <h5>○ {rotateShipInstructions}</h5>
                 <h5>○ {dropShipInstructions}</h5>
             </div>
-            <h3 className={`playerTurnText ${gameRoute === 'gameInProgress' ? null : 'hide'}`}>{`${gameRoute === 'gameInProgress' ? playerTurnText : ''}`}</h3>
+            <h3 className={`playerTurnText ${gameRoute !== 'gameInProgress' ? 'hide' : null}`}>{`${gameRoute === 'gameInProgress' ? playerTurnText : ''}`}</h3>
             {
-            gameRoute === 'placeShips'
+            gameRoute !== 'gameInProgress'
             ? 
             <div className='readyBtn'>
                 <button onClick={handleReadyButton} className='btn'>{isMobile ? '✔️' : 'Ready'}</button>
