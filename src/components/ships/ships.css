@@ -12,15 +12,12 @@
 
 .carrierIcon {
     background: url('./carrier.svg');
-    /*background-color: black;*/
     background-size: 90% 90%;
     background-repeat: no-repeat;
     background-position: center;
     width: 100%;
     height: 100%;
     transform-origin: 10% 50%;
-    /* -webkit-filter: brightness(0);
-            filter: brightness(0); */
 }
 
 .battleship {
@@ -31,15 +28,12 @@
 
 .battleshipIcon {
     background: url('./battleship.svg');
-    /*background-color: black;*/
     background-size: 90% 90%;
     background-repeat: no-repeat;
     background-position: center;
     width: 100%;
     height: 100%;
     transform-origin: 10% 50%;
-    /* -webkit-filter: brightness(0);
-            filter: brightness(0); */
 }
 
 .cruiser {
@@ -50,15 +44,12 @@
 
 .cruiserIcon {
     background: url('./cruiser.svg');
-    /*background-color: black;*/
     background-size: 90% 90%;
     background-repeat: no-repeat;
     background-position: center;
     width: 100%;
     height: 100%;
     transform-origin: 10% 50%;
-    /* -webkit-filter: brightness(0);
-            filter: brightness(0); */
 }
 
 .submarine {
@@ -69,15 +60,12 @@
 
 .submarineIcon {
     background: url('./submarine.svg');
-    /*background-color: black;*/
     background-size: 90% 90%;
     background-repeat: no-repeat;
     background-position: center;
     width: 100%;
     height: 100%;
     transform-origin: 10% 50%;
-    /* -webkit-filter: brightness(0);
-            filter: brightness(0); */
 }
 
 .destroyer {
@@ -88,15 +76,12 @@
 
 .destroyerIcon {
     background: url('./destroyer.svg');
-    /*background-color: black;*/
     background-size: 90% 90%;
     background-repeat: no-repeat;
     background-position: center;
     width: 100%;
     height: 100%;
     transform-origin: 10% 50%;
-    /* -webkit-filter: brightness(0);
-            filter: brightness(0); */
 }
 
 .rotate-carrier {
@@ -104,9 +89,9 @@
     background-size: 90% 90%;
     background-repeat: no-repeat;
     background-position: center;
-    width: 100%;
+    /* width: 100%;
     height: 100%;
-    transform-origin: 10% 50%;
+    transform-origin: 10% 50%; */
 }
 
 .rotate-battleship {
@@ -114,9 +99,9 @@
     background-size: 90% 90%;
     background-repeat: no-repeat;
     background-position: center;
-    width: 100%;
+    /* width: 100%;
     height: 100%;
-    transform-origin: 10% 50%;
+    transform-origin: 10% 50%; */
 }
 
 .rotate-cruiser {
@@ -124,9 +109,9 @@
     background-size: 90% 90%;
     background-repeat: no-repeat;
     background-position: center;
-    width: 100%;
+    /* width: 100%;
     height: 100%;
-    transform-origin: 10% 50%;
+    transform-origin: 10% 50%; */
 }
 
 .rotate-submarine {
@@ -134,9 +119,9 @@
     background-size: 90% 90%;
     background-repeat: no-repeat;
     background-position: center;
-    width: 100%;
+    /* width: 100%;
     height: 100%;
-    transform-origin: 10% 50%;
+    transform-origin: 10% 50%; */
 }
 
 .rotate-destroyer {
@@ -144,9 +129,9 @@
     background-size: 90% 90%;
     background-repeat: no-repeat;
     background-position: center;
-    width: 100%;
+    /* width: 100%;
     height: 100%;
-    transform-origin: 10% 50%;
+    transform-origin: 10% 50%; */
 }
 
 .shipSunk {
