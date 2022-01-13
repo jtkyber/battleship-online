@@ -61,6 +61,7 @@ const model = {
     showChatMobile: false,
     audioStarted: false,
     shipIsSelected: false,
+    showGameInstructions: true,
 
     //Actions
 
@@ -194,6 +195,10 @@ const model = {
 
     setShipIsSelected: action((state, input) => {
         state.shipIsSelected = input;
+    }),
+
+    setShowGameInstructions: action((state, input) => {
+        state.showGameInstructions = input;
     }),
 }
 
