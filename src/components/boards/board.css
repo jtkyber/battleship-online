@@ -2,7 +2,7 @@
     --home-board-size: 60vmin;
     --home-board-size-mobile: 80vmin;
     --game-board-size: 40rem;
-    --game-board-size-mobile: 35vh;
+    --game-board-size-mobile: 34vh;
 }
 
 @media only screen and (min-width: 1650px) and (max-width: 1920px) {
@@ -115,7 +115,7 @@
     "rows board";
     align-content: center;
     padding-top: 0;
-    margin-bottom: 1rem;
+    margin-bottom: 3rem;
     /* margin-right: calc(var(--game-board-size-mobile) / 10); */
 }
 

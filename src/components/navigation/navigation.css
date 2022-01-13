@@ -48,10 +48,14 @@ nav {
 
 .soundToggle {
     opacity: 0.6;
+    width: 22px;
+    height: auto;
 }
 
 .musicToggle {
     margin-bottom: -0.1rem;
+    width: 25px;
+    height: auto;
 }
 
 .soundOff {
@@ -134,40 +138,49 @@ nav .soundToggle:hover {
 
 .leaderboardIcon {
     opacity: 0.5;
-    height: -webkit-min-content;
+    /* height: -webkit-min-content;
     height: -moz-min-content;
-    height: min-content;
+    height: min-content; */
+    width: 25px;
+    height: auto;
 }
 
 .logOutIcon {
     opacity: 0.5;
     margin-left: 0.5rem;
-    height: -webkit-min-content;
+    width: 22px;
+    height: auto;
+    /* height: -webkit-min-content;
     height: -moz-min-content;
-    height: min-content;
+    height: min-content; */
 }
 
 .goHomeIcon {
     opacity: 0.5;
-    height: -webkit-min-content;
+    /* height: -webkit-min-content;
     height: -moz-min-content;
-    height: min-content;
-    /* margin-left: 0.5rem; */
+    height: min-content; */
+    width: 25px;
+    height: auto;
 }
 
 .goBackIcon {
     opacity: 0.5;
-    height: -webkit-min-content;
+    width: 25px;
+    height: auto;
+    /* height: -webkit-min-content;
     height: -moz-min-content;
-    height: min-content;
+    height: min-content; */
 }
 
 .friendsIcon {
     position: absolute;
     opacity: 0.5;
-    height: -webkit-min-content;
+    width: 25px;
+    height: auto;
+    /* height: -webkit-min-content;
     height: -moz-min-content;
-    height: min-content;
+    height: min-content; */
     left: 50%;
     transform: translate(-50%);
 }
@@ -175,9 +188,11 @@ nav .soundToggle:hover {
 .chatIcon {
     position: absolute;
     opacity: 0.5;
-    height: -webkit-min-content;
+    width: 25px;
+    height: auto;
+    /* height: -webkit-min-content;
     height: -moz-min-content;
-    height: min-content;
+    height: min-content; */
     left: 50%;
     transform: translate(-50%);
 }
