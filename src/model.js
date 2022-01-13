@@ -52,7 +52,6 @@ const model = {
     friendsOnline: [],
     gameRoute: 'placeShips',
     playerIsReady: false,
-    opponentIsReady: false,
     yourTurn: false,
     chatText: '',
     inviteSent: false,
@@ -61,6 +60,7 @@ const model = {
     showFriendsMobile: false,
     showChatMobile: false,
     audioStarted: false,
+    shipIsSelected: false,
 
     //Actions
 
@@ -148,10 +148,6 @@ const model = {
         state.playerIsReady = input;
     }),
 
-    setOpponentIsReady: action((state, input) => {
-        state.opponentIsReady = input;
-    }),
-
     setYourTurn: action((state, input) => {
         state.yourTurn = input;
     }),
@@ -194,6 +190,10 @@ const model = {
 
     setAudioStarted: action((state) => {
         state.audioStarted = true;
+    }),
+
+    setShipIsSelected: action((state, input) => {
+        state.shipIsSelected = input;
     }),
 }
 

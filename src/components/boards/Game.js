@@ -11,33 +11,40 @@ const Game = ({ socket, onRouteChange }) => {
     const rotateShipInstructions = "To rotate a ship, right click or press 'enter'";
     const dropShipInstructions = "To drop the ship, left click";
     
-    const { friendSocket, opponentName, user, checkOppStatusInterval, gameRoute, playerIsReady, opponentIsReady, yourTurn, playerTurnText, isMobile } = useStoreState(state => ({
+    const { friendSocket, opponentName, user, checkOppStatusInterval, gameRoute, playerIsReady, yourTurn, playerTurnText, isMobile } = useStoreState(state => ({
         friendSocket: state.friendSocket,
         opponentName: state.opponentName,
         user: state.user,
         checkOppStatusInterval: state.checkOppStatusInterval,
         gameRoute: state.gameRoute,
         playerIsReady: state.playerIsReady,
-        opponentIsReady: state.opponentIsReady,
         yourTurn: state.yourTurn,
         playerTurnText: state.playerTurnText,
         isMobile: state.stored.isMobile
     }));
 
-    const { setCheckOppStatusInterval, setRoute, setGameRoute, setPlayerIsReady, setOpponentIsReady, setYourTurn, setPlayerTurnText } = useStoreActions(actions => ({
+    const { setCheckOppStatusInterval, setRoute, setGameRoute, setPlayerIsReady, setYourTurn, setPlayerTurnText } = useStoreActions(actions => ({
         setCheckOppStatusInterval: actions.setCheckOppStatusInterval,
         setRoute: actions.setRoute,
         setGameRoute: actions.setGameRoute,
         setPlayerIsReady: actions.setPlayerIsReady,
-        setOpponentIsReady: actions.setOpponentIsReady,
         setYourTurn: actions.setYourTurn,
         setPlayerTurnText: actions.setPlayerTurnText
     }));
 
+    let opponentReady = false;
+
+    socket.on('receive ready status', () => {
+        if (playerIsReady) {
+            setGameRoute('gameInProgress');
+        }
+        opponentReady = true;
+    })
+
     useEffect(() => {
         setPlayerIsReady(false);
-        setOpponentIsReady(false);
         setGameRoute('placeShips');
+
         // const gamePage = document.querySelector('.gamePage');
         socket.on('receive game over', () => {
             // gamePage.style.setProperty('--player-turn-text', '"You Won!"');
@@ -134,31 +141,36 @@ const Game = ({ socket, onRouteChange }) => {
         }
     }
 
-    socket.on('receive ready status', () => {
-        if (playerIsReady) {
-            setGameRoute('gameInProgress');
-        }
-        setOpponentIsReady(true);
-    })
-
     const handleReadyButton = () => {
         const ships = document.querySelectorAll('.ship');
         const readyBtn = document.querySelector('.readyBtn');
         const instructionsList = document.querySelector('.instructions');
-        instructionsList.classList.add('hide');
-        readyBtn.childNodes[0].innerText = `${!isMobile ? 'Waiting...' : '•••'}`;
+        let allShipsPlaced = true;
+
         for (let ship of ships) {
-            ship.style.cursor = 'default';
+            if (parseInt(ship.style.zIndex) < 0) {
+                ship.style.border = '3px solid rgba(255, 0, 0, 0.8)';
+                allShipsPlaced = false;
+                return;
+            }
         }
-        if (opponentIsReady) {
-            setGameRoute('gameInProgress');
-            setYourTurn(true);
-        } else {
-            readyBtn.style.opacity = '0.3';
-            setGameRoute('waiting');
+
+        if (allShipsPlaced) {
+            instructionsList.classList.add('hide');
+            readyBtn.childNodes[0].innerText = `${!isMobile ? 'Waiting...' : '•••'}`;
+            for (let ship of ships) {
+                ship.style.cursor = 'default';
+            }
+            if (opponentReady) {
+                setGameRoute('gameInProgress');
+                setYourTurn(true);
+            } else {
+                readyBtn.style.opacity = '0.3';
+                setGameRoute('waiting');
+            }
+            setPlayerIsReady(true);
+            socket.emit('send ready status', friendSocket);
         }
-        setPlayerIsReady(true);
-        socket.emit('send ready status', friendSocket);
     }
 
     return (
