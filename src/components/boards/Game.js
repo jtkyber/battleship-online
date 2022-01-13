@@ -64,7 +64,7 @@ const Game = ({ socket, onRouteChange }) => {
             user.hash === 'guest' ? setRoute('login') : setRoute('loggedIn');
         })
 
-        setCheckOppStatusInterval(setInterval(checkIfOpponentIsOnline, 3000));
+        setCheckOppStatusInterval(setInterval(checkIfOpponentIsOnline, 2000));
 
         return () => {
             clearInterval(checkOppStatusInterval);
