@@ -6,13 +6,13 @@ import '../boards/board.css';
 
 const Ships = () => {
 
-    const { gameRoute, isMobile } = useStoreState(state => ({
+    const { gameRoute, isMobile, isIOS } = useStoreState(state => ({
         gameRoute: state.gameRoute,
-        isMobile: state.stored.isMobile
+        isMobile: state.stored.isMobile,
+        isIOS: state.stored.isIOS
     }));
-    
-    let doubleTapTimer = 0;
-    let lastTap = 0;
+
+    let moving = false;
     let rotating = false;
     let orientation = 'hor';
     let selectedShip = '';
@@ -74,7 +74,9 @@ const Ships = () => {
     // Place a ship down that is currently selected
 
     window.onclick = (e) => {
-        if (!isMobile && shipIsSelected && e.target.classList.contains('singleSquare') && rotating === false && areaIsClear()) {
+        if (!shipIsSelected && !isMobile && e.target.parentElement.classList.contains('ship')) {
+            onShipSelect(e);
+        } else if (!isMobile && shipIsSelected && e.target.classList.contains('singleSquare') && rotating === false && areaIsClear()) {
             audio.buttonClick.play();
             selectedShip.style.zIndex = '3';
             document.querySelector('.userBoard').style.cursor = 'default';
@@ -84,37 +86,32 @@ const Ships = () => {
     }
 
     window.ontouchend = (e) => {
-        if (shipIsSelected) {
-            const currentTime = Date.now();
-            const tapLength = currentTime - lastTap;
-            clearTimeout(doubleTapTimer);
-            if (tapLength < 500 && tapLength > 0) {
-                if (isMobile && shipIsSelected) {
-                    if (orientation === 'hor') {
-                        selectedShip.style.transform = 'rotate(-90deg)';
-                        orientation = 'vert';
-                    } else if (orientation === 'vert') {
-                        selectedShip.style.transform = 'rotate(0deg)';
-                        orientation = 'hor';
-                    }
-                    setManualGridLocation = true;
-                    rotating = true;
-                }
-            } else {
-                doubleTapTimer = setTimeout(() => {
-                    clearTimeout(doubleTapTimer);
-                }, 500)
-    
-                if (isMobile && shipIsSelected && e.target.classList.contains('singleSquare') && rotating === false && areaIsClear()) {
-                    audio.buttonClick.play();
-                    selectedShip.style.zIndex = '3';
-                    document.querySelector('.userBoard').style.cursor = 'default';
-                    selectedShip.style.border = null;
-                    shipIsSelected = false;
-                }
+        if (shipIsSelected && !moving) {
+            if (orientation === 'hor') {
+                // selectedShip.style.transform = 'rotate(-90deg)';
+                orientation = 'vert';
+                console.log(e)
+                positionShipOnGrid(e);
+            } else if (orientation === 'vert') {
+                // selectedShip.style.transform = 'rotate(0deg)';
+                orientation = 'hor';
+                positionShipOnGrid(e);
             }
-            lastTap = currentTime;
+            setManualGridLocation = true;
+            rotating = true;
+        } else if (shipIsSelected && moving) {
+        
+            if (isMobile && shipIsSelected && rotating === false && areaIsClear()) {
+                audio.buttonClick.play();
+                selectedShip.style.zIndex = '3';
+                document.querySelector('.userBoard').style.cursor = 'default';
+                selectedShip.style.border = null;
+                shipIsSelected = false;
+            }
+        } else if (!shipIsSelected && e.target.parentElement.classList.contains('ship')) {
+            onShipSelect(e);
         }
+        moving = false;
     }
     
     // Check to see if player is placing the ship in an open space
@@ -135,11 +132,13 @@ const Ships = () => {
          if (!isMobile && shipIsSelected) {
             audio.hoverSound.play();
             if (orientation === 'hor') {
-                selectedShip.style.transform = 'rotate(-90deg)';
+                // selectedShip.style.transform = 'rotate(-90deg)';
                 orientation = 'vert';
+                positionShipOnGrid(e);
             } else if (orientation === 'vert') {
-                selectedShip.style.transform = 'rotate(0deg)';
+                // selectedShip.style.transform = 'rotate(0deg)';
                 orientation = 'hor';
+                positionShipOnGrid(e);
             }
             setManualGridLocation = true;
             rotating = true;
@@ -158,53 +157,18 @@ const Ships = () => {
         if (e.code === 'Space' && selectedShip.style !== undefined && shipIsSelected) {
             audio.hoverSound.play();
             if (orientation === 'hor') {
-                selectedShip.style.transform = 'rotate(-90deg)';
+                // selectedShip.style.transform = 'rotate(-90deg)';
                 orientation = 'vert';
+                positionShipOnGrid(e);
             } else if (orientation === 'vert') {
-                selectedShip.style.transform = 'rotate(0deg)';
+                // selectedShip.style.transform = 'rotate(0deg)';
                 orientation = 'hor';
+                positionShipOnGrid(e);
             }
             setManualGridLocation = true;
             rotating = true;
         }
     }
-
-    // Change the grid-row and grid-column of the selected ship mouse is over the user's board
-
-    window.onmouseover = (e) => {
-        if (shipIsSelected) {
-            rotating = false;
-            selectedShip.style.transform = null;
-            const userGrid = document.querySelector('.userBoard');
-            const childShip = document.querySelector(`.${selectedShipName}Icon`);
-            const targetId = e.target.id;
-            const colStart = targetId.substring(0, targetId.indexOf('-'));
-            const rowStart = targetId.substring((targetId.indexOf('-') + 1), targetId.length);
-
-
-            if (userGrid.contains(e.target)
-            && (e.target.classList.contains('singleSquare'))
-            && shipIsSelected === true) {
-                if (orientation === 'hor') {
-                    childShip.classList.remove(`rotate-${selectedShipName}`);
-                    if (colStart < (11 - parseInt(selectedShip.id) + 1)) {
-                        selectedShip.style.gridColumn = `${colStart} / ${parseInt(colStart) + parseInt(selectedShip.id)}`;
-                    } else if (colStart >= (11 - parseInt(selectedShip.id) + 1) && setManualGridLocation === true) {
-                        selectedShip.style.gridColumn = `11 / ${11 - parseInt(selectedShip.id)}`;
-                    } else setManualGridLocation = false;
-                    selectedShip.style.gridRow = `${rowStart} / ${parseInt(rowStart) + 1}`;
-                } else if (orientation === 'vert') {
-                    childShip.classList.add(`rotate-${selectedShipName}`);
-                    if (rowStart > (parseInt(selectedShip.id) - 1)) {
-                        selectedShip.style.gridRow = `${parseInt(rowStart) + 1} / ${parseInt(rowStart) - parseInt(selectedShip.id) + 1}`;
-                    } else if (rowStart <= (parseInt(selectedShip.id) - 1) && setManualGridLocation === true) {
-                        selectedShip.style.gridRow = `${parseInt(selectedShip.id) + 1} / 1`;
-                    } else setManualGridLocation = false;
-                    selectedShip.style.gridColumn = `${colStart} / ${parseInt(colStart) + 1}`;
-                }
-            }
-        }
-    };
 
     const matchTouchToSquares = (x, y) => {
         const squares = document.querySelectorAll('.userBoard .singleSquare');
@@ -223,52 +187,73 @@ const Ships = () => {
         return selectedSquare;
     }
 
-    window.ontouchmove = (e) => {
-        const square = matchTouchToSquares(e.touches[0].clientX, e.touches[0].clientY)
-        if (shipIsSelected && isMobile) {
-            rotating = false;
-            selectedShip.style.transform = null;
-            const userGrid = document.querySelector('.userBoard');
-            const childShip = document.querySelector(`.${selectedShipName}Icon`);
-            const targetId = square?.id;
-            const colStart = targetId?.substring(0, targetId.indexOf('-'));
-            const rowStart = targetId?.substring((targetId.indexOf('-') + 1), targetId?.length);
+    const positionShipOnGrid = (e) => {
+        let square;
+        if (e.type === 'touchmove') {
+            square = matchTouchToSquares(e.touches[0].clientX, e.touches[0].clientY);
+        } else if (e.type === 'touchend') {
+            square = matchTouchToSquares(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
+        } else {
+            square = e.target;
+        }
 
-            if (userGrid.contains(e.target)
-            && (square?.classList?.contains('singleSquare'))
-            && shipIsSelected === true) {
-                if (orientation === 'hor') {
-                    childShip.classList.remove(`rotate-${selectedShipName}`);
-                    if (colStart < (11 - parseInt(selectedShip.id) + 1)) {
-                        selectedShip.style.gridColumn = `${colStart} / ${parseInt(colStart) + parseInt(selectedShip.id)}`;
-                    } else if (colStart >= (11 - parseInt(selectedShip.id) + 1) && setManualGridLocation === true) {
-                        selectedShip.style.gridColumn = `11 / ${11 - parseInt(selectedShip.id)}`;
-                    } else setManualGridLocation = false;
-                    selectedShip.style.gridRow = `${rowStart} / ${parseInt(rowStart) + 1}`;
-                } else if (orientation === 'vert') {
-                    childShip.classList.add(`rotate-${selectedShipName}`);
-                    if (rowStart > (parseInt(selectedShip.id) - 1)) {
-                        selectedShip.style.gridRow = `${parseInt(rowStart) + 1} / ${parseInt(rowStart) - parseInt(selectedShip.id) + 1}`;
-                    } else if (rowStart <= (parseInt(selectedShip.id) - 1) && setManualGridLocation === true) {
-                        selectedShip.style.gridRow = `${parseInt(selectedShip.id) + 1} / 1`;
-                    } else setManualGridLocation = false;
-                    selectedShip.style.gridColumn = `${colStart} / ${parseInt(colStart) + 1}`;
-                }
+        rotating = false;
+        selectedShip.style.transform = null;
+        const userGrid = document.querySelector('.userBoard');
+        const childShip = document.querySelector(`.${selectedShipName}Icon`);
+        const targetId = square?.id;
+        const colStart = targetId?.substring(0, targetId.indexOf('-'));
+        const rowStart = targetId?.substring((targetId.indexOf('-') + 1), targetId?.length);
+
+        if (userGrid.contains(e.target)
+        && (square?.classList?.contains('singleSquare'))
+        && shipIsSelected === true) {
+            if (orientation === 'hor') {
+                childShip.classList.remove(`rotate-${selectedShipName}`);
+                if (colStart < (11 - parseInt(selectedShip.id) + 1)) {
+                    selectedShip.style.gridColumn = `${colStart} / ${parseInt(colStart) + parseInt(selectedShip.id)}`;
+                } else if (colStart >= (11 - parseInt(selectedShip.id) + 1) && setManualGridLocation === true) {
+                    selectedShip.style.gridColumn = `11 / ${11 - parseInt(selectedShip.id)}`;
+                } else setManualGridLocation = false;
+                selectedShip.style.gridRow = `${rowStart} / ${parseInt(rowStart) + 1}`;
+            } else if (orientation === 'vert') {
+                childShip.classList.add(`rotate-${selectedShipName}`);
+                if (rowStart > (parseInt(selectedShip.id) - 1)) {
+                    selectedShip.style.gridRow = `${parseInt(rowStart) + 1} / ${parseInt(rowStart) - parseInt(selectedShip.id) + 1}`;
+                } else if (rowStart <= (parseInt(selectedShip.id) - 1) && setManualGridLocation === true) {
+                    selectedShip.style.gridRow = `${parseInt(selectedShip.id) + 1} / 1`;
+                } else setManualGridLocation = false;
+                selectedShip.style.gridColumn = `${colStart} / ${parseInt(colStart) + 1}`;
             }
+        }
+    }
+
+    // Change the grid-row and grid-column of the selected ship mouse is over the user's board
+
+    window.onmouseover = (e) => {
+        if (shipIsSelected && !isMobile) {
+            positionShipOnGrid(e);
+        }
+    };
+
+    window.ontouchmove = (e) => {
+        moving = true;
+        if (shipIsSelected && isMobile) {
+            positionShipOnGrid(e);
         }
     };
 
     return (
         <>
-            <div id='5' className='ship carrier'><div onClick={onShipSelect} className='carrierIcon'></div></div>
+            <div id='5' className='ship carrier'><div className='carrierIcon'></div></div>
 
-            <div id='4' className='ship battleship'><div onClick={onShipSelect} className='battleshipIcon'></div></div>
+            <div id='4' className='ship battleship'><div className='battleshipIcon'></div></div>
 
-            <div id='3' className='ship cruiser'><div onClick={onShipSelect} className='cruiserIcon'></div></div>
+            <div id='3' className='ship cruiser'><div className='cruiserIcon'></div></div>
 
-            <div id='3' className='ship submarine'><div onClick={onShipSelect} className='submarineIcon'></div></div>
+            <div id='3' className='ship submarine'><div className='submarineIcon'></div></div>
 
-            <div id='2' className='ship destroyer'><div onClick={onShipSelect} className='destroyerIcon'></div></div>
+            <div id='2' className='ship destroyer'><div className='destroyerIcon'></div></div>
         </>
     )
 }

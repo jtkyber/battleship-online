@@ -7,6 +7,13 @@ const isMobileDevice = () => {
     return false
 }
 
+const isIOSDevice = () => {
+    if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+        return true
+    }
+    return false
+}
+
 const model = {
 
     //State
@@ -15,7 +22,8 @@ const model = {
         {
             soundOn: true,
             musicOn: true,
-            isMobile: isMobileDevice()
+            isMobile: isMobileDevice(),
+            isIOS: isIOSDevice()
         },
         {
             storage: 'localStorage',

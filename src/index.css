@@ -1,10 +1,6 @@
 * {
     overflow: hidden;
     margin: 0;
-    -webkit-user-select: none;
-       -moz-user-select: none;
-        -ms-user-select: none;
-            user-select: none;
   -webkit-tap-highlight-color: rgba(0,0,0,0);
   -webkit-tap-highlight-color: transparent;
 }
@@ -45,6 +41,10 @@ button {
 
 :is(h1,h2,h3,h4,h5,h6) {
   cursor: default;
+  -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
 }
 
 button :is(h1,h2,h3,h4,h5,h6) {

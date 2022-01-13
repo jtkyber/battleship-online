@@ -18,7 +18,7 @@ import './gamePage.css';
 import './leaderboard.css';
 
 function App() {
-    const { getOnlineFriendsInterval, route, user, friendSocket, findMatchInterval, checkOppStatusInterval, search, updatLastOnlineInterval, soundOn, musicOn, isMobile, showFriendsMobile, audioStarted } = useStoreState(state => ({
+    const { getOnlineFriendsInterval, route, user, friendSocket, findMatchInterval, checkOppStatusInterval, search, updatLastOnlineInterval, soundOn, musicOn, isMobile, showFriendsMobile, audioStarted, isIOS } = useStoreState(state => ({
         getOnlineFriendsInterval: state.getOnlineFriendsInterval,
         route: state.route,
         user: state.user,
@@ -31,7 +31,8 @@ function App() {
         musicOn: state.stored.musicOn,
         isMobile: state.stored.isMobile,
         showFriendsMobile: state.showFriendsMobile,
-        audioStarted: state.audioStarted
+        audioStarted: state.audioStarted,
+        isIOS: state.stored.isIOS
     }));
 
     const { setRoute, setUser, setCurrentSocket, setSearch, setUpdatLastOnlineInterval, setAllFriends, setUnsortedFriends, setFriendsOnline, setFriendSearch, setPlayerIsReady, setSoundOn, setMusicOn, setIsMobile, setUserName, setPassword, setAudioStarted, setShowFriendsMobile, setShowChatMobile } = useStoreActions(actions => ({
@@ -222,9 +223,15 @@ function App() {
         }
 
         document.addEventListener('mousedown', handleMouseDown);
+        if (isIOS) {
+            document.addEventListener('touchstart', handleMouseDown);
+        }
 
         return () => {
             document.removeEventListener('mousedown', handleMouseDown);
+            if (isIOS) {
+                document.removeEventListener('touchstart', handleMouseDown);
+            }
         }
     }, [route])
 

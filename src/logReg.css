@@ -17,6 +17,7 @@
     background-color: rgba(0,0,0,0.7);
     min-height: 100vh;
     display: grid;
+    justify-content: center;
     grid-template-columns: 1fr;
     grid-template-rows: 3rem -webkit-max-content -webkit-max-content 1fr 2rem;
     grid-template-rows: 3rem -webkit-max-content -webkit-max-content 1fr 3.5rem;
