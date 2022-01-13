@@ -191,7 +191,7 @@
     left: 50%;
     transform: translate(-50%);
     top: 3rem;
-    bottom: 5rem;
+    bottom: 8rem;
     width: 100%;
     max-width: 30rem;
     border: 2px solid rgba(255,255,255,0.2);
@@ -206,12 +206,12 @@
 
 @-webkit-keyframes slideDownChat {
     0% {bottom: 100vh;}
-    100% {bottom: 5rem;}
+    100% {bottom: 8rem;}
 }
 
 @keyframes slideDownChat {
     0% {bottom: 100vh;}
-    100% {bottom: 5rem;}
+    100% {bottom: 8rem;}
 }
 
 .gamePage .chatContainerMobile.hide {

@@ -11,7 +11,7 @@ const Game = ({ socket, onRouteChange }) => {
     const rotateShipInstructions = "To rotate a ship, right click or press 'enter'";
     const dropShipInstructions = "To drop the ship, left click";
     
-    const { friendSocket, opponentName, user, checkOppStatusInterval, gameRoute, playerIsReady, yourTurn, playerTurnText, isMobile } = useStoreState(state => ({
+    const { friendSocket, opponentName, user, checkOppStatusInterval, gameRoute, playerIsReady, yourTurn, playerTurnText, isMobile, showGameInstructions } = useStoreState(state => ({
         friendSocket: state.friendSocket,
         opponentName: state.opponentName,
         user: state.user,
@@ -20,7 +20,8 @@ const Game = ({ socket, onRouteChange }) => {
         playerIsReady: state.playerIsReady,
         yourTurn: state.yourTurn,
         playerTurnText: state.playerTurnText,
-        isMobile: state.stored.isMobile
+        isMobile: state.stored.isMobile,
+        showGameInstructions: state.showGameInstructions
     }));
 
     const { setCheckOppStatusInterval, setRoute, setGameRoute, setPlayerIsReady, setYourTurn, setPlayerTurnText } = useStoreActions(actions => ({
