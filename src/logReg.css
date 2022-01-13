@@ -71,6 +71,8 @@
     position: absolute;
     margin: 0;
     bottom: 5vh;
+    left: 50%;
+    /* transform: translate(-50%, -50%); */
 }
 
 .logRegPage nav {
@@ -230,6 +232,9 @@
 @media only screen and (max-width: 499px) {
     .logReg {
         transform: scale(0.8);
+    }
+    .logRegPage.mobile .logReg {
+        transform: translate(-50%, 0) scale(0.8);
     }
     .homeText > h1 {
         transform: scale(0.50);

@@ -112,6 +112,7 @@ function App() {
     }, [])
 
     useEffect(() => {
+        console.log(audio.ambientWaves.playing());
         if (soundOn) {
             audio.ambientWaves.mute(false);
             audio.buttonClick.mute(false);
