@@ -19,7 +19,7 @@ import './leaderboard.css';
 
 let showInstructions = true;
 function App() {
-    const { getOnlineFriendsInterval, route, user, friendSocket, findMatchInterval, checkOppStatusInterval, search, updatLastOnlineInterval, soundOn, musicOn, isMobile, showFriendsMobile, audioStarted, isIOS, showGameInstructions } = useStoreState(state => ({
+    const { getOnlineFriendsInterval, route, user, friendSocket, findMatchInterval, checkOppStatusInterval, search, updatLastOnlineInterval, soundOn, musicOn, isMobile, showFriendsMobile, audioStarted, isIOS, showGameInstructions, deviceInPortrait } = useStoreState(state => ({
         getOnlineFriendsInterval: state.getOnlineFriendsInterval,
         route: state.route,
         user: state.user,
@@ -34,10 +34,11 @@ function App() {
         showFriendsMobile: state.showFriendsMobile,
         audioStarted: state.audioStarted,
         isIOS: state.stored.isIOS,
-        showGameInstructions: state.showGameInstructions
+        showGameInstructions: state.showGameInstructions,
+        deviceInPortrait: state.deviceInPortrait
     }));
 
-    const { setRoute, setUser, setCurrentSocket, setSearch, setUpdatLastOnlineInterval, setAllFriends, setUnsortedFriends, setFriendsOnline, setFriendSearch, setPlayerIsReady, setSoundOn, setMusicOn, setIsMobile, setUserName, setPassword, setAudioStarted, setShowFriendsMobile, setShowChatMobile, setShowGameInstructions } = useStoreActions(actions => ({
+    const { setRoute, setUser, setCurrentSocket, setSearch, setUpdatLastOnlineInterval, setAllFriends, setUnsortedFriends, setFriendsOnline, setFriendSearch, setPlayerIsReady, setSoundOn, setMusicOn, setIsMobile, setUserName, setPassword, setAudioStarted, setShowFriendsMobile, setShowChatMobile, setShowGameInstructions, setDeviceInPortrait } = useStoreActions(actions => ({
         setRoute: actions.setRoute,
         setUser: actions.setUser,
         setCurrentSocket: actions.setCurrentSocket,
@@ -56,7 +57,8 @@ function App() {
         setAudioStarted: actions.setAudioStarted,
         setShowFriendsMobile: actions.setShowFriendsMobile,
         setShowChatMobile: actions.setShowChatMobile,
-        setShowGameInstructions: actions.setShowGameInstructions
+        setShowGameInstructions: actions.setShowGameInstructions,
+        setDeviceInPortrait: actions.setDeviceInPortrait
     }));
 
     const onRouteChange = async (e) => {
@@ -100,7 +102,12 @@ function App() {
         }
     }
 
+    const isDevicePortrait = () => {
+        setDeviceInPortrait(window.screen.width < window.screen.height);
+    }
+
     useEffect(() => {
+        window.addEventListener('resize', isDevicePortrait);
         document.addEventListener('mouseover', handleMouseOver);
 
         socket.on('connect', () => {
@@ -110,12 +117,12 @@ function App() {
 
         return () => {
             socket.off('connect');
+            window.removeEventListener('resize', isDevicePortrait);
             document.removeEventListener('mouseover', handleMouseOver);
         }
     }, [])
 
     useEffect(() => {
-        console.log(audio.ambientWaves.playing());
         if (soundOn) {
             audio.ambientWaves.mute(false);
             audio.buttonClick.mute(false);
@@ -370,6 +377,13 @@ function App() {
     };
 
     return (
+    <>
+        {
+        !deviceInPortrait && isMobile
+        ? <div className='pleaseRotate'><h1>Please rotate your device</h1></div>
+        : null
+        }
+        {
         route === 'login' || route === 'register'
         ?
         <div className={`logRegPage ${isMobile ? 'mobile' : null}`}>
@@ -425,6 +439,8 @@ function App() {
             </div>
             }
         </>
+        }       
+    </>
     );
 }
 

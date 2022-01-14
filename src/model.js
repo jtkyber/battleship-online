@@ -62,6 +62,8 @@ const model = {
     audioStarted: false,
     shipIsSelected: false,
     showGameInstructions: true,
+    deviceInPortrait: true,
+
 
     //Actions
 
@@ -199,6 +201,10 @@ const model = {
 
     setShowGameInstructions: action((state, input) => {
         state.showGameInstructions = input;
+    }),
+
+    setDeviceInPortrait: action((state, input) => {
+        state.deviceInPortrait = input;
     }),
 }
 
