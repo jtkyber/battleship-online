@@ -85,31 +85,51 @@ const Ships = () => {
         }
     }
 
+    const wasShipTouched = (x, y) => {
+        const shipLeft = selectedShip.getBoundingClientRect().left;
+        const shipRight = selectedShip.getBoundingClientRect().right;
+        const shipTop = selectedShip.getBoundingClientRect().top;
+        const shipBottom = selectedShip.getBoundingClientRect().bottom;
+
+        if ((x > shipLeft) && (x < shipRight) && (y > shipTop) && (y < shipBottom)) {
+            return true;
+        }
+        return false;
+    }
+
     window.ontouchend = (e) => {
-        if (shipIsSelected && !moving && !showGameInstructions) {
-            if (orientation === 'hor') {
-                // selectedShip.style.transform = 'rotate(-90deg)';
-                orientation = 'vert';
-                positionShipOnGrid(e);
-            } else if (orientation === 'vert') {
-                // selectedShip.style.transform = 'rotate(0deg)';
-                orientation = 'hor';
-                positionShipOnGrid(e);
-            }
-            setManualGridLocation = true;
-            rotating = true;
-        } else if (shipIsSelected && moving) {
-            if (isMobile && shipIsSelected && rotating === false && areaIsClear()) {
+        if (!showGameInstructions) {
+            if (shipIsSelected && !moving && areaIsClear() && !wasShipTouched(e.changedTouches[0].clientX, e.changedTouches[0].clientY)) {
                 audio.buttonClick.play();
                 selectedShip.style.zIndex = '3';
                 document.querySelector('.userBoard').style.cursor = 'default';
                 selectedShip.style.border = null;
                 shipIsSelected = false;
+            } else if (shipIsSelected && !moving) {
+                if (orientation === 'hor') {
+                    // selectedShip.style.transform = 'rotate(-90deg)';
+                    orientation = 'vert';
+                    positionShipOnGrid(e);
+                } else if (orientation === 'vert') {
+                    // selectedShip.style.transform = 'rotate(0deg)';
+                    orientation = 'hor';
+                    positionShipOnGrid(e);
+                }
+                setManualGridLocation = true;
+                rotating = true;
+            } else if (shipIsSelected && moving) {
+                if (isMobile && shipIsSelected && rotating === false && areaIsClear()) {
+                    audio.buttonClick.play();
+                    selectedShip.style.zIndex = '3';
+                    document.querySelector('.userBoard').style.cursor = 'default';
+                    selectedShip.style.border = null;
+                    shipIsSelected = false;
+                }
+            } else if (!shipIsSelected && e.target.parentElement.classList.contains('ship')) {
+                onShipSelect(e);
             }
-        } else if (!shipIsSelected && e.target.parentElement.classList.contains('ship')) {
-            onShipSelect(e);
+            moving = false;
         }
-        moving = false;
     }
     
     // Check to see if player is placing the ship in an open space

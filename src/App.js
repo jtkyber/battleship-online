@@ -108,14 +108,14 @@ function App() {
     }
 
     useEffect(() => {
-        setTimeout(isDevicePortrait, 10)
+        setTimeout(isDevicePortrait, 10);
+        setTimeout(guestCleanup, 10);
         window.addEventListener('resize', isDevicePortrait);
         document.addEventListener('mouseover', handleMouseOver);
 
         socket.on('connect', () => {
             setCurrentSocket(socket.id);
         })
-        guestCleanup();
 
         return () => {
             socket.off('connect');
