@@ -74,7 +74,7 @@ const Ships = () => {
     // Place a ship down that is currently selected
 
     window.onclick = (e) => {
-        if (!shipIsSelected && !isMobile && e.target.parentElement.classList.contains('ship')) {
+        if (!shipIsSelected && !isMobile && e.target?.parentElement?.classList?.contains('ship')) {
             onShipSelect(e);
         } else if (!isMobile && shipIsSelected && e.target.classList.contains('singleSquare') && rotating === false && areaIsClear()) {
             audio.buttonClick.play();
