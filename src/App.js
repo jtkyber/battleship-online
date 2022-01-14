@@ -19,7 +19,7 @@ import './leaderboard.css';
 
 let showInstructions = true;
 function App() {
-    const { getOnlineFriendsInterval, route, user, friendSocket, findMatchInterval, checkOppStatusInterval, search, updatLastOnlineInterval, soundOn, musicOn, isMobile, showFriendsMobile, audioStarted, isIOS, showGameInstructions, deviceInPortrait } = useStoreState(state => ({
+    const { getOnlineFriendsInterval, route, user, friendSocket, findMatchInterval, checkOppStatusInterval, search, updatLastOnlineInterval, soundOn, musicOn, isMobile, showFriendsMobile, audioStarted, isIOS, showGameInstructions, deviceInPortrait, gameRoute } = useStoreState(state => ({
         getOnlineFriendsInterval: state.getOnlineFriendsInterval,
         route: state.route,
         user: state.user,
@@ -35,7 +35,8 @@ function App() {
         audioStarted: state.audioStarted,
         isIOS: state.stored.isIOS,
         showGameInstructions: state.showGameInstructions,
-        deviceInPortrait: state.deviceInPortrait
+        deviceInPortrait: state.deviceInPortrait,
+        gameRoute: state.gameRoute
     }));
 
     const { setRoute, setUser, setCurrentSocket, setSearch, setUpdatLastOnlineInterval, setAllFriends, setUnsortedFriends, setFriendsOnline, setFriendSearch, setPlayerIsReady, setSoundOn, setMusicOn, setIsMobile, setUserName, setPassword, setAudioStarted, setShowFriendsMobile, setShowChatMobile, setShowGameInstructions, setDeviceInPortrait } = useStoreActions(actions => ({
@@ -103,7 +104,6 @@ function App() {
     }
 
     const isDevicePortrait = () => {
-        console.log(window.screen.width < window.screen.height)
         setDeviceInPortrait(window.screen.width < window.screen.height);
     }
 
@@ -150,9 +150,11 @@ function App() {
         if (musicOn) {
             audio.lobbyTheme.mute(false);
             audio.gameTheme.mute(false);
+            audio.shipPlacementTheme.mute(false);
         } else {
             audio.lobbyTheme.mute(true);
             audio.gameTheme.mute(true);
+            audio.shipPlacementTheme.mute(true);
         }
     }, [musicOn])
 
@@ -183,20 +185,31 @@ function App() {
             }
         }
     }, [search])
-
     useEffect(() => {
         if (route === 'game') {
             setShowChatMobile(false);
-            if (audio.lobbyTheme.playing()) {
-                audio.lobbyTheme.fade(0.5, 0, 2000);
-            } 
-            if (!audio.gameTheme.playing()) {
-                audio.gameTheme.fade(0, 0.3, 500);
-                audio.gameTheme.play();
-            }
-            if (!audio.ambientWaves.playing()) {
-                audio.ambientWaves.fade(0, 0.2, 1000);
-                audio.ambientWaves.play();
+            if (gameRoute === 'placeShips') {
+                if (audio.lobbyTheme.playing()) {
+                    // audio.lobbyTheme.fade(0.5, 0, 2000);
+                    audio.lobbyTheme.stop();
+                } 
+                if (!audio.shipPlacementTheme.playing()) {
+                    // audio.lobbyTheme.fade(0.5, 0, 2000);
+                    audio.shipPlacementTheme.play();
+                } 
+                if (!audio.ambientWaves.playing()) {
+                    // audio.ambientWaves.fade(0, 0.2, 1000);
+                    audio.ambientWaves.play();
+                }
+            } else if (gameRoute === 'gameInProgress') {
+                if (!audio.gameTheme.playing()) {
+                    // audio.gameTheme.fade(0, 0.3, 500);
+                    audio.gameTheme.play();
+                }
+                if (audio.shipPlacementTheme.playing()) {
+                    // audio.lobbyTheme.fade(0.5, 0, 2000);
+                    audio.shipPlacementTheme.stop();
+                } 
             }
             setSearch(false);
             clearInterval(getOnlineFriendsInterval);
@@ -204,14 +217,20 @@ function App() {
             updateInGameStatus(true);
         } else {
             if (audioStarted && !audio.lobbyTheme.playing()) {
-                audio.lobbyTheme.fade(0, 0.5, 500);
+                // audio.lobbyTheme.fade(0, 0.5, 10);
                 audio.lobbyTheme.play();
             } 
             if (audio.gameTheme.playing()) {
-                audio.gameTheme.fade(0.3, 0, 2000);
+                // audio.gameTheme.fade(0.3, 0, 2000);
+                audio.gameTheme.stop();
+            }
+            if (audio.shipPlacementTheme.playing()) {
+                // audio.gameTheme.fade(0.3, 0, 2000);
+                audio.shipPlacementTheme.stop();
             }
             if (audio.ambientWaves.playing()) {
-                audio.ambientWaves.fade(0.2, 0, 2000);
+                // audio.ambientWaves.fade(0.2, 0, 2000);
+                audio.ambientWaves.stop();
             }
             setPlayerIsReady(false);
             if (user?.username?.length) {
@@ -246,7 +265,7 @@ function App() {
                 document.removeEventListener('touchstart', handleMouseDown);
             }
         }
-    }, [route])
+    }, [route, gameRoute])
 
     const stopSearching = async () => {
         try {
