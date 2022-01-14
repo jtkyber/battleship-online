@@ -57,6 +57,8 @@
     border: 4px solid rgba(255, 255, 255, 0.5);
     border-radius: 1rem;
     width: 80%;
+    height: -webkit-max-content;
+    height: -moz-max-content;
     height: max-content;
     padding: 3rem 1rem 2rem 1rem;
     display: flex;
@@ -70,7 +72,10 @@
     display: flex;
     flex-flow: column nowrap;
     gap: 0.3rem;
-    user-select: none;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
 }
 
 .instructions h3 {
@@ -98,7 +103,10 @@
     font-size: 1.2rem;
     font-weight: 600;
     letter-spacing: 0.2rem;
-    user-select: none;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
     color: rgba(0, 186, 19, 0.9);
     border-bottom: 1px solid rgba(255, 255, 255, 0.6);
 }
@@ -216,7 +224,8 @@
 }
 
 .gamePage.mobile .readyBtn > .btn{
-    filter: grayscale(1) brightness(100);
+    -webkit-filter: grayscale(1) brightness(100);
+            filter: grayscale(1) brightness(100);
 }
 
 
@@ -331,6 +340,9 @@
     width: 80%;
     overflow-wrap: break-word;
     color: rgba(255, 255, 255, 0.6);
+    font-size: 1.5rem;
+    letter-spacing: 0.1rem;
+    font-weight: 600;
 }
 
 .gamePage .chatBox .opponentText {
@@ -340,6 +352,9 @@
     width: 80%;
     overflow-wrap: break-word;
     color: rgba(255, 255, 255, 0.6);
+    font-size: 1.5rem;
+    letter-spacing: 0.1rem;
+    font-weight: 600;
 }
 
 .gamePage .chatBox .userName {
@@ -349,7 +364,8 @@
     display: inline-block;
     text-align: left;
     width: 80%;
-    letter-spacing: 1px
+    letter-spacing: 1px;
+    font-size: 1rem;
 }
 
 .gamePage .chatBox .oppName {
@@ -359,7 +375,8 @@
     display: inline-block;
     text-align: right;
     width: 80%;
-    letter-spacing: 1px
+    letter-spacing: 1px;
+    font-size: 1rem;
 }
 
 .gamePage .chatInput {
@@ -371,15 +388,16 @@
     border-top: 2px solid rgba(255,255,255,0.2);
     border-radius: 0;
     color: rgba(255, 255, 255, 0.528);
-    font-weight: 600;
+    font-weight: 400;
     background-color: rgba(0, 0, 0, 0.4);
     padding: 0 0.3rem;
     caret-color: rgba(255, 255, 255, 0.5);
+    font-size: 1rem;
+    letter-spacing: 0.1rem;
 }
 
 .gamePage .chatInput:focus {
     background-color: rgba(0, 0, 0, 1);
-    /* border: 2px solid rgba(0, 125, 200, 0.8); */
 }
 
 .gamePage .chatInput::-webkit-input-placeholder {
