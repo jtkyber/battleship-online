@@ -19,7 +19,7 @@ import './leaderboard.css';
 
 let showInstructions = true;
 function App() {
-    const { getOnlineFriendsInterval, route, user, friendSocket, findMatchInterval, checkOppStatusInterval, search, updatLastOnlineInterval, soundOn, musicOn, isMobile, showFriendsMobile, audioStarted, isIOS, showGameInstructions, deviceInPortrait, gameRoute } = useStoreState(state => ({
+    const { getOnlineFriendsInterval, route, user, friendSocket, findMatchInterval, checkOppStatusInterval, search, updatLastOnlineInterval, soundOn, musicOn, isMobile, showFriendsMobile, audioStarted, isIOS, deviceInPortrait, gameRoute } = useStoreState(state => ({
         getOnlineFriendsInterval: state.getOnlineFriendsInterval,
         route: state.route,
         user: state.user,
@@ -34,12 +34,11 @@ function App() {
         showFriendsMobile: state.showFriendsMobile,
         audioStarted: state.audioStarted,
         isIOS: state.stored.isIOS,
-        showGameInstructions: state.showGameInstructions,
         deviceInPortrait: state.deviceInPortrait,
         gameRoute: state.gameRoute
     }));
 
-    const { setRoute, setUser, setCurrentSocket, setSearch, setUpdatLastOnlineInterval, setAllFriends, setUnsortedFriends, setFriendsOnline, setFriendSearch, setPlayerIsReady, setSoundOn, setMusicOn, setIsMobile, setUserName, setPassword, setAudioStarted, setShowFriendsMobile, setShowChatMobile, setShowGameInstructions, setDeviceInPortrait } = useStoreActions(actions => ({
+    const { setRoute, setUser, setCurrentSocket, setSearch, setUpdatLastOnlineInterval, setAllFriends, setUnsortedFriends, setFriendsOnline, setFriendSearch, setPlayerIsReady, setUserName, setPassword, setAudioStarted, setShowFriendsMobile, setShowChatMobile, setShowGameInstructions, setDeviceInPortrait } = useStoreActions(actions => ({
         setRoute: actions.setRoute,
         setUser: actions.setUser,
         setCurrentSocket: actions.setCurrentSocket,
@@ -50,9 +49,6 @@ function App() {
         setFriendsOnline: actions.setFriendsOnline,
         setFriendSearch: actions.setFriendSearch,
         setPlayerIsReady: actions.setPlayerIsReady,
-        setSoundOn: actions.setSoundOn,
-        setMusicOn: actions.setMusicOn,
-        setIsMobile: actions.setIsMobile,
         setUserName: actions.setUserName,
         setPassword: actions.setPassword,
         setAudioStarted: actions.setAudioStarted,
