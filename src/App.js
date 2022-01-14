@@ -103,10 +103,12 @@ function App() {
     }
 
     const isDevicePortrait = () => {
+        console.log(window.screen.width < window.screen.height)
         setDeviceInPortrait(window.screen.width < window.screen.height);
     }
 
     useEffect(() => {
+        setTimeout(isDevicePortrait, 10)
         window.addEventListener('resize', isDevicePortrait);
         document.addEventListener('mouseover', handleMouseOver);
 
