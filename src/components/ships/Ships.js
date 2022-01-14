@@ -6,10 +6,10 @@ import '../boards/board.css';
 
 const Ships = () => {
 
-    const { gameRoute, isMobile, isIOS } = useStoreState(state => ({
+    const { gameRoute, isMobile, showGameInstructions } = useStoreState(state => ({
         gameRoute: state.gameRoute,
         isMobile: state.stored.isMobile,
-        isIOS: state.stored.isIOS
+        showGameInstructions: state.showGameInstructions
     }));
 
     let moving = false;
@@ -86,11 +86,10 @@ const Ships = () => {
     }
 
     window.ontouchend = (e) => {
-        if (shipIsSelected && !moving) {
+        if (shipIsSelected && !moving && !showGameInstructions) {
             if (orientation === 'hor') {
                 // selectedShip.style.transform = 'rotate(-90deg)';
                 orientation = 'vert';
-                console.log(e)
                 positionShipOnGrid(e);
             } else if (orientation === 'vert') {
                 // selectedShip.style.transform = 'rotate(0deg)';
@@ -100,7 +99,6 @@ const Ships = () => {
             setManualGridLocation = true;
             rotating = true;
         } else if (shipIsSelected && moving) {
-        
             if (isMobile && shipIsSelected && rotating === false && areaIsClear()) {
                 audio.buttonClick.play();
                 selectedShip.style.zIndex = '3';

@@ -17,8 +17,9 @@ import './homePageLogged.css';
 import './gamePage.css';
 import './leaderboard.css';
 
+let showInstructions = true;
 function App() {
-    const { getOnlineFriendsInterval, route, user, friendSocket, findMatchInterval, checkOppStatusInterval, search, updatLastOnlineInterval, soundOn, musicOn, isMobile, showFriendsMobile, audioStarted, isIOS } = useStoreState(state => ({
+    const { getOnlineFriendsInterval, route, user, friendSocket, findMatchInterval, checkOppStatusInterval, search, updatLastOnlineInterval, soundOn, musicOn, isMobile, showFriendsMobile, audioStarted, isIOS, showGameInstructions } = useStoreState(state => ({
         getOnlineFriendsInterval: state.getOnlineFriendsInterval,
         route: state.route,
         user: state.user,
@@ -32,10 +33,11 @@ function App() {
         isMobile: state.stored.isMobile,
         showFriendsMobile: state.showFriendsMobile,
         audioStarted: state.audioStarted,
-        isIOS: state.stored.isIOS
+        isIOS: state.stored.isIOS,
+        showGameInstructions: state.showGameInstructions
     }));
 
-    const { setRoute, setUser, setCurrentSocket, setSearch, setUpdatLastOnlineInterval, setAllFriends, setUnsortedFriends, setFriendsOnline, setFriendSearch, setPlayerIsReady, setSoundOn, setMusicOn, setIsMobile, setUserName, setPassword, setAudioStarted, setShowFriendsMobile, setShowChatMobile } = useStoreActions(actions => ({
+    const { setRoute, setUser, setCurrentSocket, setSearch, setUpdatLastOnlineInterval, setAllFriends, setUnsortedFriends, setFriendsOnline, setFriendSearch, setPlayerIsReady, setSoundOn, setMusicOn, setIsMobile, setUserName, setPassword, setAudioStarted, setShowFriendsMobile, setShowChatMobile, setShowGameInstructions } = useStoreActions(actions => ({
         setRoute: actions.setRoute,
         setUser: actions.setUser,
         setCurrentSocket: actions.setCurrentSocket,
@@ -53,7 +55,8 @@ function App() {
         setPassword: actions.setPassword,
         setAudioStarted: actions.setAudioStarted,
         setShowFriendsMobile: actions.setShowFriendsMobile,
-        setShowChatMobile: actions.setShowChatMobile
+        setShowChatMobile: actions.setShowChatMobile,
+        setShowGameInstructions: actions.setShowGameInstructions
     }));
 
     const onRouteChange = async (e) => {
@@ -293,6 +296,12 @@ function App() {
             (e.target.classList.contains('hasSound'))
         ) {
             audio.buttonClick.play();
+        }
+
+        const instructionsDiv = document.querySelector('.gamePage.mobile .instructions');
+        if (instructionsDiv !== e.target && !instructionsDiv?.contains(e.target) && (route === 'game') && isMobile && showInstructions) {
+            setShowGameInstructions(false);
+            showInstructions = false;
         }
     }
 

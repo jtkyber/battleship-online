@@ -7,10 +7,6 @@ import ChatBox from './ChatBox';
 import Footer from '../footer/Footer';
 
 const Game = ({ socket, onRouteChange }) => {
-    const pickUpShipInstructions = "To pick up a ship, left click on it";
-    const rotateShipInstructions = "To rotate a ship, right click or press 'enter'";
-    const dropShipInstructions = "To drop the ship, left click";
-    
     const { friendSocket, opponentName, user, checkOppStatusInterval, gameRoute, playerIsReady, yourTurn, playerTurnText, isMobile, showGameInstructions } = useStoreState(state => ({
         friendSocket: state.friendSocket,
         opponentName: state.opponentName,
@@ -24,14 +20,30 @@ const Game = ({ socket, onRouteChange }) => {
         showGameInstructions: state.showGameInstructions
     }));
 
-    const { setCheckOppStatusInterval, setRoute, setGameRoute, setPlayerIsReady, setYourTurn, setPlayerTurnText } = useStoreActions(actions => ({
+    const { setCheckOppStatusInterval, setRoute, setGameRoute, setPlayerIsReady, setYourTurn, setPlayerTurnText, setShowGameInstructions } = useStoreActions(actions => ({
         setCheckOppStatusInterval: actions.setCheckOppStatusInterval,
         setRoute: actions.setRoute,
         setGameRoute: actions.setGameRoute,
         setPlayerIsReady: actions.setPlayerIsReady,
         setYourTurn: actions.setYourTurn,
-        setPlayerTurnText: actions.setPlayerTurnText
+        setPlayerTurnText: actions.setPlayerTurnText,
+        setShowGameInstructions: actions.setShowGameInstructions
     }));
+    
+    const pickUpShipInstructions = 
+    !isMobile 
+    ? "Click once on the ship you want to move"
+    : "Tap once on the ship you want to move"
+
+    const rotateShipInstructions = 
+    !isMobile
+    ? 'Left click or press "Spacebar" while a ship is selected'
+    : "When selected, tap the ship again"
+
+    const dropShipInstructions = 
+    !isMobile
+    ? "Move the ship into position and left click again when ready to release"
+    : "Drag the selected ship and let go when the ship is in position"
 
     let opponentReady = false;
 
@@ -157,10 +169,14 @@ const Game = ({ socket, onRouteChange }) => {
         }
 
         if (allShipsPlaced) {
-            instructionsList.classList.add('hide');
+            if (!isMobile) {
+                instructionsList.classList.add('hide');
+            }
             readyBtn.childNodes[0].innerText = `${!isMobile ? 'Waiting...' : '•••'}`;
             for (let ship of ships) {
                 ship.style.cursor = 'default';
+                ship.style.border = null;
+                ship.style.zIndex = '3';
             }
             if (opponentReady) {
                 setGameRoute('gameInProgress');
@@ -178,11 +194,27 @@ const Game = ({ socket, onRouteChange }) => {
         <>
             <Navigation socket={socket} onRouteChange={onRouteChange} />
             <UserBoard socket={socket} />
-            <div className={`instructions ${isMobile ? 'hide' : null}`}>
-                <h5>○ {pickUpShipInstructions}</h5>
-                <h5>○ {rotateShipInstructions}</h5>
-                <h5>○ {dropShipInstructions}</h5>
+            {
+            !isMobile || showGameInstructions
+            ?
+            <div className={`instructions`}>
+                <div>
+                    <h3>Picking up a ship</h3>
+                    <h5>{pickUpShipInstructions}</h5>
+                </div>
+
+                <div>
+                    <h3>Rotation</h3>
+                    <h5>{rotateShipInstructions}</h5>
+                </div>
+
+                <div>
+                    <h3>Dropping a ship</h3>
+                    <h5>{dropShipInstructions}</h5>
+                </div>
             </div>
+            : null
+            }
             <h3 className={`playerTurnText ${gameRoute !== 'gameInProgress' ? 'hide' : null}`}>{`${gameRoute === 'gameInProgress' ? playerTurnText : ''}`}</h3>
             {
             gameRoute !== 'gameInProgress'
