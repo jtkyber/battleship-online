@@ -38,7 +38,7 @@ function App() {
         gameRoute: state.gameRoute
     }));
 
-    const { setRoute, setUser, setCurrentSocket, setSearch, setUpdatLastOnlineInterval, setAllFriends, setUnsortedFriends, setFriendsOnline, setFriendSearch, setPlayerIsReady, setUserName, setPassword, setAudioStarted, setShowFriendsMobile, setShowChatMobile, setShowGameInstructions, setDeviceInPortrait } = useStoreActions(actions => ({
+    const { setRoute, setUser, setCurrentSocket, setSearch, setUpdatLastOnlineInterval, setAllFriends, setUnsortedFriends, setFriendsOnline, setFriendSearch, setPlayerIsReady, setUserName, setPassword, setAudioStarted, setShowFriendsMobile, setShowChatMobile, setShowGameInstructions, setDeviceInPortrait, setGameRoute } = useStoreActions(actions => ({
         setRoute: actions.setRoute,
         setUser: actions.setUser,
         setCurrentSocket: actions.setCurrentSocket,
@@ -55,7 +55,8 @@ function App() {
         setShowFriendsMobile: actions.setShowFriendsMobile,
         setShowChatMobile: actions.setShowChatMobile,
         setShowGameInstructions: actions.setShowGameInstructions,
-        setDeviceInPortrait: actions.setDeviceInPortrait
+        setDeviceInPortrait: actions.setDeviceInPortrait,
+        setGameRoute: actions.setGameRoute
     }));
 
     const onRouteChange = async (e) => {
@@ -212,6 +213,7 @@ function App() {
             stopSearching();
             updateInGameStatus(true);
         } else {
+            setGameRoute('placeShips');
             if (audioStarted && !audio.lobbyTheme.playing()) {
                 // audio.lobbyTheme.fade(0, 0.5, 10);
                 audio.lobbyTheme.play();
