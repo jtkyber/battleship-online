@@ -188,7 +188,7 @@ function App() {
     useEffect(() => {
         if (route === 'game') {
             setShowChatMobile(false);
-            if (gameRoute === 'placeShips') {
+            if (gameRoute !== 'gameInProgress') {
                 if (audio.lobbyTheme.playing()) {
                     // audio.lobbyTheme.fade(0.5, 0, 2000);
                     audio.lobbyTheme.stop();
@@ -201,7 +201,7 @@ function App() {
                     // audio.ambientWaves.fade(0, 0.2, 1000);
                     audio.ambientWaves.play();
                 }
-            } else if (gameRoute === 'gameInProgress') {
+            } else {
                 if (!audio.gameTheme.playing()) {
                     // audio.gameTheme.fade(0, 0.3, 500);
                     audio.gameTheme.play();
