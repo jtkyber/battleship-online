@@ -1,11 +1,8 @@
 import React, { useEffect } from 'react';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import './navigation.css';
-// import msgIcon from './msg-icon.png';
 import notificationIcon from './notification.png';
 import { Dropdown } from 'react-bootstrap';
-import 'animate.css';
-
 const FriendRequests = ({ socket }) => {
 
     const { user, friendRequests } = useStoreState(state => ({
