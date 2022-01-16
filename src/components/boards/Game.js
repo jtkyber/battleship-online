@@ -7,7 +7,7 @@ import ChatBox from './ChatBox';
 import Footer from '../footer/Footer';
 
 const Game = ({ socket, onRouteChange }) => {
-    const { friendSocket, opponentName, user, checkOppStatusInterval, gameRoute, playerIsReady, yourTurn, playerTurnText, isMobile, showGameInstructions } = useStoreState(state => ({
+    const { friendSocket, opponentName, user, checkOppStatusInterval, gameRoute, playerIsReady, yourTurn, playerTurnText, isMobile, showGameInstructions, opponentIsReady } = useStoreState(state => ({
         friendSocket: state.friendSocket,
         opponentName: state.opponentName,
         user: state.user,
@@ -17,17 +17,18 @@ const Game = ({ socket, onRouteChange }) => {
         yourTurn: state.yourTurn,
         playerTurnText: state.playerTurnText,
         isMobile: state.stored.isMobile,
-        showGameInstructions: state.showGameInstructions
+        showGameInstructions: state.showGameInstructions,
+        opponentIsReady: state.opponentIsReady
     }));
 
-    const { setCheckOppStatusInterval, setRoute, setGameRoute, setPlayerIsReady, setYourTurn, setPlayerTurnText, setShowGameInstructions } = useStoreActions(actions => ({
+    const { setCheckOppStatusInterval, setRoute, setGameRoute, setPlayerIsReady, setYourTurn, setPlayerTurnText, setOpponentIsReady } = useStoreActions(actions => ({
         setCheckOppStatusInterval: actions.setCheckOppStatusInterval,
         setRoute: actions.setRoute,
         setGameRoute: actions.setGameRoute,
         setPlayerIsReady: actions.setPlayerIsReady,
         setYourTurn: actions.setYourTurn,
         setPlayerTurnText: actions.setPlayerTurnText,
-        setShowGameInstructions: actions.setShowGameInstructions
+        setOpponentIsReady: actions.setOpponentIsReady
     }));
     
     const pickUpShipInstructions = 
@@ -45,17 +46,9 @@ const Game = ({ socket, onRouteChange }) => {
     ? "Move the ship into position and left click again when ready to release"
     : "Drag the selected ship and let go when the ship is in position"
 
-    let opponentReady = false;
-
-    socket.on('receive ready status', () => {
-        if (playerIsReady) {
-            setGameRoute('gameInProgress');
-        }
-        opponentReady = true;
-    })
-
     useEffect(() => {
         setPlayerIsReady(false);
+        setOpponentIsReady(false);
         setGameRoute('placeShips');
 
         // const gamePage = document.querySelector('.gamePage');
@@ -87,16 +80,18 @@ const Game = ({ socket, onRouteChange }) => {
         }
     },[])
 
-    // useEffect(() => {
-    //     const gameInstructions = document.querySelector('.gamePage');
-    //     if (gameRoute === 'placeShips') {
-    //         gameInstructions.style.setProperty('--player-turn-text', `"${instructions}"`);
-    //     } else if (yourTurn) {
-    //         gameInstructions.style.setProperty('--player-turn-text', '"Your Turn!"');
-    //     } else {
-    //         gameInstructions.style.setProperty('--player-turn-text', `"${opponentName}'s Turn!"`);
-    //     }
-    // },[yourTurn, gameRoute])
+    useEffect(() => {
+        socket.on('receive ready status', () => {
+            if (playerIsReady) {
+                setGameRoute('gameInProgress');
+            }
+            setOpponentIsReady(true);
+        })
+
+        return () => {
+            socket.off('receive ready status');
+        }
+    }, [playerIsReady])
 
     useEffect(() => {
         const shipContainers = document.querySelectorAll('.userBoard .ship');
@@ -169,6 +164,7 @@ const Game = ({ socket, onRouteChange }) => {
         }
 
         if (allShipsPlaced) {
+            setPlayerIsReady(true);
             if (!isMobile) {
                 instructionsList.classList.add('hide');
             }
@@ -178,14 +174,13 @@ const Game = ({ socket, onRouteChange }) => {
                 ship.style.border = null;
                 ship.style.zIndex = '3';
             }
-            if (opponentReady) {
+            if (opponentIsReady) {
                 setGameRoute('gameInProgress');
                 setYourTurn(true);
             } else {
                 readyBtn.style.opacity = '0.3';
                 setGameRoute('waiting');
             }
-            setPlayerIsReady(true);
             socket.emit('send ready status', friendSocket);
         }
     }

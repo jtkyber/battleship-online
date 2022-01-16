@@ -63,6 +63,7 @@ const model = {
     shipIsSelected: false,
     showGameInstructions: true,
     deviceInPortrait: true,
+    opponentIsReady: false,
 
 
     //Actions
@@ -205,6 +206,10 @@ const model = {
 
     setDeviceInPortrait: action((state, input) => {
         state.deviceInPortrait = input;
+    }),
+
+    setOpponentIsReady: action((state, input) => {
+        state.opponentIsReady = input;
     }),
 }
 
