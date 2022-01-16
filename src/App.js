@@ -182,8 +182,13 @@ function App() {
             }
         }
     }, [search])
+    
     useEffect(() => {
         if (route === 'game') {
+            setSearch(false);
+            updateInGameStatus(true);
+            clearInterval(getOnlineFriendsInterval);
+            stopSearching();
             setShowChatMobile(false);
             if (gameRoute !== 'gameInProgress') {
                 if (audio.lobbyTheme.playing()) {
@@ -208,12 +213,13 @@ function App() {
                     audio.shipPlacementTheme.stop();
                 } 
             }
-            setSearch(false);
-            clearInterval(getOnlineFriendsInterval);
-            stopSearching();
-            updateInGameStatus(true);
         } else {
             setGameRoute('placeShips');
+            setPlayerIsReady(false);
+            if (user?.username?.length) {
+                updateInGameStatus(false);
+            }
+            clearInterval(checkOppStatusInterval);
             if (audioStarted && !audio.lobbyTheme.playing()) {
                 // audio.lobbyTheme.fade(0, 0.5, 10);
                 audio.lobbyTheme.play();
@@ -230,11 +236,6 @@ function App() {
                 // audio.ambientWaves.fade(0.2, 0, 2000);
                 audio.ambientWaves.stop();
             }
-            setPlayerIsReady(false);
-            if (user?.username?.length) {
-                updateInGameStatus(false);
-            }
-            clearInterval(checkOppStatusInterval);
         }
 
         if ((route === 'login') || (route === 'register')) {
