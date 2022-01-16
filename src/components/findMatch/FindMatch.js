@@ -88,7 +88,7 @@ const FindMatch = ({ socket }) => {
 
     const searchForMatch = async () => {
         try {
-            const response = await fetch(`https://calm-ridge-60009.herokuapp.com/findMatch?username=${user.username}`)
+            const response = await fetch(`https://calm-ridge-60009.herokuapp.com/findMatch?username=${user.username}?socketid=${user.socketid}`)
             if (!response.ok) {throw new Error('Could not find match')}
             const match = await response.json();
             if (match?.username) {
