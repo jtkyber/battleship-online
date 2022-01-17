@@ -95,7 +95,7 @@
 .gamePage.mobile .instructions:before {
     position: absolute;
     width: 80%;
-    content: "Instructions";
+    content: "How to play";
     top: 0.3rem;
     left: 50%;
     text-align: center;
