@@ -109,11 +109,11 @@ const Friends = ({ socket }) => {
             if (!response.ok) {throw new Error('Problem accessing friends list')}
             const friends = await response.json();
             if (user?.friends?.length && friends?.length) {
-                await setUnsortedFriends(friends);
+                setUnsortedFriends(friends);
                 getOnlineFriends();
             } else {
-                await setAllFriends([]);
-                await setUnsortedFriends([]);
+                setAllFriends([]);
+                setUnsortedFriends([]);
                 setFriendsOnline([]);
             }
         } catch(err) {

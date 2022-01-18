@@ -5,8 +5,9 @@ import Navigation from '../navigation/Navigation';
 
 const Leaderboard = ({ onRouteChange, socket }) => {
 
-    const { topFive } = useStoreState(state => ({
-        topFive: state.topFive
+    const { topFive, route } = useStoreState(state => ({
+        topFive: state.topFive,
+        route: state.route
     }));
 
     const { setTopFive } = useStoreActions(actions => ({
@@ -14,20 +15,21 @@ const Leaderboard = ({ onRouteChange, socket }) => {
     }));
 
     useEffect(() => {
-        getTopPlayers();
-    },[])
+        if (route === 'leaderboard') {
+            getTopPlayers();
+        }
+    },[route])
 
     const getTopPlayers = async () => {
-        const tempArr = [];
         for (let i = 0; i < 5; i++) {
             const response = await fetch(`https://calm-ridge-60009.herokuapp.com/getTopFive?userNum=${i}`)
             if (!response.ok) {
                 throw new Error('Error')
             }
-            const user1 = await response.json();
-            tempArr.push({name: user1.username, wins: user1.wins});
+            const data = await response.json();
+            console.log(data)
+            setTopFive(data);
         }
-        setTopFive(tempArr);
     }
 
     return (
@@ -40,7 +42,7 @@ const Leaderboard = ({ onRouteChange, socket }) => {
                 <div className='topFive'>
                     {
                     topFive.map(player => {
-                        return <h3 key={player.name} className='LBplayer'> {player.name} : <span className='wins'>{player.wins}</span> wins </h3>
+                        return <h3 key={player.username} className='LBplayer'> {player.username} : <span className='wins'>{player.wins}</span> wins </h3>
                     })
                     }
                 </div>
