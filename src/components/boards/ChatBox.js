@@ -12,14 +12,16 @@ const ChatBox = ({ socket }) => {
         isMobile: state.stored.isMobile
     }));
 
-    const { setChatText } = useStoreActions(actions => ({
-        setChatText: actions.setChatText
+    const { setChatText, setShowChatMobile } = useStoreActions(actions => ({
+        setChatText: actions.setChatText,
+        setShowChatMobile: actions.setShowChatMobile
     }));
 
     const chatBox = document.querySelector('.chatBox');
 
     useEffect(() => {
         document.addEventListener('keyup', handleEnterBtn);
+        window.addEventListener('touchend', handleChatScreenTouch);
 
         socket.on('receive msg', message => {
             handleReceivedMessage(message);
@@ -28,8 +30,16 @@ const ChatBox = ({ socket }) => {
         return () => {
             socket.off('receive msg');
             document.removeEventListener('keyup', handleEnterBtn);
+            window.removeEventListener('touchend', handleChatScreenTouch);
         }
     },[chatText])
+
+    const handleChatScreenTouch = (e) => {
+        const chatContainerMobile = document.querySelector('.chatContainerMobile');
+        if (!chatContainerMobile.contains(e.target)) {
+            setShowChatMobile(false);
+        }
+    }
 
     const handleReceivedMessage = (message) => {
         const chatBox = document.querySelector('.chatBox');
