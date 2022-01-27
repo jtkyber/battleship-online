@@ -106,11 +106,9 @@ const Ships = () => {
                 shipIsSelected = false;
             } else if (shipIsSelected && !moving) {
                 if (orientation === 'hor') {
-                    // selectedShip.style.transform = 'rotate(-90deg)';
                     orientation = 'vert';
                     positionShipOnGrid(e);
                 } else if (orientation === 'vert') {
-                    // selectedShip.style.transform = 'rotate(0deg)';
                     orientation = 'hor';
                     positionShipOnGrid(e);
                 }
