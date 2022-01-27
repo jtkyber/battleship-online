@@ -4,21 +4,20 @@ import $ from 'jquery';
 import './ships.css';
 import '../boards/board.css';
 
-const Ships = () => {
+let moving = false;
+let rotating = false;
+let orientation = 'hor';
+let selectedShip = '';
+let selectedShipName = '';
+let shipIsSelected = false;
+let setManualGridLocation = false;
 
+const Ships = () => {
     const { gameRoute, isMobile, showGameInstructions } = useStoreState(state => ({
         gameRoute: state.gameRoute,
         isMobile: state.stored.isMobile,
         showGameInstructions: state.showGameInstructions
     }));
-
-    let moving = false;
-    let rotating = false;
-    let orientation = 'hor';
-    let selectedShip = '';
-    let selectedShipName = '';
-    let shipIsSelected = false;
-    let setManualGridLocation = false;
 
     // Decide what happens when a ship is selected to move
 

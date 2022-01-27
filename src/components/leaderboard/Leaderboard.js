@@ -27,7 +27,6 @@ const Leaderboard = ({ onRouteChange, socket }) => {
                 throw new Error('Error')
             }
             const data = await response.json();
-            console.log(data)
             setTopFive(data);
         }
     }
