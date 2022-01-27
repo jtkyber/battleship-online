@@ -38,7 +38,7 @@ function App() {
         gameRoute: state.gameRoute
     }));
 
-    const { setRoute, setUser, setCurrentSocket, setSearch, setUpdatLastOnlineInterval, setAllFriends, setUnsortedFriends, setFriendsOnline, setFriendSearch, setPlayerIsReady, setUserName, setPassword, setAudioStarted, setShowFriendsMobile, setShowChatMobile, setShowGameInstructions, setDeviceInPortrait, setGameRoute } = useStoreActions(actions => ({
+    const { setRoute, setUser, setCurrentSocket, setSearch, setUpdatLastOnlineInterval, setAllFriends, setUnsortedFriends, setFriendsOnline, setFriendSearch, setPlayerIsReady, setUserName, setPassword, setAudioStarted, setShowFriendsMobile, setShowChatMobile, setShowGameInstructions, setDeviceInPortrait, setGameRoute, setIsMobile } = useStoreActions(actions => ({
         setRoute: actions.setRoute,
         setUser: actions.setUser,
         setCurrentSocket: actions.setCurrentSocket,
@@ -56,7 +56,8 @@ function App() {
         setShowChatMobile: actions.setShowChatMobile,
         setShowGameInstructions: actions.setShowGameInstructions,
         setDeviceInPortrait: actions.setDeviceInPortrait,
-        setGameRoute: actions.setGameRoute
+        setGameRoute: actions.setGameRoute,
+        setIsMobile: actions.setIsMobile
     }));
 
     const onRouteChange = async (e) => {
@@ -105,8 +106,11 @@ function App() {
     }
 
     useEffect(() => {
-        setTimeout(isDevicePortrait, 10);
-        setTimeout(guestCleanup, 10);
+        setTimeout(() => {
+            isDevicePortrait();
+            guestCleanup();
+        }, 10);
+
         window.addEventListener('resize', isDevicePortrait);
         document.addEventListener('mouseover', handleMouseOver);
 
