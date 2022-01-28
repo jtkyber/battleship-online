@@ -21,7 +21,7 @@ const ChatBox = ({ socket }) => {
 
     useEffect(() => {
         document.addEventListener('keyup', handleEnterBtn);
-        window.addEventListener('touchend', handleChatScreenTouch);
+        // window.addEventListener('touchend', handleChatScreenTouch);
 
         socket.on('receive msg', message => {
             handleReceivedMessage(message);
@@ -30,16 +30,16 @@ const ChatBox = ({ socket }) => {
         return () => {
             socket.off('receive msg');
             document.removeEventListener('keyup', handleEnterBtn);
-            window.removeEventListener('touchend', handleChatScreenTouch);
+            // window.removeEventListener('touchend', handleChatScreenTouch);
         }
     },[chatText])
 
-    const handleChatScreenTouch = (e) => {
-        const chatContainerMobile = document.querySelector('.chatContainerMobile');
-        if (!chatContainerMobile.contains(e.target)) {
-            setShowChatMobile(false);
-        }
-    }
+    // const handleChatScreenTouch = (e) => {
+    //     const chatContainerMobile = document.querySelector('.chatContainerMobile');
+    //     if (!chatContainerMobile.contains(e.target)) {
+    //         setShowChatMobile(false);
+    //     }
+    // }
 
     const handleReceivedMessage = (message) => {
         const chatBox = document.querySelector('.chatBox');
