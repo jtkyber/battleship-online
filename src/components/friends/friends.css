@@ -209,7 +209,7 @@
     width: 13rem;
     height: 7.5rem;
     display: flex;
-    flex-flow: wrap column;
+    flex-flow: nowrap column;
     justify-content: center;
     align-items: center;
     border: 1px solid rgba(255,255,255,0.8);
