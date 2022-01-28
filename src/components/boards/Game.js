@@ -38,7 +38,7 @@ const Game = ({ socket, onRouteChange }) => {
 
     const rotateShipInstructions = 
     !isMobile
-    ? 'Left click or press "Spacebar" while a ship is selected'
+    ? 'Right click or press "Spacebar" while a ship is selected'
     : "When selected, tap the ship again"
 
     const dropShipInstructions = 
