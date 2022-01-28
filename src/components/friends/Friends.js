@@ -25,6 +25,8 @@ const Friends = ({ socket }) => {
         setFriendsOnline: actions.setFriendsOnline,
         setGetOnlineFriendsInterval: actions.setGetOnlineFriendsInterval
     }));
+
+    let userFromLastFriendRequest;
     
     // Start fetching friends on component mount
 // -----------------------------------------------------------------------------------
@@ -58,8 +60,8 @@ const Friends = ({ socket }) => {
         let offlineSorted = [];
 
         unsortedFriends.forEach(f => {
-            if (f.username === friendSearch) {
-                justAdded.push(f)
+            if (f.username === userFromLastFriendRequest?.username) {
+                justAdded.push(f);
             } else {
                 let addFriendToOffline = true;
                 friendsOnline.forEach(olF => {
@@ -204,6 +206,7 @@ const Friends = ({ socket }) => {
             const selfAdded = await res3.json();
             if (selfAdded) {
                 socket.emit('send friend request', friendSocketId);
+                userFromLastFriendRequest = user1;
             }
         } catch(err) {
             console.log(err);
@@ -256,7 +259,7 @@ const Friends = ({ socket }) => {
             <div className='addFriend'>
                 <h3 className='addFriendText' >Add a friend</h3>
                 <input className='addFriendInput' onChange={(e) => setFriendSearch(e.target.value)} type='text' placeholder='Enter a username'/>
-                <button className='friendRequestBtn' onClick={sendFriendRequest}>Send Request</button>
+                <button className='friendRequestBtn' onClick={sendFriendRequest}>Send</button>
             </div>
         </div>
     )
