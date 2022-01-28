@@ -227,7 +227,7 @@
     font-size: 1.3rem;
     font-weight: 400;
     display: flex;
-    flex-flow: wrap column;
+    flex-flow: nowrap column;
     align-items: center;
     justify-content: flex-start;
     padding-bottom: 0rem;
