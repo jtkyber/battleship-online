@@ -207,7 +207,7 @@
 .addFriend {
     grid-area: addFriend;
     width: 13rem;
-    height: 7.5rem;
+    height: 8rem;
     display: flex;
     flex-flow: nowrap column;
     justify-content: center;
