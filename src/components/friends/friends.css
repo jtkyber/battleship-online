@@ -207,7 +207,7 @@
 .addFriend {
     grid-area: addFriend;
     width: 13rem;
-    height: 8rem;
+    height: max-content;
     display: flex;
     flex-flow: nowrap column;
     justify-content: center;
@@ -219,10 +219,13 @@
     border-bottom-right-radius: 0;
     background-color: rgba(0,0,0,0.3);
     z-index: 99;
+    padding: 0.5rem 0;
+    text-align: center;
 }
 
 .addFriend > h3 {
     height: max-content;
+    width: 90%;
     color: rgba(255, 255, 255, 0.9);
     font-size: 1.3rem;
     font-weight: 400;
