@@ -22,11 +22,11 @@
     grid-template-rows: 3rem -webkit-max-content -webkit-max-content 1fr 3.5rem;
     grid-template-rows: 3rem max-content max-content 1fr 3.5rem;
     grid-template-areas:
-            "nav"
-            "homeText"
-            "playAsGuest"
-            "logReg"
-            "footer";
+        "nav"
+        "homeText"
+        "playAsGuest"
+        "logReg"
+        "footer";
 }
 
 .playAsGuest {
@@ -88,21 +88,23 @@
     max-width: 90vw;
     height: 22rem;
     max-height: 90vh;
-    border: 2px solid white;
+    border: 4px solid rgba(255, 255, 255, 0.6);
     display: flex;
     flex-flow: nowrap column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    background-color: rgba(0,0,0,0.7);
+    background-color: rgba(0,0,0,0.6);
     --reg-log-alert: "";
     border-radius: 10px;
     opacity: 0.9;
 }
 
 .login h1, .register h1 {
-    color: white;
+    color: rgba(255, 255, 255, 0.9);
     font-size: 3rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
 }
 
 .login .username:before, .register .username:before {
@@ -110,11 +112,13 @@
     position: absolute;
     color: rgba(255,0,0,0.8);
     font-size: 0.9rem;
-    font-weight: 400;
+    font-weight: 600;
     text-align: center;
     width: 100%;
     top: 0;
     line-height: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
 }
 
 .login .username, .register .username {
@@ -146,16 +150,11 @@
     margin-bottom: 1rem;
 }
 
-.login h4 {
-    color: white;
+.login h4, .register h4 {
+    color: rgba(255, 255, 255, 0.9);
     font-size: 1.2rem;
     margin-bottom: 0.5rem;
-}
-
-.register h4 {
-    color: white;
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
+    letter-spacing: 0.1rem;
 }
 
 .login input, .register input {
@@ -163,19 +162,20 @@
     min-height: 2.5rem;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.4);
-    border: 1px solid rgba(255, 255, 255, 1);
+    border: 1px solid rgba(255, 255, 255, 0.6);
     outline: none;
     color: white;
     caret-color: white;
     padding: 0.5rem;
+    letter-spacing: 0.1rem;
 }
 
 .login input:hover, .register input:hover {
-    border: 2px solid rgba(255, 255, 255, 1);
+    border: 2px solid rgba(255, 255, 255, 0.6);
 }
 
 .login input:focus, .register input:focus {
-    border: 3px solid rgba(255, 255, 255, 1);
+    border: 3px solid rgba(255, 255, 255, 0.6);
 }
 
 .raisedTextBox {
@@ -186,21 +186,25 @@
 
 .loginBtn, .registerBtn {
     border: none;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: rgba(0, 0, 0, 0.9);
     border-radius: 8px;
     font-size: 1rem;
     font-weight: 600;
     padding: 0.5rem;
     transition: all 0.2s ease-out;
+    letter-spacing: 0.1rem;
 }
 
 .changeLogReg {
     background: transparent;
-    color: white;
+    color: rgba(255, 255, 255, 0.9);
     font-size: 0.8rem;
     border: none;
     margin-top: 0.2rem;
     padding: 0.35rem;
     transition: all 0.2s ease-out;
+    letter-spacing: 0.1rem;
 }
 
 .changeLogReg:hover {
