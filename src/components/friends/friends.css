@@ -222,7 +222,7 @@
 }
 
 .addFriend > h3 {
-    height: 3.5rem;
+    height: max-content;
     color: rgba(255, 255, 255, 0.9);
     font-size: 1.3rem;
     font-weight: 400;
@@ -230,7 +230,7 @@
     flex-flow: nowrap column;
     align-items: center;
     justify-content: flex-start;
-    padding-bottom: 0rem;
+    padding-bottom: 0.5rem;
     text-transform: uppercase;
 }
 
