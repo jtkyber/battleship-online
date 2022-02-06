@@ -19,27 +19,19 @@ const ChatBox = ({ socket }) => {
     const root = document.querySelector(':root');
 
     useEffect(() => {
+        if (showChatMobile) root.style.setProperty("--chatNotificationDisplay", 'none')
+
         document.addEventListener('keyup', handleEnterBtn);
-
-        return () => {
-            document.removeEventListener('keyup', handleEnterBtn);
-        }
-    }, [chatText])
-
-    useEffect(() => {
         socket.on('receive msg', message => {
             handleReceivedMessage(message);
         })
 
         return () => {
             socket.off('receive msg');
+            document.removeEventListener('keyup', handleEnterBtn);
         }
-    },[chatBox, showChatMobile])
-
-    useEffect(() => {
-        if (showChatMobile) root.style.setProperty("--chatNotificationDisplay", 'none')
-    },[showChatMobile])
-
+    },[chatBox, showChatMobile, chatText])
+    
     const handleReceivedMessage = (message) => {
         audio.buttonClick.play();
         const msgNode = document.createElement("DIV");
@@ -62,7 +54,6 @@ const ChatBox = ({ socket }) => {
 
     const handleEnterBtn = (e) => {
             if (e.code === 'Enter' && chatText !== '') {
-                console.log('test')
                 e.preventDefault();
                 audio.buttonClick.play();
                 const msgNode = document.createElement("DIV");
