@@ -1,6 +1,6 @@
 import { useStoreState, useStoreActions } from 'easy-peasy';
 
-const Login = ({onRouteChange }) => {
+const Login = ({ onRouteChange}) => {
     
     const { currentSocket, userName, password } = useStoreState(state => ({
         currentSocket: state.currentSocket,

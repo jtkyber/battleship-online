@@ -117,7 +117,10 @@ const Navigation = ({ socket, onRouteChange }) => {
                         <>
                             {
                                 isMobile
-                                ? <img className='hasSound chatIcon' src={chatIcon} alt='chat' onClick={() => setShowChatMobile(!showChatMobile)} />
+                                ? 
+                                <div className='chatIconContainer'>
+                                    <img className='hasSound chatIcon' src={chatIcon} alt='chat' onClick={() => setShowChatMobile(!showChatMobile)} />
+                                </div>
                                 : null
                             }
                             <img className='hasSound logOutIcon' src={logOutIcon} alt='log out' value='logOut' onClick={handleExitClick} />
@@ -126,7 +129,10 @@ const Navigation = ({ socket, onRouteChange }) => {
                         <>
                         {
                                 isMobile
-                                ? <img className='hasSound chatIcon' src={chatIcon} alt='chat' onClick={() => setShowChatMobile(!showChatMobile)} />
+                                ? 
+                                <div className='chatIconContainer'>
+                                    <img className='hasSound chatIcon' src={chatIcon} alt='chat' onClick={() => setShowChatMobile(!showChatMobile)} />
+                                </div>
                                 : null
                             }
                             <img className='hasSound goHomeIcon' src={homeIcon} alt='go home' value='goHome' onClick={handleExitClick} />

@@ -3,7 +3,6 @@ import { useStoreState, useStoreActions } from 'easy-peasy';
 import { audio } from '../../audio';
 
 const ChatBox = ({ socket }) => {
-
     const { friendSocket, opponentName, chatText, showChatMobile, isMobile } = useStoreState(state => ({
         friendSocket: state.friendSocket,
         opponentName: state.opponentName,
@@ -12,58 +11,58 @@ const ChatBox = ({ socket }) => {
         isMobile: state.stored.isMobile
     }));
 
-    const { setChatText, setShowChatMobile } = useStoreActions(actions => ({
-        setChatText: actions.setChatText,
-        setShowChatMobile: actions.setShowChatMobile
+    const { setChatText } = useStoreActions(actions => ({
+        setChatText: actions.setChatText
     }));
 
     const chatBox = document.querySelector('.chatBox');
+    const root = document.querySelector(':root');
 
     useEffect(() => {
         document.addEventListener('keyup', handleEnterBtn);
-        // window.addEventListener('touchend', handleChatScreenTouch);
 
+        return () => {
+            document.removeEventListener('keyup', handleEnterBtn);
+        }
+    }, [chatText])
+
+    useEffect(() => {
         socket.on('receive msg', message => {
             handleReceivedMessage(message);
         })
 
         return () => {
             socket.off('receive msg');
-            document.removeEventListener('keyup', handleEnterBtn);
-            // window.removeEventListener('touchend', handleChatScreenTouch);
         }
-    },[chatText])
+    },[chatBox, showChatMobile])
 
-    // const handleChatScreenTouch = (e) => {
-    //     const chatContainerMobile = document.querySelector('.chatContainerMobile');
-    //     if (!chatContainerMobile.contains(e.target)) {
-    //         setShowChatMobile(false);
-    //     }
-    // }
+    useEffect(() => {
+        if (showChatMobile) root.style.setProperty("--chatNotificationDisplay", 'none')
+    },[showChatMobile])
 
     const handleReceivedMessage = (message) => {
-        const chatBox = document.querySelector('.chatBox');
-        if (chatBox !== null) {
-            audio.buttonClick.play();
-            const msgNode = document.createElement("DIV");
-            msgNode.classList.add('message');
-            const textNode = document.createElement("H4");
-            textNode.classList.add('opponentText');
-            const nameNode = document.createElement("H5");
-            nameNode.classList.add('oppName');
-            const text = document.createTextNode(message);
-            const name = document.createTextNode(opponentName);
-            nameNode.appendChild(name);
-            textNode.appendChild(text);
-            msgNode.appendChild(nameNode);
-            msgNode.appendChild(textNode);
-            chatBox.appendChild(msgNode);
-            chatBox.scrollTop = chatBox.scrollHeight;
-        }
+        audio.buttonClick.play();
+        const msgNode = document.createElement("DIV");
+        msgNode.classList.add('message');
+        const textNode = document.createElement("H4");
+        textNode.classList.add('opponentText');
+        const nameNode = document.createElement("H5");
+        nameNode.classList.add('oppName');
+        const text = document.createTextNode(message);
+        const name = document.createTextNode(opponentName);
+        nameNode.appendChild(name);
+        textNode.appendChild(text);
+        msgNode.appendChild(nameNode);
+        msgNode.appendChild(textNode);
+        chatBox.appendChild(msgNode);
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+        if (!showChatMobile) root.style.setProperty("--chatNotificationDisplay", 'block')
     }
 
     const handleEnterBtn = (e) => {
-            if (e.keyCode === 13 && chatBox !== null && chatText !== '') {
+            if (e.code === 'Enter' && chatText !== '') {
+                console.log('test')
                 e.preventDefault();
                 audio.buttonClick.play();
                 const msgNode = document.createElement("DIV");

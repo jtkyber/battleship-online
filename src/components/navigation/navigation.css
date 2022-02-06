@@ -1,3 +1,7 @@
+:root {
+    --chatNotificationDisplay: none;
+}
+
 nav {
     position: relative;
     grid-area: nav;
@@ -138,9 +142,6 @@ nav .soundToggle:hover {
 
 .leaderboardIcon {
     opacity: 0.5;
-    /* height: -webkit-min-content;
-    height: -moz-min-content;
-    height: min-content; */
     width: 25px;
     height: auto;
 }
@@ -150,16 +151,10 @@ nav .soundToggle:hover {
     margin-left: 0.5rem;
     width: 22px;
     height: auto;
-    /* height: -webkit-min-content;
-    height: -moz-min-content;
-    height: min-content; */
 }
 
 .goHomeIcon {
     opacity: 0.5;
-    /* height: -webkit-min-content;
-    height: -moz-min-content;
-    height: min-content; */
     width: 25px;
     height: auto;
 }
@@ -168,9 +163,6 @@ nav .soundToggle:hover {
     opacity: 0.5;
     width: 25px;
     height: auto;
-    /* height: -webkit-min-content;
-    height: -moz-min-content;
-    height: min-content; */
 }
 
 .friendsIcon {
@@ -178,27 +170,35 @@ nav .soundToggle:hover {
     opacity: 0.5;
     width: 25px;
     height: auto;
-    /* height: -webkit-min-content;
-    height: -moz-min-content;
-    height: min-content; */
     left: 50%;
     transform: translate(-50%);
+}
+
+.chatIconContainer {
+    position: absolute;
+    opacity: 0.5;
+    left: 50%;
+    transform: translate(-50%);
+    display: flex;
+    align-items: center;
 }
 
 .chatIcon {
-    position: absolute;
-    opacity: 0.5;
     width: 25px;
     height: auto;
-    /* height: -webkit-min-content;
-    height: -moz-min-content;
-    height: min-content; */
-    left: 50%;
-    transform: translate(-50%);
 }
 
-.dropdown {
-    /* position: relative; */
+.chatIconContainer::before {
+    position: absolute;
+    content: '';
+    top: 0.1rem;
+    left: 0;
+    width: 0.5rem;
+    height: 0.5rem;
+    background-color: rgb(167, 0, 0);
+    border-radius: 50%;
+    z-index: 10;
+    display: var(--chatNotificationDisplay);
 }
 
 .dropdown-menu {
