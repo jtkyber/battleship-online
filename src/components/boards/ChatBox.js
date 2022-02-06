@@ -31,7 +31,7 @@ const ChatBox = ({ socket }) => {
             document.removeEventListener('keyup', handleEnterBtn);
         }
     },[chatBox, showChatMobile, chatText])
-    
+
     const handleReceivedMessage = (message) => {
         audio.buttonClick.play();
         const msgNode = document.createElement("DIV");
@@ -53,7 +53,7 @@ const ChatBox = ({ socket }) => {
     }
 
     const handleEnterBtn = (e) => {
-            if (e.code === 'Enter' && chatText !== '') {
+            if (e.key === 'Enter' && chatText !== '') {
                 e.preventDefault();
                 audio.buttonClick.play();
                 const msgNode = document.createElement("DIV");
