@@ -385,7 +385,7 @@ function App() {
         const registerPassword = document.querySelector('.register > .password > input');
         const friendRequestBtn = document.querySelector('.friendRequestBtn');
 
-        if ((e.code === 'Enter') && (route === 'login' || route === 'register')) {
+        if ((e.key === 'Enter') && (route === 'login' || route === 'register')) {
             e.preventDefault();
             if ((logUsername?.value?.length && logPassword?.value?.length) || (registerUsername?.value?.length && registerPassword?.value?.length)) {
                 audio.buttonClick.play();
@@ -393,7 +393,7 @@ function App() {
                 ? loginBtn.click()
                 : registerBtn.click()
             }
-        } else if ((e.code === 'Enter') && (route === 'loggedIn')) {
+        } else if ((e.key === 'Enter') && (route === 'loggedIn')) {
             e.preventDefault();
             audio.buttonClick.play();
             friendRequestBtn.click();
