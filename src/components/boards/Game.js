@@ -70,7 +70,7 @@ const Game = ({ socket, onRouteChange }) => {
             user.hash === 'guest' ? setRoute('login') : setRoute('loggedIn');
         })
 
-        setCheckOppStatusInterval(setInterval(checkIfOpponentIsOnline, 2000));
+        setCheckOppStatusInterval(setInterval(checkIfOpponentIsOnlineAndInGame, 2000));
 
         return () => {
             clearInterval(checkOppStatusInterval);
@@ -115,9 +115,9 @@ const Game = ({ socket, onRouteChange }) => {
         }
     },[yourTurn])
 
-    const checkIfOpponentIsOnline = async () => {
+    const checkIfOpponentIsOnlineAndInGame = async () => {
         try {
-            const response = await fetch(`https://calm-ridge-60009.herokuapp.com/checkIfOppOnline?username=${opponentName}`)
+            const response = await fetch(`https://calm-ridge-60009.herokuapp.com/checkIfOppInGame?username=${opponentName}`)
             if (!response.ok) {
                 throw new Error('Error')
             }

@@ -41,7 +41,7 @@ const FindMatch = ({ socket }) => {
         if (search) {
             setFindMatchInterval(setInterval(searchForMatch, 1000));
         }
-    }, [search])
+    }, [search, user])
 
     // useEffect(() => {
     //     if (user?.username?.length && (route === 'login' || route === 'register')) {
