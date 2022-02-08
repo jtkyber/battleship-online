@@ -33,7 +33,6 @@ const ChatBox = ({ socket }) => {
     },[chatBox, showChatMobile, chatText])
 
     const handleReceivedMessage = (message) => {
-        audio.buttonClick.play();
         const msgNode = document.createElement("DIV");
         msgNode.classList.add('message');
         const textNode = document.createElement("H4");
@@ -49,7 +48,10 @@ const ChatBox = ({ socket }) => {
         chatBox.appendChild(msgNode);
         chatBox.scrollTop = chatBox.scrollHeight;
 
-        if (!showChatMobile) root.style.setProperty("--chatNotificationDisplay", 'block')
+        if (!showChatMobile) {
+            root.style.setProperty("--chatNotificationDisplay", 'block');
+            audio.notificationSound.play();
+        }
     }
 
     const handleEnterBtn = (e) => {

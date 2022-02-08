@@ -3,6 +3,7 @@ import { useStoreState, useStoreActions } from 'easy-peasy';
 import './navigation.css';
 import notificationIcon from './notification.png';
 import { Dropdown } from 'react-bootstrap';
+import { audio } from '../../audio';
 const FriendRequests = ({ socket }) => {
 
     const { user, friendRequests } = useStoreState(state => ({
@@ -38,6 +39,7 @@ const FriendRequests = ({ socket }) => {
             if (requests !== null && requests !== '') {
                 navBar.style.setProperty('--notification-color', 'rgba(255,0,0,0.8)');
                 setFriendRequests(requests.split(','));
+                audio.notificationSound.play();
             } else {
                 navBar.style.setProperty('--notification-color', 'transparent');
                 setFriendRequests(null);

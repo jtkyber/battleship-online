@@ -8,6 +8,10 @@ import hoverSound from './audioclips/hover-sound.mp3';
 import hitSound from './audioclips/hit-sound.mp3';
 import missSound from './audioclips/miss-sound.mp3';
 import shipSunkSound from './audioclips/ship-sunk.mp3';
+import notificationSound from './audioclips/notification.mp3';
+import pickUpShip from './audioclips/pick-up-ship.mp3';
+import dropShip from './audioclips/drop-ship.mp3';
+import rotateShip from './audioclips/rotate-ship.mp3';
 
 const handleWaveFade = () => {
     if (audio.ambientWaves.volume() === 0) {
@@ -85,6 +89,26 @@ export const audio = {
 
     shipSunkSound: new Howl({
         src: shipSunkSound,
+        volume: 0.9
+    }),
+
+    notificationSound: new Howl({
+        src: notificationSound,
+        volume: 0.9
+    }),
+
+    pickUpShip: new Howl({
+        src: pickUpShip,
+        volume: 0.9
+    }),
+
+    dropShip: new Howl({
+        src: dropShip,
+        volume: 0.9
+    }),
+    
+    rotateShip: new Howl({
+        src: rotateShip,
         volume: 0.9
     })
 }

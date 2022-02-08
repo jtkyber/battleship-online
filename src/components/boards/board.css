@@ -236,11 +236,22 @@
     background: url('./hit.png');
     background-size: contain;
     z-index: 4;
+    animation: fadeInShot 0.05s ease-out;
 }
 
 .missMarker {
     background-color: rgba(0,150,255,0.7);
+    animation: fadeInShot 0.05s ease-out;
 }
+
+@keyframes fadeInShot {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
 
 /* .opponentBoard:before {
     position: absolute;

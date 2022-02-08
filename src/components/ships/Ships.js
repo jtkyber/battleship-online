@@ -23,7 +23,7 @@ const Ships = () => {
 
     const onShipSelect = (e) => {
         if (!shipIsSelected && (gameRoute === 'placeShips')) {
-            audio.buttonClick.play();
+            audio.pickUpShip.play();
             const userBoard = document.querySelector('.userBoard');
             shipIsSelected = true;
             selectedShip = e.target.parentElement;
@@ -76,7 +76,7 @@ const Ships = () => {
         if (!shipIsSelected && !isMobile && e.target?.parentElement?.classList?.contains('ship')) {
             onShipSelect(e);
         } else if (!isMobile && shipIsSelected && e.target.classList.contains('singleSquare') && rotating === false && areaIsClear()) {
-            audio.buttonClick.play();
+            audio.dropShip.play();
             selectedShip.style.zIndex = '3';
             document.querySelector('.userBoard').style.cursor = 'default';
             selectedShip.style.border = null;
@@ -99,7 +99,7 @@ const Ships = () => {
     window.ontouchend = (e) => {
         if (!showGameInstructions) {
             if (shipIsSelected && !moving && areaIsClear() && !wasShipTouched(e.changedTouches[0].clientX, e.changedTouches[0].clientY)) {
-                audio.buttonClick.play();
+                audio.dropShip.play();
                 selectedShip.style.zIndex = '3';
                 document.querySelector('.userBoard').style.cursor = 'default';
                 selectedShip.style.border = null;
@@ -112,11 +112,12 @@ const Ships = () => {
                     orientation = 'hor';
                     positionShipOnGrid(e);
                 }
+                audio.rotateShip.play();
                 setManualGridLocation = true;
                 rotating = true;
             } else if (shipIsSelected && moving) {
                 if (isMobile && shipIsSelected && rotating === false && areaIsClear()) {
-                    audio.buttonClick.play();
+                    audio.dropShip.play();
                     selectedShip.style.zIndex = '3';
                     document.querySelector('.userBoard').style.cursor = 'default';
                     selectedShip.style.border = null;
@@ -145,7 +146,7 @@ const Ships = () => {
 
     window.oncontextmenu = (e) => {
          if (!isMobile && shipIsSelected) {
-            audio.hoverSound.play();
+            audio.rotateShip.play();
             if (orientation === 'hor') {
                 // selectedShip.style.transform = 'rotate(-90deg)';
                 orientation = 'vert';
@@ -170,7 +171,7 @@ const Ships = () => {
         // Rotate the selected ship by pressing the 'space' key
 
         if (e.code === 'Space' && selectedShip.style !== undefined && shipIsSelected) {
-            audio.hoverSound.play();
+            audio.rotateShip.play();
             if (orientation === 'hor') {
                 // selectedShip.style.transform = 'rotate(-90deg)';
                 orientation = 'vert';
