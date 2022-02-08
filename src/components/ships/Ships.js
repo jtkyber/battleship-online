@@ -11,6 +11,8 @@ let selectedShip = '';
 let selectedShipName = '';
 let shipIsSelected = false;
 let setManualGridLocation = false;
+let mouseX;
+let mouseY;
 
 const Ships = () => {
     const { gameRoute, isMobile, showGameInstructions } = useStoreState(state => ({
@@ -150,12 +152,11 @@ const Ships = () => {
             if (orientation === 'hor') {
                 // selectedShip.style.transform = 'rotate(-90deg)';
                 orientation = 'vert';
-                positionShipOnGrid(e);
             } else if (orientation === 'vert') {
                 // selectedShip.style.transform = 'rotate(0deg)';
                 orientation = 'hor';
-                positionShipOnGrid(e);
             }
+            positionShipOnGrid(e);
             setManualGridLocation = true;
             rotating = true;
         }
@@ -175,12 +176,11 @@ const Ships = () => {
             if (orientation === 'hor') {
                 // selectedShip.style.transform = 'rotate(-90deg)';
                 orientation = 'vert';
-                positionShipOnGrid(e);
             } else if (orientation === 'vert') {
                 // selectedShip.style.transform = 'rotate(0deg)';
                 orientation = 'hor';
-                positionShipOnGrid(e);
             }
+            positionShipOnGrid(e);
             setManualGridLocation = true;
             rotating = true;
         }
@@ -196,6 +196,7 @@ const Ships = () => {
             const squareBottom = square.getBoundingClientRect().bottom;
 
             if ((x > squareLeft) && (x < squareRight) && (y > squareTop) && (y < squareBottom)) {
+                console.log(square);
                 selectedSquare = square;
                 return;
             }
@@ -209,6 +210,8 @@ const Ships = () => {
             square = matchTouchToSquares(e.touches[0].clientX, e.touches[0].clientY);
         } else if (e.type === 'touchend') {
             square = matchTouchToSquares(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
+        } else if (e.code === 'Space' || e.type === 'contextmenu') {
+            square = matchTouchToSquares(mouseX, mouseY);
         } else {
             square = e.target;
         }
@@ -221,7 +224,7 @@ const Ships = () => {
         const colStart = targetId?.substring(0, targetId.indexOf('-'));
         const rowStart = targetId?.substring((targetId.indexOf('-') + 1), targetId?.length);
 
-        if (userGrid.contains(e.target)
+        if ((userGrid.contains(e.target) || userGrid.contains(square))
         && (square?.classList?.contains('singleSquare'))
         && shipIsSelected === true) {
             if (orientation === 'hor') {
@@ -247,6 +250,8 @@ const Ships = () => {
     // Change the grid-row and grid-column of the selected ship mouse is over the user's board
 
     window.onmouseover = (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
         if (shipIsSelected && !isMobile) {
             positionShipOnGrid(e);
         }
