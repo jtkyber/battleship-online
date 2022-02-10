@@ -221,6 +221,7 @@
 .userBoard .singleSquare {
     /* text-align: center; */
     border: 1px solid rgba(0,255,0,0.3);
+    overflow: visible;
 }
 
 .opponentBoard .singleSquare {
@@ -242,21 +243,29 @@
     animation: fadeInShot 0.1s ease-out;
 }
 
-.userBoard .hitMarker {
+/* .userBoard .hitMarker {
     background: url('./hit.gif');
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: center;
+    background-position: center 150%;
     z-index: 4;
     animation: fadeInShot 0.1s ease-out;
-    transform: translateY(-50%);
-    border: none !important;
     filter: contrast(400%) saturate(100%) hue-rotate(320deg);
+} */
+
+.hitMarkerGif {
+    z-index: 100;
+    position: absolute;
+    height: 130%;
+    width: auto;
+    transform: translate(25%, -50%);
+    animation: fadeInShot 0.1s ease-out;
+    /* filter: contrast(400%) saturate(100%) hue-rotate(320deg); */
 }
 
 .missMarker {
     background-color: rgba(0,150,255,0.7);
-    animation: fadeInShot 0.05s ease-out;
+    animation: fadeInShot 0.1s ease-out;
 }
 
 @keyframes fadeInShot {

@@ -4,6 +4,7 @@ import Board from './Board';
 import Ships from '../ships/Ships';
 import $ from 'jquery';
 import { audio } from '../../audio';
+import hitGif from './hit.gif';
 import './board.css';
 
 const UserBoard = ({ socket }) => {
@@ -63,8 +64,13 @@ const UserBoard = ({ socket }) => {
 
     const applyHitOrMiss = (oppShot) => {
         if (matchOppShotToBoard(oppShot)) {
-            oppShot.classList.add('hit');
-            oppShot.classList.add('hitMarker');
+            // oppShot.classList.add('hit');
+            // oppShot.classList.add('hitMarker');
+            const hitElem = document.createElement('img');
+            hitElem.src = hitGif;
+            hitElem.classList.add('hitMarkerGif');
+            oppShot.appendChild(hitElem);
+
             hitSquares.push(shipHit);
             oppShot.classList.add(`_${shipHit}_userboard`)
             if (countHitsOnShip(shipHit) === parseInt(document.querySelector(`.${shipHit}`).id)) {
@@ -73,7 +79,8 @@ const UserBoard = ({ socket }) => {
                 audio.shipSunkSound.play();
                 for (let square of squares) {
                     if (square.classList.contains(`_${shipHit}_userboard`)) {
-                        square.classList.remove('hitMarker');
+                        // square.classList.remove('hitMarker');
+                        square.querySelector('.hitMarkerGif').remove();
                     }
                 }
                 sunkShipIcon.classList.add('shipSunkUser');
