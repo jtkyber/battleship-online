@@ -122,11 +122,11 @@ export const audio = {
 
     missileLaunch: new Howl({
         src: missileLaunch,
-        volume: 0.9
+        volume: 1
     }),
 
     incomingMissile: new Howl({
         src: incomingMissile,
-        volume: 0.9
+        volume: 1
     })
 }
