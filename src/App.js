@@ -127,23 +127,38 @@ function App() {
 
     useEffect(() => {
         if (soundOn) {
-            audio.ambientWaves.mute(false);
-            audio.buttonClick.mute(false);
             if (!isMobile) {
                 audio.hoverSound.mute(false);
             }
+            audio.ambientWaves.mute(false);
+            audio.buttonClick.mute(false);
             audio.hitSound.mute(false);
             audio.missSound.mute(false);
             audio.shipSunkSound.mute(false);
+            audio.notificationSound.mute(false);
+            audio.pickUpShip.mute(false);
+            audio.dropShip.mute(false);
+            audio.rotateShip.mute(false);
+            audio.missileLock.mute(false);
+            audio.missileLaunch.mute(false);
+            audio.incomingMissile.mute(false);
+            
         } else {
-            audio.ambientWaves.mute(true);
-            audio.buttonClick.mute(true);
             if (!isMobile) {
                 audio.hoverSound.mute(true);
             }
+            audio.ambientWaves.mute(true);
+            audio.buttonClick.mute(true);
             audio.hitSound.mute(true);
             audio.missSound.mute(true);
             audio.shipSunkSound.mute(true);
+            audio.notificationSound.mute(true);
+            audio.pickUpShip.mute(true);
+            audio.dropShip.mute(true);
+            audio.rotateShip.mute(true);
+            audio.missileLock.mute(true);
+            audio.missileLaunch.mute(true);
+            audio.incomingMissile.mute(true);
         }
     }, [soundOn])
 
