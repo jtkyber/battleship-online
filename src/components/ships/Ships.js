@@ -196,7 +196,6 @@ const Ships = () => {
             const squareBottom = square.getBoundingClientRect().bottom;
 
             if ((x > squareLeft) && (x < squareRight) && (y > squareTop) && (y < squareBottom)) {
-                console.log(square);
                 selectedSquare = square;
                 return;
             }

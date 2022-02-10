@@ -28,6 +28,7 @@ const OpponentBoard = ({ socket }) => {
 
     useEffect(() => {
         socket.on('show result on opponent board', data => {
+            console.log(data.shipHit)
             const clickedSquare = document.querySelector(`.opponentBoard [id='${data.shotSquare}']`);
             if (data.result === 'hit' && clickedSquare.classList !== undefined) {
                 clickedSquare.classList.add('hitMarker');

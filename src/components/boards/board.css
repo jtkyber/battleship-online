@@ -234,9 +234,24 @@
 
 .hitMarker {
     background: url('./hit.png');
-    background-size: contain;
+    background-size: 80%;
+    background-repeat: no-repeat;
+    background-position: center;
+    filter: brightness(70%) saturate(60%) drop-shadow(0px 0px 8px rgba(0, 0, 0, 0.8));
     z-index: 4;
-    animation: fadeInShot 0.05s ease-out;
+    animation: fadeInShot 0.1s ease-out;
+}
+
+.userBoard .hitMarker {
+    background: url('./hit.gif');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 4;
+    animation: fadeInShot 0.1s ease-out;
+    transform: translateY(-50%);
+    border: none !important;
+    filter: contrast(400%) saturate(100%) hue-rotate(320deg);
 }
 
 .missMarker {
