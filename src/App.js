@@ -272,15 +272,17 @@ function App() {
             setShowFriendsMobile(false);
         }
 
-        document.addEventListener('mousedown', handleMouseDown);
-        if (isIOS) {
-            document.addEventListener('touchstart', handleMouseDown);
+        if (isMobile) {
+            document.addEventListener('touchend', handleMouseDown);
+        } else {
+            document.addEventListener('mouseup', handleMouseDown);
         }
 
         return () => {
-            document.removeEventListener('mousedown', handleMouseDown);
-            if (isIOS) {
-                document.removeEventListener('touchstart', handleMouseDown);
+            if (isMobile) {
+                document.removeEventListener('touchend', handleMouseDown);
+            } else {
+                document.removeEventListener('mouseup', handleMouseDown);
             }
         }
     }, [route, gameRoute])
@@ -351,13 +353,20 @@ function App() {
         }
     }
 
+    let playHoverSound = true;
     const handleMouseOver = (e) => {
         if (
-            ((e.target.tagName === 'BUTTON') && (!e.target.classList.contains('messageToggle')))
+            (((e.target.tagName === 'BUTTON') && (!e.target.classList.contains('messageToggle')))
             ||
-            (e.target.classList.contains('hasSound'))
+            (e.target.classList.contains('hasSound')))
         ) {
-            audio.hoverSound.play();
+            if (playHoverSound) {
+                audio.hoverSound.play();
+                playHoverSound = false;
+            }
+        } else {
+            console.log(e.target)
+            playHoverSound = true;
         }
     }
 
