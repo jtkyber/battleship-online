@@ -59,7 +59,7 @@ const OpponentBoard = ({ socket }) => {
         if (yourTurn && !e.target.classList.contains('hitMarker') && !e.target.classList.contains('missMarker')) {
             // setSquareClicked(e.target);
             setYourTurn(false);
-            const missileLaunchDuration = audio.missileLaunch.duration() * 1000 - 100;
+            const missileLaunchDuration = audio.missileLaunch.duration() * 1000 - 900;
             audio.missileLaunch.play();
 
             setTimeout(() => {
