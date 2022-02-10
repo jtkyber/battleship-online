@@ -71,7 +71,8 @@ export const audio = {
 
     buttonClick: new Howl({
         src: buttonClick,
-        volume: 0.6
+        volume: 0.6,
+        preload: true
     }),
 
     hoverSound: new Howl({
