@@ -19,8 +19,13 @@ const UserBoard = ({ socket }) => {
     useEffect(() => {
         socket.on('receive shot', shot => {
             const oppShot = document.getElementById(shot);
-            applyHitOrMiss(oppShot);
-            setYourTurn(true);
+
+            const incomingMissileDuration = audio.incomingMissile.duration() * 1000 - 100;
+            audio.incomingMissile.play();
+            setTimeout(() => {
+                applyHitOrMiss(oppShot);
+                setYourTurn(true);
+            }, incomingMissileDuration)
         })
 
         return () => {

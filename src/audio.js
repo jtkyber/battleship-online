@@ -12,6 +12,9 @@ import notificationSound from './audioclips/notification.mp3';
 import pickUpShip from './audioclips/pick-up-ship.mp3';
 import dropShip from './audioclips/drop-ship.mp3';
 import rotateShip from './audioclips/rotate-ship.mp3';
+import missileLock from './audioclips/missile-lock.mp3';
+import missileLaunch from './audioclips/missile-launch.mp3';
+import incomingMissile from './audioclips/incoming-missile.mp3';
 
 const handleWaveFade = () => {
     if (audio.ambientWaves.volume() === 0) {
@@ -109,6 +112,21 @@ export const audio = {
     
     rotateShip: new Howl({
         src: rotateShip,
+        volume: 0.9
+    }),
+
+    missileLock: new Howl({
+        src: missileLock,
+        volume: 0.9
+    }),
+
+    missileLaunch: new Howl({
+        src: missileLaunch,
+        volume: 0.9
+    }),
+
+    incomingMissile: new Howl({
+        src: incomingMissile,
         volume: 0.9
     })
 }

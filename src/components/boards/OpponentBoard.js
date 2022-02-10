@@ -58,8 +58,13 @@ const OpponentBoard = ({ socket }) => {
     const onSquareClicked = (e) => {
         if (yourTurn && !e.target.classList.contains('hitMarker') && !e.target.classList.contains('missMarker')) {
             // setSquareClicked(e.target);
-            socket.emit('send shot to opponent', {target: e.target.id, socketid: friendSocket});
             setYourTurn(false);
+            const missileLaunchDuration = audio.missileLaunch.duration() * 1000 - 100;
+            audio.missileLaunch.play();
+
+            setTimeout(() => {
+                socket.emit('send shot to opponent', {target: e.target.id, socketid: friendSocket});
+            }, missileLaunchDuration)
         }
     }
 
