@@ -64,12 +64,50 @@ const UserBoard = ({ socket }) => {
 
     const applyHitOrMiss = (oppShot) => {
         if (matchOppShotToBoard(oppShot)) {
-            // oppShot.classList.add('hit');
-            // oppShot.classList.add('hitMarker');
+            const hitMarkerBackgroundFlash = document.createElement('div');
+            hitMarkerBackgroundFlash.classList.add('hitMarkerBackgroundFlash');
+
             const hitElem = document.createElement('img');
             hitElem.src = hitGif;
             hitElem.classList.add('hitMarkerGif');
-            oppShot.appendChild(hitElem);
+
+            const shrapN = document.createElement('div');
+            shrapN.classList.add('shrapN');
+
+            const shrapNE = document.createElement('div');
+            shrapNE.classList.add('shrapNE');
+
+            const shrapE = document.createElement('div');
+            shrapE.classList.add('shrapE');
+
+            const shrapSE = document.createElement('div');
+            shrapSE.classList.add('shrapSE');
+
+            const shrapS = document.createElement('div');
+            shrapS.classList.add('shrapS');
+
+            const shrapSW = document.createElement('div');
+            shrapSW.classList.add('shrapSW');
+
+            const shrapW = document.createElement('div');
+            shrapW.classList.add('shrapW');
+
+            const shrapNW = document.createElement('div');
+            shrapNW.classList.add('shrapNW');
+
+            oppShot.append(hitElem, hitMarkerBackgroundFlash, shrapN, shrapNE, shrapE, shrapSE, shrapS, shrapSW, shrapW, shrapNW);
+
+            setTimeout(() => {
+                hitMarkerBackgroundFlash.remove();
+                shrapN.remove();
+                shrapNE.remove();
+                shrapE.remove();
+                shrapSE.remove();
+                shrapS.remove();
+                shrapSW.remove();
+                shrapW.remove();
+                shrapNW.remove();
+            }, 1100);
 
             hitSquares.push(shipHit);
             oppShot.classList.add(`_${shipHit}_userboard`)

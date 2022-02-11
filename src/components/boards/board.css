@@ -3,6 +3,15 @@
     --home-board-size-mobile: 80vmin;
     --game-board-size: 40rem;
     --game-board-size-mobile: 34vh;
+    --shrap-width: 0.3rem;
+    --shrap-height: 0.3rem;
+    --shrap-fling-dist: 4rem;
+    --shrap-fling-dist-neg: -4rem;
+    --shrap-fling-dist-cnr: 3.5rem;
+    --shrap-fling-dist-cnr-neg: -3.5rem;
+    --shrap-fling-anim-dur: 1s;
+    --shrap-color: rgb(60, 56, 50);
+
 }
 
 @media only screen and (min-width: 1650px) and (max-width: 1920px) {
@@ -253,14 +262,215 @@
     filter: contrast(400%) saturate(100%) hue-rotate(320deg);
 } */
 
+.hitMarkerBackgroundFlash {
+    z-index: 100;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: red;
+    animation: hitMarkerBackgroundFlash 0.2s linear forwards;
+}
+
+@keyframes hitMarkerBackgroundFlash {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
 .hitMarkerGif {
     z-index: 100;
     position: absolute;
     height: 130%;
     width: auto;
     transform: translate(25%, -50%);
-    animation: fadeInShot 0.1s ease-out;
+    animation: fadeInShot 0.5s ease-out;
     /* filter: contrast(400%) saturate(100%) hue-rotate(320deg); */
+
+}
+
+/* shrapnel elements */
+
+.shrapN {
+    /* transform: translate(); */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 100;
+    animation: flingUp var(--shrap-fling-anim-dur) ease-out forwards;
+    width: var(--shrap-width);
+    height: var(--shrap-height);
+    border-radius: 50%;
+    background-color: var(--shrap-color);
+}
+.shrapNE {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 100;
+    animation: flingUpRight var(--shrap-fling-anim-dur) ease-out forwards;
+    width: var(--shrap-width);
+    height: var(--shrap-height);
+    border-radius: 50%;
+    background-color: var(--shrap-color);;
+}
+.shrapE {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 100;
+    animation: flingRight var(--shrap-fling-anim-dur) ease-out forwards;
+    width: var(--shrap-width);
+    height: var(--shrap-height);
+    border-radius: 50%;
+    background-color: var(--shrap-color);;
+}
+.shrapSE {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 100;
+    animation: flingRightDown var(--shrap-fling-anim-dur) ease-out forwards;
+    width: var(--shrap-width);
+    height: var(--shrap-height);
+    border-radius: 50%;
+    background-color: var(--shrap-color);;
+}
+.shrapS {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 100;
+    animation: flingDown var(--shrap-fling-anim-dur) ease-out forwards;
+    width: var(--shrap-width);
+    height: var(--shrap-height);
+    border-radius: 50%;
+    background-color: var(--shrap-color);;
+}
+.shrapSW {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 100;
+    animation: flingDownLeft var(--shrap-fling-anim-dur) ease-out forwards;
+    width: var(--shrap-width);
+    height: var(--shrap-height);
+    border-radius: 50%;
+    background-color: var(--shrap-color);;
+}
+.shrapW {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 100;
+    animation: flingLeft var(--shrap-fling-anim-dur) ease-out forwards;
+    width: var(--shrap-width);
+    height: var(--shrap-height);
+    border-radius: 50%;
+    background-color: var(--shrap-color);;
+}
+.shrapNW {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 100;
+    animation: flingLeftUp var(--shrap-fling-anim-dur) ease-out forwards;
+    width: var(--shrap-width);
+    height: var(--shrap-height);
+    border-radius: 50%;
+    background-color: var(--shrap-color);;
+}
+
+/* shrapnel animations */
+
+@keyframes flingUp {
+    0% {
+        transform: translate(0, 0);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(0, var(--shrap-fling-dist-neg));
+        opacity: 0;
+    }
+}
+
+@keyframes flingUpRight {
+    0% {
+        transform: translate(0, 0);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--shrap-fling-dist-cnr), var(--shrap-fling-dist-cnr-neg));
+        opacity: 0;
+    }
+}
+
+@keyframes flingRight {
+    0% {
+        transform: translate(0, 0);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--shrap-fling-dist), 0);
+        opacity: 0;
+    }
+}
+
+@keyframes flingRightDown {
+    0% {
+        transform: translate(0, 0);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--shrap-fling-dist-cnr), var(--shrap-fling-dist-cnr));
+        opacity: 0;
+    }
+}
+
+@keyframes flingDown {
+    0% {
+        transform: translate(0, 0);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(0, var(--shrap-fling-dist));
+        opacity: 0;
+    }
+}
+
+@keyframes flingDownLeft {
+    0% {
+        transform: translate(0, 0);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--shrap-fling-dist-cnr-neg), var(--shrap-fling-dist-cnr));
+        opacity: 0;
+    }
+}
+
+@keyframes flingLeft {
+    0% {
+        transform: translate(0, 0);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--shrap-fling-dist-neg), 0);
+        opacity: 0;
+    }
+}
+
+@keyframes flingLeftUp {
+    0% {
+        transform: translate(0, 0);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--shrap-fling-dist-cnr-neg), var(--shrap-fling-dist-cnr-neg));
+        opacity: 0;
+    }
 }
 
 .missMarker {
@@ -270,12 +480,12 @@
 
 @keyframes fadeInShot {
     0% {
-      opacity: 0;
+        opacity: 0;
     }
     100% {
-      opacity: 1;
+        opacity: 1;
     }
-  }
+}
 
 /* .opponentBoard:before {
     position: absolute;

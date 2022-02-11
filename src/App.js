@@ -365,7 +365,6 @@ function App() {
                 playHoverSound = false;
             }
         } else {
-            console.log(e.target)
             playHoverSound = true;
         }
     }
