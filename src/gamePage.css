@@ -10,7 +10,7 @@
     /* gap: 0 1rem; */
     grid-template-areas:
         "nav nav nav nav nav nav"
-        ". playerTurnText playerTurnText playerTurnText chatContainer ."
+        ". playerTurnText playerTurnText playerTurnText playerTurnText ."
         ". userBoard readyBtn opponentBoard chatContainer ."
         "footer footer footer footer footer footer";
 }
@@ -238,14 +238,14 @@
     display: flex;
     flex-flow: nowrap column;
     grid-area: chatContainer;
-    height: 70%;
+    height: 90%;
     max-height: 25rem;
     width: 90%;
     border: 2px solid rgba(255,255,255,0.2);
     background-color: rgba(0,0,0,0.4);
     justify-self: center;
     align-self: center;
-    margin-top: var(--square-size);
+    margin-top: 3vw;
     padding-top: 1.5rem;
 }
 
