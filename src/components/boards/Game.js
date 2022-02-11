@@ -7,7 +7,7 @@ import ChatBox from './ChatBox';
 import Footer from '../footer/Footer';
 
 const Game = ({ socket, onRouteChange }) => {
-    const { friendSocket, opponentName, user, checkOppStatusInterval, gameRoute, playerIsReady, yourTurn, playerTurnText, isMobile, showGameInstructions, opponentIsReady } = useStoreState(state => ({
+    const { friendSocket, opponentName, user, checkOppStatusInterval, gameRoute, playerIsReady, yourTurn, playerTurnText, isMobile, showGameInstructions, opponentIsReady, firstGameInstructionLoad } = useStoreState(state => ({
         friendSocket: state.friendSocket,
         opponentName: state.opponentName,
         user: state.user,
@@ -18,17 +18,20 @@ const Game = ({ socket, onRouteChange }) => {
         playerTurnText: state.playerTurnText,
         isMobile: state.stored.isMobile,
         showGameInstructions: state.showGameInstructions,
-        opponentIsReady: state.opponentIsReady
+        opponentIsReady: state.opponentIsReady,
+        firstGameInstructionLoad: state.firstGameInstructionLoad
     }));
 
-    const { setCheckOppStatusInterval, setRoute, setGameRoute, setPlayerIsReady, setYourTurn, setPlayerTurnText, setOpponentIsReady } = useStoreActions(actions => ({
+    const { setCheckOppStatusInterval, setRoute, setGameRoute, setPlayerIsReady, setYourTurn, setPlayerTurnText, setOpponentIsReady, setShowGameInstructions, setFirstGameInstructionLoad } = useStoreActions(actions => ({
         setCheckOppStatusInterval: actions.setCheckOppStatusInterval,
         setRoute: actions.setRoute,
         setGameRoute: actions.setGameRoute,
         setPlayerIsReady: actions.setPlayerIsReady,
         setYourTurn: actions.setYourTurn,
         setPlayerTurnText: actions.setPlayerTurnText,
-        setOpponentIsReady: actions.setOpponentIsReady
+        setOpponentIsReady: actions.setOpponentIsReady,
+        setShowGameInstructions: actions.setShowGameInstructions,
+        setFirstGameInstructionLoad: actions.setFirstGameInstructionLoad
     }));
     
     const pickUpShipInstructions = 
@@ -47,6 +50,8 @@ const Game = ({ socket, onRouteChange }) => {
     : "Drag the selected ship and let go when the ship is in position"
 
     useEffect(() => {
+        if (!isMobile) setShowGameInstructions(false);
+        setFirstGameInstructionLoad(true);
         setPlayerIsReady(false);
         setOpponentIsReady(false);
         setGameRoute('placeShips');
@@ -74,9 +79,9 @@ const Game = ({ socket, onRouteChange }) => {
 
         return () => {
             clearInterval(checkOppStatusInterval);
-            socket.off('receive ready status');
             socket.off('receive game over');
             socket.off('receive exit game');
+            setFirstGameInstructionLoad(true);
         }
     },[])
 
@@ -152,7 +157,7 @@ const Game = ({ socket, onRouteChange }) => {
     const handleReadyButton = () => {
         const ships = document.querySelectorAll('.ship');
         const readyBtn = document.querySelector('.readyBtn');
-        const instructionsList = document.querySelector('.instructions');
+        const instructionsBtn = document.querySelector('.instructionsBtn');
         let allShipsPlaced = true;
 
         for (let ship of ships) {
@@ -166,7 +171,7 @@ const Game = ({ socket, onRouteChange }) => {
         if (allShipsPlaced) {
             setPlayerIsReady(true);
             if (!isMobile) {
-                instructionsList.classList.add('hide');
+                instructionsBtn?.classList.add('hide');
             }
             readyBtn.childNodes[0].innerText = `${!isMobile ? 'Waiting...' : '•••'}`;
             for (let ship of ships) {
@@ -185,12 +190,19 @@ const Game = ({ socket, onRouteChange }) => {
         }
     }
 
+    const handleInstructionsBtnClick = () => {
+        setShowGameInstructions(true)
+        if (firstGameInstructionLoad) {
+            setFirstGameInstructionLoad(false);
+        }
+    }
+
     return (
         <>
             <Navigation socket={socket} onRouteChange={onRouteChange} />
             <UserBoard socket={socket} />
             {
-            !isMobile || showGameInstructions
+            showGameInstructions
             ?
             <div className={`instructions`}>
                 <div>
@@ -208,7 +220,11 @@ const Game = ({ socket, onRouteChange }) => {
                     <h5>{dropShipInstructions}</h5>
                 </div>
             </div>
-            : null
+            : 
+                !isMobile
+                ?
+                <button className={`instructionsBtn ${firstGameInstructionLoad ? 'firstGameInstructionLoad' : null}`} onClick={handleInstructionsBtnClick}>i</button>
+                : null
             }
             <h3 className={`playerTurnText ${gameRoute !== 'gameInProgress' ? 'hide' : null}`}>{`${gameRoute === 'gameInProgress' ? playerTurnText : ''}`}</h3>
             {

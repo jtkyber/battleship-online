@@ -207,6 +207,8 @@
 .addFriend {
     grid-area: addFriend;
     width: 13rem;
+    height: -webkit-max-content;
+    height: -moz-max-content;
     height: max-content;
     display: flex;
     flex-flow: nowrap column;
@@ -224,6 +226,8 @@
 }
 
 .addFriend > h3 {
+    height: -webkit-max-content;
+    height: -moz-max-content;
     height: max-content;
     width: 90%;
     color: rgba(255, 255, 255, 0.9);

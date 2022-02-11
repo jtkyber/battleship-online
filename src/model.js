@@ -64,6 +64,7 @@ const model = {
     showGameInstructions: true,
     deviceInPortrait: true,
     opponentIsReady: false,
+    firstGameInstructionLoad: true,
 
 
     //Actions
@@ -210,6 +211,10 @@ const model = {
 
     setOpponentIsReady: action((state, input) => {
         state.opponentIsReady = input;
+    }),
+
+    setFirstGameInstructionLoad: action((state, input) => {
+        state.firstGameInstructionLoad = input;
     }),
 }
 

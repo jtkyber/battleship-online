@@ -19,7 +19,7 @@ import './leaderboard.css';
 
 let showInstructions = true;
 function App() {
-    const { getOnlineFriendsInterval, route, user, friendSocket, findMatchInterval, checkOppStatusInterval, search, updatLastOnlineInterval, soundOn, musicOn, isMobile, showFriendsMobile, audioStarted, isIOS, deviceInPortrait, gameRoute } = useStoreState(state => ({
+    const { getOnlineFriendsInterval, route, user, friendSocket, findMatchInterval, checkOppStatusInterval, search, updatLastOnlineInterval, soundOn, musicOn, isMobile, showFriendsMobile, audioStarted, isIOS, deviceInPortrait, gameRoute, showGameInstructions } = useStoreState(state => ({
         getOnlineFriendsInterval: state.getOnlineFriendsInterval,
         route: state.route,
         user: state.user,
@@ -35,7 +35,8 @@ function App() {
         audioStarted: state.audioStarted,
         isIOS: state.stored.isIOS,
         deviceInPortrait: state.deviceInPortrait,
-        gameRoute: state.gameRoute
+        gameRoute: state.gameRoute,
+        showGameInstructions: state.showGameInstructions
     }));
 
     const { setRoute, setUser, setCurrentSocket, setSearch, setUpdatLastOnlineInterval, setAllFriends, setUnsortedFriends, setFriendsOnline, setFriendSearch, setPlayerIsReady, setUserName, setPassword, setAudioStarted, setShowFriendsMobile, setShowChatMobile, setShowGameInstructions, setDeviceInPortrait, setGameRoute, setIsMobile } = useStoreActions(actions => ({
@@ -285,7 +286,7 @@ function App() {
                 document.removeEventListener('mouseup', handleMouseDown);
             }
         }
-    }, [route, gameRoute])
+    }, [route, gameRoute, showGameInstructions, audioStarted])
 
     const stopSearching = async () => {
         try {
@@ -346,8 +347,8 @@ function App() {
             audio.buttonClick.play();
         }
 
-        const instructionsDiv = document.querySelector('.gamePage.mobile .instructions');
-        if (instructionsDiv !== e.target && !instructionsDiv?.contains(e.target) && (route === 'game') && isMobile && showInstructions) {
+        const instructionsDiv = document.querySelector('.instructions');
+        if (instructionsDiv !== e.target && !instructionsDiv?.contains(e.target) && (route === 'game') && (showInstructions || !isMobile)) {
             setShowGameInstructions(false);
             showInstructions = false;
         }
@@ -481,7 +482,7 @@ function App() {
                     <Footer />
                 </div>
             : 
-            <div className={`gamePage ${isMobile ? 'mobile' : null}`}>
+            <div className={`gamePage ${isMobile ? 'mobile' : 'desktop'}`}>
                 <Game socket={socket} onRouteChange={onRouteChange} />
             </div>
             }
