@@ -236,6 +236,7 @@
 .opponentBoard .singleSquare {
     /* text-align: center; */
     border: 1px solid rgba(255,0,0,0.4);
+    overflow: visible;
 }
 
 .opponentBoard .singleSquare:hover,.homeBoard .singleSquare:hover {
@@ -250,6 +251,28 @@
     filter: brightness(70%) saturate(60%) drop-shadow(0px 0px 8px rgba(0, 0, 0, 0.8));
     z-index: 4;
     animation: fadeInShot 0.1s ease-out;
+}
+
+.preResultDiv {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    border: 2px dashed rgba(0, 255, 21, 0.8);
+    border-radius: 50%;
+    width: 40%;
+    height: 40%;
+    animation: preResultFlash 0.2s steps(2, jump-none) infinite forwards;
+}
+
+@keyframes preResultFlash {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
 }
 
 /* .userBoard .hitMarker {

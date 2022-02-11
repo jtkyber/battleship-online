@@ -29,6 +29,7 @@ const OpponentBoard = ({ socket }) => {
     useEffect(() => {
         socket.on('show result on opponent board', data => {
             const clickedSquare = document.querySelector(`.opponentBoard [id='${data.shotSquare}']`);
+            document.querySelector('.preResultDiv').remove();
             if (data.result === 'hit' && clickedSquare.classList !== undefined) {
                 clickedSquare.classList.add('hitMarker');
                 hitSquares.push(data.shipHit);
@@ -59,6 +60,10 @@ const OpponentBoard = ({ socket }) => {
         if (yourTurn && !e.target.classList.contains('hitMarker') && !e.target.classList.contains('missMarker')) {
             // setSquareClicked(e.target);
             setYourTurn(false);
+            const preResultDiv = document.createElement('div');
+            preResultDiv.classList.add('preResultDiv');
+            e.target.appendChild(preResultDiv);
+
             audio.missileLaunch.play();
             socket.emit('send shot to opponent', {target: e.target.id, socketid: friendSocket});
         }
