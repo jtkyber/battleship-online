@@ -61,7 +61,7 @@ const model = {
     showChatMobile: false,
     audioStarted: false,
     shipIsSelected: false,
-    showGameInstructions: true,
+    showGameInstructions: false,
     deviceInPortrait: true,
     opponentIsReady: false,
     firstGameInstructionLoad: true,

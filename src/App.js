@@ -17,7 +17,7 @@ import './homePageLogged.css';
 import './gamePage.css';
 import './leaderboard.css';
 
-let showInstructions = true;
+// let showInstructions = true;
 function App() {
     const { getOnlineFriendsInterval, route, user, friendSocket, findMatchInterval, checkOppStatusInterval, search, updatLastOnlineInterval, soundOn, musicOn, isMobile, showFriendsMobile, audioStarted, isIOS, deviceInPortrait, gameRoute, showGameInstructions } = useStoreState(state => ({
         getOnlineFriendsInterval: state.getOnlineFriendsInterval,
@@ -348,9 +348,8 @@ function App() {
         }
 
         const instructionsDiv = document.querySelector('.instructions');
-        if (instructionsDiv !== e.target && !instructionsDiv?.contains(e.target) && (route === 'game') && (showInstructions || !isMobile)) {
+        if (instructionsDiv !== e.target && !instructionsDiv?.contains(e.target) && (route === 'game')) {
             setShowGameInstructions(false);
-            showInstructions = false;
         }
     }
 

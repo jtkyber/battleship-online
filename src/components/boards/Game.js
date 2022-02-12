@@ -50,7 +50,7 @@ const Game = ({ socket, onRouteChange }) => {
     : "Drag the selected ship and let go when the ship is in position"
 
     useEffect(() => {
-        if (!isMobile) setShowGameInstructions(false);
+        setShowGameInstructions(false);
         setFirstGameInstructionLoad(true);
         setPlayerIsReady(false);
         setOpponentIsReady(false);
@@ -220,11 +220,8 @@ const Game = ({ socket, onRouteChange }) => {
                     <h5>{dropShipInstructions}</h5>
                 </div>
             </div>
-            : 
-                !isMobile
-                ?
-                <button className={`instructionsBtn ${firstGameInstructionLoad ? 'firstGameInstructionLoad' : null}`} onClick={handleInstructionsBtnClick}>i</button>
-                : null
+            :
+                <button className={`instructionsBtn ${firstGameInstructionLoad ? 'firstGameInstructionLoad' : null}`} onClick={handleInstructionsBtnClick}><h2>i</h2></button>
             }
             <h3 className={`playerTurnText ${gameRoute !== 'gameInProgress' ? 'hide' : null}`}>{`${gameRoute === 'gameInProgress' ? playerTurnText : ''}`}</h3>
             {
