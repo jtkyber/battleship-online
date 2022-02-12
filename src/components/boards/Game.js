@@ -170,9 +170,7 @@ const Game = ({ socket, onRouteChange }) => {
 
         if (allShipsPlaced) {
             setPlayerIsReady(true);
-            if (!isMobile) {
-                instructionsBtn?.classList.add('hide');
-            }
+            instructionsBtn?.classList.add('hide');
             readyBtn.childNodes[0].innerText = `${!isMobile ? 'Waiting...' : '•••'}`;
             for (let ship of ships) {
                 ship.style.cursor = 'default';
@@ -191,7 +189,7 @@ const Game = ({ socket, onRouteChange }) => {
     }
 
     const handleInstructionsBtnClick = () => {
-        setShowGameInstructions(true)
+        setShowGameInstructions(true);
         if (firstGameInstructionLoad) {
             setFirstGameInstructionLoad(false);
         }
@@ -221,7 +219,7 @@ const Game = ({ socket, onRouteChange }) => {
                 </div>
             </div>
             :
-                <button className={`instructionsBtn ${firstGameInstructionLoad ? 'firstGameInstructionLoad' : null}`} onClick={handleInstructionsBtnClick}><h2>i</h2></button>
+            <button className={`instructionsBtn ${firstGameInstructionLoad ? 'firstGameInstructionLoad' : null}`} onClick={handleInstructionsBtnClick}><h2>i</h2></button>
             }
             <h3 className={`playerTurnText ${gameRoute !== 'gameInProgress' ? 'hide' : null}`}>{`${gameRoute === 'gameInProgress' ? playerTurnText : ''}`}</h3>
             {
