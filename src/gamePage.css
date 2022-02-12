@@ -257,10 +257,13 @@
 }
 
 .gamePage.mobile .instructionsBtn {
-    width: 1.5rem;
-    height: 1.5rem;
     animation: instructionsBtnMorphMobile 0.2s ease-out forwards;
     border: 2px solid rgba(255, 255, 255, 0.6);
+}
+
+.gamePage.mobile .instructionsBtn.firstGameInstructionLoad {
+    -webkit-animation: instructionsBtnMorphMobile 0s step-start forwards;
+            animation: instructionsBtnMorphMobile 0s step-start forwards;
 }
 
 @keyframes instructionsBtnMorphMobile {
