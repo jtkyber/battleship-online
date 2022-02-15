@@ -2,16 +2,18 @@ import { useStoreState, useStoreActions } from 'easy-peasy';
 
 const Register = ({ onRouteChange }) => {
 
-    const { currentSocket, userName, password } = useStoreState(state => ({
+    const { currentSocket, userName, password, search } = useStoreState(state => ({
         currentSocket: state.currentSocket,
         userName: state.userName,
-        password: state.password
+        password: state.password,
+        search: state.search
     }));
 
-    const { setUserName, setPassword, setUser } = useStoreActions(actions => ({
+    const { setUserName, setPassword, setUser, setSearch } = useStoreActions(actions => ({
         setUserName: actions.setUserName,
         setPassword: actions.setPassword,
-        setUser: actions.setUser
+        setUser: actions.setUser,
+        setSearch: actions.setSearch
     }));
 
     const register = document.querySelector('.register');
@@ -36,6 +38,9 @@ const Register = ({ onRouteChange }) => {
             .then(response => response.json())
             .then(user1 => {
               if (user1.username) {
+                  if (search) {
+                      setSearch(false);
+                  }
                 setUser(user1);
                 onRouteChange(e);
               } else if (user1 === 'no socketid') {
