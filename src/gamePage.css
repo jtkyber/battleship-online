@@ -357,9 +357,6 @@
 
 .playerTurnTimer {
     text-align: center;
-}
-
-.gamePage.mobile .playerTurnTimer {
     color: rgba(255, 255, 255, 0.7);
 }
 
