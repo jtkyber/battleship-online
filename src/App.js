@@ -10,7 +10,7 @@ import Register from './components/logReg/Register';
 import Leaderboard from './components/leaderboard/Leaderboard';
 import Navigation from './components/navigation/Navigation';
 import Footer from './components/footer/Footer';
-import { socket } from './socket/socketImport';
+import { socket } from './socketImport';
 import { audio } from './audio';
 import './logReg.css';
 import './homePageLogged.css';

@@ -67,6 +67,7 @@ const model = {
     firstGameInstructionLoad: true,
     gameTimer: 60,
     gameCountdownInterval: 0,
+    skippedTurns: 0,
 
 
     //Actions
@@ -225,6 +226,10 @@ const model = {
 
     setGameCountdownInterval: action((state, input) => {
         state.gameCountdownInterval = input;
+    }),
+
+    setSkippedTurns: action((state, input) => {
+        state.skippedTurns = input;
     }),
 }
 

@@ -7,7 +7,7 @@ import ChatBox from './ChatBox';
 import Footer from '../footer/Footer';
 
 const Game = ({ socket, onRouteChange }) => {
-    const { friendSocket, opponentName, user, checkOppStatusInterval, gameRoute, playerIsReady, yourTurn, playerTurnText, isMobile, showGameInstructions, opponentIsReady, firstGameInstructionLoad, gameTimer, gameCountdownInterval } = useStoreState(state => ({
+    const { friendSocket, opponentName, user, checkOppStatusInterval, gameRoute, playerIsReady, yourTurn, playerTurnText, isMobile, showGameInstructions, opponentIsReady, firstGameInstructionLoad, gameTimer, gameCountdownInterval, skippedTurns } = useStoreState(state => ({
         friendSocket: state.friendSocket,
         opponentName: state.opponentName,
         user: state.user,
@@ -21,10 +21,11 @@ const Game = ({ socket, onRouteChange }) => {
         opponentIsReady: state.opponentIsReady,
         firstGameInstructionLoad: state.firstGameInstructionLoad,
         gameTimer: state.gameTimer,
-        gameCountdownInterval: state.gameCountdownInterval
+        gameCountdownInterval: state.gameCountdownInterval,
+        skippedTurns: state.skippedTurns
     }));
 
-    const { setCheckOppStatusInterval, setRoute, setGameRoute, setPlayerIsReady, setYourTurn, setPlayerTurnText, setOpponentIsReady, setShowGameInstructions, setFirstGameInstructionLoad, setGameTimer, setGameCountdownInterval } = useStoreActions(actions => ({
+    const { setCheckOppStatusInterval, setRoute, setGameRoute, setPlayerIsReady, setYourTurn, setPlayerTurnText, setOpponentIsReady, setShowGameInstructions, setFirstGameInstructionLoad, setGameTimer, setGameCountdownInterval, setSkippedTurns } = useStoreActions(actions => ({
         setCheckOppStatusInterval: actions.setCheckOppStatusInterval,
         setRoute: actions.setRoute,
         setGameRoute: actions.setGameRoute,
@@ -35,7 +36,8 @@ const Game = ({ socket, onRouteChange }) => {
         setShowGameInstructions: actions.setShowGameInstructions,
         setFirstGameInstructionLoad: actions.setFirstGameInstructionLoad,
         setGameTimer: actions.setGameTimer,
-        setGameCountdownInterval: actions.setGameCountdownInterval
+        setGameCountdownInterval: actions.setGameCountdownInterval,
+        setSkippedTurns: actions.setSkippedTurns
     }));
     
     const pickUpShipInstructions = 
@@ -89,6 +91,7 @@ const Game = ({ socket, onRouteChange }) => {
             setFirstGameInstructionLoad(true);
             setGameTimer(60);
             setYourTurn(false);
+            setSkippedTurns(0);
         }
     },[])
 
@@ -118,7 +121,7 @@ const Game = ({ socket, onRouteChange }) => {
                 }
             })
             if (score >= 5) {
-                handlePlayerLost();
+                handlePlayerLost("You Lost ):");
             } else {
                 if (gameRoute === 'gameInProgress') {
                     setGameCountdownInterval(setInterval(() => {
@@ -139,11 +142,18 @@ const Game = ({ socket, onRouteChange }) => {
             if (gameRoute === 'gameInProgress') {
                 setYourTurn(false);
                 socket.emit('send shot to opponent', {target: 'oppOutOfTime', socketid: friendSocket});
+                setSkippedTurns(skippedTurns + 1);
             } else {
-                handlePlayerLost();
+                handlePlayerLost("You were kicked from the game because you took too long to ready up");
             }
         }
     }, [gameTimer])
+
+    useEffect(() => {
+        if (skippedTurns >= 3) {
+            handlePlayerLost("You've been kicked due to innactivity");
+        }
+    }, [skippedTurns])
 
     const handlePlayerWon = () => {
         clearInterval(checkOppStatusInterval);
@@ -156,10 +166,10 @@ const Game = ({ socket, onRouteChange }) => {
         }, 300);
     }
 
-    const handlePlayerLost = () => {
+    const handlePlayerLost = (msg) => {
         socket.emit('game over', friendSocket);
         setTimeout(() => {
-            window.alert('You Lose');
+            window.alert(msg);
             user.hash === 'guest' ? setRoute('login') : setRoute('loggedIn');
         }, 300);
     }

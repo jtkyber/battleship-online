@@ -10,9 +10,9 @@ const OpponentBoard = ({ socket }) => {
         yourTurn: state.yourTurn
     }));
 
-    const { setYourTurn } = useStoreActions(actions => ({
-        setYourTurn: actions.setYourTurn
-        
+    const { setYourTurn, setSkippedTurns } = useStoreActions(actions => ({
+        setYourTurn: actions.setYourTurn,
+        setSkippedTurns: actions.setSkippedTurns
     }));
     
     const hitSquares = [];
@@ -59,6 +59,7 @@ const OpponentBoard = ({ socket }) => {
     const onSquareClicked = (e) => {
         if (yourTurn && !e.target.classList.contains('hitMarker') && !e.target.classList.contains('missMarker')) {
             // setSquareClicked(e.target);
+            setSkippedTurns(0);
             setYourTurn(false);
             const preResultDiv = document.createElement('div');
             preResultDiv.classList.add('preResultDiv');
