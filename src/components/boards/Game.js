@@ -7,7 +7,7 @@ import ChatBox from './ChatBox';
 import Footer from '../footer/Footer';
 
 const Game = ({ socket, onRouteChange }) => {
-    const { friendSocket, opponentName, user, checkOppStatusInterval, gameRoute, playerIsReady, yourTurn, playerTurnText, isMobile, showGameInstructions, opponentIsReady, firstGameInstructionLoad } = useStoreState(state => ({
+    const { friendSocket, opponentName, user, checkOppStatusInterval, gameRoute, playerIsReady, yourTurn, playerTurnText, isMobile, showGameInstructions, opponentIsReady, firstGameInstructionLoad, gameTimer, gameCountdownInterval } = useStoreState(state => ({
         friendSocket: state.friendSocket,
         opponentName: state.opponentName,
         user: state.user,
@@ -19,10 +19,12 @@ const Game = ({ socket, onRouteChange }) => {
         isMobile: state.stored.isMobile,
         showGameInstructions: state.showGameInstructions,
         opponentIsReady: state.opponentIsReady,
-        firstGameInstructionLoad: state.firstGameInstructionLoad
+        firstGameInstructionLoad: state.firstGameInstructionLoad,
+        gameTimer: state.gameTimer,
+        gameCountdownInterval: state.gameCountdownInterval
     }));
 
-    const { setCheckOppStatusInterval, setRoute, setGameRoute, setPlayerIsReady, setYourTurn, setPlayerTurnText, setOpponentIsReady, setShowGameInstructions, setFirstGameInstructionLoad } = useStoreActions(actions => ({
+    const { setCheckOppStatusInterval, setRoute, setGameRoute, setPlayerIsReady, setYourTurn, setPlayerTurnText, setOpponentIsReady, setShowGameInstructions, setFirstGameInstructionLoad, setGameTimer, setGameCountdownInterval } = useStoreActions(actions => ({
         setCheckOppStatusInterval: actions.setCheckOppStatusInterval,
         setRoute: actions.setRoute,
         setGameRoute: actions.setGameRoute,
@@ -31,7 +33,9 @@ const Game = ({ socket, onRouteChange }) => {
         setPlayerTurnText: actions.setPlayerTurnText,
         setOpponentIsReady: actions.setOpponentIsReady,
         setShowGameInstructions: actions.setShowGameInstructions,
-        setFirstGameInstructionLoad: actions.setFirstGameInstructionLoad
+        setFirstGameInstructionLoad: actions.setFirstGameInstructionLoad,
+        setGameTimer: actions.setGameTimer,
+        setGameCountdownInterval: actions.setGameCountdownInterval
     }));
     
     const pickUpShipInstructions = 
@@ -50,24 +54,24 @@ const Game = ({ socket, onRouteChange }) => {
     : "Drag the selected ship and let go when the ship is in position"
 
     useEffect(() => {
+        let shipPlacementTimer = 60;
+        clearInterval(gameCountdownInterval);
         setShowGameInstructions(false);
         setFirstGameInstructionLoad(true);
         setPlayerIsReady(false);
         setOpponentIsReady(false);
         setGameRoute('placeShips');
 
+        setGameCountdownInterval(setInterval(() => {
+            setGameTimer(shipPlacementTimer - 1);
+            shipPlacementTimer -= 1;
+        }, 1000))
+
         // const gamePage = document.querySelector('.gamePage');
         socket.on('receive game over', () => {
             // gamePage.style.setProperty('--player-turn-text', '"You Won!"');
             // setTimeout(gameOver, 2000);
-            clearInterval(checkOppStatusInterval);
-            if (user?.hash !== 'guest') {
-                addWin();
-            }
-            setTimeout(() => {
-                window.alert('You Won!!!');
-                user.hash === 'guest' ? setRoute('login') : setRoute('loggedIn');
-            }, 300);
+            handlePlayerWon();
         })
 
         socket.on('receive exit game', () => {
@@ -79,9 +83,12 @@ const Game = ({ socket, onRouteChange }) => {
 
         return () => {
             clearInterval(checkOppStatusInterval);
+            clearInterval(gameCountdownInterval);
             socket.off('receive game over');
             socket.off('receive exit game');
             setFirstGameInstructionLoad(true);
+            setGameTimer(60);
+            setYourTurn(false);
         }
     },[])
 
@@ -99,6 +106,8 @@ const Game = ({ socket, onRouteChange }) => {
     }, [playerIsReady])
 
     useEffect(() => {
+        let playerTurnTimer = 10;
+        clearInterval(gameCountdownInterval);
         const shipContainers = document.querySelectorAll('.userBoard .ship');
         let score = 0;
         if (yourTurn) {
@@ -109,16 +118,51 @@ const Game = ({ socket, onRouteChange }) => {
                 }
             })
             if (score >= 5) {
-                socket.emit('game over', friendSocket);
-                setTimeout(() => {
-                    window.alert('You Lose');
-                    user.hash === 'guest' ? setRoute('login') : setRoute('loggedIn');
-                }, 300);
+                handlePlayerLost();
+            } else {
+                if (gameRoute === 'gameInProgress') {
+                    setGameCountdownInterval(setInterval(() => {
+                        setGameTimer(playerTurnTimer - 1);
+                        playerTurnTimer -= 1;
+                    }, 1000))
+                }
             }
         } else {
             setPlayerTurnText(`${opponentName}'s Turn!`)
+            if (gameRoute === 'gameInProgress') setGameTimer(10);
         }
     },[yourTurn])
+
+    useEffect(() => {
+        if (gameTimer <= 0) {
+            clearInterval(gameCountdownInterval);
+            if (gameRoute === 'gameInProgress') {
+                setYourTurn(false);
+                socket.emit('send shot to opponent', {target: 'oppOutOfTime', socketid: friendSocket});
+            } else {
+                handlePlayerLost();
+            }
+        }
+    }, [gameTimer])
+
+    const handlePlayerWon = () => {
+        clearInterval(checkOppStatusInterval);
+        if (user?.hash !== 'guest') {
+            addWin();
+        }
+        setTimeout(() => {
+            window.alert('You Won!!!');
+            user.hash === 'guest' ? setRoute('login') : setRoute('loggedIn');
+        }, 300);
+    }
+
+    const handlePlayerLost = () => {
+        socket.emit('game over', friendSocket);
+        setTimeout(() => {
+            window.alert('You Lose');
+            user.hash === 'guest' ? setRoute('login') : setRoute('loggedIn');
+        }, 300);
+    }
 
     const checkIfOpponentIsOnlineAndInGame = async () => {
         try {
@@ -158,6 +202,7 @@ const Game = ({ socket, onRouteChange }) => {
         const ships = document.querySelectorAll('.ship');
         const readyBtn = document.querySelector('.readyBtn');
         const instructionsBtn = document.querySelector('.instructionsBtn');
+        const timerElement = document.querySelector('.shipPlacementTimer');
         let allShipsPlaced = true;
 
         for (let ship of ships) {
@@ -169,9 +214,12 @@ const Game = ({ socket, onRouteChange }) => {
         }
 
         if (allShipsPlaced) {
+            clearInterval(gameCountdownInterval);
+            timerElement.style.display = 'none';
+            setGameTimer(10);
             setPlayerIsReady(true);
             instructionsBtn?.classList.add('hide');
-            readyBtn.childNodes[0].innerText = `${!isMobile ? 'Waiting...' : '•••'}`;
+            readyBtn.querySelector('button').innerText = `${!isMobile ? 'Waiting...' : '•••'}`;
             for (let ship of ships) {
                 ship.style.cursor = 'default';
                 ship.style.border = null;
@@ -221,11 +269,20 @@ const Game = ({ socket, onRouteChange }) => {
             :
             <button className={`instructionsBtn ${firstGameInstructionLoad ? 'firstGameInstructionLoad' : null}`} onClick={handleInstructionsBtnClick}><h2>i</h2></button>
             }
-            <h3 className={`playerTurnText ${gameRoute !== 'gameInProgress' ? 'hide' : null}`}>{`${gameRoute === 'gameInProgress' ? playerTurnText : ''}`}</h3>
+            {
+            gameRoute === 'gameInProgress'
+            ?
+            <div className='playerTurnTextContainer'>
+                <h3 className='playerTurnText'>{playerTurnText}</h3>
+                { yourTurn ? <h3 className='playerTurnTimer'>{gameTimer}</h3> : null }
+            </div>
+            : null
+            }            
             {
             gameRoute !== 'gameInProgress'
             ? 
             <div className='readyBtn'>
+                <h3 className='shipPlacementTimer'>{gameTimer}</h3>
                 <button onClick={handleReadyButton} className='btn'>{isMobile ? '✔️' : 'Ready'}</button>
             </div>
             : (null)

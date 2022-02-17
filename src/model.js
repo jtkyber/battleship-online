@@ -65,6 +65,8 @@ const model = {
     deviceInPortrait: true,
     opponentIsReady: false,
     firstGameInstructionLoad: true,
+    gameTimer: 60,
+    gameCountdownInterval: 0,
 
 
     //Actions
@@ -215,6 +217,14 @@ const model = {
 
     setFirstGameInstructionLoad: action((state, input) => {
         state.firstGameInstructionLoad = input;
+    }),
+
+    setGameTimer: action((state, input) => {
+        state.gameTimer = input;
+    }),
+
+    setGameCountdownInterval: action((state, input) => {
+        state.gameCountdownInterval = input;
     }),
 }
 

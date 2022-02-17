@@ -5,12 +5,11 @@
     width: 100vw;
     display: grid;
     grid-template-columns: 2rem -webkit-max-content 1fr -webkit-max-content 15rem 2rem;
-    grid-template-columns: 2rem max-content 1fr max-content 15rem 2rem;
+    grid-template-columns: 0.1fr max-content 0.8fr max-content 15rem 0.1fr;
     grid-template-rows: 3rem 0.1fr 0.9fr 2rem;
-    /* gap: 0 1rem; */
     grid-template-areas:
         "nav nav nav nav nav nav"
-        ". playerTurnText playerTurnText playerTurnText playerTurnText ."
+        ". playerTurnTextContainer playerTurnTextContainer playerTurnTextContainer playerTurnTextContainer ."
         ". userBoard readyBtn opponentBoard chatContainer ."
         "footer footer footer footer footer footer";
 }
@@ -116,8 +115,9 @@
     position: absolute;
     outline: none;
     color: rgba(255, 255, 255, 0.6);
-    background-color: rgba(0, 0, 0, 1);
+    background-color: rgba(0, 0, 0, 0.8);
     border: 3px solid rgba(255, 255, 255, 0.6);
+    opacity: 0.8;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -341,21 +341,33 @@
     display: none;
 }
 
-.playerTurnText {
-    grid-area: playerTurnText;
+.playerTurnTextContainer {
+    grid-area: playerTurnTextContainer;
     justify-self: center;
     align-self: center;
+    transform: translateX(calc((var(--game-board-size) / 10) / 2));
+}
+
+.playerTurnText {
+    grid-area: playerTurnText;
     color: rgba(196, 2, 2, 0.8);
     text-transform: uppercase;
     font-weight: 600;
-    transform: translateX(calc((var(--game-board-size) / 10) / 2));
+}
+
+.playerTurnTimer {
+    text-align: center;
+}
+
+.gamePage.mobile .playerTurnTimer {
+    color: rgba(255, 255, 255, 0.7);
 }
 
 .playerTurnText.hide {
     display: none;
 }
 
-.gamePage.mobile .playerTurnText {
+.gamePage.mobile .playerTurnTextContainer {
     position: absolute;
     top: 6rem;
     color: rgba(196, 2, 2, 0.8);
@@ -376,7 +388,7 @@
     --player-turn-text: "";
 }
 
-.gamePage nav{
+.gamePage nav {
     grid-area: nav;
 }
 
@@ -409,6 +421,7 @@
 } */
 
 .readyBtn {
+    position: relative;
     grid-area: readyBtn;
     opacity: 0.9;
     transition: all 0.2s ease-out;
@@ -422,6 +435,16 @@
     border-radius: 10px;
     box-shadow: 0 0 4px 1px rgb(204, 255, 218, 0.3);
     opacity: 0.8;
+    overflow: visible;
+}
+
+.shipPlacementTimer {
+    position: absolute;
+    top: -1.5rem;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: rgba(196, 2, 2, 1);
+    font-weight: 600;
 }
 
 .gamePage.mobile .readyBtn {

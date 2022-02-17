@@ -19,14 +19,18 @@ const UserBoard = ({ socket }) => {
     let shipHit = '';
     useEffect(() => {
         socket.on('receive shot', shot => {
-            const oppShot = document.getElementById(shot);
-
-            const incomingMissileDuration = audio.incomingMissile.duration() * 1000 - 100;
-            audio.incomingMissile.play();
-            setTimeout(() => {
-                applyHitOrMiss(oppShot);
+            if (shot === 'oppOutOfTime') {
                 setYourTurn(true);
-            }, incomingMissileDuration)
+            } else {
+                const oppShot = document.getElementById(shot);
+    
+                const incomingMissileDuration = audio.incomingMissile.duration() * 1000 - 100;
+                audio.incomingMissile.play();
+                setTimeout(() => {
+                    applyHitOrMiss(oppShot);
+                    setYourTurn(true);
+                }, incomingMissileDuration)
+            }
         })
 
         return () => {
