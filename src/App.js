@@ -396,7 +396,7 @@ function App() {
         if (route === 'game') {
             socket.emit('send exit game', friendSocket);
         }
-        e.returnValue = '';
+        // e.returnValue = '';
     })
 
     document.onkeydown = (e) => {
