@@ -3,12 +3,13 @@ import { useStoreState, useStoreActions } from 'easy-peasy';
 import { audio } from '../../audio';
 
 const ChatBox = ({ socket }) => {
-    const { friendSocket, opponentName, chatText, showChatMobile, isMobile } = useStoreState(state => ({
+    const { friendSocket, opponentName, chatText, showChatMobile, isMobile, playingWithAI } = useStoreState(state => ({
         friendSocket: state.friendSocket,
         opponentName: state.opponentName,
         chatText: state.chatText,
         showChatMobile: state.showChatMobile,
-        isMobile: state.stored.isMobile
+        isMobile: state.stored.isMobile,
+        playingWithAI: state.playingWithAI
     }));
 
     const { setChatText } = useStoreActions(actions => ({
@@ -17,6 +18,10 @@ const ChatBox = ({ socket }) => {
 
     const chatBox = document.querySelector('.chatBox');
     const root = document.querySelector(':root');
+
+    useEffect(() => {
+        if (playingWithAI && !isMobile) document.querySelector('.chatContainer').style.display = 'none';
+    }, [])
 
     useEffect(() => {
         if (showChatMobile) root.style.setProperty("--chatNotificationDisplay", 'none')

@@ -68,6 +68,7 @@ const model = {
     gameTimer: 60,
     gameCountdownInterval: 0,
     skippedTurns: 0,
+    playingWithAI: false,
 
 
     //Actions
@@ -230,6 +231,10 @@ const model = {
 
     setSkippedTurns: action((state, input) => {
         state.skippedTurns = input;
+    }),
+
+    setPlayigWithAI: action((state, input) => {
+        state.playingWithAI = input;
     }),
 }
 

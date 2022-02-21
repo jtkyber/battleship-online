@@ -4,8 +4,8 @@
     height: 100vh;
     width: 100vw;
     display: grid;
-    grid-template-columns: 2rem -webkit-max-content 1fr -webkit-max-content 15rem 2rem;
-    grid-template-columns: 0.1fr max-content 0.8fr max-content 15rem 0.1fr;
+    grid-template-columns: 2rem -webkit-max-content 1fr -webkit-max-content -webkit-max-content 2rem;
+    grid-template-columns: 0.1fr max-content 0.8fr max-content max-content 0.1fr;
     grid-template-rows: 3rem 0.1fr 0.9fr 2rem;
     grid-template-areas:
         "nav nav nav nav nav nav"
@@ -487,7 +487,7 @@
     grid-area: chatContainer;
     height: 90%;
     max-height: 25rem;
-    width: 90%;
+    width: 13rem;
     border: 2px solid rgba(255,255,255,0.2);
     background-color: rgba(0,0,0,0.4);
     justify-self: center;

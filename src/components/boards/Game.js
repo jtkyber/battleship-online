@@ -7,7 +7,7 @@ import ChatBox from './ChatBox';
 import Footer from '../footer/Footer';
 
 const Game = ({ socket, onRouteChange }) => {
-    const { friendSocket, opponentName, user, checkOppStatusInterval, gameRoute, playerIsReady, yourTurn, playerTurnText, isMobile, showGameInstructions, opponentIsReady, firstGameInstructionLoad, gameTimer, gameCountdownInterval, skippedTurns } = useStoreState(state => ({
+    const { friendSocket, opponentName, user, checkOppStatusInterval, gameRoute, playerIsReady, yourTurn, playerTurnText, isMobile, showGameInstructions, opponentIsReady, firstGameInstructionLoad, gameTimer, gameCountdownInterval, skippedTurns, playingWithAI } = useStoreState(state => ({
         friendSocket: state.friendSocket,
         opponentName: state.opponentName,
         user: state.user,
@@ -22,7 +22,8 @@ const Game = ({ socket, onRouteChange }) => {
         firstGameInstructionLoad: state.firstGameInstructionLoad,
         gameTimer: state.gameTimer,
         gameCountdownInterval: state.gameCountdownInterval,
-        skippedTurns: state.skippedTurns
+        skippedTurns: state.skippedTurns,
+        playingWithAI: state.playingWithAI
     }));
 
     const { setCheckOppStatusInterval, setRoute, setGameRoute, setPlayerIsReady, setYourTurn, setPlayerTurnText, setOpponentIsReady, setShowGameInstructions, setFirstGameInstructionLoad, setGameTimer, setGameCountdownInterval, setSkippedTurns } = useStoreActions(actions => ({
@@ -61,7 +62,7 @@ const Game = ({ socket, onRouteChange }) => {
         setShowGameInstructions(false);
         setFirstGameInstructionLoad(true);
         setPlayerIsReady(false);
-        setOpponentIsReady(false);
+        setOpponentIsReady(playingWithAI ? true : false);
         setGameRoute('placeShips');
 
         setGameCountdownInterval(setInterval(() => {
@@ -81,7 +82,7 @@ const Game = ({ socket, onRouteChange }) => {
             user.hash === 'guest' ? setRoute('login') : setRoute('loggedIn');
         })
 
-        setCheckOppStatusInterval(setInterval(checkIfOpponentIsOnlineAndInGame, 2000));
+        if (!playingWithAI) setCheckOppStatusInterval(setInterval(checkIfOpponentIsOnlineAndInGame, 2000));
 
         return () => {
             clearInterval(checkOppStatusInterval);
@@ -131,7 +132,7 @@ const Game = ({ socket, onRouteChange }) => {
                 }
             }
         } else {
-            setPlayerTurnText(`${opponentName}'s Turn!`)
+            setPlayerTurnText(playingWithAI ? "AI's turn" : `${opponentName}'s Turn!`)
             if (gameRoute === 'gameInProgress') setGameTimer(10);
         }
     },[yourTurn])
@@ -167,10 +168,10 @@ const Game = ({ socket, onRouteChange }) => {
     }
 
     const handlePlayerLost = (msg) => {
-        socket.emit('game over', friendSocket);
+        if (!playingWithAI) socket.emit('game over', friendSocket);
         setTimeout(() => {
             window.alert(msg);
-            user.hash === 'guest' ? setRoute('login') : setRoute('loggedIn');
+            user?.hash === 'guest' || !user?.hash ? setRoute('login') : setRoute('loggedIn');
         }, 300);
     }
 
@@ -242,7 +243,7 @@ const Game = ({ socket, onRouteChange }) => {
                 readyBtn.style.opacity = '0.3';
                 setGameRoute('waiting');
             }
-            socket.emit('send ready status', friendSocket);
+            if (!playingWithAI) socket.emit('send ready status', friendSocket);
         }
     }
 

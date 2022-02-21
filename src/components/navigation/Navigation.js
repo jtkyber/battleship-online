@@ -13,7 +13,7 @@ import './navigation.css';
 
 const Navigation = ({ socket, onRouteChange }) => {
 
-    const { friendSocket, user, route, soundOn, musicOn, isMobile, showChatMobile, showFriendsMobile } = useStoreState(state => ({
+    const { friendSocket, user, route, soundOn, musicOn, isMobile, showChatMobile, showFriendsMobile, playingWithAI } = useStoreState(state => ({
         friendSocket: state.friendSocket,
         user: state.user,
         route: state.route,
@@ -21,7 +21,8 @@ const Navigation = ({ socket, onRouteChange }) => {
         musicOn: state.stored.musicOn,
         isMobile: state.stored.isMobile,
         showChatMobile: state.showChatMobile,
-        showFriendsMobile: state.showFriendsMobile
+        showFriendsMobile: state.showFriendsMobile,
+        playingWithAI: state.playingWithAI
     }));
 
     const { setSearch, setSoundOn, setMusicOn, setShowFriendsMobile, setShowChatMobile } = useStoreActions(actions => ({
@@ -112,11 +113,11 @@ const Navigation = ({ socket, onRouteChange }) => {
                             <img className='hasSound goBackIcon' src={backArrow} alt='go back' value='goToLogin' onClick={onRouteChange} />
                         </>
                     : //route === 'game'
-                        user.hash === 'guest'
+                        user?.hash === 'guest' || !user?.hash
                         ?
                         <>
                             {
-                                isMobile
+                                isMobile && !playingWithAI
                                 ? 
                                 <div className='chatIconContainer'>
                                     <img className='hasSound chatIcon' src={chatIcon} alt='chat' onClick={() => setShowChatMobile(!showChatMobile)} />
@@ -128,7 +129,7 @@ const Navigation = ({ socket, onRouteChange }) => {
                         :
                         <>
                         {
-                                isMobile
+                                isMobile && !playingWithAI
                                 ? 
                                 <div className='chatIconContainer'>
                                     <img className='hasSound chatIcon' src={chatIcon} alt='chat' onClick={() => setShowChatMobile(!showChatMobile)} />

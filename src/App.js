@@ -19,7 +19,7 @@ import './leaderboard.css';
 
 // let showInstructions = true;
 function App() {
-    const { getOnlineFriendsInterval, route, user, friendSocket, findMatchInterval, checkOppStatusInterval, search, updatLastOnlineInterval, soundOn, musicOn, isMobile, showFriendsMobile, audioStarted, isIOS, deviceInPortrait, gameRoute, showGameInstructions } = useStoreState(state => ({
+    const { getOnlineFriendsInterval, route, user, friendSocket, findMatchInterval, checkOppStatusInterval, search, updatLastOnlineInterval, soundOn, musicOn, isMobile, showFriendsMobile, audioStarted, deviceInPortrait, gameRoute, showGameInstructions, playingWithAI } = useStoreState(state => ({
         getOnlineFriendsInterval: state.getOnlineFriendsInterval,
         route: state.route,
         user: state.user,
@@ -33,13 +33,13 @@ function App() {
         isMobile: state.stored.isMobile,
         showFriendsMobile: state.showFriendsMobile,
         audioStarted: state.audioStarted,
-        isIOS: state.stored.isIOS,
         deviceInPortrait: state.deviceInPortrait,
         gameRoute: state.gameRoute,
-        showGameInstructions: state.showGameInstructions
+        showGameInstructions: state.showGameInstructions,
+        playingWithAI: state.playingWithAI
     }));
 
-    const { setRoute, setUser, setCurrentSocket, setSearch, setUpdatLastOnlineInterval, setAllFriends, setUnsortedFriends, setFriendsOnline, setFriendSearch, setPlayerIsReady, setUserName, setPassword, setAudioStarted, setShowFriendsMobile, setShowChatMobile, setShowGameInstructions, setDeviceInPortrait, setGameRoute, setIsMobile } = useStoreActions(actions => ({
+    const { setRoute, setUser, setCurrentSocket, setSearch, setUpdatLastOnlineInterval, setAllFriends, setUnsortedFriends, setFriendsOnline, setFriendSearch, setPlayerIsReady, setUserName, setPassword, setAudioStarted, setShowFriendsMobile, setShowChatMobile, setShowGameInstructions, setDeviceInPortrait, setGameRoute, setIsMobile, setPlayigWithAI } = useStoreActions(actions => ({
         setRoute: actions.setRoute,
         setUser: actions.setUser,
         setCurrentSocket: actions.setCurrentSocket,
@@ -58,7 +58,8 @@ function App() {
         setShowGameInstructions: actions.setShowGameInstructions,
         setDeviceInPortrait: actions.setDeviceInPortrait,
         setGameRoute: actions.setGameRoute,
-        setIsMobile: actions.setIsMobile
+        setIsMobile: actions.setIsMobile,
+        setPlayigWithAI: actions.setPlayigWithAI
     }));
 
     const onRouteChange = async (e) => {
@@ -206,9 +207,9 @@ function App() {
     useEffect(() => {
         if (route === 'game') {
             setSearch(false);
-            updateInGameStatus(true);
+            if (user?.username) updateInGameStatus(true);
             clearInterval(getOnlineFriendsInterval);
-            stopSearching();
+            if (user?.username) stopSearching();
             setShowChatMobile(false);
             if (gameRoute !== 'gameInProgress') {
                 if (audio.lobbyTheme.playing()) {
@@ -423,6 +424,12 @@ function App() {
         }
     };
 
+    const handlePlayAIbutton = () => {
+        // if (search) return;
+        setPlayigWithAI(true);
+        setRoute('game');
+    }
+
     return (
     <>
         {
@@ -443,7 +450,12 @@ function App() {
             <div className='homeText'>
                 <h1>Battleship</h1>
             </div>
-            <FindMatch socket={socket} />
+            <div className='playGameBtnContainer'>
+                <FindMatch socket={socket} />
+                <div className={'playAIbtnContainer'}>
+                    <button onClick={handlePlayAIbutton} className='playAIbtn'>Play AI</button>
+                </div>
+            </div>
             <div className='logReg'>
                 {
                     route === 'login'
