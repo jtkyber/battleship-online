@@ -5,15 +5,24 @@ import { audio } from '../../audio';
 import './board.css';
 
 const OpponentBoard = ({ socket }) => {
-    const { friendSocket, yourTurn } = useStoreState(state => ({
+    const { friendSocket, yourTurn, playingWithAI } = useStoreState(state => ({
         friendSocket: state.friendSocket,
-        yourTurn: state.yourTurn
+        yourTurn: state.yourTurn,
+        playingWithAI: state.playingWithAI
     }));
 
     const { setYourTurn, setSkippedTurns } = useStoreActions(actions => ({
         setYourTurn: actions.setYourTurn,
         setSkippedTurns: actions.setSkippedTurns
     }));
+
+    let aiShipLocations = {
+        destroyer: [],
+        submarine: [],
+        cruiser: [],
+        battleship: [],
+        carrier: []
+    };
     
     const hitSquares = [];
     const countHitsOnShip = (ship) => {
@@ -27,6 +36,8 @@ const OpponentBoard = ({ socket }) => {
     }
 
     useEffect(() => {
+        if (playingWithAI) setAIships();
+
         socket.on('show result on opponent board', data => {
             const clickedSquare = document.querySelector(`.opponentBoard [id='${data.shotSquare}']`);
             document.querySelector('.preResultDiv').remove();
@@ -55,6 +66,128 @@ const OpponentBoard = ({ socket }) => {
             socket.off('show result on opponent board');
         }
     },[])
+
+    const aiSpotClear = (newSpot) => {
+        for (let spot of Object.values(aiShipLocations).flat()) {
+            if (spot != newSpot) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    const pickRandomBoardLocation = () => {
+        let newSpot;
+        let counter = 0;
+        while (counter < 100) {
+            counter++;
+            newSpot = `${Math.round(Math.random() * (10 - 1) + 1)}-${Math.round(Math.random() * (10 - 1) + 1)}`
+            if (aiSpotClear(newSpot)) {
+                return newSpot;
+            }
+        }
+    }
+
+    const shuffleArray = (arr) => {
+        let currentIndex = arr.length, randomIndex;
+
+        while (currentIndex !== 0) {
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex--;
+
+            [arr[currentIndex], arr[randomIndex]] = [arr[randomIndex], arr[currentIndex]];
+        }
+        
+        return arr;
+    }
+
+    const lowestAndHighest = (i, colRowIndex, shipName) => {
+        const firstSpot = aiShipLocations[shipName][0];
+        const secondSpot = aiShipLocations[shipName][i-1];
+        
+        if (Math.min(parseInt(firstSpot?.charAt(colRowIndex)), parseInt(secondSpot?.charAt(colRowIndex))) === parseInt(firstSpot?.charAt(colRowIndex))) {
+            return {
+                lowest: firstSpot,
+                highest: secondSpot
+            }
+        } else {
+            return {
+                lowest: secondSpot,
+                highest: firstSpot
+            }
+        }
+    }
+
+    const setSingleAIship = (shipLength, shipName) => {
+        while (aiShipLocations[shipName].length !== shipLength) {
+            // aiShipLocations[shipName] = [];
+
+            for (let i = 0; i < shipLength; i++) {
+                if (i === 0) {
+                    aiShipLocations[shipName][0] = pickRandomBoardLocation();
+                } else if (i === 1) {
+                    const possibleChoices = [
+                        `${parseInt(aiShipLocations[shipName][0]?.charAt(0)) - 1}-${parseInt(aiShipLocations[shipName][0]?.charAt(2))}`,
+                        `${parseInt(aiShipLocations[shipName][0]?.charAt(0)) + 1}-${parseInt(aiShipLocations[shipName][0]?.charAt(2))}`,
+                        `${parseInt(aiShipLocations[shipName][0]?.charAt(0))}-${parseInt(aiShipLocations[shipName][0]?.charAt(2)) - 1}`,
+                        `${parseInt(aiShipLocations[shipName][0]?.charAt(0))}-${parseInt(aiShipLocations[shipName][0]?.charAt(2)) + 1}`
+                    ]
+                    shuffleArray(possibleChoices);
+                    possibleChoices.forEach(choice => {
+                        if (choice.charAt(0) > 0 && choice.charAt(0) < 11 && choice.charAt(2) > 0 && choice.charAt(2) < 11 && aiSpotClear(choice)) {
+                            aiShipLocations[shipName][1] = choice;
+                        }
+                    })
+                } else {
+                    if (aiShipLocations[shipName][0]?.charAt(0) !== aiShipLocations[shipName][1]?.charAt(0)) {
+                        const lowest = lowestAndHighest(i, 0, shipName).lowest;
+                        const highest = lowestAndHighest(i, 0, shipName).highest;
+                        const possibleChoices = [
+                            `${parseInt(lowest?.charAt(0)) - 1}-${lowest?.charAt(2)}`,
+                            `${parseInt(highest?.charAt(0)) + 1}-${highest?.charAt(2)}`
+                        ]
+                        shuffleArray(possibleChoices);
+                        possibleChoices.every(choice => {
+                            if (choice.charAt(0) > 0 && choice.charAt(0) < 11 && choice.charAt(2) > 0 && choice.charAt(2) < 11 && aiSpotClear(choice)) {
+                                aiShipLocations[shipName][i] = choice;
+                                return false;
+                            }
+                            return true;
+                        })
+                    } else {
+                        const lowest = lowestAndHighest(i, 2, shipName).lowest;
+                        const highest = lowestAndHighest(i, 2, shipName).highest;
+                        const possibleChoices = [
+                            `${lowest.charAt(0)}-${parseInt(lowest.charAt(2)) - 1}`,
+                            `${highest.charAt(0)}-${parseInt(highest.charAt(2)) + 1}`
+                        ]
+                        shuffleArray(possibleChoices);
+                        possibleChoices.every(choice => {
+                            if (choice.charAt(0) > 0 && choice.charAt(0) < 11 && choice.charAt(2) > 0 && choice.charAt(2) < 11 && aiSpotClear(choice)) {
+                                aiShipLocations[shipName][i] = choice;
+                                return false;
+                            }
+                            return true;
+                        })
+                    }
+                }
+            }
+        }
+    }
+
+    const setAIships = () => {
+        //Destroyer
+        setSingleAIship(2, 'destroyer');
+        //submarine
+        setSingleAIship(3, 'submarine');
+        //cruiser
+        setSingleAIship(3, 'cruiser');
+        //battleship
+        setSingleAIship(4, 'battleship');
+        //carrier
+        setSingleAIship(5, 'carrier');
+        console.log(Object.values(aiShipLocations));
+    }
 
     const onSquareClicked = (e) => {
         if (yourTurn && !e.target.classList.contains('hitMarker') && !e.target.classList.contains('missMarker')) {
