@@ -68,12 +68,14 @@ const OpponentBoard = ({ socket }) => {
     },[])
 
     const aiSpotClear = (newSpot) => {
-        for (let spot of Object.values(aiShipLocations).flat()) {
-            if (spot != newSpot) {
-                return true;
+        for (let ship in aiShipLocations) {
+            for (let spot of aiShipLocations[ship]) {
+                if (spot == newSpot) {
+                    return false;
+                }
             }
         }
-        return false;
+        return true;
     }
 
     const pickRandomBoardLocation = () => {
@@ -101,11 +103,21 @@ const OpponentBoard = ({ socket }) => {
         return arr;
     }
 
+    const colString = (str) => {
+        return str.split('-')[0];
+    }
+
+    const rowString = (str) => {
+        return str.split('-')[1];
+    }
+
     const lowestAndHighest = (i, colRowIndex, shipName) => {
         const firstSpot = aiShipLocations[shipName][0];
         const secondSpot = aiShipLocations[shipName][i-1];
+
+        if (!firstSpot || !secondSpot) return
         
-        if (Math.min(parseInt(firstSpot?.charAt(colRowIndex)), parseInt(secondSpot?.charAt(colRowIndex))) === parseInt(firstSpot?.charAt(colRowIndex))) {
+        if (Math.min(parseInt(firstSpot.split('-')[colRowIndex]), parseInt(secondSpot.split('-')[colRowIndex])) === parseInt(firstSpot.split('-')[colRowIndex])) {
             return {
                 lowest: firstSpot,
                 highest: secondSpot
@@ -120,50 +132,54 @@ const OpponentBoard = ({ socket }) => {
 
     const setSingleAIship = (shipLength, shipName) => {
         while (aiShipLocations[shipName].length !== shipLength) {
-            // aiShipLocations[shipName] = [];
+            aiShipLocations[shipName] = [];
 
             for (let i = 0; i < shipLength; i++) {
                 if (i === 0) {
                     aiShipLocations[shipName][0] = pickRandomBoardLocation();
                 } else if (i === 1) {
+                    const firstSpot = aiShipLocations[shipName][0];
                     const possibleChoices = [
-                        `${parseInt(aiShipLocations[shipName][0]?.charAt(0)) - 1}-${parseInt(aiShipLocations[shipName][0]?.charAt(2))}`,
-                        `${parseInt(aiShipLocations[shipName][0]?.charAt(0)) + 1}-${parseInt(aiShipLocations[shipName][0]?.charAt(2))}`,
-                        `${parseInt(aiShipLocations[shipName][0]?.charAt(0))}-${parseInt(aiShipLocations[shipName][0]?.charAt(2)) - 1}`,
-                        `${parseInt(aiShipLocations[shipName][0]?.charAt(0))}-${parseInt(aiShipLocations[shipName][0]?.charAt(2)) + 1}`
+                        colString(firstSpot) > 1 ? `${parseInt(colString(firstSpot)) - 1}-${parseInt(rowString(firstSpot))}` : null,
+                        colString(firstSpot) < 10 ? `${parseInt(colString(firstSpot)) + 1}-${parseInt(rowString(firstSpot))}` : null,
+                        rowString(firstSpot) > 1 ? `${parseInt(colString(firstSpot))}-${parseInt(rowString(firstSpot)) - 1}` : null,
+                        rowString(firstSpot) < 10 ? `${parseInt(colString(firstSpot))}-${parseInt(rowString(firstSpot)) + 1}` : null
                     ]
                     shuffleArray(possibleChoices);
-                    possibleChoices.forEach(choice => {
-                        if (choice.charAt(0) > 0 && choice.charAt(0) < 11 && choice.charAt(2) > 0 && choice.charAt(2) < 11 && aiSpotClear(choice)) {
+                    possibleChoices.every(choice => {
+                        if (choice && aiSpotClear(choice)) {
                             aiShipLocations[shipName][1] = choice;
+                            return false;
                         }
+                        return true;
                     })
                 } else {
-                    if (aiShipLocations[shipName][0]?.charAt(0) !== aiShipLocations[shipName][1]?.charAt(0)) {
-                        const lowest = lowestAndHighest(i, 0, shipName).lowest;
-                        const highest = lowestAndHighest(i, 0, shipName).highest;
+                    const firstSpot = aiShipLocations[shipName][0];
+                    if (colString(firstSpot) !== colString(aiShipLocations[shipName][1])) {
+                        const lowest = lowestAndHighest(i, 0, shipName)?.lowest;
+                        const highest = lowestAndHighest(i, 0, shipName)?.highest;
                         const possibleChoices = [
-                            `${parseInt(lowest?.charAt(0)) - 1}-${lowest?.charAt(2)}`,
-                            `${parseInt(highest?.charAt(0)) + 1}-${highest?.charAt(2)}`
+                            lowest && parseInt(colString(lowest)) > 1 ? `${parseInt(colString(lowest)) - 1}-${rowString(lowest)}` : null,
+                            highest && parseInt(colString(highest)) < 10 ? `${parseInt(colString(highest)) + 1}-${rowString(highest)}` : null
                         ]
                         shuffleArray(possibleChoices);
                         possibleChoices.every(choice => {
-                            if (choice.charAt(0) > 0 && choice.charAt(0) < 11 && choice.charAt(2) > 0 && choice.charAt(2) < 11 && aiSpotClear(choice)) {
+                            if (choice && colString(choice) > 0 && colString(choice) < 11 && rowString(choice) > 0 && rowString(choice) < 11 && aiSpotClear(choice)) {
                                 aiShipLocations[shipName][i] = choice;
                                 return false;
                             }
                             return true;
                         })
                     } else {
-                        const lowest = lowestAndHighest(i, 2, shipName).lowest;
-                        const highest = lowestAndHighest(i, 2, shipName).highest;
+                        const lowest = lowestAndHighest(i, 1, shipName)?.lowest;
+                        const highest = lowestAndHighest(i, 1, shipName)?.highest;
                         const possibleChoices = [
-                            `${lowest.charAt(0)}-${parseInt(lowest.charAt(2)) - 1}`,
-                            `${highest.charAt(0)}-${parseInt(highest.charAt(2)) + 1}`
+                            lowest && parseInt(rowString(lowest)) > 1 ? `${colString(lowest)}-${parseInt(rowString(lowest)) - 1}` : null,
+                            highest && parseInt(rowString(lowest)) < 10 ? `${colString(highest)}-${parseInt(rowString(highest)) + 1}` : null
                         ]
                         shuffleArray(possibleChoices);
                         possibleChoices.every(choice => {
-                            if (choice.charAt(0) > 0 && choice.charAt(0) < 11 && choice.charAt(2) > 0 && choice.charAt(2) < 11 && aiSpotClear(choice)) {
+                            if (choice && colString(choice) > 0 && colString(choice) < 11 && rowString(choice) > 0 && rowString(choice) < 11 && aiSpotClear(choice)) {
                                 aiShipLocations[shipName][i] = choice;
                                 return false;
                             }
@@ -186,7 +202,23 @@ const OpponentBoard = ({ socket }) => {
         setSingleAIship(4, 'battleship');
         //carrier
         setSingleAIship(5, 'carrier');
-        console.log(Object.values(aiShipLocations));
+        
+        let colVal = 0;
+        const tempArr = [];
+        const sameSpots = [];
+        for (let ship in aiShipLocations) {
+            for (let spot of aiShipLocations[ship]) {
+                const spotBlock = document.querySelector(`.opponentBoard [id="${spot}"]`);
+                const aiShipSpot = document.createElement('div');
+                aiShipSpot.classList.add('aiShipSpotTest');
+                aiShipSpot.style.backgroundColor = `rgba(${colVal}, ${colVal}, ${colVal}, 0.5)`;
+                spotBlock?.appendChild(aiShipSpot);
+                if (tempArr.includes(spot)) {
+                    sameSpots.push(spot);
+                } else tempArr.push(spot);
+            }
+            colVal += 50;
+        }
     }
 
     const onSquareClicked = (e) => {
