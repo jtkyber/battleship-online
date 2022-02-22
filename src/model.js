@@ -65,7 +65,7 @@ const model = {
     deviceInPortrait: true,
     opponentIsReady: false,
     firstGameInstructionLoad: true,
-    gameTimer: 60,
+    gameTimer: 90,
     gameCountdownInterval: 0,
     skippedTurns: 0,
     playingWithAI: false,

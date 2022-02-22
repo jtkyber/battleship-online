@@ -59,7 +59,7 @@ const Game = ({ socket, onRouteChange }) => {
     : "Drag the selected ship and let go when the ship is in position"
 
     useEffect(() => {
-        let shipPlacementTimer = 60;
+        let shipPlacementTimer = 90;
         clearInterval(gameCountdownInterval);
         setShowGameInstructions(false);
         setFirstGameInstructionLoad(true);
@@ -67,10 +67,12 @@ const Game = ({ socket, onRouteChange }) => {
         setOpponentIsReady(playingWithAI ? true : false);
         setGameRoute('placeShips');
 
-        setGameCountdownInterval(setInterval(() => {
-            setGameTimer(shipPlacementTimer - 1);
-            shipPlacementTimer -= 1;
-        }, 1000))
+        if (!playingWithAI) {
+            setGameCountdownInterval(setInterval(() => {
+                setGameTimer(shipPlacementTimer - 1);
+                shipPlacementTimer -= 1;
+            }, 1000))
+        }
 
         // const gamePage = document.querySelector('.gamePage');
         socket.on('receive game over', () => {
@@ -92,7 +94,7 @@ const Game = ({ socket, onRouteChange }) => {
             socket.off('receive game over');
             socket.off('receive exit game');
             setFirstGameInstructionLoad(true);
-            setGameTimer(60);
+            setGameTimer(90);
             setYourTurn(false);
             setSkippedTurns(0);
             setPlayigWithAI(false);
@@ -113,7 +115,7 @@ const Game = ({ socket, onRouteChange }) => {
     }, [playerIsReady])
 
     useEffect(() => {
-        let playerTurnTimer = 10;
+        let playerTurnTimer = 15;
         clearInterval(gameCountdownInterval);
         const shipContainers = document.querySelectorAll('.userBoard .ship');
         let score = 0;
@@ -127,26 +129,26 @@ const Game = ({ socket, onRouteChange }) => {
             if (score >= 5) {
                 handlePlayerLost("You Lost ):");
             } else {
-                if (gameRoute === 'gameInProgress') {
+                if (gameRoute === 'gameInProgress' && !playingWithAI) {
                     setGameCountdownInterval(setInterval(() => {
-                        setGameTimer(playerTurnTimer - 1);
-                        playerTurnTimer -= 1;
+                    setGameTimer(playerTurnTimer - 1);
+                    playerTurnTimer -= 1;
                     }, 1000))
                 }
             }
         } else {
             setPlayerTurnText(playingWithAI ? "AI's turn" : `${opponentName}'s Turn!`)
-            if (gameRoute === 'gameInProgress') setGameTimer(10);
+            if (gameRoute === 'gameInProgress') setGameTimer(15);
         }
     },[yourTurn])
 
     useEffect(() => {
-        if (gameTimer <= 0) {
+        if (gameTimer <= 0 && !playingWithAI) {
             clearInterval(gameCountdownInterval);
             if (gameRoute === 'gameInProgress') {
                 setYourTurn(false);
-                if (playingWithAI) setAIturn(true);
-                if (!playingWithAI) socket.emit('send shot to opponent', {target: 'oppOutOfTime', socketid: friendSocket});
+                // if (playingWithAI) setAIturn(true);
+                socket.emit('send shot to opponent', {target: 'oppOutOfTime', socketid: friendSocket});
                 setSkippedTurns(skippedTurns + 1);
             } else {
                 handlePlayerLost("You were kicked from the game because you took too long to ready up");
@@ -155,7 +157,7 @@ const Game = ({ socket, onRouteChange }) => {
     }, [gameTimer])
 
     useEffect(() => {
-        if (skippedTurns >= 3) {
+        if (skippedTurns >= 3 && !playingWithAI) {
             handlePlayerLost("You've been kicked due to innactivity");
         }
     }, [skippedTurns])
@@ -230,8 +232,8 @@ const Game = ({ socket, onRouteChange }) => {
 
         if (allShipsPlaced) {
             clearInterval(gameCountdownInterval);
-            timerElement.style.display = 'none';
-            setGameTimer(10);
+            if (!playingWithAI) timerElement.style.display = 'none';
+            setGameTimer(15);
             setPlayerIsReady(true);
             instructionsBtn?.classList.add('hide');
             readyBtn.querySelector('button').innerText = `${!isMobile ? 'Waiting...' : '•••'}`;
@@ -289,7 +291,7 @@ const Game = ({ socket, onRouteChange }) => {
             ?
             <div className='playerTurnTextContainer'>
                 <h3 className='playerTurnText'>{playerTurnText}</h3>
-                { yourTurn ? <h3 className='playerTurnTimer'>{gameTimer}</h3> : null }
+                { yourTurn && !playingWithAI ? <h3 className='playerTurnTimer'>{gameTimer}</h3> : null }
             </div>
             : null
             }            
@@ -297,7 +299,7 @@ const Game = ({ socket, onRouteChange }) => {
             gameRoute !== 'gameInProgress'
             ? 
             <div className='readyBtn'>
-                <h3 className='shipPlacementTimer'>{gameTimer}</h3>
+                { !playingWithAI ? <h3 className='shipPlacementTimer'>{gameTimer}</h3> : null }
                 <button onClick={handleReadyButton} className='btn'>{isMobile ? '✔️' : 'Ready'}</button>
             </div>
             : (null)

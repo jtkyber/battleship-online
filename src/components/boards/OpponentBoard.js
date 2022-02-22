@@ -4,25 +4,23 @@ import Board from './Board';
 import { audio } from '../../audio';
 import './board.css';
 
-const hitSquares = [];
+let hitSquares = [];
 let score = 0;
 
 const OpponentBoard = ({ socket }) => {
-    const { friendSocket, yourTurn, playingWithAI, aiShipLayout, aiShotMatchedToUserShot, user } = useStoreState(state => ({
+    const { friendSocket, yourTurn, playingWithAI, aiShipLayout, user } = useStoreState(state => ({
         friendSocket: state.friendSocket,
         yourTurn: state.yourTurn,
         playingWithAI: state.playingWithAI,
         aiShipLayout: state.aiShipLayout,
-        aiShotMatchedToUserShot: state.aiShotMatchedToUserShot,
         user: state.user
     }));
 
-    const { setYourTurn, setSkippedTurns, setAiShipLayout, setAIturn, setAIShotMatchedToUserShot, setRoute } = useStoreActions(actions => ({
+    const { setYourTurn, setSkippedTurns, setAiShipLayout, setAIturn, setRoute } = useStoreActions(actions => ({
         setYourTurn: actions.setYourTurn,
         setSkippedTurns: actions.setSkippedTurns,
         setAiShipLayout: actions.setAiShipLayout,
         setAIturn: actions.setAIturn,
-        setAIShotMatchedToUserShot: actions.setAIShotMatchedToUserShot,
         setRoute: actions.setRoute
     }));
 
@@ -75,7 +73,9 @@ const OpponentBoard = ({ socket }) => {
             socket.off('show result on opponent board');
             setAiShipLayout({});
             setAIturn(false);
-            setAIShotMatchedToUserShot('');
+            setSkippedTurns(0);
+            score = 0;
+            hitSquares = [];
         }
     },[])
 
@@ -271,7 +271,7 @@ const OpponentBoard = ({ socket }) => {
 
         for (let ship in aiShipLayout) {
             for (let spot of aiShipLayout[ship]) {
-                if (spot == clickedSquareID) {
+                if (spot === clickedSquareID) {
                     hit = true;
                     shipHit = ship;
                 }
@@ -297,13 +297,13 @@ const OpponentBoard = ({ socket }) => {
 
             if (score >= 5) {
                 handlePlayerWonAgainstAI();
+                return;
             }
         } else if (!hit && clickedSquare.classList !== undefined) {
             clickedSquare.classList.add('missMarker');
             audio.missSound.play();
         }
 
-        setAIShotMatchedToUserShot(clickedSquareID);
         setAIturn(true);
     }
 

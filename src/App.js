@@ -395,7 +395,7 @@ function App() {
             updateInGameStatus(false);
         }
         if (route === 'game') {
-            socket.emit('send exit game', friendSocket);
+            if (!playingWithAI) socket.emit('send exit game', friendSocket);
         }
         // e.returnValue = '';
     })

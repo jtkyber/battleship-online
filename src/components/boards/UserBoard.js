@@ -7,18 +7,17 @@ import { audio } from '../../audio';
 import hitGif from './hit.gif';
 import './board.css';
 
-const hitSquares = [];
+let hitSquares = [];
 let firstHit = '';
 let lastHit = '';
 let aiShipOrientationGuess = null;
+
 const UserBoard = ({ socket }) => {
-    const { friendSocket, yourTurn, playingWithAI, allSquareIDs, aiTurn, aiShotMatchedToUserShot } = useStoreState(state => ({
+    const { friendSocket, playingWithAI, allSquareIDs, aiTurn } = useStoreState(state => ({
         friendSocket: state.friendSocket,
-        yourTurn: state.yourTurn,
         playingWithAI: state.playingWithAI,
         allSquareIDs: state.allSquareIDs,
-        aiTurn: state.aiTurn,
-        aiShotMatchedToUserShot: state.aiShotMatchedToUserShot
+        aiTurn: state.aiTurn
     }));
 
     const { setYourTurn, setAllSquareIDs, setAIturn } = useStoreActions(actions => ({
@@ -55,6 +54,10 @@ const UserBoard = ({ socket }) => {
             socket.off('receive shot');
             setAIturn(false);
             setAllSquareIDs([]);
+            hitSquares = [];
+            firstHit = '';
+            lastHit = '';
+            aiShipOrientationGuess = null;
         }
     },[])
 
@@ -84,6 +87,11 @@ const UserBoard = ({ socket }) => {
         const randSquare = allSquareIDs[randIndex];
         allSquareIDs.splice(randIndex, 1);
 
+        setTimeout(() => {
+            console.log("AI: Choosing random available square --> ", randSquare)
+            console.log("__________________________________________________________________________________")
+        }, 1000);
+
         return randSquare;
     }
 
@@ -99,6 +107,7 @@ const UserBoard = ({ socket }) => {
     }
 
     const pickNearbySquare = () => {
+        let aiMoveText = '';
         if (lastHit !== firstHit) {
             if (colString(lastHit) !== colString(firstHit)) {
                 aiShipOrientationGuess = 'hor';
@@ -117,6 +126,9 @@ const UserBoard = ({ socket }) => {
             for (let square of allSquareIDs) {
                 if (square === choice) {
                     numOfValidSquares += 1;
+                    aiShipOrientationGuess 
+                    ? aiMoveText = `AI: Choosing ${aiShipOrientationGuess === 'hor' ? 'horizontal' : 'vertical'} neighbor to last hit --> `
+                    : aiMoveText = "AI: Choosing random neighbor to last hit --> "
                 }
             }
         }
@@ -130,12 +142,14 @@ const UserBoard = ({ socket }) => {
                 for (let square of allSquareIDs) {
                     if (square === choice) {
                         foundOption = true;
+                        aiMoveText = `AI: Going back to first hit with another ${aiShipOrientationGuess === 'hor' ? 'horizontal' : 'vertical'} guess --> `;
                     }
                 }
             }
 
             if (!foundOption) {
                 aiShipOrientationGuess = null;
+                aiMoveText = `AI: Going back to first hit with nearby random guess --> `;
                 possibleChoices = getChoicesForNearby(firstHit);
             }
 
@@ -149,6 +163,10 @@ const UserBoard = ({ socket }) => {
                     if (square === choice) {
                         const selected = choice;
                         allSquareIDs.splice(allSquareIDs.indexOf(selected), 1);
+                        setTimeout(() => {
+                            console.log(aiMoveText, selected)
+                            console.log("__________________________________________________________________________________")
+                        }, 1000);
                         return selected;
                     }
                 }
@@ -162,6 +180,9 @@ const UserBoard = ({ socket }) => {
         const allSqaures = document.querySelectorAll('.userBoard .singleSquare');
         for (let square of allSqaures) {
             if (square?.childNodes[0]?.classList.contains('hitMarkerGif')) {
+                setTimeout(() => {
+                    console.log("AI: Going back to unfinished ship")
+                }, 500);
                 return square.id;
             }
         }
@@ -180,7 +201,6 @@ const UserBoard = ({ socket }) => {
             } else {
                 shotOnUserBoard = document.getElementById(pickRandomSquare());
             }
-            // const shotOnUserBoard = document.getElementById(aiShotMatchedToUserShot);
 
             setTimeout(() => {
                 const incomingMissileDuration = audio.incomingMissile.duration() * 1000;
@@ -291,11 +311,11 @@ const UserBoard = ({ socket }) => {
             } else {
                 audio.hitSound.play();
             }
-            socket.emit('send result to opponent board', {shotSquare: oppShot.id, shot: 'hit', socketid: friendSocket, shipHit: shipHit});
+            if (!playingWithAI) socket.emit('send result to opponent board', {shotSquare: oppShot.id, shot: 'hit', socketid: friendSocket, shipHit: shipHit});
         } else {
             oppShot.classList.add('missMarker');
             audio.missSound.play();
-            socket.emit('send result to opponent board', {shotSquare: oppShot.id, shot: 'miss', socketid: friendSocket, shipHit: shipHit});
+            if (!playingWithAI) socket.emit('send result to opponent board', {shotSquare: oppShot.id, shot: 'miss', socketid: friendSocket, shipHit: shipHit});
         }
     }
 
