@@ -41,7 +41,7 @@ const Leaderboard = ({ onRouteChange, socket }) => {
                 <div className='topFive'>
                     {
                     topFive.map(player => {
-                        return <h3 key={player.username} className='LBplayer'> {player.username} : <span className='wins'>{player.wins}</span> wins </h3>
+                        return <h3 key={player.username} className='LBplayer'> {player.username} : <span className='score'>{player.score}</span> Score </h3>
                     })
                     }
                 </div>

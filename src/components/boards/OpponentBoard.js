@@ -235,27 +235,28 @@ const OpponentBoard = ({ socket }) => {
         setAiShipLayout(aiShipLocations);
     }
 
-    const addWin = async () => {
+    const updateScore = async (scoreIncrement) => {
         try {
-            const res = await fetch('https://calm-ridge-60009.herokuapp.com/updateWins', {
+            const res = await fetch('https://calm-ridge-60009.herokuapp.com/updateScore', {
                 method: 'put',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
-                    username: user.username
+                    username: user.username,
+                    scoreIncrement: scoreIncrement
                 })
             })
-            const winsUpdated = await res.json();
-            if (!winsUpdated) {
-                throw new Error('Could not increment wins')
+            const scoreUpdated = await res.json();
+            if (!scoreUpdated) {
+                throw new Error('Could not increment score')
             }
         } catch(err) {
             console.log(err);
         }
     }
 
-    const handlePlayerWonAgainstAI = () => {
+    const handlePlayerWonAgainstAI = (scoreIncrement) => {
         if (user?.username && user?.hash !== 'guest') {
-            addWin();
+            updateScore(scoreIncrement);
         }
         setTimeout(() => {
             window.alert('You Won!!!');
@@ -296,7 +297,7 @@ const OpponentBoard = ({ socket }) => {
             }
 
             if (score >= 5) {
-                handlePlayerWonAgainstAI();
+                handlePlayerWonAgainstAI(5);
                 return;
             }
         } else if (!hit && clickedSquare.classList !== undefined) {

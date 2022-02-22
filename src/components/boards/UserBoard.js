@@ -177,12 +177,12 @@ const UserBoard = ({ socket }) => {
     }
 
     const unfinishedShipSpot = () => {
+        setTimeout(() => {
+            console.log("AI: Going back to unfinished ship")
+        }, 500);
         const allSqaures = document.querySelectorAll('.userBoard .singleSquare');
         for (let square of allSqaures) {
             if (square?.childNodes[0]?.classList.contains('hitMarkerGif')) {
-                setTimeout(() => {
-                    console.log("AI: Going back to unfinished ship")
-                }, 500);
                 return square.id;
             }
         }
