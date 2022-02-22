@@ -7,17 +7,32 @@ import { audio } from '../../audio';
 import hitGif from './hit.gif';
 import './board.css';
 
+const hitSquares = [];
 const UserBoard = ({ socket }) => {
-    const { friendSocket } = useStoreState(state => ({
-        friendSocket: state.friendSocket
+    const { friendSocket, yourTurn, playingWithAI, allSquareIDs, aiTurn, aiShotMatchedToUserShot } = useStoreState(state => ({
+        friendSocket: state.friendSocket,
+        yourTurn: state.yourTurn,
+        playingWithAI: state.playingWithAI,
+        allSquareIDs: state.allSquareIDs,
+        aiTurn: state.aiTurn,
+        aiShotMatchedToUserShot: state.aiShotMatchedToUserShot
     }));
 
-    const { setYourTurn } = useStoreActions(actions => ({
-        setYourTurn: actions.setYourTurn
+    const { setYourTurn, setAllSquareIDs, setAIturn } = useStoreActions(actions => ({
+        setYourTurn: actions.setYourTurn,
+        setAllSquareIDs: actions.setAllSquareIDs,
+        setAIturn: actions.setAIturn
     }));
 
     let shipHit = '';
     useEffect(() => {
+        const allSqaures = document.querySelectorAll('.opponentBoard .singleSquare');
+        const allSquareIDsTemp = [];
+        for (let square of allSqaures) {
+            allSquareIDsTemp.push(square.id);
+        }
+        setAllSquareIDs(allSquareIDsTemp);
+
         socket.on('receive shot', shot => {
             if (shot === 'oppOutOfTime') {
                 setYourTurn(true);
@@ -35,8 +50,35 @@ const UserBoard = ({ socket }) => {
 
         return () => {
             socket.off('receive shot');
+            setAIturn(false);
+            setAllSquareIDs([]);
         }
     },[])
+
+    const pickRandomSquare = () => {
+        const randIndex = Math.round(Math.random() * ((allSquareIDs.length - 1) - 0) + 0);
+        const randSquare = allSquareIDs[randIndex];
+        allSquareIDs.splice(randIndex, 1);
+
+        return randSquare;
+    }
+    
+    useEffect(() => {
+        if (aiTurn) {
+            const shotOnUserBoard = document.getElementById(pickRandomSquare());
+            // const shotOnUserBoard = document.getElementById(aiShotMatchedToUserShot);
+
+            setTimeout(() => {
+                const incomingMissileDuration = audio.incomingMissile.duration() * 1000 - 100;
+                audio.incomingMissile.play();
+                setTimeout(() => {
+                    applyHitOrMiss(shotOnUserBoard);
+                    setYourTurn(true);
+                }, incomingMissileDuration)
+            }, 1500);
+            setAIturn(false);
+        }
+    },[aiTurn])
 
     const hit = (item1, item2) => {
         let d1Offset = $(item1).offset();
@@ -55,7 +97,6 @@ const UserBoard = ({ socket }) => {
         return colliding;
     }
 
-    const hitSquares = [];
     const countHitsOnShip = (ship) => {
         let count = 0;
         for (let hit of hitSquares) {

@@ -26,7 +26,7 @@ const Game = ({ socket, onRouteChange }) => {
         playingWithAI: state.playingWithAI
     }));
 
-    const { setCheckOppStatusInterval, setRoute, setGameRoute, setPlayerIsReady, setYourTurn, setPlayerTurnText, setOpponentIsReady, setShowGameInstructions, setFirstGameInstructionLoad, setGameTimer, setGameCountdownInterval, setSkippedTurns } = useStoreActions(actions => ({
+    const { setCheckOppStatusInterval, setRoute, setGameRoute, setPlayerIsReady, setYourTurn, setPlayerTurnText, setOpponentIsReady, setShowGameInstructions, setFirstGameInstructionLoad, setGameTimer, setGameCountdownInterval, setSkippedTurns, setPlayigWithAI, setAIturn } = useStoreActions(actions => ({
         setCheckOppStatusInterval: actions.setCheckOppStatusInterval,
         setRoute: actions.setRoute,
         setGameRoute: actions.setGameRoute,
@@ -38,7 +38,9 @@ const Game = ({ socket, onRouteChange }) => {
         setFirstGameInstructionLoad: actions.setFirstGameInstructionLoad,
         setGameTimer: actions.setGameTimer,
         setGameCountdownInterval: actions.setGameCountdownInterval,
-        setSkippedTurns: actions.setSkippedTurns
+        setSkippedTurns: actions.setSkippedTurns,
+        setPlayigWithAI: actions.setPlayigWithAI,
+        setAIturn: actions.setAIturn
     }));
     
     const pickUpShipInstructions = 
@@ -93,6 +95,7 @@ const Game = ({ socket, onRouteChange }) => {
             setGameTimer(60);
             setYourTurn(false);
             setSkippedTurns(0);
+            setPlayigWithAI(false);
         }
     },[])
 
@@ -142,7 +145,8 @@ const Game = ({ socket, onRouteChange }) => {
             clearInterval(gameCountdownInterval);
             if (gameRoute === 'gameInProgress') {
                 setYourTurn(false);
-                socket.emit('send shot to opponent', {target: 'oppOutOfTime', socketid: friendSocket});
+                if (playingWithAI) setAIturn(true);
+                if (!playingWithAI) socket.emit('send shot to opponent', {target: 'oppOutOfTime', socketid: friendSocket});
                 setSkippedTurns(skippedTurns + 1);
             } else {
                 handlePlayerLost("You were kicked from the game because you took too long to ready up");

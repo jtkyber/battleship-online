@@ -4,16 +4,26 @@ import Board from './Board';
 import { audio } from '../../audio';
 import './board.css';
 
+const hitSquares = [];
+let score = 0;
+
 const OpponentBoard = ({ socket }) => {
-    const { friendSocket, yourTurn, playingWithAI } = useStoreState(state => ({
+    const { friendSocket, yourTurn, playingWithAI, aiShipLayout, aiShotMatchedToUserShot, user } = useStoreState(state => ({
         friendSocket: state.friendSocket,
         yourTurn: state.yourTurn,
-        playingWithAI: state.playingWithAI
+        playingWithAI: state.playingWithAI,
+        aiShipLayout: state.aiShipLayout,
+        aiShotMatchedToUserShot: state.aiShotMatchedToUserShot,
+        user: state.user
     }));
 
-    const { setYourTurn, setSkippedTurns } = useStoreActions(actions => ({
+    const { setYourTurn, setSkippedTurns, setAiShipLayout, setAIturn, setAIShotMatchedToUserShot, setRoute } = useStoreActions(actions => ({
         setYourTurn: actions.setYourTurn,
-        setSkippedTurns: actions.setSkippedTurns
+        setSkippedTurns: actions.setSkippedTurns,
+        setAiShipLayout: actions.setAiShipLayout,
+        setAIturn: actions.setAIturn,
+        setAIShotMatchedToUserShot: actions.setAIShotMatchedToUserShot,
+        setRoute: actions.setRoute
     }));
 
     let aiShipLocations = {
@@ -24,7 +34,6 @@ const OpponentBoard = ({ socket }) => {
         carrier: []
     };
     
-    const hitSquares = [];
     const countHitsOnShip = (ship) => {
         let count = 0;
         for (let hit of hitSquares) {
@@ -64,6 +73,9 @@ const OpponentBoard = ({ socket }) => {
 
         return () => {
             socket.off('show result on opponent board');
+            setAiShipLayout({});
+            setAIturn(false);
+            setAIShotMatchedToUserShot('');
         }
     },[])
 
@@ -219,6 +231,80 @@ const OpponentBoard = ({ socket }) => {
             }
             colVal += 50;
         }
+
+        setAiShipLayout(aiShipLocations);
+    }
+
+    const addWin = async () => {
+        try {
+            const res = await fetch('https://calm-ridge-60009.herokuapp.com/updateWins', {
+                method: 'put',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    username: user.username
+                })
+            })
+            const winsUpdated = await res.json();
+            if (!winsUpdated) {
+                throw new Error('Could not increment wins')
+            }
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
+    const handlePlayerWonAgainstAI = () => {
+        if (user?.username && user?.hash !== 'guest') {
+            addWin();
+        }
+        setTimeout(() => {
+            window.alert('You Won!!!');
+            user?.hash === 'guest' || !user?.username ? setRoute('login') : setRoute('loggedIn');
+        }, 300);
+    }
+
+    const applyAIhitOrMiss = (clickedSquare) => {
+        document.querySelector('.preResultDiv').remove();
+        const clickedSquareID = clickedSquare.id;
+        let hit = false;
+        let shipHit = '';
+
+        for (let ship in aiShipLayout) {
+            for (let spot of aiShipLayout[ship]) {
+                if (spot == clickedSquareID) {
+                    hit = true;
+                    shipHit = ship;
+                }
+            }
+        }
+
+        if (hit && clickedSquare.classList !== undefined) {
+            score += 1;
+            hitSquares.push(shipHit);
+            clickedSquare.classList.add('hitMarker');
+            clickedSquare.classList.add(`_${shipHit}`)
+            if (countHitsOnShip(shipHit) === parseInt(document.querySelector(`.${shipHit}`).id)) {
+                const squares = document.querySelectorAll('.singleSquare');
+                audio.shipSunkSound.play();
+                for (let square of squares) {
+                    if (square.classList.contains(`_${shipHit}`)) {
+                        square.classList.add('shipSunk');
+                    }
+                }
+            } else {
+                audio.hitSound.play();
+            }
+
+            if (score >= 17) {
+                handlePlayerWonAgainstAI();
+            }
+        } else if (!hit && clickedSquare.classList !== undefined) {
+            clickedSquare.classList.add('missMarker');
+            audio.missSound.play();
+        }
+
+        setAIShotMatchedToUserShot(clickedSquareID);
+        setAIturn(true);
     }
 
     const onSquareClicked = (e) => {
@@ -231,7 +317,15 @@ const OpponentBoard = ({ socket }) => {
             e.target.appendChild(preResultDiv);
 
             audio.missileLaunch.play();
-            socket.emit('send shot to opponent', {target: e.target.id, socketid: friendSocket});
+            if (playingWithAI) {
+                const shot = e.target;
+                const missileLaunchDuration = audio.missileLaunch.duration() * 1000 - 100;
+                setTimeout(() => {
+                    applyAIhitOrMiss(shot);
+                }, missileLaunchDuration)
+            } else {
+                socket.emit('send shot to opponent', {target: e.target.id, socketid: friendSocket});
+            }
         }
     }
 

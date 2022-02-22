@@ -69,6 +69,10 @@ const model = {
     gameCountdownInterval: 0,
     skippedTurns: 0,
     playingWithAI: false,
+    aiShipLayout: {},
+    allSquareIDs: [],
+    aiTurn: false,
+    aiShotMatchedToUserShot: '',
 
 
     //Actions
@@ -235,6 +239,22 @@ const model = {
 
     setPlayigWithAI: action((state, input) => {
         state.playingWithAI = input;
+    }),
+    
+    setAiShipLayout: action((state, input) => {
+        state.aiShipLayout = input;
+    }),
+
+    setAllSquareIDs: action((state, input) => {
+        state.allSquareIDs = input;
+    }),
+
+    setAIturn: action((state, input) => {
+        state.aiTurn = input;
+    }),
+
+    setAIShotMatchedToUserShot: action((state, input) => {
+        state.aiShotMatchedToUserShot = input;
     }),
 }
 
