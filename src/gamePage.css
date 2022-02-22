@@ -5,6 +5,7 @@
     width: 100vw;
     display: grid;
     grid-template-columns: 2rem -webkit-max-content 1fr -webkit-max-content -webkit-max-content 2rem;
+    grid-template-columns: 0.1fr -webkit-max-content 0.8fr -webkit-max-content -webkit-max-content 0.1fr;
     grid-template-columns: 0.1fr max-content 0.8fr max-content max-content 0.1fr;
     grid-template-rows: 3rem 0.1fr 0.9fr 2rem;
     grid-template-areas:
@@ -257,13 +258,32 @@
 }
 
 .gamePage.mobile .instructionsBtn {
-    animation: instructionsBtnMorphMobile 0.2s ease-out forwards;
+    -webkit-animation: instructionsBtnMorphMobile 0.2s ease-out forwards;
+            animation: instructionsBtnMorphMobile 0.2s ease-out forwards;
     border: 2px solid rgba(255, 255, 255, 0.6);
 }
 
 .gamePage.mobile .instructionsBtn.firstGameInstructionLoad {
     -webkit-animation: instructionsBtnMorphMobile 0s step-start forwards;
             animation: instructionsBtnMorphMobile 0s step-start forwards;
+}
+
+@-webkit-keyframes instructionsBtnMorphMobile {
+    0% {
+        top: 40vh;
+        left: 50vw;
+        width: 90vw;
+        height: 50vh;
+        border-radius: 1rem;
+    }
+
+    100% {
+        top: 4.2rem;
+        left: 1.2rem;
+        width: 1.5rem;
+        height: 1.5rem;
+        border-radius: 50%;
+    }
 }
 
 @keyframes instructionsBtnMorphMobile {

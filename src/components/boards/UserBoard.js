@@ -8,6 +8,9 @@ import hitGif from './hit.gif';
 import './board.css';
 
 const hitSquares = [];
+let firstHit = '';
+let lastHit = '';
+let aiShipOrientationGuess = null;
 const UserBoard = ({ socket }) => {
     const { friendSocket, yourTurn, playingWithAI, allSquareIDs, aiTurn, aiShotMatchedToUserShot } = useStoreState(state => ({
         friendSocket: state.friendSocket,
@@ -55,6 +58,27 @@ const UserBoard = ({ socket }) => {
         }
     },[])
 
+    const shuffleArray = (arr) => {
+        let currentIndex = arr.length, randomIndex;
+
+        while (currentIndex !== 0) {
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex--;
+
+            [arr[currentIndex], arr[randomIndex]] = [arr[randomIndex], arr[currentIndex]];
+        }
+        
+        return arr;
+    }
+
+    const colString = (str) => {
+        return str.split('-')[0];
+    }
+
+    const rowString = (str) => {
+        return str.split('-')[1];
+    }
+
     const pickRandomSquare = () => {
         const randIndex = Math.round(Math.random() * ((allSquareIDs.length - 1) - 0) + 0);
         const randSquare = allSquareIDs[randIndex];
@@ -62,20 +86,110 @@ const UserBoard = ({ socket }) => {
 
         return randSquare;
     }
-    
+
+    const getChoicesForNearby = (hit) => {
+        const possibleChoices = [
+            !aiShipOrientationGuess || aiShipOrientationGuess === 'hor' ? `${parseInt(colString(hit)) - 1}-${parseInt(rowString(hit))}` : null,
+            !aiShipOrientationGuess || aiShipOrientationGuess === 'hor' ? `${parseInt(colString(hit)) + 1}-${parseInt(rowString(hit))}` : null,
+            !aiShipOrientationGuess || aiShipOrientationGuess === 'vert' ? `${parseInt(colString(hit))}-${parseInt(rowString(hit)) - 1}` : null,
+            !aiShipOrientationGuess || aiShipOrientationGuess === 'vert' ? `${parseInt(colString(hit))}-${parseInt(rowString(hit)) + 1}` : null
+        ]
+
+        return possibleChoices;
+    }
+
+    const pickNearbySquare = () => {
+        if (lastHit !== firstHit) {
+            if (colString(lastHit) !== colString(firstHit)) {
+                aiShipOrientationGuess = 'hor';
+            } else {
+                aiShipOrientationGuess = 'vert';
+            }
+        } else {
+            aiShipOrientationGuess = null;
+        }
+
+        let numOfValidSquares = 0;
+        let possibleChoices = getChoicesForNearby(lastHit);
+        shuffleArray(possibleChoices);
+
+        for (let choice of possibleChoices) {
+            for (let square of allSquareIDs) {
+                if (square === choice) {
+                    numOfValidSquares += 1;
+                }
+            }
+        }
+
+        if (numOfValidSquares <= 0) {
+            lastHit = firstHit;
+            possibleChoices = getChoicesForNearby(firstHit);
+            let foundOption = false;
+
+            for (let choice of possibleChoices) {
+                for (let square of allSquareIDs) {
+                    if (square === choice) {
+                        foundOption = true;
+                    }
+                }
+            }
+
+            if (!foundOption) {
+                aiShipOrientationGuess = null;
+                possibleChoices = getChoicesForNearby(firstHit);
+            }
+
+            shuffleArray(possibleChoices);
+        }
+
+
+        if (possibleChoices) {
+            for (let choice of possibleChoices) {
+                for (let square of allSquareIDs) {
+                    if (square === choice) {
+                        const selected = choice;
+                        allSquareIDs.splice(allSquareIDs.indexOf(selected), 1);
+                        return selected;
+                    }
+                }
+            }
+        } else {
+            console.log(Error, 'Could not find possible square');
+        }
+    }
+
+    const unfinishedShipSpot = () => {
+        const allSqaures = document.querySelectorAll('.userBoard .singleSquare');
+        for (let square of allSqaures) {
+            if (square?.childNodes[0]?.classList.contains('hitMarkerGif')) {
+                return square.id;
+            }
+        }
+        return false;
+    }
+
     useEffect(() => {
         if (aiTurn) {
-            const shotOnUserBoard = document.getElementById(pickRandomSquare());
+            let shotOnUserBoard;
+            if (lastHit) {
+                shotOnUserBoard = document.getElementById(pickNearbySquare());
+            } else if (unfinishedShipSpot()) {
+                firstHit = unfinishedShipSpot();
+                lastHit = unfinishedShipSpot();
+                shotOnUserBoard = document.getElementById(pickNearbySquare());
+            } else {
+                shotOnUserBoard = document.getElementById(pickRandomSquare());
+            }
             // const shotOnUserBoard = document.getElementById(aiShotMatchedToUserShot);
 
             setTimeout(() => {
-                const incomingMissileDuration = audio.incomingMissile.duration() * 1000 - 100;
+                const incomingMissileDuration = audio.incomingMissile.duration() * 1000;
                 audio.incomingMissile.play();
                 setTimeout(() => {
                     applyHitOrMiss(shotOnUserBoard);
                     setYourTurn(true);
                 }, incomingMissileDuration)
-            }, 1500);
+            }, 0);
             setAIturn(false);
         }
     },[aiTurn])
@@ -155,11 +269,18 @@ const UserBoard = ({ socket }) => {
             }, 1100);
 
             hitSquares.push(shipHit);
+            lastHit = oppShot.id;
+            if (!firstHit) {
+                firstHit = oppShot.id;
+            }
+
             oppShot.classList.add(`_${shipHit}_userboard`)
             if (countHitsOnShip(shipHit) === parseInt(document.querySelector(`.${shipHit}`).id)) {
                 const sunkShipIcon = document.querySelector(`.${shipHit}Icon`);
                 const squares = document.querySelectorAll('.singleSquare');
                 audio.shipSunkSound.play();
+                firstHit = '';
+                lastHit = '';
                 for (let square of squares) {
                     if (square.classList.contains(`_${shipHit}_userboard`)) {
                         // square.classList.remove('hitMarker');

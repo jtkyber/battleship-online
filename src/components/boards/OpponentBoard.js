@@ -215,22 +215,22 @@ const OpponentBoard = ({ socket }) => {
         //carrier
         setSingleAIship(5, 'carrier');
         
-        let colVal = 0;
-        const tempArr = [];
-        const sameSpots = [];
-        for (let ship in aiShipLocations) {
-            for (let spot of aiShipLocations[ship]) {
-                const spotBlock = document.querySelector(`.opponentBoard [id="${spot}"]`);
-                const aiShipSpot = document.createElement('div');
-                aiShipSpot.classList.add('aiShipSpotTest');
-                aiShipSpot.style.backgroundColor = `rgba(${colVal}, ${colVal}, ${colVal}, 0.5)`;
-                spotBlock?.appendChild(aiShipSpot);
-                if (tempArr.includes(spot)) {
-                    sameSpots.push(spot);
-                } else tempArr.push(spot);
-            }
-            colVal += 50;
-        }
+        // let colVal = 0;
+        // const tempArr = [];
+        // const sameSpots = [];
+        // for (let ship in aiShipLocations) {
+        //     for (let spot of aiShipLocations[ship]) {
+        //         const spotBlock = document.querySelector(`.opponentBoard [id="${spot}"]`);
+        //         const aiShipSpot = document.createElement('div');
+        //         aiShipSpot.classList.add('aiShipSpotTest');
+        //         aiShipSpot.style.backgroundColor = `rgba(${colVal}, ${colVal}, ${colVal}, 0.5)`;
+        //         spotBlock?.appendChild(aiShipSpot);
+        //         if (tempArr.includes(spot)) {
+        //             sameSpots.push(spot);
+        //         } else tempArr.push(spot);
+        //     }
+        //     colVal += 50;
+        // }
 
         setAiShipLayout(aiShipLocations);
     }
@@ -279,13 +279,13 @@ const OpponentBoard = ({ socket }) => {
         }
 
         if (hit && clickedSquare.classList !== undefined) {
-            score += 1;
             hitSquares.push(shipHit);
             clickedSquare.classList.add('hitMarker');
             clickedSquare.classList.add(`_${shipHit}`)
             if (countHitsOnShip(shipHit) === parseInt(document.querySelector(`.${shipHit}`).id)) {
                 const squares = document.querySelectorAll('.singleSquare');
                 audio.shipSunkSound.play();
+                score += 1;
                 for (let square of squares) {
                     if (square.classList.contains(`_${shipHit}`)) {
                         square.classList.add('shipSunk');
@@ -295,7 +295,7 @@ const OpponentBoard = ({ socket }) => {
                 audio.hitSound.play();
             }
 
-            if (score >= 17) {
+            if (score >= 5) {
                 handlePlayerWonAgainstAI();
             }
         } else if (!hit && clickedSquare.classList !== undefined) {

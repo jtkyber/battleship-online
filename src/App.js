@@ -477,7 +477,12 @@ function App() {
                         <Navigation socket={socket} onRouteChange={onRouteChange} />
                         <Friends socket={socket} />
                         <div className={`matchAndBoard ${showFriendsMobile ? 'hide' : null}`}>
+                        <div className='playGameBtnContainer'>
                             <FindMatch socket={socket} />
+                            <div className={'playAIbtnContainer'}>
+                                <button onClick={handlePlayAIbutton} className='playAIbtn'>Play AI</button>
+                            </div>
+                        </div>
                             <HomeBoard />
                         </div>
                         <Footer />

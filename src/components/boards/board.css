@@ -238,6 +238,7 @@
     /* text-align: center; */
     border: 1px solid rgba(255,0,0,0.4);
     overflow: visible;
+    cursor: crosshair;
 }
 
 .opponentBoard .singleSquare:hover,.homeBoard .singleSquare:hover {
