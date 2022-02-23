@@ -26,7 +26,7 @@ const Game = ({ socket, onRouteChange }) => {
         playingWithAI: state.playingWithAI
     }));
 
-    const { setCheckOppStatusInterval, setRoute, setGameRoute, setPlayerIsReady, setYourTurn, setPlayerTurnText, setOpponentIsReady, setShowGameInstructions, setFirstGameInstructionLoad, setGameTimer, setGameCountdownInterval, setSkippedTurns, setPlayigWithAI, setAIturn } = useStoreActions(actions => ({
+    const { setCheckOppStatusInterval, setRoute, setGameRoute, setPlayerIsReady, setYourTurn, setPlayerTurnText, setOpponentIsReady, setShowGameInstructions, setFirstGameInstructionLoad, setGameTimer, setGameCountdownInterval, setSkippedTurns, setPlayigWithAI } = useStoreActions(actions => ({
         setCheckOppStatusInterval: actions.setCheckOppStatusInterval,
         setRoute: actions.setRoute,
         setGameRoute: actions.setGameRoute,
@@ -39,8 +39,7 @@ const Game = ({ socket, onRouteChange }) => {
         setGameTimer: actions.setGameTimer,
         setGameCountdownInterval: actions.setGameCountdownInterval,
         setSkippedTurns: actions.setSkippedTurns,
-        setPlayigWithAI: actions.setPlayigWithAI,
-        setAIturn: actions.setAIturn
+        setPlayigWithAI: actions.setPlayigWithAI
     }));
     
     const pickUpShipInstructions = 

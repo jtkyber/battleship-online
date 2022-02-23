@@ -39,7 +39,7 @@ function App() {
         playingWithAI: state.playingWithAI
     }));
 
-    const { setRoute, setUser, setCurrentSocket, setSearch, setUpdatLastOnlineInterval, setAllFriends, setUnsortedFriends, setFriendsOnline, setFriendSearch, setPlayerIsReady, setUserName, setPassword, setAudioStarted, setShowFriendsMobile, setShowChatMobile, setShowGameInstructions, setDeviceInPortrait, setGameRoute, setIsMobile, setPlayigWithAI } = useStoreActions(actions => ({
+    const { setRoute, setUser, setCurrentSocket, setSearch, setUpdatLastOnlineInterval, setAllFriends, setUnsortedFriends, setFriendsOnline, setFriendSearch, setPlayerIsReady, setUserName, setPassword, setAudioStarted, setShowFriendsMobile, setShowChatMobile, setShowGameInstructions, setDeviceInPortrait, setGameRoute, setPlayigWithAI } = useStoreActions(actions => ({
         setRoute: actions.setRoute,
         setUser: actions.setUser,
         setCurrentSocket: actions.setCurrentSocket,
@@ -58,7 +58,6 @@ function App() {
         setShowGameInstructions: actions.setShowGameInstructions,
         setDeviceInPortrait: actions.setDeviceInPortrait,
         setGameRoute: actions.setGameRoute,
-        setIsMobile: actions.setIsMobile,
         setPlayigWithAI: actions.setPlayigWithAI
     }));
 
@@ -162,7 +161,7 @@ function App() {
             audio.missileLaunch.mute(true);
             audio.incomingMissile.mute(true);
         }
-    }, [soundOn])
+    }, [soundOn, isMobile])
 
     useEffect(() => {
         if (musicOn) {
@@ -259,6 +258,22 @@ function App() {
             }
         }
 
+        if (isMobile) {
+            document.addEventListener('touchend', handleMouseDown);
+        } else {
+            document.addEventListener('mouseup', handleMouseDown);
+        }
+        
+        return () => {
+            if (isMobile) {
+                document.removeEventListener('touchend', handleMouseDown);
+            } else {
+                document.removeEventListener('mouseup', handleMouseDown);
+            }
+        }
+    }, [route, gameRoute, showGameInstructions, audioStarted])
+
+    useEffect(() => {
         if ((route === 'login') || (route === 'register')) {
             if (user?.hash !== 'guest') {
                 setUser(null);
@@ -273,21 +288,7 @@ function App() {
         if (route === 'loggedIn') {
             setShowFriendsMobile(false);
         }
-
-        if (isMobile) {
-            document.addEventListener('touchend', handleMouseDown);
-        } else {
-            document.addEventListener('mouseup', handleMouseDown);
-        }
-
-        return () => {
-            if (isMobile) {
-                document.removeEventListener('touchend', handleMouseDown);
-            } else {
-                document.removeEventListener('mouseup', handleMouseDown);
-            }
-        }
-    }, [route, gameRoute, showGameInstructions, audioStarted])
+    }, [route])
 
     const stopSearching = async () => {
         try {

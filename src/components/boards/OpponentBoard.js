@@ -82,7 +82,7 @@ const OpponentBoard = ({ socket }) => {
     const aiSpotClear = (newSpot) => {
         for (let ship in aiShipLocations) {
             for (let spot of aiShipLocations[ship]) {
-                if (spot == newSpot) {
+                if (spot === newSpot) {
                     return false;
                 }
             }
