@@ -110,7 +110,7 @@
     justify-self: center;
     align-items: start;
     margin-top: 5vh;
-    box-shadow: 10px 10px 20px 12px rgba(0, 0, 0, .6);
+    box-shadow: 8px 8px 12px 9px rgba(0, 0, 0, .6);
     border-radius: 8px;
 }
 
@@ -157,7 +157,7 @@
     height: -moz-max-content;
     height: max-content;
     color: var(--primary-logreg-text-color);
-    font-size: 3rem;
+    font-size: 2.6rem;
     text-transform: uppercase;
     letter-spacing: 0.1rem;
     display: flex;
@@ -223,7 +223,7 @@
     box-sizing: border-box;
     min-height: 2.5rem;
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.6);
     border: 1px solid rgba(255, 255, 255, 0.6);
     outline: none;
     color: white;
