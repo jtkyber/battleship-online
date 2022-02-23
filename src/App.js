@@ -453,7 +453,7 @@ function App() {
             <div className='playGameBtnContainer'>
                 <FindMatch socket={socket} />
                 <div className={'playAIbtnContainer'}>
-                    <button onClick={handlePlayAIbutton} className='playAIbtn'>Play AI</button>
+                    <button onClick={handlePlayAIbutton} className='playAIbtn'>Play with Computer</button>
                 </div>
             </div>
             <div className='logReg'>
@@ -480,7 +480,7 @@ function App() {
                         <div className='playGameBtnContainer'>
                             <FindMatch socket={socket} />
                             <div className={'playAIbtnContainer'}>
-                                <button onClick={handlePlayAIbutton} className='playAIbtn'>Play AI</button>
+                                <button onClick={handlePlayAIbutton} className='playAIbtn'>Play with Computer</button>
                             </div>
                         </div>
                             <HomeBoard />

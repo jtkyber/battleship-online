@@ -71,8 +71,9 @@
 
 }
 
-.logToSeeFriendsText {
-    color: rgba(255,0,0,0.7);
+.logToSeeFriendsText > h3 {
+    color: rgba(0, 255, 42, 0.6);
+    font-weight: 400;
     text-align: center;
 }
 
