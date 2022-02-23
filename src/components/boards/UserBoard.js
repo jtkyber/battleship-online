@@ -128,7 +128,7 @@ const UserBoard = ({ socket }) => {
                     numOfValidSquares += 1;
                     aiShipOrientationGuess 
                     ? aiMoveText = `AI: Choosing ${aiShipOrientationGuess === 'hor' ? 'horizontal' : 'vertical'} neighbor to last hit --> `
-                    : aiMoveText = "AI: Choosing random neighbor to last hit --> "
+                    : aiMoveText = "AI: Choosing random available neighbor to last hit --> "
                 }
             }
         }
@@ -149,7 +149,7 @@ const UserBoard = ({ socket }) => {
 
             if (!foundOption) {
                 aiShipOrientationGuess = null;
-                aiMoveText = `AI: Going back to first hit with nearby random guess --> `;
+                aiMoveText = `AI: Going back to first hit and choosing random available neighbor --> `;
                 possibleChoices = getChoicesForNearby(firstHit);
             }
 
@@ -181,7 +181,7 @@ const UserBoard = ({ socket }) => {
         for (let square of allSqaures) {
             if (square?.childNodes[0]?.classList.contains('hitMarkerGif')) {
                 setTimeout(() => {
-                    console.log("AI: Going back to unfinished ship")
+                    console.log("AI: Going back to unfinished ship -- > ", square.id)
                 }, 500);
                 return square.id;
             }
