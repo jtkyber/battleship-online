@@ -261,7 +261,7 @@
 .changeLogReg {
     background: transparent;
     color: var(--primary-logreg-text-color);
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     border: none;
     margin-top: 0.2rem;
     padding: 0.35rem;
