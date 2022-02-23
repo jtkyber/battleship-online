@@ -1,3 +1,7 @@
+:root {
+    --primary-logreg-text-color: rgba(235, 235, 235, 0.9);
+}
+
 .logRegPage {
     background-color: rgba(0,0,0,0.7);
     height: 100vh;
@@ -106,6 +110,8 @@
     justify-self: center;
     align-items: start;
     margin-top: 5vh;
+    box-shadow: 10px 10px 20px 12px rgba(0, 0, 0, .6);
+    border-radius: 8px;
 }
 
 .logRegPage.mobile .logReg {
@@ -132,15 +138,15 @@
     height: -moz-max-content;
     height: max-content;
     max-height: 90vh;
-    border: 4px solid rgba(255, 255, 255, 0.6);
+    /* border: 4px solid rgba(255, 255, 255, 0.6); */
     display: flex;
     flex-flow: nowrap column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    background-color: rgba(0,0,0,0.6);
+    /* background-color: rgba(0,0,0,0.6); */
     --reg-log-alert: "";
-    border-radius: 10px;
+    /* border-radius: 10px; */
     opacity: 0.9;
     padding: 0.5rem;
 }
@@ -150,7 +156,7 @@
     height: -webkit-max-content;
     height: -moz-max-content;
     height: max-content;
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--primary-logreg-text-color);
     font-size: 3rem;
     text-transform: uppercase;
     letter-spacing: 0.1rem;
@@ -207,7 +213,7 @@
 }
 
 .login h4, .register h4 {
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--primary-logreg-text-color);
     font-size: 1.2rem;
     margin-bottom: 0.5rem;
     letter-spacing: 0.1rem;
@@ -242,7 +248,7 @@
 
 .loginBtn, .registerBtn {
     border: none;
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: var(--primary-logreg-text-color);
     color: rgba(0, 0, 0, 0.9);
     border-radius: 8px;
     font-size: 1rem;
@@ -254,7 +260,7 @@
 
 .changeLogReg {
     background: transparent;
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--primary-logreg-text-color);
     font-size: 0.8rem;
     border: none;
     margin-top: 0.2rem;
@@ -293,7 +299,7 @@
         transform: scale(0.8);
     }
     .logRegPage.mobile .logReg {
-        bottom: 5vh;
+        /* bottom: 5vh; */
         transform: translate(-50%) scale(0.8);
     }
     .homeText > h1 {
