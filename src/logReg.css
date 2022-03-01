@@ -111,7 +111,7 @@
     align-items: start;
     margin-top: 5vh;
     box-shadow: 8px 8px 12px 9px rgba(0, 0, 0, .6);
-    border: 2px solid rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(0, 0, 0, 1);
     border-radius: 8px;
 }
 
