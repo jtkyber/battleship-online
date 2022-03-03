@@ -5,7 +5,7 @@ A battleship web-app that lets users play against friends, random players, or th
 * Fully custom game board
 * Game timers for placing ships and for each turn (except when playing against AI)
   * 90 seconds to place ships
-  * 15 seconds to choose a shot or the turn ends. After 3 consecutive missed turns, the user is kicked from the match and the opponenent wins
+  * 15 seconds to choose a shot or the turn ends. After 3 consecutive missed turns, the user is kicked from the match and the opponent wins
 * Make an account to add friends, invite them to matches, and have a saved score
 * View your friends' status ("Online/Offline/In Game"), which is updated in real time
 * View a top-five leaderboard
