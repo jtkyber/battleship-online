@@ -15,7 +15,7 @@ A battleship web-app that lets users play against friends, random players, or th
 * Play against a custom AI, which has decision-making similar to that of a normal player. Also does not require an account
 * User and server error handling when logging in, adding a friend, placing ships, etc.
 * Responsive and mobile friendly
-## How to place ships (Instructions button available during ship-placement stage)
+## How to place ships (Instructions button available in-game)
 #### Deskop
 * To pick up a ship, left click once on the ship you want to move
 * To rotate a ship, right click or press "spacebar" while the ship is selected
