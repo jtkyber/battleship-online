@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useStoreState } from 'easy-peasy';
 import { audio } from '../../audio';
 import $ from 'jquery';
@@ -15,11 +16,16 @@ let mouseX;
 let mouseY;
 
 const Ships = () => {
-    const { gameRoute, isMobile, showGameInstructions } = useStoreState(state => ({
+    const { gameRoute, isMobile, showGameInstructions, gameTimer } = useStoreState(state => ({
         gameRoute: state.gameRoute,
         isMobile: state.stored.isMobile,
-        showGameInstructions: state.showGameInstructions
+        showGameInstructions: state.stored.showGameInstructions,
+        gameTimer: state.gameTimer,
     }));
+
+    useEffect(() => {
+        if (gameTimer <= 0) removeShipIfSelected()
+    }, [gameTimer])
 
     // Decide what happens when a ship is selected to move
 
@@ -50,6 +56,15 @@ const Ships = () => {
             } else if (selectedShip.classList.contains('destroyer')) {
                 selectedShipName = 'destroyer';
             }
+        }
+    }
+
+    // Delete ship if still picked up after timer
+
+    const removeShipIfSelected = () => {
+        if (shipIsSelected) {
+            selectedShip.remove()
+            shipIsSelected = false;
         }
     }
 

@@ -35,7 +35,7 @@ function App() {
         audioStarted: state.audioStarted,
         deviceInPortrait: state.deviceInPortrait,
         gameRoute: state.gameRoute,
-        showGameInstructions: state.showGameInstructions,
+        showGameInstructions: state.stored.showGameInstructions,
         playingWithAI: state.playingWithAI
     }));
 

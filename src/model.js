@@ -23,7 +23,8 @@ const model = {
             soundOn: true,
             musicOn: true,
             isMobile: isMobileDevice(),
-            isIOS: isIOSDevice()
+            isIOS: isIOSDevice(),
+            showGameInstructions: true,
         },
         {
             storage: 'localStorage',
@@ -61,7 +62,6 @@ const model = {
     showChatMobile: false,
     audioStarted: false,
     shipIsSelected: false,
-    showGameInstructions: false,
     deviceInPortrait: true,
     opponentIsReady: false,
     firstGameInstructionLoad: true,
@@ -210,7 +210,7 @@ const model = {
     }),
 
     setShowGameInstructions: action((state, input) => {
-        state.showGameInstructions = input;
+        state.stored.showGameInstructions = input;
     }),
 
     setDeviceInPortrait: action((state, input) => {

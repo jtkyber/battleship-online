@@ -17,7 +17,7 @@ const Game = ({ socket, onRouteChange }) => {
         yourTurn: state.yourTurn,
         playerTurnText: state.playerTurnText,
         isMobile: state.stored.isMobile,
-        showGameInstructions: state.showGameInstructions,
+        showGameInstructions: state.stored.showGameInstructions,
         opponentIsReady: state.opponentIsReady,
         firstGameInstructionLoad: state.firstGameInstructionLoad,
         gameTimer: state.gameTimer,
@@ -60,7 +60,7 @@ const Game = ({ socket, onRouteChange }) => {
     useEffect(() => {
         let shipPlacementTimer = 90;
         clearInterval(gameCountdownInterval);
-        setShowGameInstructions(false);
+        setGameTimer(90);
         setFirstGameInstructionLoad(true);
         setPlayerIsReady(false);
         setOpponentIsReady(playingWithAI ? true : false);
@@ -125,7 +125,7 @@ const Game = ({ socket, onRouteChange }) => {
                     score += 1;
                 }
             })
-            if (score >= 5) {
+            if (score >= shipContainers.length) {
                 handlePlayerLost("You Lost ):");
             } else {
                 if (gameRoute === 'gameInProgress' && !playingWithAI) {
@@ -142,6 +142,10 @@ const Game = ({ socket, onRouteChange }) => {
     },[yourTurn])
 
     useEffect(() => {
+        const readyBtn = document.querySelector('.readyBtn');
+        const instructionsBtn = document.querySelector('.instructionsBtn');
+        const timerElement = document.querySelector('.shipPlacementTimer');
+
         if (gameTimer <= 0 && !playingWithAI) {
             clearInterval(gameCountdownInterval);
             if (gameRoute === 'gameInProgress') {
@@ -150,7 +154,20 @@ const Game = ({ socket, onRouteChange }) => {
                 socket.emit('send shot to opponent', {target: 'oppOutOfTime', socketid: friendSocket});
                 setSkippedTurns(skippedTurns + 1);
             } else {
-                handlePlayerLost("You were kicked from the game because you took too long to ready up");
+                // handlePlayerLost("You were kicked from the game because you took too long to ready up");
+                clearInterval(gameCountdownInterval);
+                if (!playingWithAI) timerElement.style.display = 'none';
+                setGameTimer(15);
+                setPlayerIsReady(true);
+                instructionsBtn?.classList.add('hide');
+                if (opponentIsReady) {
+                    setGameRoute('gameInProgress');
+                    setYourTurn(true);
+                } else {
+                    readyBtn.style.opacity = '0.3';
+                    setGameRoute('waiting');
+                }
+                if (!playingWithAI) socket.emit('send ready status', friendSocket);
             }
         }
     }, [gameTimer])
