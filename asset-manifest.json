@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/battleship-online/static/css/main.cce13815.chunk.css",
-    "main.js": "/battleship-online/static/js/main.77a673fa.chunk.js",
-    "main.js.map": "/battleship-online/static/js/main.77a673fa.chunk.js.map",
+    "main.css": "/battleship-online/static/css/main.888ea7fb.chunk.css",
+    "main.js": "/battleship-online/static/js/main.4ff6c1ad.chunk.js",
+    "main.js.map": "/battleship-online/static/js/main.4ff6c1ad.chunk.js.map",
     "runtime-main.js": "/battleship-online/static/js/runtime-main.ba8f50fe.js",
     "runtime-main.js.map": "/battleship-online/static/js/runtime-main.ba8f50fe.js.map",
     "static/js/2.a8b3788a.chunk.js": "/battleship-online/static/js/2.a8b3788a.chunk.js",
@@ -10,7 +10,7 @@
     "static/js/3.7c3fd58f.chunk.js": "/battleship-online/static/js/3.7c3fd58f.chunk.js",
     "static/js/3.7c3fd58f.chunk.js.map": "/battleship-online/static/js/3.7c3fd58f.chunk.js.map",
     "index.html": "/battleship-online/index.html",
-    "static/css/main.cce13815.chunk.css.map": "/battleship-online/static/css/main.cce13815.chunk.css.map",
+    "static/css/main.888ea7fb.chunk.css.map": "/battleship-online/static/css/main.888ea7fb.chunk.css.map",
     "static/js/2.a8b3788a.chunk.js.LICENSE.txt": "/battleship-online/static/js/2.a8b3788a.chunk.js.LICENSE.txt",
     "static/media/ambient-waves.b96c967b.mp3": "/battleship-online/static/media/ambient-waves.b96c967b.mp3",
     "static/media/index.css": "/battleship-online/static/media/background.f30097d9.jpg",
@@ -32,12 +32,12 @@
     "static/media/ship-placement-theme.58d77477.mp3": "/battleship-online/static/media/ship-placement-theme.58d77477.mp3",
     "static/media/ship-sunk.48a88457.mp3": "/battleship-online/static/media/ship-sunk.48a88457.mp3",
     "static/media/homeBoard.css": "/battleship-online/static/media/submarine-vert-home.3412310a.svg",
-    "static/media/board.css": "/battleship-online/static/media/waterbg.ade23eca.gif"
+    "static/media/board.css": "/battleship-online/static/media/waterbg2.954c042e.gif"
   },
   "entrypoints": [
     "static/js/runtime-main.ba8f50fe.js",
     "static/js/2.a8b3788a.chunk.js",
-    "static/css/main.cce13815.chunk.css",
-    "static/js/main.77a673fa.chunk.js"
+    "static/css/main.888ea7fb.chunk.css",
+    "static/js/main.4ff6c1ad.chunk.js"
   ]
 }
