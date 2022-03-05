@@ -173,6 +173,10 @@
     opacity: 0.7;
 }
 
+.homeBoard .grid {
+    background: url('./waterbg2.gif');
+}
+
 .userBoard .grid {
     background: url('./waterbg2.gif');
 }
