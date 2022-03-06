@@ -2,12 +2,12 @@
     background-color: rgba(0,0,0,0.7);
     height: 100vh;
     display: grid;
-    grid-template-columns: 15rem  1fr;
+    grid-template-columns: 15rem  1fr max-content;
     grid-template-rows: 3rem 1fr 2rem;
     grid-template-areas:
-        "nav nav"
-        "friends matchAndBoard"
-        "footer footer";
+        "nav nav nav"
+        "friends matchAndBoard userScore"
+        "footer footer footer";
 }
 
 .homePageLogged.mobile {
@@ -48,6 +48,28 @@
     grid-area: matchAndBoard;
     -webkit-animation: fadeInMatchAndBoard 0.3s ease-out;
             animation: fadeInMatchAndBoard 0.3s ease-out;
+}
+
+.userScore {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    padding: 0.2rem 0.5rem 0 0;
+}
+
+.userScore * {
+    font-weight: 400;
+    text-transform: uppercase;
+}
+
+.userScore .scoreText {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.userScore .scoreValue {
+    color: rgba(0, 255, 26, 0.9);;
 }
 
 @-webkit-keyframes fadeInMatchAndBoard {

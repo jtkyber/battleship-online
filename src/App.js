@@ -469,7 +469,7 @@ function App() {
         :
         <>
             {
-            route === 'loggedIn' || route === 'leaderboard'
+            route === 'loggedIn' || route === 'leaderboard' 
             ?
                 user?.username?.length
                 ?
@@ -485,6 +485,9 @@ function App() {
                             </div>
                         </div>
                             <HomeBoard />
+                        </div>
+                        <div className='userScore'>
+                            <h3><span className='scoreText'>Score:</span> <span className='scoreValue'>{user.score}</span></h3>
                         </div>
                         <Footer />
                     </div>
