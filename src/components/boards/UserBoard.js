@@ -209,7 +209,7 @@ const UserBoard = ({ socket }) => {
                     applyHitOrMiss(shotOnUserBoard);
                     setYourTurn(true);
                 }, incomingMissileDuration)
-            }, 0);
+            }, 1300);
             setAIturn(false);
         }
     },[aiTurn])
