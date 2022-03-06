@@ -22,7 +22,7 @@ nav {
     flex-flow: row nowrap;
     justify-self: start;
     align-items: flex-end;
-    gap: 1rem;
+    gap: 1.5rem;
     height: 2rem;
     overflow: visible;
 }
@@ -32,7 +32,7 @@ nav {
     flex-flow: row nowrap;
     justify-self: end;
     align-items: flex-end;
-    gap: 0.5rem;
+    gap: 1rem;
     height: 2rem;
     overflow: visible;
 }
