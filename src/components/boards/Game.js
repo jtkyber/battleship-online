@@ -26,7 +26,7 @@ const Game = ({ socket, onRouteChange }) => {
         playingWithAI: state.playingWithAI
     }));
 
-    const { setCheckOppStatusInterval, setRoute, setGameRoute, setPlayerIsReady, setYourTurn, setPlayerTurnText, setOpponentIsReady, setShowGameInstructions, setFirstGameInstructionLoad, setGameTimer, setGameCountdownInterval, setSkippedTurns, setPlayigWithAI } = useStoreActions(actions => ({
+    const { setCheckOppStatusInterval, setRoute, setGameRoute, setPlayerIsReady, setYourTurn, setPlayerTurnText, setOpponentIsReady, setShowGameInstructions, setFirstGameInstructionLoad, setGameTimer, setGameCountdownInterval, setSkippedTurns, setPlayigWithAI, setUser } = useStoreActions(actions => ({
         setCheckOppStatusInterval: actions.setCheckOppStatusInterval,
         setRoute: actions.setRoute,
         setGameRoute: actions.setGameRoute,
@@ -39,7 +39,8 @@ const Game = ({ socket, onRouteChange }) => {
         setGameTimer: actions.setGameTimer,
         setGameCountdownInterval: actions.setGameCountdownInterval,
         setSkippedTurns: actions.setSkippedTurns,
-        setPlayigWithAI: actions.setPlayigWithAI
+        setPlayigWithAI: actions.setPlayigWithAI,
+        setUser: actions.setUser
     }));
     
     const pickUpShipInstructions = 
@@ -226,6 +227,8 @@ const Game = ({ socket, onRouteChange }) => {
             const scoreUpdated = await res.json();
             if (!scoreUpdated) {
                 throw new Error('Could not increment score')
+            } else {
+                setUser({...user, score: scoreUpdated});
             }
         } catch(err) {
             console.log(err);

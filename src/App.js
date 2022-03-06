@@ -18,7 +18,7 @@ import './gamePage.css';
 import './leaderboard.css';
 
 // let showInstructions = true;
-function App() {
+const App = () => {
     const { getOnlineFriendsInterval, route, user, friendSocket, findMatchInterval, checkOppStatusInterval, search, updatLastOnlineInterval, soundOn, musicOn, isMobile, showFriendsMobile, audioStarted, deviceInPortrait, gameRoute, showGameInstructions, playingWithAI } = useStoreState(state => ({
         getOnlineFriendsInterval: state.getOnlineFriendsInterval,
         route: state.route,

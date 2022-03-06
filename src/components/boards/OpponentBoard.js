@@ -16,12 +16,13 @@ const OpponentBoard = ({ socket }) => {
         user: state.user
     }));
 
-    const { setYourTurn, setSkippedTurns, setAiShipLayout, setAIturn, setRoute } = useStoreActions(actions => ({
+    const { setYourTurn, setSkippedTurns, setAiShipLayout, setAIturn, setRoute, setUser } = useStoreActions(actions => ({
         setYourTurn: actions.setYourTurn,
         setSkippedTurns: actions.setSkippedTurns,
         setAiShipLayout: actions.setAiShipLayout,
         setAIturn: actions.setAIturn,
-        setRoute: actions.setRoute
+        setRoute: actions.setRoute,
+        setUser: actions.setUser
     }));
 
     let aiShipLocations = {
@@ -248,6 +249,8 @@ const OpponentBoard = ({ socket }) => {
             const scoreUpdated = await res.json();
             if (!scoreUpdated) {
                 throw new Error('Could not increment score')
+            } else {
+                setUser({...user, score: scoreUpdated});
             }
         } catch(err) {
             console.log(err);
