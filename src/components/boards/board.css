@@ -170,7 +170,6 @@
     height: 100%;
     margin: 0;
     grid-area: board;
-    opacity: 0.7;
 }
 
 .homeBoard .grid {
@@ -180,11 +179,11 @@
 
 .userBoard .grid {
     /* background: url('./waterbg2.gif'); */
-    background-color: rgb(0, 105, 165);
+    background-color: rgba(0, 104, 165, 0.8);
 }
 
 .opponentBoard .grid {
-    background-color: rgb(0, 105, 165);
+    background-color: rgba(0, 104, 165, 0.8);
 }
 
 .gamePage.mobile .grid {

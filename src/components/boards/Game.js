@@ -65,6 +65,7 @@ const Game = ({ socket, onRouteChange }) => {
         setFirstGameInstructionLoad(true);
         setPlayerIsReady(false);
         setOpponentIsReady(playingWithAI ? true : false);
+        setYourTurn(playingWithAI ? true : false);
         setGameRoute('placeShips');
 
         if (!playingWithAI) {
