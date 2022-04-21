@@ -174,11 +174,13 @@
 }
 
 .homeBoard .grid {
-    background: url('./waterbg2.gif');
+    background-color: rgb(0, 105, 165);
+    /* background: url('./waterbg2.gif'); */
 }
 
 .userBoard .grid {
-    background: url('./waterbg2.gif');
+    /* background: url('./waterbg2.gif'); */
+    background-color: rgb(0, 105, 165);
 }
 
 .opponentBoard .grid {
