@@ -65,7 +65,6 @@ const Game = ({ socket, onRouteChange }) => {
         setFirstGameInstructionLoad(true);
         setPlayerIsReady(false);
         setOpponentIsReady(playingWithAI ? true : false);
-        setYourTurn(playingWithAI ? true : false);
         setGameRoute('placeShips');
 
         if (!playingWithAI) {
@@ -132,15 +131,19 @@ const Game = ({ socket, onRouteChange }) => {
             } else {
                 if (gameRoute === 'gameInProgress' && !playingWithAI) {
                     setGameCountdownInterval(setInterval(() => {
-                    setGameTimer(playerTurnTimer - 1);
-                    playerTurnTimer -= 1;
+                        setGameTimer(playerTurnTimer - 1);
+                        playerTurnTimer -= 1;
                     }, 1000))
                 }
             }
         } else {
-            setTimeout(() => setPlayerTurnText(playingWithAI ? "Computer's turn" : `${opponentName}'s Turn!`), 900);
-
-            if (gameRoute === 'gameInProgress') setGameTimer(15);
+            playingWithAI
+            ? setTimeout(() => setPlayerTurnText("Computer's turn"), 900)
+            : setTimeout(() => setPlayerTurnText(`${opponentName}'s Turn!`), 900)
+            
+            if (gameRoute === 'gameInProgress') {
+                setGameTimer(15);
+            }
         }
     },[yourTurn])
 
