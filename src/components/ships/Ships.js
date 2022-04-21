@@ -36,7 +36,7 @@ const Ships = () => {
             shipIsSelected = true;
             selectedShip = e.target.parentElement;
             userBoard.style.cursor = 'pointer';
-            selectedShip.style.zIndex = '-2';
+            selectedShip.style.pointerEvents = 'none';
             selectedShip.style.border = '2px solid rgba(0, 250, 0, 0.5)';
 
             if (parseInt(e.target.parentElement.offsetWidth) > parseInt(e.target.parentElement.offsetHeight)) {
@@ -94,7 +94,7 @@ const Ships = () => {
             onShipSelect(e);
         } else if (!isMobile && shipIsSelected && e.target.classList.contains('singleSquare') && rotating === false && areaIsClear()) {
             audio.dropShip.play();
-            selectedShip.style.zIndex = '3';
+            selectedShip.style.pointerEvents = 'auto';
             document.querySelector('.userBoard').style.cursor = 'default';
             selectedShip.style.border = null;
             shipIsSelected = false;
@@ -117,7 +117,7 @@ const Ships = () => {
         if (!showGameInstructions) {
             if (shipIsSelected && !moving && areaIsClear() && !wasShipTouched(e.changedTouches[0].clientX, e.changedTouches[0].clientY)) {
                 audio.dropShip.play();
-                selectedShip.style.zIndex = '3';
+                selectedShip.style.pointerEvents = 'auto';
                 document.querySelector('.userBoard').style.cursor = 'default';
                 selectedShip.style.border = null;
                 shipIsSelected = false;
@@ -135,7 +135,7 @@ const Ships = () => {
             } else if (shipIsSelected && moving) {
                 if (isMobile && shipIsSelected && rotating === false && areaIsClear()) {
                     audio.dropShip.play();
-                    selectedShip.style.zIndex = '3';
+                    selectedShip.style.pointerEvents = 'auto';
                     document.querySelector('.userBoard').style.cursor = 'default';
                     selectedShip.style.border = null;
                     shipIsSelected = false;

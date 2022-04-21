@@ -245,7 +245,7 @@ const Game = ({ socket, onRouteChange }) => {
         let allShipsPlaced = true;
 
         for (let ship of ships) {
-            if (parseInt(ship.style.zIndex) < 0) {
+            if (ship.style.pointerEvents === 'none') {
                 ship.style.border = '3px solid rgba(255, 0, 0, 0.8)';
                 allShipsPlaced = false;
                 return;
@@ -262,7 +262,7 @@ const Game = ({ socket, onRouteChange }) => {
             for (let ship of ships) {
                 ship.style.cursor = 'default';
                 ship.style.border = null;
-                ship.style.zIndex = '3';
+                ship.style.pointerEvents = 'auto';
             }
             if (opponentIsReady) {
                 setGameRoute('gameInProgress');
