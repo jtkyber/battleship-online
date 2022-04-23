@@ -258,18 +258,11 @@ const App = () => {
             }
         }
 
-        if (isMobile) {
-            document.addEventListener('touchend', handleMouseDown);
-        } else {
-            document.addEventListener('mouseup', handleMouseDown);
-        }
+        
+        document.addEventListener('click', handleMouseDown);
         
         return () => {
-            if (isMobile) {
-                document.removeEventListener('touchend', handleMouseDown);
-            } else {
-                document.removeEventListener('mouseup', handleMouseDown);
-            }
+            document.removeEventListener('click', handleMouseDown);
         }
     }, [route, gameRoute, showGameInstructions, audioStarted])
 
@@ -349,8 +342,7 @@ const App = () => {
             audio.buttonClick.play();
         }
 
-        const instructionsDiv = document.querySelector('.instructions');
-        if (instructionsDiv !== e.target && !instructionsDiv?.contains(e.target) && (route === 'game')) {
+        if (showGameInstructions) {
             setShowGameInstructions(false);
         }
     }

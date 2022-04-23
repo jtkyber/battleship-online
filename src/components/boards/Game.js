@@ -137,13 +137,10 @@ const Game = ({ socket, onRouteChange }) => {
                 }
             }
         } else {
-            playingWithAI
-            ? setTimeout(() => setPlayerTurnText("Computer's turn"), 900)
-            : setTimeout(() => setPlayerTurnText(`${opponentName}'s Turn!`), 900)
-            
             if (gameRoute === 'gameInProgress') {
+                setTimeout(() => setPlayerTurnText(playingWithAI ? "Computer's turn" : `${opponentName}'s Turn!`), 900)
                 setGameTimer(15);
-            }
+            } else setPlayerTurnText(playingWithAI ? "Computer's turn" : `${opponentName}'s Turn!`);
         }
     },[yourTurn])
 
