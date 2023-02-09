@@ -1,2 +1,2 @@
 import io from 'socket.io-client';
-export const socket = io(`${process.env.REACT_APP_API_URL}`);       //,{autoConnect: false}
+export const socket = io(`https://battleship-online-socket.vercel.app/`);       //,{autoConnect: false}
