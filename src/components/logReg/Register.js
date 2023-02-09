@@ -26,7 +26,7 @@ const Register = ({ onRouteChange }) => {
         } else if (password.length < 5) {
             register.style.setProperty("--reg-log-alert", '"Password must be at least 5 characters"');
         } else {
-            fetch('https://calm-ridge-60009.herokuapp.com/register', {
+            fetch(`${process.env.REACT_APP_API_URL}/register`, {
               method: 'post',
               headers: {'Content-Type': 'application/json'},
               body: JSON.stringify({

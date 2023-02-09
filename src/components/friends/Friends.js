@@ -93,7 +93,7 @@ const Friends = ({ socket }) => {
 
     const getOnlineFriends = async () => {
          try {
-            const response = await fetch(`https://calm-ridge-60009.herokuapp.com/getFriendsOnline?username=${user.username}`)
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/getFriendsOnline?username=${user.username}`)
             if (!response.ok) {throw new Error('Could not get online friends')}
             const onlineFriends = await response.json();
             setFriendsOnline(onlineFriends);
@@ -107,7 +107,7 @@ const Friends = ({ socket }) => {
 // -----------------------------------------------------------------------------------
     const fetchFriends = async () => {
         try {
-            const response = await fetch(`https://calm-ridge-60009.herokuapp.com/getFriends?username=${user.username}`)
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/getFriends?username=${user.username}`)
             if (!response.ok) {throw new Error('Problem accessing friends list')}
             const friends = await response.json();
             if (user?.friends?.length && friends?.length) {
@@ -136,7 +136,7 @@ const Friends = ({ socket }) => {
         // Check to see if friend already sent user request
 //-----------------------------------------------------------------------------------
         try {
-            const res = await fetch(`https://calm-ridge-60009.herokuapp.com/getFriendRequests?username=${user.username}`);
+            const res = await fetch(`${process.env.REACT_APP_API_URL}/getFriendRequests?username=${user.username}`);
             if (!res.ok) {
                 throw new Error('Could not get friend requests')
             }
@@ -151,7 +151,7 @@ const Friends = ({ socket }) => {
 //-----------------------------------------------------------------------------------
             // Check to see if friend exists
 //-----------------------------------------------------------------------------------
-            const res2 = await fetch(`https://calm-ridge-60009.herokuapp.com/findFriend?username=${friendSearch}`);
+            const res2 = await fetch(`${process.env.REACT_APP_API_URL}/findFriend?username=${friendSearch}`);
             if (!res2.ok) {
                 friendAlert.style.setProperty('--add-friend-alert', '"User does not exist"');
                 throw new Error('User does not exist')
@@ -192,7 +192,7 @@ const Friends = ({ socket }) => {
                 }
             }
             friendAlert.style.setProperty('--add-friend-alert', '""');
-            const res3 = await fetch('https://calm-ridge-60009.herokuapp.com/updateFriendRequests', {
+            const res3 = await fetch(`${process.env.REACT_APP_API_URL}/updateFriendRequests`, {
                 method: 'put',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({

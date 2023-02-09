@@ -107,6 +107,7 @@ const App = () => {
     }
 
     useEffect(() => {
+        console.log(process.env.REACT_APP_API_URL)
         setTimeout(() => {
             isDevicePortrait();
             guestCleanup();
@@ -285,7 +286,7 @@ const App = () => {
 
     const stopSearching = async () => {
         try {
-           const response = await fetch('https://calm-ridge-60009.herokuapp.com/updateSearching', {
+           const response = await fetch(`${process.env.REACT_APP_API_URL}/updateSearching`, {
                method: 'put',
                headers: {'Content-Type': 'application/json'},
                body: JSON.stringify({
@@ -301,7 +302,7 @@ const App = () => {
 
     const updateLastOnline = async () => {
         try {
-            const response = await fetch(`https://calm-ridge-60009.herokuapp.com/updateOnlineStatus`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/updateOnlineStatus`, {
                 method: 'put',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
@@ -318,7 +319,7 @@ const App = () => {
 
     const guestCleanup = async () => {
         try {
-            const response = await fetch('https://calm-ridge-60009.herokuapp.com/guestCleanup', {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/guestCleanup`, {
                 method: 'delete',
                 headers: {'Content-Type': 'application/json'}
             })
@@ -365,7 +366,7 @@ const App = () => {
 
     const updateInGameStatus = async (inGame) => {
         try {
-            const response = await fetch(`https://calm-ridge-60009.herokuapp.com/setInGame`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/setInGame`, {
                 method: 'put',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({

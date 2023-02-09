@@ -202,7 +202,7 @@ const Game = ({ socket, onRouteChange }) => {
 
     const checkIfOpponentIsOnlineAndInGame = async () => {
         try {
-            const response = await fetch(`https://calm-ridge-60009.herokuapp.com/checkIfOppInGame?username=${opponentName}`)
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/checkIfOppInGame?username=${opponentName}`)
             if (!response.ok) {
                 throw new Error('Error')
             }
@@ -218,7 +218,7 @@ const Game = ({ socket, onRouteChange }) => {
 
     const updateScore = async (scoreIncrement) => {
         try {
-            const res = await fetch('https://calm-ridge-60009.herokuapp.com/updateScore', {
+            const res = await fetch(`${process.env.REACT_APP_API_URL}/updateScore`, {
                 method: 'put',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({

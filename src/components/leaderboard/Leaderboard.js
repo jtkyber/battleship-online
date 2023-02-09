@@ -22,7 +22,7 @@ const Leaderboard = ({ onRouteChange, socket }) => {
 
     const getTopPlayers = async () => {
         for (let i = 0; i < 5; i++) {
-            const response = await fetch(`https://calm-ridge-60009.herokuapp.com/getTopFive?userNum=${i}`)
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/getTopFive?userNum=${i}`)
             if (!response.ok) {
                 throw new Error('Error')
             }

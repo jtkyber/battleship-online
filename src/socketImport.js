@@ -1,2 +1,2 @@
 import io from 'socket.io-client';
-export const socket = io('https://safe-mesa-81492.herokuapp.com/');       //,{autoConnect: false}
+export const socket = io(`${process.env.REACT_APP_API_URL}`);       //,{autoConnect: false}

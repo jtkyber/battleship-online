@@ -20,7 +20,7 @@ const Login = ({ onRouteChange}) => {
 
     const onSubmitLogin = async (e) => {
         try {
-            const res = await fetch('https://calm-ridge-60009.herokuapp.com/login', {
+            const res = await fetch(`${process.env.REACT_APP_API_URL}/login`, {
               method: 'put',
               headers: {'Content-Type': 'application/json'},
               body: JSON.stringify({

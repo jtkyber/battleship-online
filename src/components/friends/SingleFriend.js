@@ -56,7 +56,7 @@ const SingleFriend = ({ friendInGame, socket, name, status }) => {
     const sendInvite = async (e) => {
         const friend = e.target.id;
         try {
-            const response = await fetch(`https://calm-ridge-60009.herokuapp.com/findFriend?username=${friend}`)
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/findFriend?username=${friend}`)
             const user1 = await response.json();
             if (user1.socketid) {
                 socket.emit('send invite', {currentSocket: currentSocket, username: user.username, socketid: user1.socketid});

@@ -52,7 +52,7 @@ const FindMatch = ({ socket }) => {
 
     const stopSearching = async () => {
          try {
-            const response = await fetch('https://calm-ridge-60009.herokuapp.com/updateSearching', {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/updateSearching`, {
                 method: 'put',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
@@ -68,7 +68,7 @@ const FindMatch = ({ socket }) => {
 
     const updateSearching = async () => {
         try {
-            const response = await fetch('https://calm-ridge-60009.herokuapp.com/updateSearching', {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/updateSearching`, {
                 method: 'put',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
@@ -88,7 +88,7 @@ const FindMatch = ({ socket }) => {
 
     const searchForMatch = async () => {
         try {
-            const response = await fetch(`https://calm-ridge-60009.herokuapp.com/findMatch?username=${user.username}&socketid=${user.socketid}`)
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/findMatch?username=${user.username}&socketid=${user.socketid}`)
             if (!response.ok) {throw new Error('Could not find match')}
             const match = await response.json();
             if (match?.username) {
@@ -106,7 +106,7 @@ const FindMatch = ({ socket }) => {
 
     const removeGuest = async () => {
         try {
-            const response = await fetch('https://calm-ridge-60009.herokuapp.com/removeGuestUser', {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/removeGuestUser`, {
                 method: 'delete',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
@@ -123,7 +123,7 @@ const FindMatch = ({ socket }) => {
 
     const addGuest = async () => {
         try {
-            const response = await fetch('https://calm-ridge-60009.herokuapp.com/addGuestUser', {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/addGuestUser`, {
                 method: 'post',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
