@@ -107,7 +107,6 @@ const App = () => {
     }
 
     useEffect(() => {
-        console.log(process.env.REACT_APP_API_URL)
         setTimeout(() => {
             isDevicePortrait();
             guestCleanup();
