@@ -1,2 +1,2 @@
 import io from 'socket.io-client';
-export const socket = io(`https://battleship-socket.adaptable.app/`);       //,{autoConnect: false}
+export const socket = io(`https://battleship-socket.adaptable.app/`);       //,{autoConnect: false} 
