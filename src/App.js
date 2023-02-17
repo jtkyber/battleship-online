@@ -12,6 +12,7 @@ import Navigation from './components/navigation/Navigation';
 import Footer from './components/footer/Footer';
 import { socket } from './socketImport';
 import { audio } from './audio';
+import { Pusher } from 'pusher-js';
 import './logReg.css';
 import './homePageLogged.css';
 import './gamePage.css';
@@ -39,7 +40,7 @@ const App = () => {
         playingWithAI: state.playingWithAI
     }));
 
-    const { setRoute, setUser, setCurrentSocket, setSearch, setUpdatLastOnlineInterval, setAllFriends, setUnsortedFriends, setFriendsOnline, setFriendSearch, setPlayerIsReady, setUserName, setPassword, setAudioStarted, setShowFriendsMobile, setShowChatMobile, setShowGameInstructions, setDeviceInPortrait, setGameRoute, setPlayigWithAI } = useStoreActions(actions => ({
+    const { setRoute, setUser, setCurrentSocket, setSearch, setUpdatLastOnlineInterval, setAllFriends, setUnsortedFriends, setFriendsOnline, setFriendSearch, setPlayerIsReady, setUserName, setPassword, setAudioStarted, setShowFriendsMobile, setShowChatMobile, setShowGameInstructions, setDeviceInPortrait, setGameRoute, setPlayigWithAI, setPusher } = useStoreActions(actions => ({
         setRoute: actions.setRoute,
         setUser: actions.setUser,
         setCurrentSocket: actions.setCurrentSocket,
@@ -58,7 +59,8 @@ const App = () => {
         setShowGameInstructions: actions.setShowGameInstructions,
         setDeviceInPortrait: actions.setDeviceInPortrait,
         setGameRoute: actions.setGameRoute,
-        setPlayigWithAI: actions.setPlayigWithAI
+        setPlayigWithAI: actions.setPlayigWithAI,
+        setPusher: actions.setPusher
     }));
 
     const onRouteChange = async (e) => {
@@ -107,6 +109,13 @@ const App = () => {
     }
 
     useEffect(() => {
+        // setPusher(new Pusher(process.env.key, {
+        //     cluster: process.env.cluster,
+        //     authEndpoint: `${process.env.REACT_APP_PUSHER_URL}/auth`,
+        //     auth: {params: {username: user.username}}
+        // }))
+
+        
         setTimeout(() => {
             isDevicePortrait();
             guestCleanup();

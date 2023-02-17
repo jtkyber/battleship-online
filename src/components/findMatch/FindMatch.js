@@ -4,20 +4,23 @@ import './findMatch.css';
 
 const FindMatch = ({ socket }) => {
     
-    const { currentSocket, search, user, route } = useStoreState(state => ({
+    const { currentSocket, search, user, route, channel, pusher } = useStoreState(state => ({
         currentSocket: state.currentSocket,
         search: state.search,
         user: state.user,
-        route: state.route
+        route: state.route,
+        channel: state.channel,
+        pusher: state.pusher
     }));
 
-    const { setSearch, setFindMatchInterval, setOpponentName, setFriendSocket, setRoute, setUser } = useStoreActions(actions => ({
+    const { setSearch, setFindMatchInterval, setOpponentName, setFriendSocket, setRoute, setUser, setChannel } = useStoreActions(actions => ({
         setSearch: actions.setSearch,
         setFindMatchInterval: actions.setFindMatchInterval,
         setOpponentName: actions.setOpponentName,
         setFriendSocket: actions.setFriendSocket,
         setRoute: actions.setRoute,
-        setUser: actions.setUser
+        setUser: actions.setUser,
+        setChannel: actions.setChannel
     }));
 
     useEffect(() => {
@@ -39,9 +42,18 @@ const FindMatch = ({ socket }) => {
 
     useEffect(() => {
         if (search) {
-            setFindMatchInterval(setInterval(searchForMatch, 1000));
+            // setFindMatchInterval(setInterval(searchForMatch, 1000));
+            searchForMatch()
         }
     }, [search, user])
+
+    useEffect(() => {
+        if (channel) {
+            channel.bind('go to game', function(data) {
+                return data
+            })
+        }
+    }, [channel])
 
     // useEffect(() => {
     //     if (user?.username?.length && (route === 'login' || route === 'register')) {
@@ -85,17 +97,29 @@ const FindMatch = ({ socket }) => {
             console.log(err);
         }
     }
+    
+    // const setNewChannel = () => {
+    //     const newChannel = pusher.subscribe(user.username)
+    //     newChannel.bind('go to game', function(data) {
+    //         console.log(data)
+    //     })
+    //     setChannel(newChannel)
+    // }
 
     const searchForMatch = async () => {
         try {
             const response = await fetch(`${process.env.REACT_APP_API_URL}/findMatch?username=${user.username}&socketid=${user.socketid}`)
-            if (!response.ok) {throw new Error('Could not find match')}
+            if (!response.ok) {
+                throw new Error('Could not find match')
+                // setNewChannel()
+            }
             const match = await response.json();
             if (match?.username) {
                 setFriendSocket(match.socketid);
                 setOpponentName(match.username);
                 stopSearching();
                 socket.emit('send go to game',  {receiverSocket: match.socketid, senderSocket: currentSocket, senderName: user.username});
+                // const res2 = await fetch(`${process.env.REACT_APP_SOCKET_URL}/`)
                 setSearch(false);
                 setRoute('game');
             }

@@ -73,6 +73,8 @@ const model = {
     allSquareIDs: [],
     aiTurn: false,
     aiShotMatchedToUserShot: '',
+    channel: '',
+    pusher: null,
 
 
     //Actions
@@ -255,6 +257,14 @@ const model = {
 
     setAIShotMatchedToUserShot: action((state, input) => {
         state.aiShotMatchedToUserShot = input;
+    }),
+
+    setChannel: action((state, input) => {
+        state.channel = input;
+    }),
+
+    setPusher: action((state, input) => {
+        state.pusher = input;
     }),
 }
 
