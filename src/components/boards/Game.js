@@ -59,6 +59,7 @@ const Game = ({ socket, onRouteChange }) => {
     : "Drag the selected ship and let go when the ship is in position"
 
     useEffect(() => {
+        console.log(friendSocket)
         let shipPlacementTimer = 90;
         clearInterval(gameCountdownInterval);
         setGameTimer(90);
