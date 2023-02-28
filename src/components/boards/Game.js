@@ -87,7 +87,7 @@ const Game = ({ onRouteChange }) => {
             return data
         })
 
-        if (!playingWithAI) setCheckOppStatusInterval(setInterval(checkIfOpponentIsOnlineAndInGame, 2000));
+        if (!playingWithAI) setTimeout(() => setCheckOppStatusInterval(setInterval(checkIfOpponentIsOnlineAndInGame, 5000)), 5000);
 
         return () => {
             channel.unbind('receive-game-over')
