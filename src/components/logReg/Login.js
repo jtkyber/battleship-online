@@ -2,8 +2,7 @@ import { useStoreState, useStoreActions } from 'easy-peasy';
 
 const Login = ({ onRouteChange}) => {
     
-    const { currentSocket, userName, password, search } = useStoreState(state => ({
-        currentSocket: state.currentSocket,
+    const { userName, password, search } = useStoreState(state => ({
         userName: state.userName,
         password: state.password,
         search: state.search
@@ -25,8 +24,7 @@ const Login = ({ onRouteChange}) => {
               headers: {'Content-Type': 'application/json'},
               body: JSON.stringify({
                 username: userName,
-                password: password,
-                socketid: currentSocket
+                password: password
               })
             })
             const user1 = await res.json();

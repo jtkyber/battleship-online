@@ -4,11 +4,12 @@ import './navigation.css';
 import notificationIcon from './notification.png';
 import { Dropdown } from 'react-bootstrap';
 import { audio } from '../../audio';
-const FriendRequests = ({ socket }) => {
+const FriendRequests = () => {
 
-    const { user, friendRequests } = useStoreState(state => ({
+    const { user, friendRequests, channel } = useStoreState(state => ({
         user: state.user,
-        friendRequests: state.friendRequests
+        friendRequests: state.friendRequests,
+        channel: state.channel
     }));
 
     const { setUnsortedFriends, setFriendRequests } = useStoreActions(actions => ({
@@ -19,14 +20,21 @@ const FriendRequests = ({ socket }) => {
     useEffect(() => {
         updateRequests();
 
-        socket.on('receive friend request', () => {
+        return () => {
+        }
+    },[])
+
+    useEffect(() => {
+        if (!channel) return
+        channel.bind('receive-friend-request', data => {
             updateRequests();
+            return data
         })
 
         return () => {
-            socket.off('receive friend request');
+            if (channel) channel.unbind('receive-friend-request')
         }
-    },[])
+    }, [channel])
 
     const updateRequests = async () => {
         const navBar = document.querySelector('nav');
@@ -95,12 +103,10 @@ const FriendRequests = ({ socket }) => {
     }
 
      const addFriend = async (friend) => {
-        console.log('friend added');
         document.querySelector('.addFriendInput').value = '';
         let friendList = '';
         let friendArray = [];
         let friendlistOfFriends = '';
-        let friendSocketId = '';
 //-----------------------------------------------------------------------------------
         // Search the database to check if the name matches any users in the databse
 //-----------------------------------------------------------------------------------
@@ -114,7 +120,6 @@ const FriendRequests = ({ socket }) => {
                 throw new Error('Cannot add self as friend')
             } else if (user1.username) {
                 let friendlistOfFriendsArray = [];
-                friendSocketId = user1.socketid;
                 if (user1?.friends?.length) {
                     friendlistOfFriendsArray = user1.friends.split(',');
                     if (friendlistOfFriendsArray.includes(user.username)) {
@@ -188,8 +193,8 @@ const FriendRequests = ({ socket }) => {
                 })
                 if (!res4.ok) {throw new Error('Problem adding self to friendlist of friend')}
                 const selfAdded = await res4.json();
-                if (selfAdded && friendSocketId !== null) {
-                    socket.emit('update user status', friendSocketId);
+                if (selfAdded) {
+                    await fetch(`${process.env.REACT_APP_PUSHER_URL}/updateUserStatus?channelName=${friend}`)
                 }
             }
         } catch(err) {
@@ -206,9 +211,7 @@ const FriendRequests = ({ socket }) => {
             const user1 = await res.json();
             if (user1.username) {
                 removeRequest(e.target.id);
-                // socket.emit('send add friend', {socketid: user.socketid, user: username})
                 addFriend(e.target.id);
-                // Can't add friend if their offline   FIX
             }
         } catch(err) {
             console.log(err)

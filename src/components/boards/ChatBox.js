@@ -2,14 +2,14 @@ import React, { useEffect } from 'react';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import { audio } from '../../audio';
 
-const ChatBox = ({ socket }) => {
-    const { friendSocket, opponentName, chatText, showChatMobile, isMobile, playingWithAI } = useStoreState(state => ({
-        friendSocket: state.friendSocket,
+const ChatBox = () => {
+    const { opponentName, chatText, showChatMobile, isMobile, playingWithAI, channel } = useStoreState(state => ({
         opponentName: state.opponentName,
         chatText: state.chatText,
         showChatMobile: state.showChatMobile,
         isMobile: state.stored.isMobile,
-        playingWithAI: state.playingWithAI
+        playingWithAI: state.playingWithAI,
+        channel: state.channel
     }));
 
     const { setChatText } = useStoreActions(actions => ({
@@ -24,15 +24,23 @@ const ChatBox = ({ socket }) => {
     }, [])
 
     useEffect(() => {
-        if (showChatMobile) root.style.setProperty("--chatNotificationDisplay", 'none')
-
-        document.addEventListener('keyup', handleEnterBtn);
-        socket.on('receive msg', message => {
-            handleReceivedMessage(message);
+        if (!chatBox) return
+        channel.bind('receive-msg', data => {
+            handleReceivedMessage(data.message);
+            return data
         })
 
         return () => {
-            socket.off('receive msg');
+            channel.unbind('receive-msg')
+        }
+    }, [chatBox])
+
+    useEffect(() => {
+        if (showChatMobile) root.style.setProperty("--chatNotificationDisplay", 'none')
+
+        document.addEventListener('keyup', handleEnterBtn);
+
+        return () => {
             document.removeEventListener('keyup', handleEnterBtn);
         }
     },[chatBox, showChatMobile, chatText])
@@ -59,7 +67,7 @@ const ChatBox = ({ socket }) => {
         }
     }
 
-    const handleEnterBtn = (e) => {
+    const handleEnterBtn = async (e) => {
             if (e.key === 'Enter' && chatText !== '') {
                 e.preventDefault();
                 audio.buttonClick.play();
@@ -77,7 +85,7 @@ const ChatBox = ({ socket }) => {
                 msgNode.appendChild(textNode);
                 chatBox.appendChild(msgNode);
                 setChatText('');
-                socket.emit('send msg', {socketid: friendSocket, message: chatText});
+                await fetch(`${process.env.REACT_APP_PUSHER_URL}/sendMessage?channelName=${opponentName}&message=${chatText}`)
                 document.querySelector('.chatInput').value = '';
                 chatBox.scrollTop = chatBox.scrollHeight;
             }

@@ -12,12 +12,13 @@ let firstHit = '';
 let lastHit = '';
 let aiShipOrientationGuess = null;
 
-const UserBoard = ({ socket }) => {
-    const { friendSocket, playingWithAI, allSquareIDs, aiTurn } = useStoreState(state => ({
-        friendSocket: state.friendSocket,
+const UserBoard = () => {
+    const {  playingWithAI, allSquareIDs, aiTurn, channel, opponentName } = useStoreState(state => ({
         playingWithAI: state.playingWithAI,
         allSquareIDs: state.allSquareIDs,
-        aiTurn: state.aiTurn
+        aiTurn: state.aiTurn,
+        channel: state.channel,
+        opponentName: state.opponentName
     }));
 
     const { setYourTurn, setAllSquareIDs, setAIturn } = useStoreActions(actions => ({
@@ -35,11 +36,11 @@ const UserBoard = ({ socket }) => {
         }
         setAllSquareIDs(allSquareIDsTemp);
 
-        socket.on('receive shot', shot => {
-            if (shot === 'oppOutOfTime') {
+        channel.bind('receive-shot', data => {
+            if (data.shot === 'oppOutOfTime') {
                 setYourTurn(true);
             } else {
-                const oppShot = document.getElementById(shot);
+                const oppShot = document.getElementById(data.shot);
     
                 const incomingMissileDuration = audio.incomingMissile.duration() * 1000 - 100;
                 audio.incomingMissile.play();
@@ -48,10 +49,11 @@ const UserBoard = ({ socket }) => {
                     setYourTurn(true);
                 }, incomingMissileDuration)
             }
+            return data
         })
 
         return () => {
-            socket.off('receive shot');
+            channel.unbind('receive-shot')
             setAIturn(false);
             setAllSquareIDs([]);
             hitSquares = [];
@@ -241,7 +243,7 @@ const UserBoard = ({ socket }) => {
         return count;
     }
 
-    const applyHitOrMiss = (oppShot) => {
+    const applyHitOrMiss = async (oppShot) => {
         if (matchOppShotToBoard(oppShot)) {
             const hitMarkerBackgroundFlash = document.createElement('div');
             hitMarkerBackgroundFlash.classList.add('hitMarkerBackgroundFlash');
@@ -311,11 +313,11 @@ const UserBoard = ({ socket }) => {
             } else {
                 audio.hitSound.play();
             }
-            if (!playingWithAI) socket.emit('send result to opponent board', {shotSquare: oppShot.id, shot: 'hit', socketid: friendSocket, shipHit: shipHit});
+            if (!playingWithAI) await fetch(`${process.env.REACT_APP_PUSHER_URL}/sendResultToOpponentBoard?channelName=${opponentName}&shotSquare=${oppShot.id}&shot=hit&shipHit=${shipHit}`)
         } else {
             oppShot.classList.add('missMarker');
             audio.missSound.play();
-            if (!playingWithAI) socket.emit('send result to opponent board', {shotSquare: oppShot.id, shot: 'miss', socketid: friendSocket, shipHit: shipHit});
+            if (!playingWithAI) await fetch(`${process.env.REACT_APP_PUSHER_URL}/sendResultToOpponentBoard?channelName=${opponentName}&shotSquare=${oppShot.id}&shot=miss&shipHit=${shipHit}`)
         }
     }
 

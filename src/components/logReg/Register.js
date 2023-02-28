@@ -2,8 +2,7 @@ import { useStoreState, useStoreActions } from 'easy-peasy';
 
 const Register = ({ onRouteChange }) => {
 
-    const { currentSocket, userName, password, search } = useStoreState(state => ({
-        currentSocket: state.currentSocket,
+    const { userName, password, search } = useStoreState(state => ({
         userName: state.userName,
         password: state.password,
         search: state.search
@@ -32,7 +31,6 @@ const Register = ({ onRouteChange }) => {
               body: JSON.stringify({
                 username: userName,
                 password: password,
-                socketid: currentSocket
               })
             })
             .then(response => response.json())

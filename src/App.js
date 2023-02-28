@@ -10,9 +10,8 @@ import Register from './components/logReg/Register';
 import Leaderboard from './components/leaderboard/Leaderboard';
 import Navigation from './components/navigation/Navigation';
 import Footer from './components/footer/Footer';
-import { socket } from './socketImport';
 import { audio } from './audio';
-import { Pusher } from 'pusher-js';
+import Pusher from 'pusher-js';
 import './logReg.css';
 import './homePageLogged.css';
 import './gamePage.css';
@@ -20,11 +19,10 @@ import './leaderboard.css';
 
 // let showInstructions = true;
 const App = () => {
-    const { getOnlineFriendsInterval, route, user, friendSocket, findMatchInterval, checkOppStatusInterval, search, updatLastOnlineInterval, soundOn, musicOn, isMobile, showFriendsMobile, audioStarted, deviceInPortrait, gameRoute, showGameInstructions, playingWithAI } = useStoreState(state => ({
+    const { getOnlineFriendsInterval, route, user, findMatchInterval, checkOppStatusInterval, search, updatLastOnlineInterval, soundOn, musicOn, isMobile, showFriendsMobile, audioStarted, deviceInPortrait, gameRoute, showGameInstructions, playingWithAI, pusher, opponentName, playerIsReady, opponentIsReady } = useStoreState(state => ({
         getOnlineFriendsInterval: state.getOnlineFriendsInterval,
         route: state.route,
         user: state.user,
-        friendSocket: state.friendSocket,
         findMatchInterval: state.findMatchInterval,
         checkOppStatusInterval: state.checkOppStatusInterval,
         search: state.search,
@@ -37,13 +35,16 @@ const App = () => {
         deviceInPortrait: state.deviceInPortrait,
         gameRoute: state.gameRoute,
         showGameInstructions: state.stored.showGameInstructions,
-        playingWithAI: state.playingWithAI
+        playingWithAI: state.playingWithAI,
+        pusher: state.pusher,
+        opponentName: state.opponentName,
+        playerIsReady: state.playerIsReady,
+        opponentIsReady: state.opponentIsReady
     }));
 
-    const { setRoute, setUser, setCurrentSocket, setSearch, setUpdatLastOnlineInterval, setAllFriends, setUnsortedFriends, setFriendsOnline, setFriendSearch, setPlayerIsReady, setUserName, setPassword, setAudioStarted, setShowFriendsMobile, setShowChatMobile, setShowGameInstructions, setDeviceInPortrait, setGameRoute, setPlayigWithAI, setPusher } = useStoreActions(actions => ({
+    const { setRoute, setUser, setSearch, setUpdatLastOnlineInterval, setAllFriends, setUnsortedFriends, setFriendsOnline, setFriendSearch, setPlayerIsReady, setUserName, setPassword, setAudioStarted, setShowFriendsMobile, setShowChatMobile, setShowGameInstructions, setDeviceInPortrait, setGameRoute, setPlayigWithAI, setPusher, setChannel, setOpponentIsReady } = useStoreActions(actions => ({
         setRoute: actions.setRoute,
         setUser: actions.setUser,
-        setCurrentSocket: actions.setCurrentSocket,
         setSearch: actions.setSearch,
         setUpdatLastOnlineInterval: actions.setUpdatLastOnlineInterval,
         setAllFriends: actions.setAllFriends,
@@ -60,7 +61,9 @@ const App = () => {
         setDeviceInPortrait: actions.setDeviceInPortrait,
         setGameRoute: actions.setGameRoute,
         setPlayigWithAI: actions.setPlayigWithAI,
-        setPusher: actions.setPusher
+        setPusher: actions.setPusher,
+        setChannel: actions.setChannel,
+        setOpponentIsReady: actions.setOpponentIsReady
     }));
 
     const onRouteChange = async (e) => {
@@ -109,13 +112,6 @@ const App = () => {
     }
 
     useEffect(() => {
-        // setPusher(new Pusher(process.env.key, {
-        //     cluster: process.env.cluster,
-        //     authEndpoint: `${process.env.REACT_APP_PUSHER_URL}/auth`,
-        //     auth: {params: {username: user.username}}
-        // }))
-
-        
         setTimeout(() => {
             isDevicePortrait();
             guestCleanup();
@@ -123,15 +119,12 @@ const App = () => {
 
         window.addEventListener('resize', isDevicePortrait);
         document.addEventListener('mouseover', handleMouseOver);
-
-        socket.on('connect', () => {
-            setCurrentSocket(socket.id);
-        })
+        window.addEventListener('beforeunload', handleBeforeUnload)
 
         return () => {
-            socket.off('connect');
             window.removeEventListener('resize', isDevicePortrait);
             document.removeEventListener('mouseover', handleMouseOver);
+            window.removeEventListener('beforeunload', handleBeforeUnload)
         }
     }, [])
 
@@ -185,7 +178,17 @@ const App = () => {
     }, [musicOn])
 
     useEffect(() => {
+        if (user?.username) setChannel(pusher.subscribe(user.username))
+    }, [pusher])
+
+    useEffect(() => {
         if (user?.username?.length) {
+            setPusher(new Pusher(process.env.REACT_APP_KEY, {
+                cluster: process.env.REACT_APP_CLUSTER,
+                authEndpoint: `${process.env.REACT_APP_PUSHER_URL}/auth`,
+                auth: {params: {username: user.username}}
+            }))
+            
             if (route !== 'login' && route !== 'register') {
                 stopSearching();
                 updateInGameStatus(false);
@@ -245,6 +248,7 @@ const App = () => {
         } else {
             setGameRoute('placeShips');
             setPlayerIsReady(false);
+            setOpponentIsReady(false);
             if (user?.username?.length) {
                 updateInGameStatus(false);
             }
@@ -390,17 +394,17 @@ const App = () => {
         }
     }
 
-    window.addEventListener('beforeunload', (e) => {
+    const handleBeforeUnload = async (e) => {
         e.preventDefault();
         if (user?.username) {
             stopSearching();
             updateInGameStatus(false);
         }
         if (route === 'game') {
-            if (!playingWithAI) socket.emit('send exit game', friendSocket);
+            if (!playingWithAI && opponentName) await fetch(`${process.env.REACT_APP_PUSHER_URL}/sendExitGame?channelName=${opponentName}`)
         }
         // e.returnValue = '';
-    })
+    }
 
     document.onkeydown = (e) => {
         const loginBtn = document.querySelector('.loginBtn');
@@ -443,7 +447,7 @@ const App = () => {
         route === 'login' || route === 'register'
         ?
         <div className={`logRegPage ${isMobile ? 'mobile' : null}`}>
-            <Navigation socket={socket} onRouteChange={onRouteChange} />
+            <Navigation onRouteChange={onRouteChange} />
             {
                 !isMobile 
                 ? <FriendsHome onRouteChange={onRouteChange}/>
@@ -453,7 +457,7 @@ const App = () => {
                 <h1>Battleship</h1>
             </div>
             <div className='playGameBtnContainer'>
-                <FindMatch socket={socket} />
+                <FindMatch />
                 <div className={'playAIbtnContainer'}>
                     <button onClick={handlePlayAIbutton} className='playAIbtn'>Play with Computer</button>
                 </div>
@@ -476,11 +480,11 @@ const App = () => {
                 ?
                 <>
                     <div className={`homePageLogged ${route === 'leaderboard' ? 'hide' : null} ${isMobile ? 'mobile' : null}`}>
-                        <Navigation socket={socket} onRouteChange={onRouteChange} />
-                        <Friends socket={socket} />
+                        <Navigation onRouteChange={onRouteChange} />
+                        <Friends />
                         <div className={`matchAndBoard ${showFriendsMobile ? 'hide' : null}`}>
                         <div className='playGameBtnContainer'>
-                            <FindMatch socket={socket} />
+                            <FindMatch />
                             <div className={'playAIbtnContainer'}>
                                 <button onClick={handlePlayAIbutton} className='playAIbtn'>Play with Computer</button>
                             </div>
@@ -493,18 +497,18 @@ const App = () => {
                         <Footer />
                     </div>
                     <div className={`leaderboard ${route === 'loggedIn' ? 'hide' : null}`}>
-                        <Leaderboard onRouteChange={onRouteChange} socket={socket} />
+                        <Leaderboard onRouteChange={onRouteChange} />
                         <Footer />
                     </div>
                 </>
                 :
                 <div className={`leaderboard ${isMobile ? 'mobile' : null}`}>
-                    <Leaderboard onRouteChange={onRouteChange} socket={socket} />
+                    <Leaderboard onRouteChange={onRouteChange} />
                     <Footer />
                 </div>
             : 
             <div className={`gamePage ${isMobile ? 'mobile' : 'desktop'}`}>
-                <Game socket={socket} onRouteChange={onRouteChange} />
+                <Game onRouteChange={onRouteChange} />
             </div>
             }
         </>

@@ -2,33 +2,36 @@ import React, { useEffect } from 'react';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import './singleFriend.css';
 
-const SingleFriend = ({ friendInGame, socket, name, status }) => {
+const SingleFriend = ({ friendInGame, name, status }) => {
 
-    const { friendSocket, route, currentSocket, user } = useStoreState(state => ({
-        friendSocket: state.friendSocket,
+    const { route, user, channel } = useStoreState(state => ({
         route: state.route,
-        currentSocket: state.currentSocket,
-        user: state.user
+        user: state.user,
+        channel: state.channel
     }));
 
-    const { setOpponentName, setFriendSocket, setRoute } = useStoreActions(actions => ({
+    const { setOpponentName, setRoute } = useStoreActions(actions => ({
         setOpponentName: actions.setOpponentName,
-        setFriendSocket: actions.setFriendSocket,
         setRoute: actions.setRoute
     }));    
 
     useEffect(() => {
-        socket.on('receive go to game', data => {
+
+        channel.bind('receive-go-to-game', data => {
             setOpponentName(data.senderName);
-            setFriendSocket(data.senderSocket);
             setRoute('game');
+            return data
         })
 
-        socket.on('receive invite', data => handleInvite(data))
+        channel.bind('receive-invite', data => {
+            handleInvite(data)
+            return data
+        })
+
 
         return () => {
-            socket.off('receive go to game');
-            socket.off('receive invite');
+            channel.unbind('receive-go-to-game')
+            channel.unbind('receive-go-to-game')
         }
     },[])
 
@@ -49,7 +52,6 @@ const SingleFriend = ({ friendInGame, socket, name, status }) => {
                 btn.disabled = false;
             }
             btn.childNodes[0].nodeValue = "Accept";
-            setFriendSocket(data.socketid);
         }
     }
 
@@ -58,8 +60,8 @@ const SingleFriend = ({ friendInGame, socket, name, status }) => {
         try {
             const response = await fetch(`${process.env.REACT_APP_API_URL}/findFriend?username=${friend}`)
             const user1 = await response.json();
-            if (user1.socketid) {
-                socket.emit('send invite', {currentSocket: currentSocket, username: user.username, socketid: user1.socketid});
+            if (user1.username) {
+                await fetch(`${process.env.REACT_APP_PUSHER_URL}/sendInvite?username=${user.username}&friendName=${user1.username}`)
                 e.target.childNodes[0].nodeValue = "Invite sent";
                 e.target.style.opacity = '0.4';
                 e.target.style.cursor = 'default';
@@ -70,8 +72,8 @@ const SingleFriend = ({ friendInGame, socket, name, status }) => {
         }
     }
 
-    const acceptInvite = (e) => {
-        socket.emit('send go to game',  {receiverSocket: friendSocket, senderSocket: currentSocket, senderName: user.username});
+    const acceptInvite = async (e) => {
+        await fetch(`${process.env.REACT_APP_PUSHER_URL}/sendGoToGame?username=${user.username}&friendName=${name}`)
         setOpponentName(e.target.id);
         setRoute('game');
     }

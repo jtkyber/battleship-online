@@ -34,8 +34,6 @@ const model = {
 
     route: 'login',
     user: null,
-    currentSocket: null,
-    friendSocket: null,
     opponentName: '',
     unsortedFriends: [],
     findMatchInterval: 0,
@@ -85,14 +83,6 @@ const model = {
 
     setUser: action((state, input) => {
         state.user = input;
-    }),
-
-    setCurrentSocket: action((state, input) => {
-        state.currentSocket = input;
-    }),
-
-    setFriendSocket: action((state, input) => {
-        state.friendSocket = input;
     }),
 
     setOpponentName: action((state, input) => {

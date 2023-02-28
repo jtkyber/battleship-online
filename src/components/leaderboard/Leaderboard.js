@@ -3,7 +3,7 @@ import { useStoreState, useStoreActions } from 'easy-peasy';
 
 import Navigation from '../navigation/Navigation';
 
-const Leaderboard = ({ onRouteChange, socket }) => {
+const Leaderboard = ({ onRouteChange }) => {
 
     const { topFive, route } = useStoreState(state => ({
         topFive: state.topFive,
@@ -33,7 +33,7 @@ const Leaderboard = ({ onRouteChange, socket }) => {
 
     return (
         <>
-            <Navigation onRouteChange={onRouteChange} socket={socket} />
+            <Navigation onRouteChange={onRouteChange} />
             {
             topFive.length
             ?

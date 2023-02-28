@@ -6,9 +6,8 @@ import Navigation from '../navigation/Navigation';
 import ChatBox from './ChatBox';
 import Footer from '../footer/Footer';
 
-const Game = ({ socket, onRouteChange }) => {
-    const { friendSocket, opponentName, user, checkOppStatusInterval, gameRoute, playerIsReady, yourTurn, playerTurnText, isMobile, showGameInstructions, opponentIsReady, firstGameInstructionLoad, gameTimer, gameCountdownInterval, skippedTurns, playingWithAI } = useStoreState(state => ({
-        friendSocket: state.friendSocket,
+const Game = ({ onRouteChange }) => {
+    const { opponentName, user, checkOppStatusInterval, gameRoute, playerIsReady, yourTurn, playerTurnText, isMobile, showGameInstructions, opponentIsReady, firstGameInstructionLoad, gameTimer, gameCountdownInterval, skippedTurns, playingWithAI, channel } = useStoreState(state => ({
         opponentName: state.opponentName,
         user: state.user,
         checkOppStatusInterval: state.checkOppStatusInterval,
@@ -23,7 +22,8 @@ const Game = ({ socket, onRouteChange }) => {
         gameTimer: state.gameTimer,
         gameCountdownInterval: state.gameCountdownInterval,
         skippedTurns: state.skippedTurns,
-        playingWithAI: state.playingWithAI
+        playingWithAI: state.playingWithAI,
+        channel: state.channel
     }));
 
     const { setCheckOppStatusInterval, setRoute, setGameRoute, setPlayerIsReady, setYourTurn, setPlayerTurnText, setOpponentIsReady, setShowGameInstructions, setFirstGameInstructionLoad, setGameTimer, setGameCountdownInterval, setSkippedTurns, setPlayigWithAI, setUser } = useStoreActions(actions => ({
@@ -59,7 +59,6 @@ const Game = ({ socket, onRouteChange }) => {
     : "Drag the selected ship and let go when the ship is in position"
 
     useEffect(() => {
-        console.log(friendSocket)
         let shipPlacementTimer = 90;
         clearInterval(gameCountdownInterval);
         setGameTimer(90);
@@ -76,24 +75,25 @@ const Game = ({ socket, onRouteChange }) => {
         }
 
         // const gamePage = document.querySelector('.gamePage');
-        socket.on('receive game over', () => {
-            // gamePage.style.setProperty('--player-turn-text', '"You Won!"');
-            // setTimeout(gameOver, 2000);
+
+        channel.bind('receive-game-over', data => {
             handlePlayerWon(20);
+            return data
         })
 
-        socket.on('receive exit game', () => {
+        channel.bind('receive-exit-game', data => {
             window.alert('Opponent has left the game');
             user.hash === 'guest' ? setRoute('login') : setRoute('loggedIn');
+            return data
         })
 
         if (!playingWithAI) setCheckOppStatusInterval(setInterval(checkIfOpponentIsOnlineAndInGame, 2000));
 
         return () => {
+            channel.unbind('receive-game-over')
+            channel.unbind('receive-exit-game')
             clearInterval(checkOppStatusInterval);
             clearInterval(gameCountdownInterval);
-            socket.off('receive game over');
-            socket.off('receive exit game');
             setFirstGameInstructionLoad(true);
             setGameTimer(90);
             setYourTurn(false);
@@ -103,15 +103,16 @@ const Game = ({ socket, onRouteChange }) => {
     },[])
 
     useEffect(() => {
-        socket.on('receive ready status', () => {
+        channel.bind('receive-ready-status', data => {
             if (playerIsReady) {
                 setGameRoute('gameInProgress');
             }
             setOpponentIsReady(true);
+            return data
         })
 
         return () => {
-            socket.off('receive ready status');
+            channel.unbind('receive-ready-status')
         }
     }, [playerIsReady])
 
@@ -155,7 +156,7 @@ const Game = ({ socket, onRouteChange }) => {
             if (gameRoute === 'gameInProgress') {
                 setYourTurn(false);
                 // if (playingWithAI) setAIturn(true);
-                socket.emit('send shot to opponent', {target: 'oppOutOfTime', socketid: friendSocket});
+                (async () => {await fetch(`${process.env.REACT_APP_PUSHER_URL}/sendShotToOpponent?channelName=${opponentName}&target=oppOutOfTime`)})()
                 setSkippedTurns(skippedTurns + 1);
             } else {
                 // handlePlayerLost("You were kicked from the game because you took too long to ready up");
@@ -171,7 +172,7 @@ const Game = ({ socket, onRouteChange }) => {
                     readyBtn.style.opacity = '0.3';
                     setGameRoute('waiting');
                 }
-                if (!playingWithAI) socket.emit('send ready status', friendSocket);
+                if (!playingWithAI) (async () => {await fetch(`${process.env.REACT_APP_PUSHER_URL}/sendReadyStatus?channelName=${opponentName}`)})()
             }
         }
     }, [gameTimer])
@@ -193,8 +194,8 @@ const Game = ({ socket, onRouteChange }) => {
         }, 300);
     }
 
-    const handlePlayerLost = (msg) => {
-        if (!playingWithAI) socket.emit('game over', friendSocket);
+    const handlePlayerLost = async (msg) => {
+        if (!playingWithAI) await fetch(`${process.env.REACT_APP_PUSHER_URL}/gameOver?channelName=${opponentName}`)
         setTimeout(() => {
             window.alert(msg);
             user?.hash === 'guest' || !user?.hash ? setRoute('login') : setRoute('loggedIn');
@@ -272,7 +273,7 @@ const Game = ({ socket, onRouteChange }) => {
                 readyBtn.style.opacity = '0.3';
                 setGameRoute('waiting');
             }
-            if (!playingWithAI) socket.emit('send ready status', friendSocket);
+            if (!playingWithAI) (async () => {await fetch(`${process.env.REACT_APP_PUSHER_URL}/sendReadyStatus?channelName=${opponentName}`)})()
         }
     }
 
@@ -285,8 +286,8 @@ const Game = ({ socket, onRouteChange }) => {
 
     return (
         <>
-            <Navigation socket={socket} onRouteChange={onRouteChange} />
-            <UserBoard socket={socket} />
+            <Navigation onRouteChange={onRouteChange} />
+            <UserBoard />
             {
             showGameInstructions
             ?
@@ -327,8 +328,8 @@ const Game = ({ socket, onRouteChange }) => {
             </div>
             : (null)
             }
-            <OpponentBoard socket={socket} />
-            <ChatBox socket={socket} />
+            <OpponentBoard />
+            <ChatBox />
             <Footer />
         </>
     )

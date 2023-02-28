@@ -11,10 +11,9 @@ import friendsIcon from './friends-icon.png';
 import chatIcon from './chat-icon.png';
 import './navigation.css';
 
-const Navigation = ({ socket, onRouteChange }) => {
+const Navigation = ({ onRouteChange }) => {
 
-    const { friendSocket, user, route, soundOn, musicOn, isMobile, showChatMobile, showFriendsMobile, playingWithAI } = useStoreState(state => ({
-        friendSocket: state.friendSocket,
+    const { user, route, soundOn, musicOn, isMobile, showChatMobile, showFriendsMobile, playingWithAI, opponentName } = useStoreState(state => ({
         user: state.user,
         route: state.route,
         soundOn: state.stored.soundOn,
@@ -22,7 +21,8 @@ const Navigation = ({ socket, onRouteChange }) => {
         isMobile: state.stored.isMobile,
         showChatMobile: state.showChatMobile,
         showFriendsMobile: state.showFriendsMobile,
-        playingWithAI: state.playingWithAI
+        playingWithAI: state.playingWithAI,
+        opponentName: state.opponentName
     }));
 
     const { setSearch, setSoundOn, setMusicOn, setShowFriendsMobile, setShowChatMobile } = useStoreActions(actions => ({
@@ -33,10 +33,10 @@ const Navigation = ({ socket, onRouteChange }) => {
         setShowChatMobile: actions.setShowChatMobile
     }));
 
-    const handleExitClick = (e) => {
+    const handleExitClick = async (e) => {
         setSearch(false);
         onRouteChange(e);
-        socket.emit('send exit game', friendSocket);
+        await fetch(`${process.env.REACT_APP_PUSHER_URL}/sendExitGame?channelName=${opponentName}`)
     }
 
     const setSoundClick = () => {
@@ -82,17 +82,17 @@ const Navigation = ({ socket, onRouteChange }) => {
                     !isMobile
                     ?
                     <>
-                        {/* <FriendRequests socket={socket} />
+                        {/* <FriendRequests />
                         <button value='goToLeaderboard' onClick={onRouteChange}>Leaderboard</button>
                         <button value='logOut' onClick={onRouteChange}>Log Out</button> */}
-                        <FriendRequests socket={socket} />
+                        <FriendRequests />
                         <img className='hasSound leaderboardIcon' src={leaderboardIcon} alt='leaderboard' value='goToLeaderboard' onClick={onRouteChange} />
                         <img className='hasSound logOutIcon' src={logOutIcon} alt='log out' value='logOut' onClick={onRouteChange} />
                     </>
                     :
                     <>
                         <img className='hasSound friendsIcon' src={friendsIcon} alt='friends' onClick={() => setShowFriendsMobile(!showFriendsMobile)} />
-                        <FriendRequests socket={socket} />
+                        <FriendRequests />
                         <img className='hasSound leaderboardIcon' src={leaderboardIcon} alt='leaderboard' value='goToLeaderboard' onClick={onRouteChange} />
                         <img className='hasSound logOutIcon' src={logOutIcon} alt='log out' value='logOut' onClick={onRouteChange} />
                     </>
@@ -104,7 +104,7 @@ const Navigation = ({ socket, onRouteChange }) => {
                         user?.username
                         ?
                         <>
-                            {/* <FriendRequests socket={socket} /> */}
+                            {/* <FriendRequests /> */}
                             <img className='hasSound goHomeIcon' src={homeIcon} alt='go home' value='goHome' onClick={onRouteChange} />
                             <img className='hasSound logOutIcon' src={logOutIcon} alt='log out' value='logOut' onClick={onRouteChange} />
                         </>

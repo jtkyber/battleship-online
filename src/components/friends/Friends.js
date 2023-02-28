@@ -3,9 +3,9 @@ import { useStoreState, useStoreActions } from 'easy-peasy';
 import SingleFriend from './SingleFriend';
 import './friends.css';
 
-const Friends = ({ socket }) => {
+const Friends = () => {
     
-    const { unsortedFriends, user, allFriends, friendFilter, friendSearch, friendsOnline, getOnlineFriendsInterval, isMobile, showFriendsMobile } = useStoreState(state => ({
+    const { unsortedFriends, user, allFriends, friendFilter, friendSearch, friendsOnline, getOnlineFriendsInterval, isMobile, showFriendsMobile, channel } = useStoreState(state => ({
         unsortedFriends: state.unsortedFriends,
         user: state.user,
         allFriends: state.allFriends,
@@ -14,7 +14,8 @@ const Friends = ({ socket }) => {
         friendsOnline: state.friendsOnline,
         getOnlineFriendsInterval: state.getOnlineFriendsInterval,
         isMobile: state.stored.isMobile,
-        showFriendsMobile: state.showFriendsMobile
+        showFriendsMobile: state.showFriendsMobile,
+        channel: state.channel
     }));
 
     const { setUnsortedFriends, setAllFriends, setFriendFilter, setFriendSearch, setFriendsOnline, setGetOnlineFriendsInterval } = useStoreActions(actions => ({
@@ -32,17 +33,25 @@ const Friends = ({ socket }) => {
 // -----------------------------------------------------------------------------------
     useEffect(() => {
         fetchFriends();
-        socket.on('update friend status', () => {
-            getOnlineFriends();
-        });
 
         setGetOnlineFriendsInterval(setInterval(getOnlineFriends, 1000));
 
         return () => {
-            socket.off('update friend status');
             clearInterval(getOnlineFriendsInterval);
         }
     }, [])
+
+    useEffect(() => {
+        if (channel !== user.username) return
+        channel.bind('update-friend-status', data => {
+            getOnlineFriends();
+            return data
+        })
+
+        return () => {
+            if (channel) channel.unbind('update-friend-status')
+        }
+    }, [channel])
 //-----------------------------------------------------------------------------------
     // Sort the friends when fetching has finished/unsortedFriends has updated
 //-----------------------------------------------------------------------------------
@@ -129,7 +138,6 @@ const Friends = ({ socket }) => {
         document.querySelector('.addFriendInput').value = '';
         const friendAlert = document.querySelector('.friendsContainer');
         let friendName = '';
-        let friendSocketId = '';
         let friendsRequests = '';
         let friendsRequestsArray = [];
 //-----------------------------------------------------------------------------------
@@ -162,7 +170,6 @@ const Friends = ({ socket }) => {
                 throw new Error('Cannot add self as friend')
             } else if (user1.username) {
                 friendName = user1.username;
-                friendSocketId = user1.socketid;
 //-----------------------------------------------------------------------------------
                 // Add user to friend's friendrequests
 //-----------------------------------------------------------------------------------
@@ -205,7 +212,7 @@ const Friends = ({ socket }) => {
             }
             const selfAdded = await res3.json();
             if (selfAdded) {
-                socket.emit('send friend request', friendSocketId);
+                await fetch(`${process.env.REACT_APP_PUSHER_URL}/sendFriendRequest?channelName=${friendSearch}`)
                 userFromLastFriendRequest = user1;
             }
         } catch(err) {
@@ -242,10 +249,10 @@ const Friends = ({ socket }) => {
                         allFriends.map(f => {
                             if (f.username && f.username.toLowerCase().includes(friendFilter.toLowerCase())) {
                                 if (friendIsOnline(f.lastonline)) {
-                                    return <SingleFriend friendInGame={f.ingame} socket={socket} key={f.username} name={f.username} 
+                                    return <SingleFriend friendInGame={f.ingame} key={f.username} name={f.username} 
                                     status='online' />
                                 } else {
-                                    return <SingleFriend friendInGame={f.ingame} socket={socket} key={f.username} name={f.username} 
+                                    return <SingleFriend friendInGame={f.ingame} key={f.username} name={f.username} 
                                     status='offline' />
                                 }
                             } else return null

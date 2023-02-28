@@ -7,13 +7,14 @@ import './board.css';
 let hitSquares = [];
 let score = 0;
 
-const OpponentBoard = ({ socket }) => {
-    const { friendSocket, yourTurn, playingWithAI, aiShipLayout, user } = useStoreState(state => ({
-        friendSocket: state.friendSocket,
+const OpponentBoard = () => {
+    const { yourTurn, playingWithAI, aiShipLayout, user, channel, opponentName } = useStoreState(state => ({
         yourTurn: state.yourTurn,
         playingWithAI: state.playingWithAI,
         aiShipLayout: state.aiShipLayout,
-        user: state.user
+        user: state.user,
+        channel: state.channel,
+        opponentName: state.opponentName
     }));
 
     const { setYourTurn, setSkippedTurns, setAiShipLayout, setAIturn, setRoute, setUser } = useStoreActions(actions => ({
@@ -46,7 +47,7 @@ const OpponentBoard = ({ socket }) => {
     useEffect(() => {
         if (playingWithAI) setAIships();
 
-        socket.on('show result on opponent board', data => {
+        channel.bind('show-result-on-opponent-board', data => {
             const clickedSquare = document.querySelector(`.opponentBoard [id='${data.shotSquare}']`);
             document.querySelector('.preResultDiv').remove();
             if (data.result === 'hit' && clickedSquare.classList !== undefined) {
@@ -68,10 +69,11 @@ const OpponentBoard = ({ socket }) => {
                 clickedSquare.classList.add('missMarker');
                 audio.missSound.play();
             }
+            return data
         })
 
         return () => {
-            socket.off('show result on opponent board');
+            channel.unbind('show-result-on-opponent-board')
             setAiShipLayout({});
             setAIturn(false);
             setSkippedTurns(0);
@@ -311,7 +313,7 @@ const OpponentBoard = ({ socket }) => {
         setAIturn(true);
     }
 
-    const onSquareClicked = (e) => {
+    const onSquareClicked = async (e) => {
         if (yourTurn && !e.target.classList.contains('hitMarker') && !e.target.classList.contains('missMarker')) {
             // setSquareClicked(e.target);
             setSkippedTurns(0);
@@ -328,7 +330,7 @@ const OpponentBoard = ({ socket }) => {
                     applyAIhitOrMiss(shot);
                 }, missileLaunchDuration)
             } else {
-                socket.emit('send shot to opponent', {target: e.target.id, socketid: friendSocket});
+                await fetch(`${process.env.REACT_APP_PUSHER_URL}/sendShotToOpponent?channelName=${opponentName}&target=${e.target.id}`)
             }
         }
     }
