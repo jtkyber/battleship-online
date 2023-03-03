@@ -34,8 +34,7 @@ A battleship web-app that lets users play against friends, random players, or th
 * Express.js
 * PostgreSQL
 * Knex.js
-* Socket.io
-* Heroku
+* Pusher.js
 * Easy-Peasy (state management)
 * Howler.js
 * jQuery
