@@ -201,11 +201,11 @@ const Friends = () => {
             friendAlert.style.setProperty('--add-friend-alert', '""');
             const res3 = await fetch(`${process.env.REACT_APP_API_URL}/updateFriendRequests`, {
                 method: 'put',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({
-                        requestlist: friendsRequests,
-                        username: friendName
-                    })
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    requestlist: friendsRequests,
+                    username: friendName
+                })
             });
             if (!res3.ok) {
                 throw new Error('Could not add self to friendrequests of friend');

@@ -36,24 +36,7 @@ const UserBoard = () => {
         }
         setAllSquareIDs(allSquareIDsTemp);
 
-        channel.bind('receive-shot', data => {
-            if (data.shot === 'oppOutOfTime') {
-                setYourTurn(true);
-            } else {
-                const oppShot = document.getElementById(data.shot);
-    
-                const incomingMissileDuration = audio.incomingMissile.duration() * 1000 - 100;
-                audio.incomingMissile.play();
-                setTimeout(() => {
-                    applyHitOrMiss(oppShot);
-                    setYourTurn(true);
-                }, incomingMissileDuration)
-            }
-            return data
-        })
-
         return () => {
-            channel.unbind('receive-shot')
             setAIturn(false);
             setAllSquareIDs([]);
             hitSquares = [];
@@ -62,6 +45,30 @@ const UserBoard = () => {
             aiShipOrientationGuess = null;
         }
     },[])
+
+    useEffect(() => {
+        if (channel) {
+            channel.bind('receive-shot', data => {
+                if (data.shot === 'oppOutOfTime') {
+                    setYourTurn(true);
+                } else {
+                    const oppShot = document.getElementById(data.shot);
+        
+                    const incomingMissileDuration = audio.incomingMissile.duration() * 1000 - 100;
+                    audio.incomingMissile.play();
+                    setTimeout(() => {
+                        applyHitOrMiss(oppShot);
+                        setYourTurn(true);
+                    }, incomingMissileDuration)
+                }
+                return data
+            })
+        }
+
+        return () => {
+            if (channel) channel.unbind('receive-shot');
+        }
+    }, [channel])
 
     const shuffleArray = (arr) => {
         let currentIndex = arr.length, randomIndex;

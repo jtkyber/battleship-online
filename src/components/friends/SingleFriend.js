@@ -16,24 +16,27 @@ const SingleFriend = ({ friendInGame, name, status }) => {
     }));    
 
     useEffect(() => {
-
-        channel.bind('receive-go-to-game', data => {
-            setOpponentName(data.senderName);
-            setRoute('game');
-            return data
-        })
-
-        channel.bind('receive-invite', data => {
-            handleInvite(data)
-            return data
-        })
+        if (channel) {
+            channel.bind('receive-go-to-game', data => {
+                setOpponentName(data.senderName);
+                setRoute('game');
+                return data
+            })
+    
+            channel.bind('receive-invite', data => {
+                handleInvite(data)
+                return data
+            })
+        }
 
 
         return () => {
-            channel.unbind('receive-go-to-game')
-            channel.unbind('receive-go-to-game')
+            if (channel) {
+                channel.unbind('receive-go-to-game')
+                channel.unbind('receive-go-to-game')
+            }
         }
-    },[])
+    },[channel])
 
     useEffect(() => {
         const btn = document.querySelector(`.btn${name}`);

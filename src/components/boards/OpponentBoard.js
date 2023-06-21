@@ -46,34 +46,8 @@ const OpponentBoard = () => {
 
     useEffect(() => {
         if (playingWithAI) setAIships();
-
-        channel.bind('show-result-on-opponent-board', data => {
-            const clickedSquare = document.querySelector(`.opponentBoard [id='${data.shotSquare}']`);
-            document.querySelector('.preResultDiv').remove();
-            if (data.result === 'hit' && clickedSquare.classList !== undefined) {
-                clickedSquare.classList.add('hitMarker');
-                hitSquares.push(data.shipHit);
-                clickedSquare.classList.add(`_${data.shipHit}`)
-                if (countHitsOnShip(data.shipHit) === parseInt(document.querySelector(`.${data.shipHit}`).id)) {
-                    const squares = document.querySelectorAll('.singleSquare');
-                    audio.shipSunkSound.play();
-                    for (let square of squares) {
-                        if (square.classList.contains(`_${data.shipHit}`)) {
-                            square.classList.add('shipSunk');
-                        }
-                    }
-                } else {
-                    audio.hitSound.play();
-                }
-            } else if (data.result === 'miss' && clickedSquare.classList !== undefined) {
-                clickedSquare.classList.add('missMarker');
-                audio.missSound.play();
-            }
-            return data
-        })
-
+        
         return () => {
-            channel.unbind('show-result-on-opponent-board')
             setAiShipLayout({});
             setAIturn(false);
             setSkippedTurns(0);
@@ -81,6 +55,39 @@ const OpponentBoard = () => {
             hitSquares = [];
         }
     },[])
+
+    useEffect(() => {
+        if (channel) {
+            channel.bind('show-result-on-opponent-board', data => {
+                const clickedSquare = document.querySelector(`.opponentBoard [id='${data.shotSquare}']`);
+                document.querySelector('.preResultDiv').remove();
+                if (data.result === 'hit' && clickedSquare.classList !== undefined) {
+                    clickedSquare.classList.add('hitMarker');
+                    hitSquares.push(data.shipHit);
+                    clickedSquare.classList.add(`_${data.shipHit}`)
+                    if (countHitsOnShip(data.shipHit) === parseInt(document.querySelector(`.${data.shipHit}`).id)) {
+                        const squares = document.querySelectorAll('.singleSquare');
+                        audio.shipSunkSound.play();
+                        for (let square of squares) {
+                            if (square.classList.contains(`_${data.shipHit}`)) {
+                                square.classList.add('shipSunk');
+                            }
+                        }
+                    } else {
+                        audio.hitSound.play();
+                    }
+                } else if (data.result === 'miss' && clickedSquare.classList !== undefined) {
+                    clickedSquare.classList.add('missMarker');
+                    audio.missSound.play();
+                }
+                return data
+            })
+        }
+
+        return () => {
+            if (channel) channel.unbind('show-result-on-opponent-board')
+        }
+    }, [channel])
 
     const aiSpotClear = (newSpot) => {
         for (let ship in aiShipLocations) {

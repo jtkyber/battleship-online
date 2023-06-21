@@ -76,22 +76,9 @@ const Game = ({ onRouteChange }) => {
 
         // const gamePage = document.querySelector('.gamePage');
 
-        channel.bind('receive-game-over', data => {
-            handlePlayerWon(20);
-            return data
-        })
-
-        channel.bind('receive-exit-game', data => {
-            window.alert('Opponent has left the game');
-            user.hash === 'guest' ? setRoute('login') : setRoute('loggedIn');
-            return data
-        })
-
         if (!playingWithAI) setTimeout(() => setCheckOppStatusInterval(setInterval(checkIfOpponentIsOnlineAndInGame, 5000)), 5000);
 
         return () => {
-            channel.unbind('receive-game-over')
-            channel.unbind('receive-exit-game')
             clearInterval(checkOppStatusInterval);
             clearInterval(gameCountdownInterval);
             setFirstGameInstructionLoad(true);
@@ -103,18 +90,42 @@ const Game = ({ onRouteChange }) => {
     },[])
 
     useEffect(() => {
-        channel.bind('receive-ready-status', data => {
-            if (playerIsReady) {
-                setGameRoute('gameInProgress');
-            }
-            setOpponentIsReady(true);
-            return data
-        })
+        if (channel) {
+            channel.bind('receive-game-over', data => {
+                handlePlayerWon(20);
+                return data
+            })
+    
+            channel.bind('receive-exit-game', data => {
+                window.alert('Opponent has left the game');
+                user.hash === 'guest' ? setRoute('login') : setRoute('loggedIn');
+                return data
+            })
+        }
 
         return () => {
-            channel.unbind('receive-ready-status')
+            if (channel) {
+                channel.unbind('receive-game-over');
+                channel.unbind('receive-exit-game');
+            }
         }
-    }, [playerIsReady])
+    }, [channel])
+
+    useEffect(() => {
+        if (channel) {
+            channel.bind('receive-ready-status', data => {
+                if (playerIsReady) {
+                    setGameRoute('gameInProgress');
+                }
+                setOpponentIsReady(true);
+                return data
+            })
+        }
+
+        return () => {
+            if (channel) channel.unbind('receive-ready-status')
+        }
+    }, [playerIsReady, channel])
 
     useEffect(() => {
         let playerTurnTimer = 15;

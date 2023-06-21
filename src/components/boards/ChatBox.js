@@ -24,16 +24,16 @@ const ChatBox = () => {
     }, [])
 
     useEffect(() => {
-        if (!chatBox) return
+        if (!chatBox || !channel) return
         channel.bind('receive-msg', data => {
             handleReceivedMessage(data.message);
             return data
         })
 
         return () => {
-            channel.unbind('receive-msg')
+            if (channel) channel.unbind('receive-msg')
         }
-    }, [chatBox])
+    }, [chatBox, channel])
 
     useEffect(() => {
         if (showChatMobile) root.style.setProperty("--chatNotificationDisplay", 'none')
