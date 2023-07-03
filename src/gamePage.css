@@ -90,6 +90,7 @@
 .instructionsBtn > h2 {
 	font-weight: 800;
 	color: rgba(255, 255, 255, 0.6);
+	pointer-events: none;
 	/* -webkit-animation: fadeInstructionsBtnText 0.2s ease-out forwards;
             animation: fadeInstructionsBtnText 0.2s ease-out forwards; */
 }
