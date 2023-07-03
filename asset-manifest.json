@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/battleship-online/static/css/main.56024b2f.css",
-    "main.js": "/battleship-online/static/js/main.207e47f6.js",
+    "main.css": "/battleship-online/static/css/main.8874fba5.css",
+    "main.js": "/battleship-online/static/js/main.f4d8e30a.js",
     "static/js/496.f3a57c29.chunk.js": "/battleship-online/static/js/496.f3a57c29.chunk.js",
     "static/media/lobby-theme.mp3": "/battleship-online/static/media/lobby-theme.a9efad879e66f48504b7.mp3",
     "static/media/game-theme.mp3": "/battleship-online/static/media/game-theme.07202b2d61eba4b7f9c0.mp3",
@@ -33,12 +33,12 @@
     "static/media/submarine.svg": "/battleship-online/static/media/submarine.3aa8793473bf256cf9b4.svg",
     "static/media/submarine-vert-home.svg": "/battleship-online/static/media/submarine-vert-home.3412310ac4b32ed3ab2a.svg",
     "index.html": "/battleship-online/index.html",
-    "main.56024b2f.css.map": "/battleship-online/static/css/main.56024b2f.css.map",
-    "main.207e47f6.js.map": "/battleship-online/static/js/main.207e47f6.js.map",
+    "main.8874fba5.css.map": "/battleship-online/static/css/main.8874fba5.css.map",
+    "main.f4d8e30a.js.map": "/battleship-online/static/js/main.f4d8e30a.js.map",
     "496.f3a57c29.chunk.js.map": "/battleship-online/static/js/496.f3a57c29.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.56024b2f.css",
-    "static/js/main.207e47f6.js"
+    "static/css/main.8874fba5.css",
+    "static/js/main.f4d8e30a.js"
   ]
 }
