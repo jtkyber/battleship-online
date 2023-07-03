@@ -1,291 +1,294 @@
 :root {
-    --chatNotificationDisplay: none;
+	--chatNotificationDisplay: none;
 }
 
 nav {
-    position: relative;
-    grid-area: nav;
-    background-color: rgba(0,0,0,0.3);
-    border-bottom: 2px solid rgba(255,255,255,0.2);
-    color: green;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: end;
-    padding-right: 1.5rem;
-    padding-left: 1.5rem;
-    padding-bottom: 0.5rem;
-    --notification-color: transparent;
+	position: relative;
+	grid-area: nav;
+	background-color: rgba(0, 0, 0, 0.3);
+	border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+	color: green;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	align-items: end;
+	padding-right: 1.5rem;
+	padding-left: 1.5rem;
+	padding-bottom: 0.5rem;
+	--notification-color: transparent;
 }
 
 .leftNav {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-self: start;
-    align-items: flex-end;
-    gap: 1.5rem;
-    height: 2rem;
-    overflow: visible;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-self: start;
+	align-items: flex-end;
+	gap: 1.5rem;
+	height: 2rem;
+	overflow: visible;
 }
 
 .rightNav {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-self: end;
-    align-items: flex-end;
-    gap: 1rem;
-    height: 2rem;
-    overflow: visible;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-self: end;
+	align-items: flex-end;
+	gap: 1rem;
+	height: 2rem;
+	overflow: visible;
 }
 
 .audioToggle {
-    opacity: 0.5;
-    transition: all 0.15s ease-out;
-    cursor: pointer;
-    height: -webkit-min-content;
-    height: -moz-min-content;
-    height: min-content;
+	opacity: 0.5;
+	transition: all 0.15s ease-out;
+	cursor: pointer;
+	height: -webkit-min-content;
+	height: -moz-min-content;
+	height: min-content;
 }
 
 .audioToggle:hover {
-    opacity: 0.3;
+	opacity: 0.3;
 }
 
 .soundToggle {
-    opacity: 0.6;
-    width: 22px;
-    height: auto;
+	opacity: 0.6;
+	width: 22px;
+	height: auto;
 }
 
 .musicToggle {
-    margin-bottom: -0.1rem;
-    width: 25px;
-    height: auto;
+	margin-bottom: -0.1rem;
+	width: 25px;
+	height: auto;
 }
 
 .soundOff {
-    opacity: 0.4;
-    background: linear-gradient(to top left,
-           rgba(0,0,0,0) 0%,
-           rgba(0,0,0,0) calc(50% - 0.8px),
-           rgba(0,0,0,1) 50%,
-           rgba(0,0,0,0) calc(50% + 0.8px),
-           rgba(0,0,0,0) 100%)
+	opacity: 0.4;
+	background: linear-gradient(
+		to top left,
+		rgba(0, 0, 0, 0) 0%,
+		rgba(0, 0, 0, 0) calc(50% - 0.8px),
+		rgba(0, 0, 0, 1) 50%,
+		rgba(0, 0, 0, 0) calc(50% + 0.8px),
+		rgba(0, 0, 0, 0) 100%
+	);
 }
 
 .musicOff {
-    opacity: 0.3;
-    background: linear-gradient(to top left,
-           rgba(0,0,0,0) 0%,
-           rgba(0,0,0,0) calc(50% - 0.8px),
-           rgba(0,0,0,1) 50%,
-           rgba(0,0,0,0) calc(50% + 0.8px),
-           rgba(0,0,0,0) 100%)
+	opacity: 0.3;
+	background: linear-gradient(
+		to top left,
+		rgba(0, 0, 0, 0) 0%,
+		rgba(0, 0, 0, 0) calc(50% - 0.8px),
+		rgba(0, 0, 0, 1) 50%,
+		rgba(0, 0, 0, 0) calc(50% + 0.8px),
+		rgba(0, 0, 0, 0) 100%
+	);
 }
 
-nav button:hover{
-    opacity: 0.5;
+nav button:hover {
+	opacity: 0.5;
 }
 
 nav button {
-    background: transparent;
-    border: none;
-    color: rgba(0,200,20,0.8);
-    font-size: 1rem;
-    display: flex;
-    align-content: flex-end;
-    transition: 0.15s ease-out all;
+	background: transparent;
+	border: none;
+	color: rgba(0, 200, 20, 0.8);
+	font-size: 1rem;
+	display: flex;
+	align-content: flex-end;
+	transition: 0.15s ease-out all;
 }
 
 #dropdown-basic {
-    opacity: 0.5;
+	opacity: 0.5;
 }
 
 nav #dropdown-basic {
-    position: relative;
+	position: relative;
 }
 
 nav #dropdown-basic:before {
-    position: absolute;
-    content: "";
-    width: 0.5rem;
-    height: 0.5rem;
-    background-color: var(--notification-color);
-    border-radius: 50%;
-    top: 0;
-    left: 0.6rem;
-    z-index: 100;
+	position: absolute;
+	content: '';
+	width: 0.5rem;
+	height: 0.5rem;
+	background-color: var(--notification-color);
+	border-radius: 50%;
+	top: 0;
+	left: 0.6rem;
+	z-index: 100;
 }
 
 nav #dropdown-basic > img {
-    margin-bottom: -0.2rem;
+	margin-bottom: -0.2rem;
 }
 
 nav img {
-    position: relative;
-    max-width: 100%;
-    max-height: 100%;
-    -o-object-fit: contain;
-       object-fit: contain;
-    -webkit-filter: invert(100%);
-            filter: invert(100%);
-    cursor: pointer;
-    transition: all 0.15s ease-out;
+	position: relative;
+	max-width: 100%;
+	max-height: 100%;
+	-o-object-fit: contain;
+	object-fit: contain;
+	-webkit-filter: invert(100%);
+	filter: invert(100%);
+	cursor: pointer;
+	transition: all 0.15s ease-out;
 }
 
 nav img:hover {
-    opacity: 0.3;
+	opacity: 0.3;
 }
 
 nav .soundToggle:hover {
-    opacity: 0.4;
+	opacity: 0.4;
 }
 
 .leaderboardIcon {
-    opacity: 0.5;
-    width: 25px;
-    height: auto;
+	opacity: 0.5;
+	width: 25px;
+	height: auto;
 }
 
 .logOutIcon {
-    opacity: 0.5;
-    margin-left: 0.5rem;
-    width: 22px;
-    height: auto;
+	opacity: 0.5;
+	margin-left: 0.5rem;
+	width: 22px;
+	height: auto;
 }
 
 .goHomeIcon {
-    opacity: 0.5;
-    width: 25px;
-    height: auto;
+	opacity: 0.5;
+	width: 25px;
+	height: auto;
 }
 
 .goBackIcon {
-    opacity: 0.5;
-    width: 25px;
-    height: auto;
+	opacity: 0.5;
+	width: 25px;
+	height: auto;
 }
 
 .friendsIcon {
-    position: absolute;
-    opacity: 0.5;
-    width: 25px;
-    height: auto;
-    left: 50%;
-    transform: translate(-50%);
+	position: absolute;
+	opacity: 0.5;
+	width: 25px;
+	height: auto;
+	left: 50%;
+	transform: translate(-50%);
 }
 
 .chatIconContainer {
-    position: absolute;
-    opacity: 0.5;
-    left: 50%;
-    transform: translate(-50%);
-    display: flex;
-    align-items: center;
+	position: absolute;
+	opacity: 0.5;
+	left: 50%;
+	transform: translate(-50%);
+	display: flex;
+	align-items: center;
 }
 
 .chatIcon {
-    width: 25px;
-    height: auto;
+	width: 25px;
+	height: auto;
 }
 
 .chatIconContainer::before {
-    position: absolute;
-    content: '';
-    top: 0.1rem;
-    left: 0;
-    width: 0.5rem;
-    height: 0.5rem;
-    background-color: rgb(167, 0, 0);
-    border-radius: 50%;
-    z-index: 10;
-    display: var(--chatNotificationDisplay);
+	position: absolute;
+	content: '';
+	top: 0.1rem;
+	left: 0;
+	width: 0.5rem;
+	height: 0.5rem;
+	background-color: rgb(167, 0, 0);
+	border-radius: 50%;
+	z-index: 10;
+	display: var(--chatNotificationDisplay);
 }
 
 .dropdown-menu {
-    position: fixed !important;
-    background: rgba(0,0,0,0.4);
-    border-left: 3px solid rgb(255, 255, 255, 0.3);
-    display: flex;
-    flex-flow: wrap column;
-    width: -webkit-max-content;
-    width: -moz-max-content;
-    width: max-content;
-    z-index: 1000;
-    transform: translate(calc(100vw - 100%), 3rem) !important;
-    transition: max-height 1s linear;
-    max-height: 0;
-    display: block;
-    overflow: hidden;
-    opacity: 0;
+	position: fixed !important;
+	background: rgba(0, 0, 0, 0.4);
+	border-left: 3px solid rgb(255, 255, 255, 0.3);
+	display: flex;
+	flex-flow: wrap column;
+	width: -webkit-max-content;
+	width: -moz-max-content;
+	width: max-content;
+	z-index: 1000;
+	transform: translate(calc(100vw - 100%), 3rem) !important;
+	transition: max-height 1s linear;
+	max-height: 0;
+	display: block;
+	overflow: hidden;
+	opacity: 0;
 }
 
 .dropdown-menu.show {
-    opacity: 1;
-    max-height: 100%;
+	opacity: 1;
+	max-height: 100%;
 }
 
 .dropdownItem {
-    /*padding: 1rem;*/
-    border-bottom: 3px solid rgb(255, 255, 255, 0.3);
-    border-top: none;
-    height: 4.2rem;
-    width: 12rem;
-    display: flex;
-    flex-flow: nowrap column;
-    justify-content: center;
-    align-items: center;
-    opacity: 0.8;
-    padding: 0.5rem 0.2rem;
+	/*padding: 1rem;*/
+	border-bottom: 3px solid rgb(255, 255, 255, 0.3);
+	border-top: none;
+	height: 4.2rem;
+	width: 12rem;
+	display: flex;
+	flex-flow: nowrap column;
+	justify-content: center;
+	align-items: center;
+	opacity: 0.8;
+	padding: 0.5rem 0.2rem;
 }
 
 .text {
-    text-decoration: none;
-    color: white;
-    text-align: center;
-    margin-bottom: 0.3rem;
-    font-size: 0.8rem;
+	text-decoration: none;
+	color: white;
+	text-align: center;
+	margin-bottom: 0.3rem;
+	font-size: 0.8rem;
 }
 
 .requesterName {
-    font-weight: 600;
+	font-weight: 600;
 }
 
 .acceptReject {
-    display: flex;
-    flex-flow: nowrap row;
-    gap: 1rem;
-    opacity: 0.8;
+	display: flex;
+	flex-flow: nowrap row;
+	gap: 1rem;
+	opacity: 0.8;
 }
 
 .acceptInvite {
-    background-image: linear-gradient(-45deg, rgba(0,150,0,0.9), rgba(0,255,0,0.9));
-    border: 2px solid rgba(0,0,0,0.5);
-    color: black;
-    border-radius: 10px;
-    /*padding: 0.1rem 0.2rem;*/
-    font-weight: 600;
-    font-size: 0.8rem;
-    transition: 0.2s ease;
+	background-image: linear-gradient(-45deg, rgba(0, 150, 0, 0.9), rgba(0, 255, 0, 0.9));
+	border: 2px solid rgba(0, 0, 0, 0.5);
+	color: black;
+	border-radius: 10px;
+	/*padding: 0.1rem 0.2rem;*/
+	font-weight: 600;
+	font-size: 0.8rem;
+	transition: 0.2s ease;
 }
 
 .rejectInvite {
-    background-image: linear-gradient(-45deg, rgba(150,0,0,0.9), rgba(255,0,0,0.9));
-    border: 2px solid rgba(0,0,0,0.5);
-    color: black;
-    border-radius: 10px;
-    /*padding: 0.1rem 0.2rem;*/
-    font-weight: 600;
-    font-size: 0.8rem;
-    transition: 0.2s ease;
+	background-image: linear-gradient(-45deg, rgba(150, 0, 0, 0.9), rgba(255, 0, 0, 0.9));
+	border: 2px solid rgba(0, 0, 0, 0.5);
+	color: black;
+	border-radius: 10px;
+	/*padding: 0.1rem 0.2rem;*/
+	font-weight: 600;
+	font-size: 0.8rem;
+	transition: 0.2s ease;
 }
 
 .acceptInvite:hover {
-    opacity: 0.6;
-    transition: 0.2s ease;
+	opacity: 0.6;
+	transition: 0.2s ease;
 }
 
 .rejectInvite:hover {
-    opacity: 0.6;
-    transition: 0.2s ease;
+	opacity: 0.6;
+	transition: 0.2s ease;
 }
-

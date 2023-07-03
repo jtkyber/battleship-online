@@ -1,261 +1,258 @@
-import { action, persist } from 'easy-peasy';
+import { action, persist } from 'easy-peasy'
 
 const isMobileDevice = () => {
-    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-        return true
-    }
-    return false
+	if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+		return true
+	}
+	return false
 }
 
 const isIOSDevice = () => {
-    if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-        return true
-    }
-    return false
+	if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+		return true
+	}
+	return false
 }
 
 const model = {
+	//State
 
-    //State
+	stored: persist(
+		{
+			soundOn: true,
+			musicOn: true,
+			isMobile: isMobileDevice(),
+			isIOS: isIOSDevice(),
+			showGameInstructions: true,
+		},
+		{
+			storage: 'localStorage',
+		}
+	),
 
-    stored: persist(
-        {
-            soundOn: true,
-            musicOn: true,
-            isMobile: isMobileDevice(),
-            isIOS: isIOSDevice(),
-            showGameInstructions: true,
-        },
-        {
-            storage: 'localStorage',
-        }
+	route: 'login',
+	user: null,
+	opponentName: '',
+	unsortedFriends: [],
+	findMatchInterval: 0,
+	checkOppStatusInterval: 0,
+	updatLastOnlineInterval: 0,
+	getOnlineFriendsInterval: 0,
+	search: false,
+	friendRequests: [],
+	userName: '',
+	password: '',
+	topFive: [],
+	allFriends: [],
+	friendFilter: '',
+	friendSearch: '',
+	friendsOnline: [],
+	gameRoute: 'placeShips',
+	playerIsReady: false,
+	yourTurn: false,
+	chatText: '',
+	inviteSent: false,
+	inviteReceived: false,
+	playerTurnText: '',
+	showFriendsMobile: false,
+	showChatMobile: false,
+	audioStarted: false,
+	shipIsSelected: false,
+	deviceInPortrait: true,
+	opponentIsReady: false,
+	firstGameInstructionLoad: true,
+	gameTimer: 90,
+	gameCountdownInterval: 0,
+	skippedTurns: 0,
+	playingWithAI: false,
+	aiShipLayout: {},
+	allSquareIDs: [],
+	aiTurn: false,
+	aiShotMatchedToUserShot: '',
+	channel: '',
+	pusher: null,
 
-    ),
+	//Actions
 
-    route: 'login',
-    user: null,
-    opponentName: '',
-    unsortedFriends: [],
-    findMatchInterval: 0,
-    checkOppStatusInterval: 0,
-    updatLastOnlineInterval: 0,
-    getOnlineFriendsInterval: 0,
-    search: false,
-    friendRequests: [],
-    userName: '',
-    password: '',
-    topFive: [],
-    allFriends: [],
-    friendFilter: '',
-    friendSearch: '',
-    friendsOnline: [],
-    gameRoute: 'placeShips',
-    playerIsReady: false,
-    yourTurn: false,
-    chatText: '',
-    inviteSent: false,
-    inviteReceived: false,
-    playerTurnText: '',
-    showFriendsMobile: false,
-    showChatMobile: false,
-    audioStarted: false,
-    shipIsSelected: false,
-    deviceInPortrait: true,
-    opponentIsReady: false,
-    firstGameInstructionLoad: true,
-    gameTimer: 90,
-    gameCountdownInterval: 0,
-    skippedTurns: 0,
-    playingWithAI: false,
-    aiShipLayout: {},
-    allSquareIDs: [],
-    aiTurn: false,
-    aiShotMatchedToUserShot: '',
-    channel: '',
-    pusher: null,
+	setRoute: action((state, input) => {
+		state.route = input
+	}),
 
+	setUser: action((state, input) => {
+		state.user = input
+	}),
 
-    //Actions
+	setOpponentName: action((state, input) => {
+		state.opponentName = input
+	}),
 
-    setRoute: action((state, input) => {
-        state.route = input;
-    }),
+	setUnsortedFriends: action((state, input) => {
+		state.unsortedFriends = input
+	}),
 
-    setUser: action((state, input) => {
-        state.user = input;
-    }),
+	setFindMatchInterval: action((state, input) => {
+		state.findMatchInterval = input
+	}),
 
-    setOpponentName: action((state, input) => {
-        state.opponentName = input;
-    }),
+	setCheckOppStatusInterval: action((state, input) => {
+		state.checkOppStatusInterval = input
+	}),
 
-    setUnsortedFriends: action((state, input) => {
-        state.unsortedFriends = input;
-    }),
+	setUpdatLastOnlineInterval: action((state, input) => {
+		state.updatLastOnlineInterval = input
+	}),
 
-    setFindMatchInterval: action((state, input) => {
-        state.findMatchInterval = input;
-    }),
+	setGetOnlineFriendsInterval: action((state, input) => {
+		state.getOnlineFriendsInterval = input
+	}),
 
-    setCheckOppStatusInterval: action((state, input) => {
-        state.checkOppStatusInterval = input;
-    }),
+	setSearch: action((state, input) => {
+		state.search = input
+	}),
 
-    setUpdatLastOnlineInterval: action((state, input) => {
-        state.updatLastOnlineInterval = input;
-    }),
+	setFriendRequests: action((state, input) => {
+		state.friendRequests = input
+	}),
 
-    setGetOnlineFriendsInterval: action((state, input) => {
-        state.getOnlineFriendsInterval = input;
-    }),
+	setUserName: action((state, input) => {
+		state.userName = input
+	}),
 
-    setSearch: action((state, input) => {
-        state.search = input;
-    }),
+	setPassword: action((state, input) => {
+		state.password = input
+	}),
 
-    setFriendRequests: action((state, input) => {
-        state.friendRequests = input;
-    }),
+	setTopFive: action((state, input) => {
+		state.topFive = input
+	}),
 
-    setUserName: action((state, input) => {
-        state.userName = input;
-    }),
+	setAllFriends: action((state, input) => {
+		state.allFriends = input
+	}),
 
-    setPassword: action((state, input) => {
-        state.password = input;
-    }),
+	setFriendFilter: action((state, input) => {
+		state.friendFilter = input
+	}),
 
-    setTopFive: action((state, input) => {
-        state.topFive = input;
-    }),
+	setFriendSearch: action((state, input) => {
+		state.friendSearch = input
+	}),
 
-    setAllFriends: action((state, input) => {
-        state.allFriends = input;
-    }),
+	setFriendsOnline: action((state, input) => {
+		state.friendsOnline = input
+	}),
 
-    setFriendFilter: action((state, input) => {
-        state.friendFilter = input;
-    }),
+	setGameRoute: action((state, input) => {
+		state.gameRoute = input
+	}),
 
-    setFriendSearch: action((state, input) => {
-        state.friendSearch = input;
-    }),
+	setPlayerIsReady: action((state, input) => {
+		state.playerIsReady = input
+	}),
 
-    setFriendsOnline: action((state, input) => {
-        state.friendsOnline = input;
-    }),
+	setYourTurn: action((state, input) => {
+		state.yourTurn = input
+	}),
 
-    setGameRoute: action((state, input) => {
-        state.gameRoute = input;
-    }),
-    
-    setPlayerIsReady: action((state, input) => {
-        state.playerIsReady = input;
-    }),
+	setChatText: action((state, input) => {
+		state.chatText = input
+	}),
 
-    setYourTurn: action((state, input) => {
-        state.yourTurn = input;
-    }),
+	setInviteSent: action((state, input) => {
+		state.inviteSent = input
+	}),
 
-    setChatText: action((state, input) => {
-        state.chatText = input;
-    }),
+	setInviteReceived: action((state, input) => {
+		state.inviteReceived = input
+	}),
 
-    setInviteSent: action((state, input) => {
-        state.inviteSent = input;
-    }),
+	setPlayerTurnText: action((state, input) => {
+		state.playerTurnText = input
+	}),
 
-    setInviteReceived: action((state, input) => {
-        state.inviteReceived = input;
-    }),
-    
-    setPlayerTurnText: action((state, input) => {
-        state.playerTurnText = input;
-    }),
+	setSoundOn: action(state => {
+		state.stored.soundOn = !state.stored.soundOn
+	}),
 
-    setSoundOn: action((state) => {
-        state.stored.soundOn = !state.stored.soundOn;
-    }),
+	setMusicOn: action(state => {
+		state.stored.musicOn = !state.stored.musicOn
+	}),
 
-    setMusicOn: action((state) => {
-        state.stored.musicOn = !state.stored.musicOn;
-    }),
+	setIsMobile: action((state, input) => {
+		state.stored.isMobile = input
+	}),
 
-    setIsMobile: action((state, input) => {
-        state.stored.isMobile = input;
-    }),
+	setShowFriendsMobile: action((state, input) => {
+		state.showFriendsMobile = input
+	}),
 
-    setShowFriendsMobile: action((state, input) => {
-        state.showFriendsMobile = input;
-    }),
+	setShowChatMobile: action((state, input) => {
+		state.showChatMobile = input
+	}),
 
-    setShowChatMobile: action((state, input) => {
-        state.showChatMobile = input;
-    }),
+	setAudioStarted: action(state => {
+		state.audioStarted = true
+	}),
 
-    setAudioStarted: action((state) => {
-        state.audioStarted = true;
-    }),
+	setShipIsSelected: action((state, input) => {
+		state.shipIsSelected = input
+	}),
 
-    setShipIsSelected: action((state, input) => {
-        state.shipIsSelected = input;
-    }),
+	setShowGameInstructions: action((state, input) => {
+		state.stored.showGameInstructions = input
+	}),
 
-    setShowGameInstructions: action((state, input) => {
-        state.stored.showGameInstructions = input;
-    }),
+	setDeviceInPortrait: action((state, input) => {
+		state.deviceInPortrait = input
+	}),
 
-    setDeviceInPortrait: action((state, input) => {
-        state.deviceInPortrait = input;
-    }),
+	setOpponentIsReady: action((state, input) => {
+		state.opponentIsReady = input
+	}),
 
-    setOpponentIsReady: action((state, input) => {
-        state.opponentIsReady = input;
-    }),
+	setFirstGameInstructionLoad: action((state, input) => {
+		state.firstGameInstructionLoad = input
+	}),
 
-    setFirstGameInstructionLoad: action((state, input) => {
-        state.firstGameInstructionLoad = input;
-    }),
+	setGameTimer: action((state, input) => {
+		state.gameTimer = input
+	}),
 
-    setGameTimer: action((state, input) => {
-        state.gameTimer = input;
-    }),
+	setGameCountdownInterval: action((state, input) => {
+		state.gameCountdownInterval = input
+	}),
 
-    setGameCountdownInterval: action((state, input) => {
-        state.gameCountdownInterval = input;
-    }),
+	setSkippedTurns: action((state, input) => {
+		state.skippedTurns = input
+	}),
 
-    setSkippedTurns: action((state, input) => {
-        state.skippedTurns = input;
-    }),
+	setPlayigWithAI: action((state, input) => {
+		state.playingWithAI = input
+	}),
 
-    setPlayigWithAI: action((state, input) => {
-        state.playingWithAI = input;
-    }),
-    
-    setAiShipLayout: action((state, input) => {
-        state.aiShipLayout = input;
-    }),
+	setAiShipLayout: action((state, input) => {
+		state.aiShipLayout = input
+	}),
 
-    setAllSquareIDs: action((state, input) => {
-        state.allSquareIDs = input;
-    }),
+	setAllSquareIDs: action((state, input) => {
+		state.allSquareIDs = input
+	}),
 
-    setAIturn: action((state, input) => {
-        state.aiTurn = input;
-    }),
+	setAIturn: action((state, input) => {
+		state.aiTurn = input
+	}),
 
-    setAIShotMatchedToUserShot: action((state, input) => {
-        state.aiShotMatchedToUserShot = input;
-    }),
+	setAIShotMatchedToUserShot: action((state, input) => {
+		state.aiShotMatchedToUserShot = input
+	}),
 
-    setChannel: action((state, input) => {
-        state.channel = input;
-    }),
+	setChannel: action((state, input) => {
+		state.channel = input
+	}),
 
-    setPusher: action((state, input) => {
-        state.pusher = input;
-    }),
+	setPusher: action((state, input) => {
+		state.pusher = input
+	}),
 }
 
-export default model;
+export default model

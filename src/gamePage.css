@@ -1,118 +1,114 @@
 .gamePage {
-    position: relative;
-    background-color: rgba(0,0,0,0.7);
-    height: 100vh;
-    width: 100vw;
-    display: grid;
-    grid-template-columns: 2rem -webkit-max-content 1fr -webkit-max-content -webkit-max-content 2rem;
-    grid-template-columns: 0.1fr -webkit-max-content 0.8fr -webkit-max-content -webkit-max-content 0.1fr;
-    grid-template-columns: 0.1fr max-content 0.8fr max-content max-content 0.1fr;
-    grid-template-rows: 3rem 0.1fr 0.9fr 2rem;
-    grid-template-areas:
-        "nav nav nav nav nav nav"
-        ". playerTurnTextContainer playerTurnTextContainer playerTurnTextContainer playerTurnTextContainer ."
-        ". userBoard readyBtn opponentBoard chatContainer ."
-        "footer footer footer footer footer footer";
+	position: relative;
+	background-color: rgba(0, 0, 0, 0.7);
+	height: 100vh;
+	width: 100vw;
+	display: grid;
+	grid-template-columns: 2rem -webkit-max-content 1fr -webkit-max-content -webkit-max-content 2rem;
+	grid-template-columns: 0.1fr -webkit-max-content 0.8fr -webkit-max-content -webkit-max-content 0.1fr;
+	grid-template-columns: 0.1fr max-content 0.8fr max-content max-content 0.1fr;
+	grid-template-rows: 3rem 0.1fr 0.9fr 2rem;
+	grid-template-areas:
+		'nav nav nav nav nav nav'
+		'. playerTurnTextContainer playerTurnTextContainer playerTurnTextContainer playerTurnTextContainer .'
+		'. userBoard readyBtn opponentBoard chatContainer .'
+		'footer footer footer footer footer footer';
 }
 
 .gamePage.mobile {
-    position: relative;
-    background-color: rgba(0,0,0,0.7);
-    height: 100vh;
-    width: 100vw;
-    display: grid;
-    grid-template-columns: 1fr -webkit-max-content;
-    grid-template-columns: 1fr max-content;
-    grid-template-rows: 3rem -webkit-max-content -webkit-max-content 3.5rem;
-    grid-template-rows: 3rem 1fr 1fr 3.5rem;
-    grid-template-areas:
-        "nav nav"
-        "userBoard readyBtn"
-        "opponentBoard ."
-        "footer footer";
+	position: relative;
+	background-color: rgba(0, 0, 0, 0.7);
+	height: 100vh;
+	width: 100vw;
+	display: grid;
+	grid-template-columns: 1fr -webkit-max-content;
+	grid-template-columns: 1fr max-content;
+	grid-template-rows: 3rem -webkit-max-content -webkit-max-content 3.5rem;
+	grid-template-rows: 3rem 1fr 1fr 3.5rem;
+	grid-template-areas:
+		'nav nav'
+		'userBoard readyBtn'
+		'opponentBoard .'
+		'footer footer';
 }
 
 .gamePage .instructions {
-    position: absolute;
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: center;
-    align-items: center;
-    color: rgba(196, 2, 2, 0.9);
-    background-color: rgba(0, 0, 0, 0.9);
-    border: 4px solid rgba(255, 255, 255, 0.5);
-    text-transform: uppercase;
-    font-weight: 600;
-    text-align: center;
-    font-size: 2.5vmin;
-    transform: translate(-50%, -50%);
-    z-index: 1000;
-    top: 50vh;
-    left: 50vw;
-    width: 30rem;
-    max-width: 90vw;
-    height: max-content;
-    border-radius: 1rem;
-    gap: 2rem;
-    padding: 1rem 0;
-    /* -webkit-animation: instructionsMorph 0.3s ease-out forwards;
+	position: absolute;
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: center;
+	align-items: center;
+	color: rgba(196, 2, 2, 0.9);
+	background-color: rgba(0, 0, 0, 0.9);
+	border: 4px solid rgba(255, 255, 255, 0.5);
+	text-transform: uppercase;
+	font-weight: 600;
+	text-align: center;
+	font-size: 2.5vmin;
+	transform: translate(-50%, -50%);
+	z-index: 1000;
+	top: 50vh;
+	left: 50vw;
+	width: 30rem;
+	max-width: 90vw;
+	height: -webkit-max-content;
+	height: -moz-max-content;
+	height: max-content;
+	border-radius: 1rem;
+	gap: 2rem;
+	padding: 1rem 0;
+	/* -webkit-animation: instructionsMorph 0.3s ease-out forwards;
             animation: instructionsMorph 0.3s ease-out forwards; */
 }
 
-
-
-.gamePage.desktop .instructions *, .gamePage.desktop .instructions:before {
-    /* -webkit-animation: fadeInstructionsText 0.3s ease-out forwards;
+.gamePage.desktop .instructions *,
+.gamePage.desktop .instructions:before {
+	/* -webkit-animation: fadeInstructionsText 0.3s ease-out forwards;
             animation: fadeInstructionsText 0.3s ease-out forwards; */
 }
 
-
-
 .instructionsBtn {
-    position: absolute;
-    outline: none;
-    background-color: rgba(0, 0, 0, 0.8);
-    border: 3px solid rgba(255, 255, 255, 0.6);
-    opacity: 0.8;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: all 0.15s ease-out;
-    transform: translate(-50%, -50%);
-    top: 4.5rem;
-    left: 2rem;
-    width: 2rem;
-    height: 2rem;
-    border-radius: 50%;
-    /* -webkit-animation: instructionsBtnMorph 0.2s ease-out forwards;
+	position: absolute;
+	outline: none;
+	background-color: rgba(0, 0, 0, 0.8);
+	border: 3px solid rgba(255, 255, 255, 0.6);
+	opacity: 0.8;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transition: all 0.15s ease-out;
+	transform: translate(-50%, -50%);
+	top: 4.5rem;
+	left: 2rem;
+	width: 2rem;
+	height: 2rem;
+	border-radius: 50%;
+	/* -webkit-animation: instructionsBtnMorph 0.2s ease-out forwards;
             animation: instructionsBtnMorph 0.2s ease-out forwards; */
 }
 
 .instructionsBtn > h2 {
-    font-weight: 800;
-    color: rgba(255, 255, 255, 0.6);
-    /* -webkit-animation: fadeInstructionsBtnText 0.2s ease-out forwards;
+	font-weight: 800;
+	color: rgba(255, 255, 255, 0.6);
+	/* -webkit-animation: fadeInstructionsBtnText 0.2s ease-out forwards;
             animation: fadeInstructionsBtnText 0.2s ease-out forwards; */
 }
 
-
-
 .instructionsBtn.hide {
-    display: none;
+	display: none;
 }
 
 .instructionsBtn.firstGameInstructionLoad {
-    /* -webkit-animation: instructionsBtnMorph 0s step-start forwards;
+	/* -webkit-animation: instructionsBtnMorph 0s step-start forwards;
             animation: instructionsBtnMorph 0s step-start forwards; */
 }
 
-
 .instructionsBtn:hover {
-    opacity: 0.6;
+	opacity: 0.6;
 }
 
 .gamePage.mobile .instructions {
-    /* position: absolute;
+	/* position: absolute;
     text-transform: uppercase;
     transform: translate(-50%, -50%);
     z-index: 1000;
@@ -128,23 +124,23 @@
     width: 90vw;
     height: 50vh;
     border-radius: 1rem; */
-    /* -webkit-animation: instructionsMorphMobile 0.3s ease-out forwards;
+	/* -webkit-animation: instructionsMorphMobile 0.3s ease-out forwards;
             animation: instructionsMorphMobile 0.3s ease-out forwards; */
 }
 
 .gamePage.mobile .instructionsBtn {
-    /* -webkit-animation: instructionsBtnMorphMobile 0.2s ease-out forwards;
+	/* -webkit-animation: instructionsBtnMorphMobile 0.2s ease-out forwards;
             animation: instructionsBtnMorphMobile 0.2s ease-out forwards; */
-    top: 4.2rem;
-    left: 1.2rem;
-    width: 1.5rem;
-    height: 1.5rem;
-    border-radius: 50%;
-    border: 2px solid rgba(255, 255, 255, 0.6);
+	top: 4.2rem;
+	left: 1.2rem;
+	width: 1.5rem;
+	height: 1.5rem;
+	border-radius: 50%;
+	border: 2px solid rgba(255, 255, 255, 0.6);
 }
 
 .gamePage.mobile .instructionsBtn.firstGameInstructionLoad {
-    /* -webkit-animation: instructionsBtnMorphMobile 0s step-start forwards;
+	/* -webkit-animation: instructionsBtnMorphMobile 0s step-start forwards;
             animation: instructionsBtnMorphMobile 0s step-start forwards; */
 }
 
@@ -329,38 +325,38 @@
 } */
 
 .gamePage.mobile .instructionsBtn > h2 {
-    color: rgba(255, 255, 255, 0.6);
-    font-weight: 600;
-    font-size: 0.9rem;
+	color: rgba(255, 255, 255, 0.6);
+	font-weight: 600;
+	font-size: 0.9rem;
 }
 
 .gamePage .instructions > div {
-    width: 90%;
-    display: flex;
-    flex-flow: column nowrap;
-    gap: 0.3rem;
-    -webkit-user-select: none;
-       -moz-user-select: none;
-        -ms-user-select: none;
-            user-select: none;
+	width: 90%;
+	display: flex;
+	flex-flow: column nowrap;
+	gap: 0.3rem;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 .gamePage.desktop .instructions > div {
-    /* width: 55vw; */
+	/* width: 55vw; */
 }
 
 .instructions h3 {
-    font-weight: 600;
-    letter-spacing: 0.1rem;
-    color: rgba(181, 0, 0, 0.9);
-    font-size: 1.5rem;
+	font-weight: 600;
+	letter-spacing: 0.1rem;
+	color: rgba(181, 0, 0, 0.9);
+	font-size: 1.5rem;
 }
 
 .instructions h5 {
-    font-weight: 400;
-    letter-spacing: 0.2rem;
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 1rem;
+	font-weight: 400;
+	letter-spacing: 0.2rem;
+	color: rgba(255, 255, 255, 0.8);
+	font-size: 1rem;
 }
 
 /* .gamePage.mobile .instructions:before {
@@ -382,76 +378,76 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.6);
 } */
 
-.instructions.hide{
-    display: none;
+.instructions.hide {
+	display: none;
 }
 
 .playerTurnTextContainer {
-    grid-area: playerTurnTextContainer;
-    justify-self: center;
-    align-self: center;
-    transform: translateX(calc((var(--game-board-size) / 10) / 2));
+	grid-area: playerTurnTextContainer;
+	justify-self: center;
+	align-self: center;
+	transform: translateX(calc((var(--game-board-size) / 10) / 2));
 }
 
 .playerTurnText {
-    grid-area: playerTurnText;
-    color: rgba(196, 2, 2, 0.8);
-    text-transform: uppercase;
-    font-weight: 600;
+	grid-area: playerTurnText;
+	color: rgba(196, 2, 2, 0.8);
+	text-transform: uppercase;
+	font-weight: 600;
 }
 
 .playerTurnTimer {
-    text-align: center;
-    color: rgba(255, 255, 255, 0.7);
+	text-align: center;
+	color: rgba(255, 255, 255, 0.7);
 }
 
 .playerTurnText.hide {
-    display: none;
+	display: none;
 }
 
 .gamePage.mobile .playerTurnTextContainer {
-    position: absolute;
-    top: 6rem;
-    color: rgba(196, 2, 2, 0.8);
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 0.4rem;
-    border-radius: 10px;
-    text-transform: uppercase;
-    font-weight: 600;
-    font-size: 0.8rem;
-    z-index: 100;
+	position: absolute;
+	top: 6rem;
+	color: rgba(196, 2, 2, 0.8);
+	background-color: rgba(0, 0, 0, 0.5);
+	padding: 0.4rem;
+	border-radius: 10px;
+	text-transform: uppercase;
+	font-weight: 600;
+	font-size: 0.8rem;
+	z-index: 100;
 }
 
 .gamePage {
-    -webkit-user-select: none;
-       -moz-user-select: none;
-        -ms-user-select: none;
-            user-select: none;
-    --player-turn-text: "";
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	--player-turn-text: '';
 }
 
 .gamePage nav {
-    grid-area: nav;
+	grid-area: nav;
 }
 
 .gamePage .userBoard {
-    grid-area: userBoard;
-    justify-self: center;
-    align-self: center;
+	grid-area: userBoard;
+	justify-self: center;
+	align-self: center;
 }
 
 .gamePage .opponentBoard {
-    grid-area: opponentBoard;
-    justify-self: center;
-    align-self: center;
+	grid-area: opponentBoard;
+	justify-self: center;
+	align-self: center;
 }
 
 .gamePage .userBoard > .grid {
-    border: 2px solid rgba(0,255,0,0.3);;
+	border: 2px solid rgba(0, 255, 0, 0.3);
 }
 
 .gamePage .opponentBoard > .grid {
-    border: 2px solid rgba(255,0,0,0.4);;
+	border: 2px solid rgba(255, 0, 0, 0.4);
 }
 
 /* .gamePage .opponentBoard::before {
@@ -463,260 +459,267 @@
 } */
 
 .readyBtn {
-    position: relative;
-    grid-area: readyBtn;
-    opacity: 0.9;
-    transition: all 0.2s ease-out;
-    justify-self: center;
-    align-self: center;
-    width: -webkit-max-content;
-    width: -moz-max-content;
-    width: max-content;
-    height: 2rem;
-    border: 2px solid rgb(0, 255, 26);
-    border-radius: 10px;
-    box-shadow: 0 0 4px 1px rgb(204, 255, 218, 0.3);
-    opacity: 0.8;
-    overflow: visible;
+	position: relative;
+	grid-area: readyBtn;
+	opacity: 0.9;
+	transition: all 0.2s ease-out;
+	justify-self: center;
+	align-self: center;
+	width: -webkit-max-content;
+	width: -moz-max-content;
+	width: max-content;
+	height: 2rem;
+	border: 2px solid rgb(0, 255, 26);
+	border-radius: 10px;
+	box-shadow: 0 0 4px 1px rgb(204, 255, 218, 0.3);
+	opacity: 0.8;
+	overflow: visible;
 }
 
 .shipPlacementTimer {
-    position: absolute;
-    top: -1.5rem;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: rgba(196, 2, 2, 1);
-    font-weight: 600;
+	position: absolute;
+	top: -1.5rem;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: rgba(196, 2, 2, 1);
+	font-weight: 600;
 }
 
 .gamePage.mobile .readyBtn {
-    height: -webkit-max-content;
-    height: -moz-max-content;
-    height: max-content;
-    width: -webkit-max-content;
-    width: -moz-max-content;
-    width: max-content;
-    margin-right: 0.5rem;
-    margin-top: 1rem;
-    align-self: center;
-    opacity: 0.7;
+	height: -webkit-max-content;
+	height: -moz-max-content;
+	height: max-content;
+	width: -webkit-max-content;
+	width: -moz-max-content;
+	width: max-content;
+	margin-right: 0.5rem;
+	margin-top: 1rem;
+	align-self: center;
+	opacity: 0.7;
 }
 
 .readyBtn > .btn {
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    background-color: transparent;
-    color: rgb(0, 255, 26, 0.9);
-    border: none;
-    outline: none;
-    font-weight: 400;
-    text-transform: uppercase;
-    white-space: pre-wrap;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	background-color: transparent;
+	color: rgb(0, 255, 26, 0.9);
+	border: none;
+	outline: none;
+	font-weight: 400;
+	text-transform: uppercase;
+	white-space: pre-wrap;
 }
 
-.gamePage.mobile .readyBtn > .btn{
-    -webkit-filter: grayscale(1) brightness(100);
-            filter: grayscale(1) brightness(100);
+.gamePage.mobile .readyBtn > .btn {
+	-webkit-filter: grayscale(1) brightness(100);
+	filter: grayscale(1) brightness(100);
 }
-
 
 .readyBtn:hover {
-    transform: scale(1.04);
+	transform: scale(1.04);
 }
 
 .gamePage .chatContainer {
-    position: relative;
-    display: flex;
-    flex-flow: nowrap column;
-    grid-area: chatContainer;
-    height: 90%;
-    max-height: 25rem;
-    width: 13rem;
-    border: 2px solid rgba(255,255,255,0.2);
-    background-color: rgba(0,0,0,0.4);
-    justify-self: center;
-    align-self: center;
-    margin-top: 3vw;
-    padding-top: 1.5rem;
+	position: relative;
+	display: flex;
+	flex-flow: nowrap column;
+	grid-area: chatContainer;
+	height: 90%;
+	max-height: 25rem;
+	width: 13rem;
+	border: 2px solid rgba(255, 255, 255, 0.2);
+	background-color: rgba(0, 0, 0, 0.4);
+	justify-self: center;
+	align-self: center;
+	margin-top: 3vw;
+	padding-top: 1.5rem;
 }
 
 .chatContainerMobile {
-    position: absolute;
-    display: flex;
-    flex-flow: nowrap column;
-    left: 50%;
-    transform: translate(-50%);
-    top: 3rem;
-    bottom: 8rem;
-    width: 100%;
-    max-width: 30rem;
-    border: 2px solid rgba(255,255,255,0.2);
-    border-top: none;
-    background-color: rgba(0,0,0,0.8);
-    margin-top: 0;
-    padding-top: 1.5rem;
-    z-index: 100;
-    -webkit-animation: slideDownChat 0.3s ease-out;
-            animation: slideDownChat 0.3s ease-out;
+	position: absolute;
+	display: flex;
+	flex-flow: nowrap column;
+	left: 50%;
+	transform: translate(-50%);
+	top: 3rem;
+	bottom: 8rem;
+	width: 100%;
+	max-width: 30rem;
+	border: 2px solid rgba(255, 255, 255, 0.2);
+	border-top: none;
+	background-color: rgba(0, 0, 0, 0.8);
+	margin-top: 0;
+	padding-top: 1.5rem;
+	z-index: 100;
+	-webkit-animation: slideDownChat 0.3s ease-out;
+	animation: slideDownChat 0.3s ease-out;
 }
 
 @-webkit-keyframes slideDownChat {
-    0% {bottom: 100vh;}
-    100% {bottom: 8rem;}
+	0% {
+		bottom: 100vh;
+	}
+	100% {
+		bottom: 8rem;
+	}
 }
 
 @keyframes slideDownChat {
-    0% {bottom: 100vh;}
-    100% {bottom: 8rem;}
+	0% {
+		bottom: 100vh;
+	}
+	100% {
+		bottom: 8rem;
+	}
 }
 
 .gamePage .chatContainerMobile.hide {
-    display: none;
+	display: none;
 }
 
 .gamePage .chatContainerMobile:before {
-    position: absolute;
-    left: 50%;
-    width: 90%;
-    text-align: center;
-    top: 0.5rem;
-    transform: translate(-50%, 0%);
-    content: 'Chat';
-    font-weight: 400;
-    color: rgba(0, 237, 39, 0.6);
-    text-transform: uppercase;
-    letter-spacing: 0.2rem;
-    border-bottom: 1px solid rgba(255,255,255,0.2);
+	position: absolute;
+	left: 50%;
+	width: 90%;
+	text-align: center;
+	top: 0.5rem;
+	transform: translate(-50%, 0%);
+	content: 'Chat';
+	font-weight: 400;
+	color: rgba(0, 237, 39, 0.6);
+	text-transform: uppercase;
+	letter-spacing: 0.2rem;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .gamePage .chatContainer:before {
-    position: absolute;
-    left: 50%;
-    width: 90%;
-    text-align: center;
-    top: 0.2rem;
-    transform: translate(-50%, 0%);
-    content: 'Chat';
-    font-weight: 400;
-    color: rgba(0, 237, 39, 0.6);
-    text-transform: uppercase;
-    letter-spacing: 0.2rem;
-    border-bottom: 1px solid rgba(255,255,255,0.2);
+	position: absolute;
+	left: 50%;
+	width: 90%;
+	text-align: center;
+	top: 0.2rem;
+	transform: translate(-50%, 0%);
+	content: 'Chat';
+	font-weight: 400;
+	color: rgba(0, 237, 39, 0.6);
+	text-transform: uppercase;
+	letter-spacing: 0.2rem;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .gamePage .chatBox {
-    display: inline-block;
-    height: 90%;
-    overflow: scroll;
-    padding: 0.5rem;
+	display: inline-block;
+	height: 90%;
+	overflow: scroll;
+	padding: 0.5rem;
 }
 
 .chatContainerMobile .chatBox {
-    padding: 1rem;
+	padding: 1rem;
 }
 
 .gamePage .chatBox::-webkit-scrollbar {
-    display: none;
+	display: none;
 }
 
 .gamePage .chatBox .message {
-    display: flex;
-    flex-flow: nowrap column;
+	display: flex;
+	flex-flow: nowrap column;
 }
 
 .gamePage .chatBox .userText {
-    align-self: flex-start;
-    display: inline-block;
-    text-align: left;
-    width: 80%;
-    overflow-wrap: break-word;
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 1.5rem;
-    letter-spacing: 0.1rem;
-    font-weight: 600;
+	align-self: flex-start;
+	display: inline-block;
+	text-align: left;
+	width: 80%;
+	overflow-wrap: break-word;
+	color: rgba(255, 255, 255, 0.6);
+	font-size: 1.5rem;
+	letter-spacing: 0.1rem;
+	font-weight: 600;
 }
 
 .gamePage .chatBox .opponentText {
-    align-self: flex-end;
-    display: inline-block;
-    text-align: right;
-    width: 80%;
-    overflow-wrap: break-word;
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 1.5rem;
-    letter-spacing: 0.1rem;
-    font-weight: 600;
+	align-self: flex-end;
+	display: inline-block;
+	text-align: right;
+	width: 80%;
+	overflow-wrap: break-word;
+	color: rgba(255, 255, 255, 0.6);
+	font-size: 1.5rem;
+	letter-spacing: 0.1rem;
+	font-weight: 600;
 }
 
 .gamePage .chatBox .userName {
-    color: rgba(0, 150, 255, 0.7);
-    margin-top: 0.5rem;
-    align-self: flex-start;
-    display: inline-block;
-    text-align: left;
-    width: 80%;
-    letter-spacing: 1px;
-    font-size: 1rem;
+	color: rgba(0, 150, 255, 0.7);
+	margin-top: 0.5rem;
+	align-self: flex-start;
+	display: inline-block;
+	text-align: left;
+	width: 80%;
+	letter-spacing: 1px;
+	font-size: 1rem;
 }
 
 .gamePage .chatBox .oppName {
-    color: rgba(200, 0, 0, 0.7);
-    margin-top: 0.5rem;
-    align-self: flex-end;
-    display: inline-block;
-    text-align: right;
-    width: 80%;
-    letter-spacing: 1px;
-    font-size: 1rem;
+	color: rgba(200, 0, 0, 0.7);
+	margin-top: 0.5rem;
+	align-self: flex-end;
+	display: inline-block;
+	text-align: right;
+	width: 80%;
+	letter-spacing: 1px;
+	font-size: 1rem;
 }
 
 .gamePage .chatInput {
-    height: 3rem;
-    min-height: -webkit-min-content;
-    min-height: -moz-min-content;
-    min-height: min-content;
-    outline: none;
-    border-top: 2px solid rgba(255,255,255,0.2);
-    border-radius: 0;
-    color: rgba(255, 255, 255, 0.528);
-    font-weight: 400;
-    background-color: rgba(0, 0, 0, 0.4);
-    padding: 0 0.3rem;
-    caret-color: rgba(255, 255, 255, 0.5);
-    font-size: 1rem;
-    letter-spacing: 0.1rem;
+	height: 3rem;
+	min-height: -webkit-min-content;
+	min-height: -moz-min-content;
+	min-height: min-content;
+	outline: none;
+	border-top: 2px solid rgba(255, 255, 255, 0.2);
+	border-radius: 0;
+	color: rgba(255, 255, 255, 0.528);
+	font-weight: 400;
+	background-color: rgba(0, 0, 0, 0.4);
+	padding: 0 0.3rem;
+	caret-color: rgba(255, 255, 255, 0.5);
+	font-size: 1rem;
+	letter-spacing: 0.1rem;
 }
 
 .gamePage .chatInput:focus {
-    background-color: rgba(0, 0, 0, 1);
+	background-color: rgba(0, 0, 0, 1);
 }
 
 .gamePage .chatInput::-webkit-input-placeholder {
-    color: rgba(255, 255, 255, 0.4);
-    font-weight: 400;
+	color: rgba(255, 255, 255, 0.4);
+	font-weight: 400;
 }
 
 .gamePage .chatInput::-moz-placeholder {
-    color: rgba(255, 255, 255, 0.4);
-    font-weight: 400;
+	color: rgba(255, 255, 255, 0.4);
+	font-weight: 400;
 }
 
 .gamePage .chatInput:-ms-input-placeholder {
-    color: rgba(255, 255, 255, 0.4);
-    font-weight: 400;
+	color: rgba(255, 255, 255, 0.4);
+	font-weight: 400;
 }
 
 .gamePage .chatInput::-ms-input-placeholder {
-    color: rgba(255, 255, 255, 0.4);
-    font-weight: 400;
+	color: rgba(255, 255, 255, 0.4);
+	font-weight: 400;
 }
 
 .gamePage .chatInput::placeholder {
-    color: rgba(255, 255, 255, 0.3);
-    font-weight: 400;
+	color: rgba(255, 255, 255, 0.3);
+	font-weight: 400;
 }
 
 .gamePage footer {
-    grid-area: footer;
+	grid-area: footer;
 }

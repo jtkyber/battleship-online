@@ -1,111 +1,111 @@
 .friendBlock {
-    display: flex;
-    flex-flow: nowrap row;
-    justify-content: flex-end;
-    align-items: center;
-    width: 9.5rem;
-    height: 4rem;
-    margin: 0.5rem 0;
-    position: relative;
-    background-color: rgba(0, 0, 0, 0.3);
-    border: 3px solid rgb(0, 0, 0);
-    border-radius: 10px;
-    box-shadow: 0 0 2px 1px rgba(255, 255, 255, 0.7);
-    /* transition: all 0.2s ease-out; */
+	display: flex;
+	flex-flow: nowrap row;
+	justify-content: flex-end;
+	align-items: center;
+	width: 9.5rem;
+	height: 4rem;
+	margin: 0.5rem 0;
+	position: relative;
+	background-color: rgba(0, 0, 0, 0.3);
+	border: 3px solid rgb(0, 0, 0);
+	border-radius: 10px;
+	box-shadow: 0 0 2px 1px rgba(255, 255, 255, 0.7);
+	/* transition: all 0.2s ease-out; */
 }
 
 .friendBlock:after {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
-    box-shadow: 0 0 2px 1px rgba(255, 255, 255, 0.4) inset;
-    /* transition: all 0.2s ease-out; */
-    z-index: -1;
+	content: '';
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	left: 0;
+	top: 0;
+	box-shadow: 0 0 2px 1px rgba(255, 255, 255, 0.4) inset;
+	/* transition: all 0.2s ease-out; */
+	z-index: -1;
 }
 
 .friendBlock:hover {
-    box-shadow: 0 0 2px 2px rgba(255, 255, 255, 0.7);
+	box-shadow: 0 0 2px 2px rgba(255, 255, 255, 0.7);
 }
 
 .friendBlock:hover:after {
-    box-shadow: 0 0 2px 2px rgba(255, 255, 255, 0.4) inset;
+	box-shadow: 0 0 2px 2px rgba(255, 255, 255, 0.4) inset;
 }
 
 .friendText {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-flow: wrap column;
-    margin: auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-flow: wrap column;
+	margin: auto;
 }
 
 .friendBlock > .online {
-    height: 1rem;
-    width: 1rem;
-    margin-right: 1rem;
-    border-radius: 50%;
-    border: 1px solid rgb(0, 255, 26, 0.9);
+	height: 1rem;
+	width: 1rem;
+	margin-right: 1rem;
+	border-radius: 50%;
+	border: 1px solid rgb(0, 255, 26, 0.9);
 }
 
 .friendBlock > .offline {
-    height: 1rem;
-    width: 1rem;
-    margin-right: 1rem;
-    border-radius: 50%;
-    border: 1px solid rgba(220, 0, 0, 0.9);
+	height: 1rem;
+	width: 1rem;
+	margin-right: 1rem;
+	border-radius: 50%;
+	border: 1px solid rgba(220, 0, 0, 0.9);
 }
 
 .friendText > h3 {
-    color: rgba(255, 255, 255, 0.9);
-    font-weight: 400;
+	color: rgba(255, 255, 255, 0.9);
+	font-weight: 400;
 }
 
 .friendText > button {
-    margin-top: 0.3rem;
-    font-weight: 400;
-    padding: 0.2rem 0.3rem;
-    position: relative;
-    background-color: transparent;
-    border-radius: 7px;
-    opacity: 0.8;
-    transition: all 0.15s ease-out;
-    letter-spacing: 0.1rem;
+	margin-top: 0.3rem;
+	font-weight: 400;
+	padding: 0.2rem 0.3rem;
+	position: relative;
+	background-color: transparent;
+	border-radius: 7px;
+	opacity: 0.8;
+	transition: all 0.15s ease-out;
+	letter-spacing: 0.1rem;
 }
 
 .friendText > button:after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
 }
 
 .friendText > button:hover {
-    opacity: 0.4 !important;
+	opacity: 0.4 !important;
 }
 
 .friendInGameBtn {
-    color: rgba(0, 255, 26, 0.7);
-    border: none;
-    pointer-events: none;
+	color: rgba(0, 255, 26, 0.7);
+	border: none;
+	pointer-events: none;
 }
 
 .friendOnlineBtn {
-    color: rgb(0, 255, 26);
-    border: 1px solid rgb(0, 255, 26);
-    box-shadow: 0 0 1px 1px rgb(204, 255, 218, 0.6);
+	color: rgb(0, 255, 26);
+	border: 1px solid rgb(0, 255, 26);
+	box-shadow: 0 0 1px 1px rgb(204, 255, 218, 0.6);
 }
 
 .friendOfflineBtn {
-    color: rgba(255, 0, 0, 0.9);
-    border: none;
-    pointer-events: none;
+	color: rgba(255, 0, 0, 0.9);
+	border: none;
+	pointer-events: none;
 }
 
 .friendOnlineBtn > button:after {
-    box-shadow: 0 0 1px 1px rgb(204, 255, 218, 0.6) inset;
+	box-shadow: 0 0 1px 1px rgb(204, 255, 218, 0.6) inset;
 }

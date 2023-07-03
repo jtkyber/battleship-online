@@ -1,314 +1,320 @@
 .friendsContainer {
-    width: 15rem;
-    display: grid;
-    grid-template-rows: -webkit-max-content 1fr -webkit-max-content;
-    grid-template-rows: max-content 1fr max-content;
-    grid-template-areas: 
-    "friendHeader"
-    "friendSection"
-    "addFriend";
-    justify-items: center;
-    position: relative;
-    background-color: rgba(0,0,0,0.4);
-    border: 2px solid rgba(255,255,255,0.4);
-    border-left: none;
-    border-top: none;
-    border-bottom: none;
-    --add-friend-alert: "";
+	width: 15rem;
+	display: grid;
+	grid-template-rows: -webkit-max-content 1fr -webkit-max-content;
+	grid-template-rows: max-content 1fr max-content;
+	grid-template-areas:
+		'friendHeader'
+		'friendSection'
+		'addFriend';
+	justify-items: center;
+	position: relative;
+	background-color: rgba(0, 0, 0, 0.4);
+	border: 2px solid rgba(255, 255, 255, 0.4);
+	border-left: none;
+	border-top: none;
+	border-bottom: none;
+	--add-friend-alert: '';
 }
 
 .friendsContainer.mobile {
-  position: absolute;
-  display: grid;
-  grid-template-rows: -webkit-max-content 1fr -webkit-max-content;
-  grid-template-rows: max-content 1fr max-content;
-  grid-template-areas: 
-  "friendHeader"
-  "friendSection"
-  "addFriend";
-  justify-items: center;
-  width: 100vw;
-  top: 3rem;
-  bottom: 0;
-  background-color: rgba(0,0,0,0.4);
-  border: 2px solid rgba(255,255,255,0.4);
-  border-left: none;
-  border-top: none;
-  border-bottom: none;
-  --add-friend-alert: "";
-  -webkit-animation: slideDownFriends 0.5s ease-out;
-          animation: slideDownFriends 0.5s ease-out;
+	position: absolute;
+	display: grid;
+	grid-template-rows: -webkit-max-content 1fr -webkit-max-content;
+	grid-template-rows: max-content 1fr max-content;
+	grid-template-areas:
+		'friendHeader'
+		'friendSection'
+		'addFriend';
+	justify-items: center;
+	width: 100vw;
+	top: 3rem;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.4);
+	border: 2px solid rgba(255, 255, 255, 0.4);
+	border-left: none;
+	border-top: none;
+	border-bottom: none;
+	--add-friend-alert: '';
+	-webkit-animation: slideDownFriends 0.5s ease-out;
+	animation: slideDownFriends 0.5s ease-out;
 }
 
 @-webkit-keyframes slideDownFriends {
-  0% {bottom: 100vh;}
-  100% {bottom: 0;}
+	0% {
+		bottom: 100vh;
+	}
+	100% {
+		bottom: 0;
+	}
 }
 
 @keyframes slideDownFriends {
-  0% {bottom: 100vh;}
-  100% {bottom: 0;}
+	0% {
+		bottom: 100vh;
+	}
+	100% {
+		bottom: 0;
+	}
 }
 
 .friendsContainer.hide {
-  display: none;
+	display: none;
 }
 
 .leaderboard > .friendsContainer {
-  display: none;
+	display: none;
 }
 
 .friendsSection {
-    grid-area: friendSection;
-    height: 100%;
-    display: flex;
-    flex-flow: nowrap column;
-    align-items: center;
-    justify-content: flex-start;
+	grid-area: friendSection;
+	height: 100%;
+	display: flex;
+	flex-flow: nowrap column;
+	align-items: center;
+	justify-content: flex-start;
 }
 
 .friendsContainer.mobile .friendsSection {
-
 }
 
 .logToSeeFriendsText > h3 {
-    color: rgba(0, 255, 42, 0.6);
-    font-weight: 400;
-    text-align: center;
+	color: rgba(0, 255, 42, 0.6);
+	font-weight: 400;
+	text-align: center;
 }
 
 .friendSearch {
-    height: 2rem;
-    border: 2px solid rgba(255, 255, 255, 0.5);
-    background-color: rgba(0, 0, 0, 0.4);
-    outline: none;
-    caret-color: white;
-    color: rgba(255, 255, 255, 0.8);
-    transition: all 0.1s ease-out;
+	height: 2rem;
+	border: 2px solid rgba(255, 255, 255, 0.5);
+	background-color: rgba(0, 0, 0, 0.4);
+	outline: none;
+	caret-color: white;
+	color: rgba(255, 255, 255, 0.8);
+	transition: all 0.1s ease-out;
 }
 
 .friendSearch:hover {
-  border: 2px solid rgba(255, 255, 255, 0.7);
+	border: 2px solid rgba(255, 255, 255, 0.7);
 }
 
 .friendSearch:focus {
-  border: 2px solid rgba(255, 255, 255, 0.9);
+	border: 2px solid rgba(255, 255, 255, 0.9);
 }
 
 .friendsContainerHeader {
-    grid-area: friendHeader;
-    height: 5.5rem;
-    display: flex;
-    flex-flow: nowrap column;
-    justify-content: center;
-    align-items: center;
+	grid-area: friendHeader;
+	height: 5.5rem;
+	display: flex;
+	flex-flow: nowrap column;
+	justify-content: center;
+	align-items: center;
 }
 
 .friendsContainerHeader > h2 {
-    color: rgba(255, 255, 255, 0.9);
-    margin-bottom: 1rem;
-    padding-bottom: 0.5rem;
-    padding-top: 0.5rem;
-    border-bottom: 1px solid rgba(13, 255, 0, 0.6);
-    width: 13rem;
-    text-align: center;
-    z-index: 100;
-    text-transform: uppercase;
-    letter-spacing: 0.2rem;
-    font-weight: 400;
+	color: rgba(255, 255, 255, 0.9);
+	margin-bottom: 1rem;
+	padding-bottom: 0.5rem;
+	padding-top: 0.5rem;
+	border-bottom: 1px solid rgba(13, 255, 0, 0.6);
+	width: 13rem;
+	text-align: center;
+	z-index: 100;
+	text-transform: uppercase;
+	letter-spacing: 0.2rem;
+	font-weight: 400;
 }
 
 .friendsContainerHeader h2 + input {
-    width: 10rem;
-    height: 2rem;
-    text-align: center;
-    opacity: .8;
+	width: 10rem;
+	height: 2rem;
+	text-align: center;
+	opacity: 0.8;
 }
 
 .noFriends {
-    margin: 0.5rem 0;
-    color: rgba(255,0,0,0.7);
-    text-align: center;
+	margin: 0.5rem 0;
+	color: rgba(255, 0, 0, 0.7);
+	text-align: center;
 }
 
 .friendsListContainer {
-    overflow: scroll;
-    overflow-x: hidden;
-    width: 15rem;
-    height: 100%;
-    /* margin-bottom: 18.5rem; */
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+	overflow: scroll;
+	overflow-x: hidden;
+	width: 15rem;
+	height: 100%;
+	/* margin-bottom: 18.5rem; */
+	scrollbar-width: none;
+	-ms-overflow-style: none;
 }
 
 .friendsContainer.mobile .friendsListContainer {
-  margin-bottom: 0;
+	margin-bottom: 0;
 }
 
 .friendsContainer.mobile .friendsListContainer::-webkit-scrollbar {
-  display: none;
+	display: none;
 }
 
 .friendsListContainer::-webkit-scrollbar {
-    width: 1.2rem;
+	width: 1.2rem;
 }
 
 .friendsListContainer::-webkit-scrollbar-track {
-    background-color: transparent;
+	background-color: transparent;
 }
 
 .friendsListContainer::-webkit-scrollbar-thumb {
-    background-color: rgba(0,0,0,0.6);
-    border-radius: 10px;
+	background-color: rgba(0, 0, 0, 0.6);
+	border-radius: 10px;
 }
 
 .friendsListContainer::-webkit-scrollbar-thumb:hover {
-    background-color: rgba(0,0,0,0.4);
+	background-color: rgba(0, 0, 0, 0.4);
 }
 
 .friendsListContainer > h3 {
-    margin: 1rem;
-    color: rgba(220,0,0,1);
-    text-align: center;
+	margin: 1rem;
+	color: rgba(220, 0, 0, 1);
+	text-align: center;
 }
 
 .friendsList {
-    width: 15rem;
-    display: flex;
-    flex-flow: nowrap column;
-    align-items: center;
-    padding: 1rem 0;
-    -webkit-animation: 0.5s linear 0s 1 slideUp;
-            animation: 0.5s linear 0s 1 slideUp;
+	width: 15rem;
+	display: flex;
+	flex-flow: nowrap column;
+	align-items: center;
+	padding: 1rem 0;
+	-webkit-animation: 0.5s linear 0s 1 slideUp;
+	animation: 0.5s linear 0s 1 slideUp;
 }
 
 .friendsContainer.mobile .friendsList {
-  /* z-index: -1; */
+	/* z-index: -1; */
 }
 
 @-webkit-keyframes slideUp {
-  0% {
-    transform: translateY(100vh);
-  }
-  100% {
-    transform: translateY(0);
-  }
+	0% {
+		transform: translateY(100vh);
+	}
+	100% {
+		transform: translateY(0);
+	}
 }
 
 @keyframes slideUp {
-  0% {
-    transform: translateY(100vh);
-  }
-  100% {
-    transform: translateY(0);
-  }
+	0% {
+		transform: translateY(100vh);
+	}
+	100% {
+		transform: translateY(0);
+	}
 }
 
-
 .addFriend {
-    grid-area: addFriend;
-    width: 13rem;
-    height: -webkit-max-content;
-    height: -moz-max-content;
-    height: max-content;
-    display: flex;
-    flex-flow: nowrap column;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid rgba(255,255,255,0.8);
-    border-bottom: none;
-    border-radius: 15px;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-    background-color: rgba(0,0,0,0.3);
-    z-index: 99;
-    padding: 0.5rem 0;
-    text-align: center;
+	grid-area: addFriend;
+	width: 13rem;
+	height: -webkit-max-content;
+	height: -moz-max-content;
+	height: max-content;
+	display: flex;
+	flex-flow: nowrap column;
+	justify-content: center;
+	align-items: center;
+	border: 1px solid rgba(255, 255, 255, 0.8);
+	border-bottom: none;
+	border-radius: 15px;
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+	background-color: rgba(0, 0, 0, 0.3);
+	z-index: 99;
+	padding: 0.5rem 0;
+	text-align: center;
 }
 
 .addFriend > h3 {
-    height: -webkit-max-content;
-    height: -moz-max-content;
-    height: max-content;
-    width: 90%;
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 1.3rem;
-    font-weight: 400;
-    display: flex;
-    flex-flow: nowrap column;
-    align-items: center;
-    justify-content: flex-start;
-    padding-bottom: 0.5rem;
-    text-transform: uppercase;
+	height: -webkit-max-content;
+	height: -moz-max-content;
+	height: max-content;
+	width: 90%;
+	color: rgba(255, 255, 255, 0.9);
+	font-size: 1.3rem;
+	font-weight: 400;
+	display: flex;
+	flex-flow: nowrap column;
+	align-items: center;
+	justify-content: flex-start;
+	padding-bottom: 0.5rem;
+	text-transform: uppercase;
 }
 
 .addFriend > h3::after {
-    content: var(--add-friend-alert);
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: rgba(255,0,0,0.8);
-    padding-top: 0rem;
-    text-align: center;
-    text-transform: uppercase;
-    letter-spacing: 0.1rem;
-    -webkit-animation: 1s ease-out fadeOut;
-            animation: 1s ease-out fadeOut;
+	content: var(--add-friend-alert);
+	font-size: 0.8rem;
+	font-weight: 600;
+	color: rgba(255, 0, 0, 0.8);
+	padding-top: 0rem;
+	text-align: center;
+	text-transform: uppercase;
+	letter-spacing: 0.1rem;
+	-webkit-animation: 1s ease-out fadeOut;
+	animation: 1s ease-out fadeOut;
 }
 
 @-webkit-keyframes fadeOut {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
 }
 
 @keyframes fadeOut {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
 }
 
 .addFriend > input {
-    height: 1.5rem;
-    width: 8rem;
-    text-align: center;
-    border: 2px solid rgba(255, 255, 255, 0.5);
-    background-color: rgba(0, 0, 0, 0.4);
-    outline: none;
-    caret-color: white;
-    color: rgba(255, 255, 255, 0.8);
-    transition: all 0.1s ease-out;
+	height: 1.5rem;
+	width: 8rem;
+	text-align: center;
+	border: 2px solid rgba(255, 255, 255, 0.5);
+	background-color: rgba(0, 0, 0, 0.4);
+	outline: none;
+	caret-color: white;
+	color: rgba(255, 255, 255, 0.8);
+	transition: all 0.1s ease-out;
 }
 
 .addFriend > input:hover {
-  border: 2px solid rgba(255, 255, 255, 0.7);
+	border: 2px solid rgba(255, 255, 255, 0.7);
 }
 
 .addFriend > input:focus {
-  border: 2px solid rgba(255, 255, 255, 0.9);
+	border: 2px solid rgba(255, 255, 255, 0.9);
 }
 
 .addFriend > button {
-    margin-top: 0.2rem;
-    font-weight: 600;
-    font-size: 1rem;
-    padding: 0.2rem 0.3rem;
-    position: relative;
-    background-color: transparent;
-    color: rgba(0, 255, 26, 0.8);
-    /* border: 1px solid rgb(0, 255, 26); */
-    border: none;
-    border-radius: 7px;
-    /* box-shadow: 0 0 1px 1px rgb(204, 255, 218, 0.6); */
-    opacity: 0.8;
-    transition: all 0.15s ease-out;
-    text-transform: uppercase;
-    letter-spacing: 0.05rem;
+	margin-top: 0.2rem;
+	font-weight: 600;
+	font-size: 1rem;
+	padding: 0.2rem 0.3rem;
+	position: relative;
+	background-color: transparent;
+	color: rgba(0, 255, 26, 0.8);
+	/* border: 1px solid rgb(0, 255, 26); */
+	border: none;
+	border-radius: 7px;
+	/* box-shadow: 0 0 1px 1px rgb(204, 255, 218, 0.6); */
+	opacity: 0.8;
+	transition: all 0.15s ease-out;
+	text-transform: uppercase;
+	letter-spacing: 0.05rem;
 }
 
 /* .addFriend > button::after {
@@ -322,5 +328,5 @@
 } */
 
 .addFriend > button:hover {
-    opacity: 0.4;
+	opacity: 0.4;
 }

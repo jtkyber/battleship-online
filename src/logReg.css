@@ -1,309 +1,319 @@
 :root {
-    --primary-logreg-text-color: rgba(235, 235, 235, 0.9);
+	--primary-logreg-text-color: rgba(235, 235, 235, 0.9);
 }
 
 .logRegPage {
-    background-color: rgba(0,0,0,0.7);
-    height: 100vh;
-    display: grid;
-    grid-template-columns: 15rem 1fr;
-    grid-template-rows: 3rem -webkit-max-content -webkit-max-content 1fr 2rem;
-    grid-template-rows: 3rem max-content max-content 1fr 2rem;
-    grid-template-areas:
-            "nav nav"
-            "friends homeText"
-            "friends playGameBtnContainer"
-            "friends logReg"
-            "footer footer";
+	background-color: rgba(0, 0, 0, 0.7);
+	height: 100vh;
+	display: grid;
+	grid-template-columns: 15rem 1fr;
+	grid-template-rows: 3rem -webkit-max-content -webkit-max-content 1fr 2rem;
+	grid-template-rows: 3rem max-content max-content 1fr 2rem;
+	grid-template-areas:
+		'nav nav'
+		'friends homeText'
+		'friends playGameBtnContainer'
+		'friends logReg'
+		'footer footer';
 }
 
 .logRegPage.mobile {
-    background-color: rgba(0,0,0,0.7);
-    min-height: 100vh;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 3rem -webkit-max-content -webkit-max-content 1fr 2rem;
-    grid-template-rows: 3rem -webkit-max-content -webkit-max-content 1fr 3.5rem;
-    grid-template-rows: 3rem max-content max-content 1fr 3.5rem;
-    grid-template-areas:
-        "nav"
-        "homeText"
-        "playGameBtnContainer"
-        "logReg"
-        "footer";
+	background-color: rgba(0, 0, 0, 0.7);
+	min-height: 100vh;
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: 3rem -webkit-max-content -webkit-max-content 1fr 2rem;
+	grid-template-rows: 3rem -webkit-max-content -webkit-max-content 1fr 3.5rem;
+	grid-template-rows: 3rem max-content max-content 1fr 3.5rem;
+	grid-template-areas:
+		'nav'
+		'homeText'
+		'playGameBtnContainer'
+		'logReg'
+		'footer';
 }
 
 .playGameBtnContainer {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    overflow: visible;
-    gap: 1rem;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	overflow: visible;
+	gap: 1rem;
 }
 
 .playAIbtnContainer {
-    position: relative;
-    width: 8rem;
-    height: 2.5rem;
-    border: 2px solid rgb(0, 255, 26);
-    border-radius: 10px;
-    box-shadow: 0 0 6px 1px rgb(204, 255, 218, 0.3);
-    opacity: 0.8;
-    transition: all 0.15s ease-out;
-    -webkit-animation: pulseGlow 1.5s linear infinite;
-            animation: pulseGlow 1.5s linear infinite;
+	position: relative;
+	width: 8rem;
+	height: 2.5rem;
+	border: 2px solid rgb(0, 255, 26);
+	border-radius: 10px;
+	box-shadow: 0 0 6px 1px rgb(204, 255, 218, 0.3);
+	opacity: 0.8;
+	transition: all 0.15s ease-out;
+	-webkit-animation: pulseGlow 1.5s linear infinite;
+	animation: pulseGlow 1.5s linear infinite;
 }
 
 .playAIbtn {
-    width: 100%;
-    height: 100%;
-    background-color: transparent;
-    color: rgb(0, 255, 26, 0.9);
-    border: none;
-    outline: none;
-    font-size: 1rem;
-    font-weight: 400;
-    text-transform: uppercase;
-    box-shadow: 0 0 6px 1px rgb(204, 255, 218, 0.3) inset;
-    -webkit-animation: pulseGlowInset 1.5s linear infinite;
-            animation: pulseGlowInset 1.5s linear infinite;
+	width: 100%;
+	height: 100%;
+	background-color: transparent;
+	color: rgb(0, 255, 26, 0.9);
+	border: none;
+	outline: none;
+	font-size: 1rem;
+	font-weight: 400;
+	text-transform: uppercase;
+	box-shadow: 0 0 6px 1px rgb(204, 255, 218, 0.3) inset;
+	-webkit-animation: pulseGlowInset 1.5s linear infinite;
+	animation: pulseGlowInset 1.5s linear infinite;
 }
 
 .playAIbtnContainer:hover {
-    transform: scale(1.04);
+	transform: scale(1.04);
 }
 
 .playAsGuest {
-    grid-area: playAsGuest;
-    justify-self: center;
-    align-self: start;
+	grid-area: playAsGuest;
+	justify-self: center;
+	align-self: start;
 }
 
 .homeText {
-    grid-area: homeText;
-    justify-self: center;
-    align-self: center;
+	grid-area: homeText;
+	justify-self: center;
+	align-self: center;
 }
 
 .homeText > h1 {
-    position: relative;
-    color: rgb(0, 0, 0);
-    text-transform: uppercase;
-    font-weight: 600;
-    font-size: 5rem;
-    letter-spacing: 0.5rem;
-    -webkit-text-stroke: 1px rgba(0, 255, 42, 0.6);
+	position: relative;
+	color: rgb(0, 0, 0);
+	text-transform: uppercase;
+	font-weight: 600;
+	font-size: 5rem;
+	letter-spacing: 0.5rem;
+	-webkit-text-stroke: 1px rgba(0, 255, 42, 0.6);
 }
 
 .logReg {
-    width: -webkit-max-content;
-    width: -moz-max-content;
-    width: max-content;
-    height: -webkit-max-content;
-    height: -moz-max-content;
-    height: max-content;
-    grid-area: logReg;
-    display: flex;
-    justify-content: center;
-    justify-self: center;
-    align-items: start;
-    margin-top: 5vh;
-    box-shadow: 8px 8px 12px 9px rgba(0, 0, 0, .6);
-    border: 2px solid rgba(0, 0, 0, 0.6);
-    border-radius: 8px;
+	width: -webkit-max-content;
+	width: -moz-max-content;
+	width: max-content;
+	height: -webkit-max-content;
+	height: -moz-max-content;
+	height: max-content;
+	grid-area: logReg;
+	display: flex;
+	justify-content: center;
+	justify-self: center;
+	align-items: start;
+	margin-top: 5vh;
+	box-shadow: 8px 8px 12px 9px rgba(0, 0, 0, 0.6);
+	border: 2px solid rgba(0, 0, 0, 0.6);
+	border-radius: 8px;
 }
 
 .logRegPage.mobile .logReg {
-    position: absolute;
-    margin: 0;
-    bottom: 10vh;
-    left: 50%;
-    transform: translate(-50%);
+	position: absolute;
+	margin: 0;
+	bottom: 10vh;
+	left: 50%;
+	transform: translate(-50%);
 }
 
 .logRegPage nav {
-    grid-area: nav;
+	grid-area: nav;
 }
 
 .logRegPage .friendsContainer {
-    grid-area: friends;
-    z-index: 2;
+	grid-area: friends;
+	z-index: 2;
 }
 
-.login, .register {
-    width: 18rem;
-    max-width: 90vw;
-    height: -webkit-max-content;
-    height: -moz-max-content;
-    height: max-content;
-    max-height: 90vh;
-    /* border: 4px solid rgba(255, 255, 255, 0.6); */
-    display: flex;
-    flex-flow: nowrap column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    /* background-color: rgba(0,0,0,0.6); */
-    --reg-log-alert: "";
-    /* border-radius: 10px; */
-    opacity: 0.9;
-    padding: 0.5rem;
+.login,
+.register {
+	width: 18rem;
+	max-width: 90vw;
+	height: -webkit-max-content;
+	height: -moz-max-content;
+	height: max-content;
+	max-height: 90vh;
+	/* border: 4px solid rgba(255, 255, 255, 0.6); */
+	display: flex;
+	flex-flow: nowrap column;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	/* background-color: rgba(0,0,0,0.6); */
+	--reg-log-alert: '';
+	/* border-radius: 10px; */
+	opacity: 0.9;
+	padding: 0.5rem;
 }
 
-.login h1, .register h1 {
-    position: relative;
-    height: -webkit-max-content;
-    height: -moz-max-content;
-    height: max-content;
-    color: var(--primary-logreg-text-color);
-    font-size: 2.6rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1rem;
-    display: flex;
-    flex-flow: nowrap column;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 0.5rem;
+.login h1,
+.register h1 {
+	position: relative;
+	height: -webkit-max-content;
+	height: -moz-max-content;
+	height: max-content;
+	color: var(--primary-logreg-text-color);
+	font-size: 2.6rem;
+	text-transform: uppercase;
+	letter-spacing: 0.1rem;
+	display: flex;
+	flex-flow: nowrap column;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 0.5rem;
 }
 
-.login h1::after, .register h1::after {
-    content: var(--reg-log-alert);
-    position: relative;
-    color: rgba(255,0,0,0.8);
-    font-size: 0.9rem;
-    font-weight: 600;
-    text-align: center;
-    width: 90%;
-    height: -webkit-max-content;
-    height: -moz-max-content;
-    height: max-content;
-    line-height: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1rem;
+.login h1::after,
+.register h1::after {
+	content: var(--reg-log-alert);
+	position: relative;
+	color: rgba(255, 0, 0, 0.8);
+	font-size: 0.9rem;
+	font-weight: 600;
+	text-align: center;
+	width: 90%;
+	height: -webkit-max-content;
+	height: -moz-max-content;
+	height: max-content;
+	line-height: 0.8rem;
+	text-transform: uppercase;
+	letter-spacing: 0.1rem;
 }
 
-.login .username, .register .username {
-    position: relative;
-    height: -webkit-max-content;
-    height: -moz-max-content;
-    height: max-content;
-    width: 13rem;
-    max-width: 90vw;
-    display: flex;
-    flex-flow: nowrap column;
-    justify-content: flex-end;
-    align-items: center;
-    margin-bottom: 1rem;
-    /* padding-top: 3rem; */
+.login .username,
+.register .username {
+	position: relative;
+	height: -webkit-max-content;
+	height: -moz-max-content;
+	height: max-content;
+	width: 13rem;
+	max-width: 90vw;
+	display: flex;
+	flex-flow: nowrap column;
+	justify-content: flex-end;
+	align-items: center;
+	margin-bottom: 1rem;
+	/* padding-top: 3rem; */
 }
 
-.login .password, .register .password {
-    position: relative;
-    height: -webkit-max-content;
-    height: -moz-max-content;
-    height: max-content;
-    width: 13rem;
-    max-width: 90vw;
-    display: flex;
-    flex-flow: nowrap column;
-    justify-content: flex-start;
-    align-items: center;
-    margin-bottom: 1rem;
+.login .password,
+.register .password {
+	position: relative;
+	height: -webkit-max-content;
+	height: -moz-max-content;
+	height: max-content;
+	width: 13rem;
+	max-width: 90vw;
+	display: flex;
+	flex-flow: nowrap column;
+	justify-content: flex-start;
+	align-items: center;
+	margin-bottom: 1rem;
 }
 
-.login h4, .register h4 {
-    color: var(--primary-logreg-text-color);
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
-    letter-spacing: 0.1rem;
+.login h4,
+.register h4 {
+	color: var(--primary-logreg-text-color);
+	font-size: 1.2rem;
+	margin-bottom: 0.5rem;
+	letter-spacing: 0.1rem;
 }
 
-.login input, .register input {
-    box-sizing: border-box;
-    min-height: 2.5rem;
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.6);
-    outline: none;
-    color: white;
-    caret-color: white;
-    padding: 0.5rem;
-    letter-spacing: 0.1rem;
+.login input,
+.register input {
+	box-sizing: border-box;
+	min-height: 2.5rem;
+	width: 100%;
+	background-color: rgba(0, 0, 0, 0.6);
+	border: 1px solid rgba(255, 255, 255, 0.6);
+	outline: none;
+	color: white;
+	caret-color: white;
+	padding: 0.5rem;
+	letter-spacing: 0.1rem;
 }
 
-.login input:hover, .register input:hover {
-    border: 2px solid rgba(255, 255, 255, 0.6);
+.login input:hover,
+.register input:hover {
+	border: 2px solid rgba(255, 255, 255, 0.6);
 }
 
-.login input:focus, .register input:focus {
-    border: 3px solid rgba(255, 255, 255, 0.6);
+.login input:focus,
+.register input:focus {
+	border: 3px solid rgba(255, 255, 255, 0.6);
 }
 
 .raisedTextBox {
-    position: fixed;
-    height: 100vh;
-    z-index: 100;
+	position: fixed;
+	height: 100vh;
+	z-index: 100;
 }
 
-.loginBtn, .registerBtn {
-    border: none;
-    background-color: var(--primary-logreg-text-color);
-    color: rgba(0, 0, 0, 0.9);
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 600;
-    padding: 0.5rem;
-    transition: all 0.2s ease-out;
-    letter-spacing: 0.1rem;
+.loginBtn,
+.registerBtn {
+	border: none;
+	background-color: var(--primary-logreg-text-color);
+	color: rgba(0, 0, 0, 0.9);
+	border-radius: 8px;
+	font-size: 1rem;
+	font-weight: 600;
+	padding: 0.5rem;
+	transition: all 0.2s ease-out;
+	letter-spacing: 0.1rem;
 }
 
 .changeLogReg {
-    background: transparent;
-    color: var(--primary-logreg-text-color);
-    font-size: 0.9rem;
-    border: none;
-    margin-top: 0.2rem;
-    padding: 0.35rem;
-    transition: all 0.2s ease-out;
-    letter-spacing: 0.1rem;
+	background: transparent;
+	color: var(--primary-logreg-text-color);
+	font-size: 0.9rem;
+	border: none;
+	margin-top: 0.2rem;
+	padding: 0.35rem;
+	transition: all 0.2s ease-out;
+	letter-spacing: 0.1rem;
 }
 
 .changeLogReg:hover {
-    opacity: 0.8;
+	opacity: 0.8;
 }
 
-.loginBtn:hover, .registerBtn:hover {
-    opacity: 0.8;
+.loginBtn:hover,
+.registerBtn:hover {
+	opacity: 0.8;
 }
 
 .logRegPage footer {
-    grid-area: footer;
+	grid-area: footer;
 }
 
-
 @media only screen and (min-width: 651px) and (max-width: 855px) {
-    .homeText > h1 {
-        transform: scale(0.70);
-    }
+	.homeText > h1 {
+		transform: scale(0.7);
+	}
 }
 
 @media only screen and (min-width: 500px) and (max-width: 650px) {
-    .homeText > h1 {
-        transform: scale(0.60);
-    }
+	.homeText > h1 {
+		transform: scale(0.6);
+	}
 }
 
 @media only screen and (max-width: 499px) {
-    .logReg {
-        transform: scale(0.8);
-    }
-    .logRegPage.mobile .logReg {
-        /* bottom: 5vh; */
-        transform: translate(-50%) scale(0.8);
-    }
-    .homeText > h1 {
-        transform: scale(0.50);
-    }
+	.logReg {
+		transform: scale(0.8);
+	}
+	.logRegPage.mobile .logReg {
+		/* bottom: 5vh; */
+		transform: translate(-50%) scale(0.8);
+	}
+	.homeText > h1 {
+		transform: scale(0.5);
+	}
 }

@@ -1,75 +1,75 @@
 .leaderboard {
-    background-color: rgba(0,0,0,0.7);
-    height: 100vh;
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-template-rows: 3rem 1fr 2rem;
-        grid-template-areas:
-            "nav"
-            "topFive"
-            "footer";
+	background-color: rgba(0, 0, 0, 0.7);
+	height: 100vh;
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: 3rem 1fr 2rem;
+	grid-template-areas:
+		'nav'
+		'topFive'
+		'footer';
 }
 
 .leaderboard.mobile {
-    background-color: rgba(0,0,0,0.7);
-    height: 100vh;
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-template-rows: 3rem 1fr 3.5rem;
-        grid-template-areas:
-            "nav"
-            "topFive"
-            "footer";
+	background-color: rgba(0, 0, 0, 0.7);
+	height: 100vh;
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: 3rem 1fr 3.5rem;
+	grid-template-areas:
+		'nav'
+		'topFive'
+		'footer';
 }
 
 .leaderboard.hide {
-    display: none;
+	display: none;
 }
 
 .leaderboard nav {
-    grid-area: nav;
+	grid-area: nav;
 }
 
 .topFiveContainer {
-    display: flex;
-    flex-flow: nowrap column;
-    justify-content: center;
-    align-items: center;
-    grid-area: topFive;
+	display: flex;
+	flex-flow: nowrap column;
+	justify-content: center;
+	align-items: center;
+	grid-area: topFive;
 }
 
 .topFiveContainer::before {
-    content: 'Leaderboard';
-    color: green;
-    font-size: 2.5rem;
-    font-weight: 600;
-    padding-bottom: 1rem;
-    margin-bottom: 1rem;
-    border-bottom: 3px solid black;
+	content: 'Leaderboard';
+	color: green;
+	font-size: 2.5rem;
+	font-weight: 600;
+	padding-bottom: 1rem;
+	margin-bottom: 1rem;
+	border-bottom: 3px solid black;
 }
 
 .topFive {
-    background-color: rgba(0, 0, 0, 0.3);
-    width:  20rem;
-    height: 20rem;
-    display: flex;
-    flex-flow: nowrap column;
-    justify-content: center;
-    align-items: center;
-    border-radius: 10px;
+	background-color: rgba(0, 0, 0, 0.3);
+	width: 20rem;
+	height: 20rem;
+	display: flex;
+	flex-flow: nowrap column;
+	justify-content: center;
+	align-items: center;
+	border-radius: 10px;
 }
 
 .LBplayer {
-    color: white;
-    padding: 1rem;
-    font-weight: 400;
+	color: white;
+	padding: 1rem;
+	font-weight: 400;
 }
 
 .leaderboard footer {
-    grid-area: footer;
+	grid-area: footer;
 }
 
 .score {
-    color: white;
-    font-weight: 800;
+	color: white;
+	font-weight: 800;
 }

@@ -1,304 +1,304 @@
 :root {
-    --home-board-size: 60vmin;
-    --home-board-size-mobile: 80vmin;
-    --game-board-size: 40rem;
-    --game-board-size-mobile: 34vh;
-    --shrap-width: 0.3rem;
-    --shrap-height: 0.3rem;
-    --shrap-fling-dist: 4rem;
-    --shrap-fling-dist-neg: -4rem;
-    --shrap-fling-dist-cnr: 3.5rem;
-    --shrap-fling-dist-cnr-neg: -3.5rem;
-    --shrap-fling-anim-dur: 1s;
-    --shrap-color: rgb(60, 56, 50);
-
+	--home-board-size: 60vmin;
+	--home-board-size-mobile: 80vmin;
+	--game-board-size: 40rem;
+	--game-board-size-mobile: 34vh;
+	--shrap-width: 0.3rem;
+	--shrap-height: 0.3rem;
+	--shrap-fling-dist: 4rem;
+	--shrap-fling-dist-neg: -4rem;
+	--shrap-fling-dist-cnr: 3.5rem;
+	--shrap-fling-dist-cnr-neg: -3.5rem;
+	--shrap-fling-anim-dur: 1s;
+	--shrap-color: rgb(60, 56, 50);
 }
 
 @media only screen and (min-width: 1650px) and (max-width: 1920px) {
-    :root {
-        --game-board-size: 35rem;
-    }
+	:root {
+		--game-board-size: 35rem;
+	}
 }
 
 @media only screen and (min-width: 1480px) and (max-width: 1649px) {
-    :root {
-        --game-board-size: 30rem;
-    }
+	:root {
+		--game-board-size: 30rem;
+	}
 }
 
 @media only screen and (min-width: 1260px) and (max-width: 1479px) {
-    :root {
-        --game-board-size: 25rem;
-    }
+	:root {
+		--game-board-size: 25rem;
+	}
 }
 
 @media only screen and (min-width: 1120px) and (max-width: 1259px) {
-    :root {
-        /* --home-board-size: 40rem; */
-        --game-board-size: 20rem;
-    }
+	:root {
+		/* --home-board-size: 40rem; */
+		--game-board-size: 20rem;
+	}
 }
 
 @media only screen and (min-width: 1000px) and (max-width: 1119px) {
-    :root {
-        /* --home-board-size: 35rem; */
-        --game-board-size: 17rem;
-    }
+	:root {
+		/* --home-board-size: 35rem; */
+		--game-board-size: 17rem;
+	}
 }
 
 @media only screen and (min-width: 750px) and (max-width: 999px) {
-    :root {
-        /* --home-board-size: 30rem; */
-        --game-board-size: 14rem;
-    }
+	:root {
+		/* --home-board-size: 30rem; */
+		--game-board-size: 14rem;
+	}
 }
 
 @media only screen and (max-width: 749px) {
-    :root {
-        /* --home-board-size: 25rem; */
-        --game-board-size: 14rem;
-    }
+	:root {
+		/* --home-board-size: 25rem; */
+		--game-board-size: 14rem;
+	}
 }
 
 .board {
-    position: relative;
-    padding: 1rem;
+	position: relative;
+	padding: 1rem;
 }
 
 .homeBoard {
-    align-content: center;
-    justify-content: center;
-    height: var(--home-board-size);
-    width: var(--home-board-size);
+	align-content: center;
+	justify-content: center;
+	height: var(--home-board-size);
+	width: var(--home-board-size);
 }
 
 .homePageLogged.mobile .homeBoard {
-    align-content: center;
-    justify-content: center;
-    height: var(--home-board-size-mobile);
-    width: var(--home-board-size-mobile);
+	align-content: center;
+	justify-content: center;
+	height: var(--home-board-size-mobile);
+	width: var(--home-board-size-mobile);
 }
 
 .userBoard {
-    display: grid;
-    grid-template-columns: 2rem var(--game-board-size);
-    grid-template-rows: 2rem var(--game-board-size);
-    gap: 0;
-    grid-template-areas:
-    "rows cols"
-    "rows board";
-    align-content: center;
+	display: grid;
+	grid-template-columns: 2rem var(--game-board-size);
+	grid-template-rows: 2rem var(--game-board-size);
+	gap: 0;
+	grid-template-areas:
+		'rows cols'
+		'rows board';
+	align-content: center;
 }
 
 .gamePage.mobile .userBoard {
-    display: grid;
-    grid-template-columns: 2rem var(--game-board-size-mobile);
-    grid-template-rows: 2rem var(--game-board-size-mobile);
-    gap: 0;
-    grid-template-areas:
-    "rows cols"
-    "rows board";
-    align-content: center;
-    padding-top: 0;
-    /* margin-right: calc(var(--game-board-size-mobile) / 10); */
+	display: grid;
+	grid-template-columns: 2rem var(--game-board-size-mobile);
+	grid-template-rows: 2rem var(--game-board-size-mobile);
+	gap: 0;
+	grid-template-areas:
+		'rows cols'
+		'rows board';
+	align-content: center;
+	padding-top: 0;
+	/* margin-right: calc(var(--game-board-size-mobile) / 10); */
 }
 
 .opponentBoard {
-    display: grid;
-    grid-template-columns: 2rem var(--game-board-size);
-    grid-template-rows: 2rem var(--game-board-size);
-    gap: 0;
-    grid-template-areas:
-    "rows cols"
-    "rows board";
-    align-content: center;
+	display: grid;
+	grid-template-columns: 2rem var(--game-board-size);
+	grid-template-rows: 2rem var(--game-board-size);
+	gap: 0;
+	grid-template-areas:
+		'rows cols'
+		'rows board';
+	align-content: center;
 }
 
 .gamePage.mobile .opponentBoard {
-    display: grid;
-    grid-template-columns: 2rem var(--game-board-size-mobile);
-    grid-template-rows: 2rem var(--game-board-size-mobile);
-    gap: 0;
-    grid-template-areas:
-    "rows cols"
-    "rows board";
-    align-content: center;
-    padding-top: 0;
-    margin-bottom: 3rem;
-    /* margin-right: calc(var(--game-board-size-mobile) / 10); */
+	display: grid;
+	grid-template-columns: 2rem var(--game-board-size-mobile);
+	grid-template-rows: 2rem var(--game-board-size-mobile);
+	gap: 0;
+	grid-template-areas:
+		'rows cols'
+		'rows board';
+	align-content: center;
+	padding-top: 0;
+	margin-bottom: 3rem;
+	/* margin-right: calc(var(--game-board-size-mobile) / 10); */
 }
 
 .rows {
-    display: flex;
-    grid-area: rows;
-    grid-row-start: 2;
-    flex-flow: nowrap column;
-    justify-content: space-around;
-    align-items: center;
-    color: white;
+	display: flex;
+	grid-area: rows;
+	grid-row-start: 2;
+	flex-flow: nowrap column;
+	justify-content: space-around;
+	align-items: center;
+	color: white;
 }
 
 .rows > h3 {
-    font-weight: 400;
+	font-weight: 400;
 }
 
 .gamePage.mobile .rows > h3 {
-    font-size: 0.7rem;
+	font-size: 0.7rem;
 }
 
 .cols {
-    display: flex;
-    grid-area: cols;
-    grid-column-start: 2;
-    flex-flow: nowrap row;
-    justify-content: space-around;
-    align-items: center;
-    margin-right: -0.3rem;
+	display: flex;
+	grid-area: cols;
+	grid-column-start: 2;
+	flex-flow: nowrap row;
+	justify-content: space-around;
+	align-items: center;
+	margin-right: -0.3rem;
 }
 
 .cols > h3 {
-    font-weight: 400;
-    color: white;
+	font-weight: 400;
+	color: white;
 }
 
 .gamePage.mobile .cols > h3 {
-    font-size: 0.7rem;
+	font-size: 0.7rem;
 }
 
 .grid {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    grid-area: board;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	grid-area: board;
 }
 
 .homeBoard .grid {
-    background-color: rgb(0, 105, 165);
-    /* background: url('./waterbg2.gif'); */
+	background-color: rgb(0, 105, 165);
+	/* background: url('./waterbg2.gif'); */
 }
 
 .userBoard .grid {
-    /* background: url('./waterbg2.gif'); */
-    background-color: rgba(0, 104, 165, 0.8);
+	/* background: url('./waterbg2.gif'); */
+	background-color: rgba(0, 104, 165, 0.8);
 }
 
 .opponentBoard .grid {
-    background-color: rgba(0, 104, 165, 0.8);
+	background-color: rgba(0, 104, 165, 0.8);
 }
 
 .gamePage.mobile .grid {
-    width: -webkit-max-content;
-    width: -moz-max-content;
-    width: max-content;
-    height: -webkit-max-content;
-    height: -moz-max-content;
-    height: max-content;
+	width: -webkit-max-content;
+	width: -moz-max-content;
+	width: max-content;
+	height: -webkit-max-content;
+	height: -moz-max-content;
+	height: max-content;
 }
 
 .allSqaures {
-    width: 100%;
-    height: 100%;
-    display: grid;
-    grid-template-columns: repeat(10, calc(var(--game-board-size) / 10));
-    grid-template-rows: repeat(10, calc(var(--game-board-size) / 10));
-    gap: 0;
-    grid-template-areas:
-    "a1 a2 a3 a4 a5 a6 a7 a8 a9 a10"
-    "b1 b2 b3 b4 b5 b6 b7 b8 b9 b10"
-    "c1 c2 c3 c4 c5 c6 c7 c8 c9 c10"
-    "d1 d2 d3 d4 d5 d6 d7 d8 d9 d10"
-    "e1 e2 e3 e4 e5 e6 e7 e8 e9 e10"
-    "f1 f2 f3 f4 f5 f6 f7 f8 f9 f10"
-    "g1 g2 g3 g4 g5 g6 g7 g8 g9 g10"
-    "h1 h2 h3 h4 h5 h6 h7 h8 h9 h10"
-    "i1 i2 i3 i4 i5 i6 i7 i8 i9 i10"
-    "j1 j2 j3 j4 j5 j6 j7 j8 j9 j10";
+	width: 100%;
+	height: 100%;
+	display: grid;
+	grid-template-columns: repeat(10, calc(var(--game-board-size) / 10));
+	grid-template-rows: repeat(10, calc(var(--game-board-size) / 10));
+	gap: 0;
+	grid-template-areas:
+		'a1 a2 a3 a4 a5 a6 a7 a8 a9 a10'
+		'b1 b2 b3 b4 b5 b6 b7 b8 b9 b10'
+		'c1 c2 c3 c4 c5 c6 c7 c8 c9 c10'
+		'd1 d2 d3 d4 d5 d6 d7 d8 d9 d10'
+		'e1 e2 e3 e4 e5 e6 e7 e8 e9 e10'
+		'f1 f2 f3 f4 f5 f6 f7 f8 f9 f10'
+		'g1 g2 g3 g4 g5 g6 g7 g8 g9 g10'
+		'h1 h2 h3 h4 h5 h6 h7 h8 h9 h10'
+		'i1 i2 i3 i4 i5 i6 i7 i8 i9 i10'
+		'j1 j2 j3 j4 j5 j6 j7 j8 j9 j10';
 }
 
 .gamePage.mobile .allSqaures {
-    grid-template-columns: repeat(10, minmax(auto, calc(var(--game-board-size-mobile) / 10)));
-    grid-template-rows: repeat(10, minmax(auto, calc(var(--game-board-size-mobile) / 10)));
+	grid-template-columns: repeat(10, minmax(auto, calc(var(--game-board-size-mobile) / 10)));
+	grid-template-rows: repeat(10, minmax(auto, calc(var(--game-board-size-mobile) / 10)));
 }
 
 .homeBoard .allSqaures {
-    width: 100%;
-    height: 100%;
-    display: grid;
-    grid-template-columns: repeat(10, auto);
-    grid-template-rows: repeat(10, auto);
-    gap: 0;
-    grid-template-areas:
-    "a1 a2 a3 a4 a5 a6 a7 a8 a9 a10"
-    "b1 b2 b3 b4 b5 b6 b7 b8 b9 b10"
-    "c1 c2 c3 c4 c5 c6 c7 c8 c9 c10"
-    "d1 d2 d3 d4 d5 d6 d7 d8 d9 d10"
-    "e1 e2 e3 e4 e5 e6 e7 e8 e9 e10"
-    "f1 f2 f3 f4 f5 f6 f7 f8 f9 f10"
-    "g1 g2 g3 g4 g5 g6 g7 g8 g9 g10"
-    "h1 h2 h3 h4 h5 h6 h7 h8 h9 h10"
-    "i1 i2 i3 i4 i5 i6 i7 i8 i9 i10"
-    "j1 j2 j3 j4 j5 j6 j7 j8 j9 j10";
+	width: 100%;
+	height: 100%;
+	display: grid;
+	grid-template-columns: repeat(10, auto);
+	grid-template-rows: repeat(10, auto);
+	gap: 0;
+	grid-template-areas:
+		'a1 a2 a3 a4 a5 a6 a7 a8 a9 a10'
+		'b1 b2 b3 b4 b5 b6 b7 b8 b9 b10'
+		'c1 c2 c3 c4 c5 c6 c7 c8 c9 c10'
+		'd1 d2 d3 d4 d5 d6 d7 d8 d9 d10'
+		'e1 e2 e3 e4 e5 e6 e7 e8 e9 e10'
+		'f1 f2 f3 f4 f5 f6 f7 f8 f9 f10'
+		'g1 g2 g3 g4 g5 g6 g7 g8 g9 g10'
+		'h1 h2 h3 h4 h5 h6 h7 h8 h9 h10'
+		'i1 i2 i3 i4 i5 i6 i7 i8 i9 i10'
+		'j1 j2 j3 j4 j5 j6 j7 j8 j9 j10';
 }
 
 .userBoard .singleSquare {
-    /* text-align: center; */
-    border: 1px solid rgba(0,255,0,0.3);
-    overflow: visible;
+	/* text-align: center; */
+	border: 1px solid rgba(0, 255, 0, 0.3);
+	overflow: visible;
 }
 
 .opponentBoard .singleSquare {
-    /* text-align: center; */
-    border: 1px solid rgba(255,0,0,0.4);
-    overflow: visible;
-    cursor: crosshair;
+	/* text-align: center; */
+	border: 1px solid rgba(255, 0, 0, 0.4);
+	overflow: visible;
+	cursor: crosshair;
 }
 
-.opponentBoard .singleSquare:hover,.homeBoard .singleSquare:hover {
-    box-shadow: 0px 0px 6px 2px rgba(0, 0, 0, 0.5);
+.opponentBoard .singleSquare:hover,
+.homeBoard .singleSquare:hover {
+	box-shadow: 0px 0px 6px 2px rgba(0, 0, 0, 0.5);
 }
 
 .hitMarker {
-    background: url('./hit.png');
-    background-size: 80%;
-    background-repeat: no-repeat;
-    background-position: center;
-    -webkit-filter: brightness(70%) saturate(60%) drop-shadow(0px 0px 8px rgba(0, 0, 0, 0.8));
-            filter: brightness(70%) saturate(60%) drop-shadow(0px 0px 8px rgba(0, 0, 0, 0.8));
-    z-index: 4;
-    -webkit-animation: fadeInShot 0.1s ease-out;
-            animation: fadeInShot 0.1s ease-out;
+	background: url('./hit.png');
+	background-size: 80%;
+	background-repeat: no-repeat;
+	background-position: center;
+	-webkit-filter: brightness(70%) saturate(60%) drop-shadow(0px 0px 8px rgba(0, 0, 0, 0.8));
+	filter: brightness(70%) saturate(60%) drop-shadow(0px 0px 8px rgba(0, 0, 0, 0.8));
+	z-index: 4;
+	-webkit-animation: fadeInShot 0.1s ease-out;
+	animation: fadeInShot 0.1s ease-out;
 }
 
 .preResultDiv {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 100;
-    border: 2px dashed rgba(0, 255, 21, 0.8);
-    border-radius: 50%;
-    width: 40%;
-    height: 40%;
-    -webkit-animation: preResultFlash 0.2s steps(2, jump-none) infinite forwards;
-            animation: preResultFlash 0.2s steps(2, jump-none) infinite forwards;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 100;
+	border: 2px dashed rgba(0, 255, 21, 0.8);
+	border-radius: 50%;
+	width: 40%;
+	height: 40%;
+	-webkit-animation: preResultFlash 0.2s steps(2, jump-none) infinite forwards;
+	animation: preResultFlash 0.2s steps(2, jump-none) infinite forwards;
 }
 
 @-webkit-keyframes preResultFlash {
-    0% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
-    }
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
 }
 
 @keyframes preResultFlash {
-    0% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
-    }
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
 }
 
 /* .userBoard .hitMarker {
@@ -312,352 +312,351 @@
 } */
 
 .aiShipSpotTest {
-    z-index: -1;
-    position: absolute;
-    width: 100%;
-    height: 100%;
+	z-index: -1;
+	position: absolute;
+	width: 100%;
+	height: 100%;
 }
 
 .hitMarkerBackgroundFlash {
-    z-index: 100;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: red;
-    -webkit-animation: hitMarkerBackgroundFlash 0.2s linear forwards;
-            animation: hitMarkerBackgroundFlash 0.2s linear forwards;
+	z-index: 100;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-color: red;
+	-webkit-animation: hitMarkerBackgroundFlash 0.2s linear forwards;
+	animation: hitMarkerBackgroundFlash 0.2s linear forwards;
 }
 
 @-webkit-keyframes hitMarkerBackgroundFlash {
-    0% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
-    }
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
 }
 
 @keyframes hitMarkerBackgroundFlash {
-    0% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
-    }
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
 }
 
 .hitMarkerGif {
-    z-index: 100;
-    position: absolute;
-    height: 130%;
-    width: auto;
-    transform: translate(25%, -50%);
-    -webkit-animation: fadeInShot 0.5s ease-out;
-            animation: fadeInShot 0.5s ease-out;
-    /* filter: contrast(400%) saturate(100%) hue-rotate(320deg); */
-
+	z-index: 100;
+	position: absolute;
+	height: 130%;
+	width: auto;
+	transform: translate(25%, -50%);
+	-webkit-animation: fadeInShot 0.5s ease-out;
+	animation: fadeInShot 0.5s ease-out;
+	/* filter: contrast(400%) saturate(100%) hue-rotate(320deg); */
 }
 
 /* shrapnel elements */
 
 .shrapN {
-    /* transform: translate(); */
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    z-index: 100;
-    -webkit-animation: flingUp var(--shrap-fling-anim-dur) ease-out forwards;
-            animation: flingUp var(--shrap-fling-anim-dur) ease-out forwards;
-    width: var(--shrap-width);
-    height: var(--shrap-height);
-    border-radius: 50%;
-    background-color: var(--shrap-color);
+	/* transform: translate(); */
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	z-index: 100;
+	-webkit-animation: flingUp var(--shrap-fling-anim-dur) ease-out forwards;
+	animation: flingUp var(--shrap-fling-anim-dur) ease-out forwards;
+	width: var(--shrap-width);
+	height: var(--shrap-height);
+	border-radius: 50%;
+	background-color: var(--shrap-color);
 }
 .shrapNE {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    z-index: 100;
-    -webkit-animation: flingUpRight var(--shrap-fling-anim-dur) ease-out forwards;
-            animation: flingUpRight var(--shrap-fling-anim-dur) ease-out forwards;
-    width: var(--shrap-width);
-    height: var(--shrap-height);
-    border-radius: 50%;
-    background-color: var(--shrap-color);;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	z-index: 100;
+	-webkit-animation: flingUpRight var(--shrap-fling-anim-dur) ease-out forwards;
+	animation: flingUpRight var(--shrap-fling-anim-dur) ease-out forwards;
+	width: var(--shrap-width);
+	height: var(--shrap-height);
+	border-radius: 50%;
+	background-color: var(--shrap-color);
 }
 .shrapE {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    z-index: 100;
-    -webkit-animation: flingRight var(--shrap-fling-anim-dur) ease-out forwards;
-            animation: flingRight var(--shrap-fling-anim-dur) ease-out forwards;
-    width: var(--shrap-width);
-    height: var(--shrap-height);
-    border-radius: 50%;
-    background-color: var(--shrap-color);;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	z-index: 100;
+	-webkit-animation: flingRight var(--shrap-fling-anim-dur) ease-out forwards;
+	animation: flingRight var(--shrap-fling-anim-dur) ease-out forwards;
+	width: var(--shrap-width);
+	height: var(--shrap-height);
+	border-radius: 50%;
+	background-color: var(--shrap-color);
 }
 .shrapSE {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    z-index: 100;
-    -webkit-animation: flingRightDown var(--shrap-fling-anim-dur) ease-out forwards;
-            animation: flingRightDown var(--shrap-fling-anim-dur) ease-out forwards;
-    width: var(--shrap-width);
-    height: var(--shrap-height);
-    border-radius: 50%;
-    background-color: var(--shrap-color);;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	z-index: 100;
+	-webkit-animation: flingRightDown var(--shrap-fling-anim-dur) ease-out forwards;
+	animation: flingRightDown var(--shrap-fling-anim-dur) ease-out forwards;
+	width: var(--shrap-width);
+	height: var(--shrap-height);
+	border-radius: 50%;
+	background-color: var(--shrap-color);
 }
 .shrapS {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    z-index: 100;
-    -webkit-animation: flingDown var(--shrap-fling-anim-dur) ease-out forwards;
-            animation: flingDown var(--shrap-fling-anim-dur) ease-out forwards;
-    width: var(--shrap-width);
-    height: var(--shrap-height);
-    border-radius: 50%;
-    background-color: var(--shrap-color);;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	z-index: 100;
+	-webkit-animation: flingDown var(--shrap-fling-anim-dur) ease-out forwards;
+	animation: flingDown var(--shrap-fling-anim-dur) ease-out forwards;
+	width: var(--shrap-width);
+	height: var(--shrap-height);
+	border-radius: 50%;
+	background-color: var(--shrap-color);
 }
 .shrapSW {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    z-index: 100;
-    -webkit-animation: flingDownLeft var(--shrap-fling-anim-dur) ease-out forwards;
-            animation: flingDownLeft var(--shrap-fling-anim-dur) ease-out forwards;
-    width: var(--shrap-width);
-    height: var(--shrap-height);
-    border-radius: 50%;
-    background-color: var(--shrap-color);;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	z-index: 100;
+	-webkit-animation: flingDownLeft var(--shrap-fling-anim-dur) ease-out forwards;
+	animation: flingDownLeft var(--shrap-fling-anim-dur) ease-out forwards;
+	width: var(--shrap-width);
+	height: var(--shrap-height);
+	border-radius: 50%;
+	background-color: var(--shrap-color);
 }
 .shrapW {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    z-index: 100;
-    -webkit-animation: flingLeft var(--shrap-fling-anim-dur) ease-out forwards;
-            animation: flingLeft var(--shrap-fling-anim-dur) ease-out forwards;
-    width: var(--shrap-width);
-    height: var(--shrap-height);
-    border-radius: 50%;
-    background-color: var(--shrap-color);;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	z-index: 100;
+	-webkit-animation: flingLeft var(--shrap-fling-anim-dur) ease-out forwards;
+	animation: flingLeft var(--shrap-fling-anim-dur) ease-out forwards;
+	width: var(--shrap-width);
+	height: var(--shrap-height);
+	border-radius: 50%;
+	background-color: var(--shrap-color);
 }
 .shrapNW {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    z-index: 100;
-    -webkit-animation: flingLeftUp var(--shrap-fling-anim-dur) ease-out forwards;
-            animation: flingLeftUp var(--shrap-fling-anim-dur) ease-out forwards;
-    width: var(--shrap-width);
-    height: var(--shrap-height);
-    border-radius: 50%;
-    background-color: var(--shrap-color);;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	z-index: 100;
+	-webkit-animation: flingLeftUp var(--shrap-fling-anim-dur) ease-out forwards;
+	animation: flingLeftUp var(--shrap-fling-anim-dur) ease-out forwards;
+	width: var(--shrap-width);
+	height: var(--shrap-height);
+	border-radius: 50%;
+	background-color: var(--shrap-color);
 }
 
 /* shrapnel animations */
 
 @-webkit-keyframes flingUp {
-    0% {
-        transform: translate(0, 0);
-        opacity: 1;
-    }
-    100% {
-        transform: translate(0, var(--shrap-fling-dist-neg));
-        opacity: 0;
-    }
+	0% {
+		transform: translate(0, 0);
+		opacity: 1;
+	}
+	100% {
+		transform: translate(0, var(--shrap-fling-dist-neg));
+		opacity: 0;
+	}
 }
 
 @keyframes flingUp {
-    0% {
-        transform: translate(0, 0);
-        opacity: 1;
-    }
-    100% {
-        transform: translate(0, var(--shrap-fling-dist-neg));
-        opacity: 0;
-    }
+	0% {
+		transform: translate(0, 0);
+		opacity: 1;
+	}
+	100% {
+		transform: translate(0, var(--shrap-fling-dist-neg));
+		opacity: 0;
+	}
 }
 
 @-webkit-keyframes flingUpRight {
-    0% {
-        transform: translate(0, 0);
-        opacity: 1;
-    }
-    100% {
-        transform: translate(var(--shrap-fling-dist-cnr), var(--shrap-fling-dist-cnr-neg));
-        opacity: 0;
-    }
+	0% {
+		transform: translate(0, 0);
+		opacity: 1;
+	}
+	100% {
+		transform: translate(var(--shrap-fling-dist-cnr), var(--shrap-fling-dist-cnr-neg));
+		opacity: 0;
+	}
 }
 
 @keyframes flingUpRight {
-    0% {
-        transform: translate(0, 0);
-        opacity: 1;
-    }
-    100% {
-        transform: translate(var(--shrap-fling-dist-cnr), var(--shrap-fling-dist-cnr-neg));
-        opacity: 0;
-    }
+	0% {
+		transform: translate(0, 0);
+		opacity: 1;
+	}
+	100% {
+		transform: translate(var(--shrap-fling-dist-cnr), var(--shrap-fling-dist-cnr-neg));
+		opacity: 0;
+	}
 }
 
 @-webkit-keyframes flingRight {
-    0% {
-        transform: translate(0, 0);
-        opacity: 1;
-    }
-    100% {
-        transform: translate(var(--shrap-fling-dist), 0);
-        opacity: 0;
-    }
+	0% {
+		transform: translate(0, 0);
+		opacity: 1;
+	}
+	100% {
+		transform: translate(var(--shrap-fling-dist), 0);
+		opacity: 0;
+	}
 }
 
 @keyframes flingRight {
-    0% {
-        transform: translate(0, 0);
-        opacity: 1;
-    }
-    100% {
-        transform: translate(var(--shrap-fling-dist), 0);
-        opacity: 0;
-    }
+	0% {
+		transform: translate(0, 0);
+		opacity: 1;
+	}
+	100% {
+		transform: translate(var(--shrap-fling-dist), 0);
+		opacity: 0;
+	}
 }
 
 @-webkit-keyframes flingRightDown {
-    0% {
-        transform: translate(0, 0);
-        opacity: 1;
-    }
-    100% {
-        transform: translate(var(--shrap-fling-dist-cnr), var(--shrap-fling-dist-cnr));
-        opacity: 0;
-    }
+	0% {
+		transform: translate(0, 0);
+		opacity: 1;
+	}
+	100% {
+		transform: translate(var(--shrap-fling-dist-cnr), var(--shrap-fling-dist-cnr));
+		opacity: 0;
+	}
 }
 
 @keyframes flingRightDown {
-    0% {
-        transform: translate(0, 0);
-        opacity: 1;
-    }
-    100% {
-        transform: translate(var(--shrap-fling-dist-cnr), var(--shrap-fling-dist-cnr));
-        opacity: 0;
-    }
+	0% {
+		transform: translate(0, 0);
+		opacity: 1;
+	}
+	100% {
+		transform: translate(var(--shrap-fling-dist-cnr), var(--shrap-fling-dist-cnr));
+		opacity: 0;
+	}
 }
 
 @-webkit-keyframes flingDown {
-    0% {
-        transform: translate(0, 0);
-        opacity: 1;
-    }
-    100% {
-        transform: translate(0, var(--shrap-fling-dist));
-        opacity: 0;
-    }
+	0% {
+		transform: translate(0, 0);
+		opacity: 1;
+	}
+	100% {
+		transform: translate(0, var(--shrap-fling-dist));
+		opacity: 0;
+	}
 }
 
 @keyframes flingDown {
-    0% {
-        transform: translate(0, 0);
-        opacity: 1;
-    }
-    100% {
-        transform: translate(0, var(--shrap-fling-dist));
-        opacity: 0;
-    }
+	0% {
+		transform: translate(0, 0);
+		opacity: 1;
+	}
+	100% {
+		transform: translate(0, var(--shrap-fling-dist));
+		opacity: 0;
+	}
 }
 
 @-webkit-keyframes flingDownLeft {
-    0% {
-        transform: translate(0, 0);
-        opacity: 1;
-    }
-    100% {
-        transform: translate(var(--shrap-fling-dist-cnr-neg), var(--shrap-fling-dist-cnr));
-        opacity: 0;
-    }
+	0% {
+		transform: translate(0, 0);
+		opacity: 1;
+	}
+	100% {
+		transform: translate(var(--shrap-fling-dist-cnr-neg), var(--shrap-fling-dist-cnr));
+		opacity: 0;
+	}
 }
 
 @keyframes flingDownLeft {
-    0% {
-        transform: translate(0, 0);
-        opacity: 1;
-    }
-    100% {
-        transform: translate(var(--shrap-fling-dist-cnr-neg), var(--shrap-fling-dist-cnr));
-        opacity: 0;
-    }
+	0% {
+		transform: translate(0, 0);
+		opacity: 1;
+	}
+	100% {
+		transform: translate(var(--shrap-fling-dist-cnr-neg), var(--shrap-fling-dist-cnr));
+		opacity: 0;
+	}
 }
 
 @-webkit-keyframes flingLeft {
-    0% {
-        transform: translate(0, 0);
-        opacity: 1;
-    }
-    100% {
-        transform: translate(var(--shrap-fling-dist-neg), 0);
-        opacity: 0;
-    }
+	0% {
+		transform: translate(0, 0);
+		opacity: 1;
+	}
+	100% {
+		transform: translate(var(--shrap-fling-dist-neg), 0);
+		opacity: 0;
+	}
 }
 
 @keyframes flingLeft {
-    0% {
-        transform: translate(0, 0);
-        opacity: 1;
-    }
-    100% {
-        transform: translate(var(--shrap-fling-dist-neg), 0);
-        opacity: 0;
-    }
+	0% {
+		transform: translate(0, 0);
+		opacity: 1;
+	}
+	100% {
+		transform: translate(var(--shrap-fling-dist-neg), 0);
+		opacity: 0;
+	}
 }
 
 @-webkit-keyframes flingLeftUp {
-    0% {
-        transform: translate(0, 0);
-        opacity: 1;
-    }
-    100% {
-        transform: translate(var(--shrap-fling-dist-cnr-neg), var(--shrap-fling-dist-cnr-neg));
-        opacity: 0;
-    }
+	0% {
+		transform: translate(0, 0);
+		opacity: 1;
+	}
+	100% {
+		transform: translate(var(--shrap-fling-dist-cnr-neg), var(--shrap-fling-dist-cnr-neg));
+		opacity: 0;
+	}
 }
 
 @keyframes flingLeftUp {
-    0% {
-        transform: translate(0, 0);
-        opacity: 1;
-    }
-    100% {
-        transform: translate(var(--shrap-fling-dist-cnr-neg), var(--shrap-fling-dist-cnr-neg));
-        opacity: 0;
-    }
+	0% {
+		transform: translate(0, 0);
+		opacity: 1;
+	}
+	100% {
+		transform: translate(var(--shrap-fling-dist-cnr-neg), var(--shrap-fling-dist-cnr-neg));
+		opacity: 0;
+	}
 }
 
 .missMarker {
-    background-color: rgba(0,150,255,0.7);
-    -webkit-animation: fadeInShot 0.1s ease-out;
-            animation: fadeInShot 0.1s ease-out;
+	background-color: rgba(0, 150, 255, 0.7);
+	-webkit-animation: fadeInShot 0.1s ease-out;
+	animation: fadeInShot 0.1s ease-out;
 }
 
 @-webkit-keyframes fadeInShot {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
 }
 
 @keyframes fadeInShot {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
 }
 
 /* .opponentBoard:before {
@@ -681,19 +680,19 @@
 } */
 
 @-webkit-keyframes fadeText {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
 }
 
 @keyframes fadeText {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
 }

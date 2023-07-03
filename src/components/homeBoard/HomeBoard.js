@@ -1,11 +1,11 @@
-import React from 'react';
-import Board from '../boards/Board';
-import './homeBoard.css';
+import React from 'react'
+import Board from '../boards/Board'
+import './homeBoard.css'
 
 const HomeBoard = () => {
-    return (
-        <div className='board homeBoard'>
-{/*            <div className='rows'>
+	return (
+		<div className='board homeBoard'>
+			{/*            <div className='rows'>
                 <h3>A</h3>
                 <h3>B</h3>
                 <h3>C</h3>
@@ -31,14 +31,13 @@ const HomeBoard = () => {
                 <h3>10</h3>
             </div>*/}
 
-            <div className='grid'>
-                <div className='allSqaures'>
-                    <Board />
-                </div>
-            </div>
-        </div>
-    )
+			<div className='grid'>
+				<div className='allSqaures'>
+					<Board />
+				</div>
+			</div>
+		</div>
+	)
 }
 
-export default HomeBoard;
-
+export default HomeBoard

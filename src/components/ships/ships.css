@@ -1,147 +1,147 @@
 .ship {
-    cursor: move;
-    z-index: 3;
-    overflow: visible;
+	cursor: move;
+	z-index: 3;
+	overflow: visible;
 }
 
 .carrier {
-    grid-row: 10 / 11;
-    grid-column: 1 / 6;
-    transform-origin: 10% 50%;
+	grid-row: 10 / 11;
+	grid-column: 1 / 6;
+	transform-origin: 10% 50%;
 }
 
 .carrierIcon {
-    background: url('./carrier.svg');
-    background-size: 90% 90%;
-    background-repeat: no-repeat;
-    background-position: center;
-    width: 100%;
-    height: 100%;
-    transform-origin: 10% 50%;
+	background: url('./carrier.svg');
+	background-size: 90% 90%;
+	background-repeat: no-repeat;
+	background-position: center;
+	width: 100%;
+	height: 100%;
+	transform-origin: 10% 50%;
 }
 
 .battleship {
-    grid-row: 9 / 10;
-    grid-column: 1 / 5;
-    transform-origin: 12.5% 50%;
+	grid-row: 9 / 10;
+	grid-column: 1 / 5;
+	transform-origin: 12.5% 50%;
 }
 
 .battleshipIcon {
-    background: url('./battleship.svg');
-    background-size: 90% 90%;
-    background-repeat: no-repeat;
-    background-position: center;
-    width: 100%;
-    height: 100%;
-    transform-origin: 10% 50%;
+	background: url('./battleship.svg');
+	background-size: 90% 90%;
+	background-repeat: no-repeat;
+	background-position: center;
+	width: 100%;
+	height: 100%;
+	transform-origin: 10% 50%;
 }
 
 .cruiser {
-    grid-row: 8 / 9;
-    grid-column: 1 / 4;
-    transform-origin: 16.5% 50%;
+	grid-row: 8 / 9;
+	grid-column: 1 / 4;
+	transform-origin: 16.5% 50%;
 }
 
 .cruiserIcon {
-    background: url('./cruiser.svg');
-    background-size: 90% 90%;
-    background-repeat: no-repeat;
-    background-position: center;
-    width: 100%;
-    height: 100%;
-    transform-origin: 10% 50%;
+	background: url('./cruiser.svg');
+	background-size: 90% 90%;
+	background-repeat: no-repeat;
+	background-position: center;
+	width: 100%;
+	height: 100%;
+	transform-origin: 10% 50%;
 }
 
 .submarine {
-    grid-row: 7 / 8;
-    grid-column: 1 / 4;
-    transform-origin: 16.5% 50%;
+	grid-row: 7 / 8;
+	grid-column: 1 / 4;
+	transform-origin: 16.5% 50%;
 }
 
 .submarineIcon {
-    background: url('./submarine.svg');
-    background-size: 90% 90%;
-    background-repeat: no-repeat;
-    background-position: center;
-    width: 100%;
-    height: 100%;
-    transform-origin: 10% 50%;
+	background: url('./submarine.svg');
+	background-size: 90% 90%;
+	background-repeat: no-repeat;
+	background-position: center;
+	width: 100%;
+	height: 100%;
+	transform-origin: 10% 50%;
 }
 
 .destroyer {
-    grid-row: 6 / 7;
-    grid-column: 1 / 3;
-    transform-origin: 25% 50%;
+	grid-row: 6 / 7;
+	grid-column: 1 / 3;
+	transform-origin: 25% 50%;
 }
 
 .destroyerIcon {
-    background: url('./destroyer.svg');
-    background-size: 90% 90%;
-    background-repeat: no-repeat;
-    background-position: center;
-    width: 100%;
-    height: 100%;
-    transform-origin: 10% 50%;
+	background: url('./destroyer.svg');
+	background-size: 90% 90%;
+	background-repeat: no-repeat;
+	background-position: center;
+	width: 100%;
+	height: 100%;
+	transform-origin: 10% 50%;
 }
 
 .rotate-carrier {
-    background: url('./carrier-vert.svg');
-    background-size: 90% 90%;
-    background-repeat: no-repeat;
-    background-position: center;
-    /* width: 100%;
+	background: url('./carrier-vert.svg');
+	background-size: 90% 90%;
+	background-repeat: no-repeat;
+	background-position: center;
+	/* width: 100%;
     height: 100%;
     transform-origin: 10% 50%; */
 }
 
 .rotate-battleship {
-    background: url('./battleship-vert.svg');
-    background-size: 90% 90%;
-    background-repeat: no-repeat;
-    background-position: center;
-    /* width: 100%;
+	background: url('./battleship-vert.svg');
+	background-size: 90% 90%;
+	background-repeat: no-repeat;
+	background-position: center;
+	/* width: 100%;
     height: 100%;
     transform-origin: 10% 50%; */
 }
 
 .rotate-cruiser {
-    background: url('./cruiser-vert.svg');
-    background-size: 90% 90%;
-    background-repeat: no-repeat;
-    background-position: center;
-    /* width: 100%;
+	background: url('./cruiser-vert.svg');
+	background-size: 90% 90%;
+	background-repeat: no-repeat;
+	background-position: center;
+	/* width: 100%;
     height: 100%;
     transform-origin: 10% 50%; */
 }
 
 .rotate-submarine {
-    background: url('./submarine-vert.svg');
-    background-size: 90% 90%;
-    background-repeat: no-repeat;
-    background-position: center;
-    /* width: 100%;
+	background: url('./submarine-vert.svg');
+	background-size: 90% 90%;
+	background-repeat: no-repeat;
+	background-position: center;
+	/* width: 100%;
     height: 100%;
     transform-origin: 10% 50%; */
 }
 
 .rotate-destroyer {
-    background: url('./destroyer-vert.svg');
-    background-size: 90% 90%;
-    background-repeat: no-repeat;
-    background-position: center;
-    /* width: 100%;
+	background: url('./destroyer-vert.svg');
+	background-size: 90% 90%;
+	background-repeat: no-repeat;
+	background-position: center;
+	/* width: 100%;
     height: 100%;
     transform-origin: 10% 50%; */
 }
 
 .shipSunk {
-   background-color: rgb(150, 5, 5, 0.7);
+	background-color: rgb(150, 5, 5, 0.7);
 }
 
 .shipSunkUser {
-    -webkit-filter: invert(8%) sepia(88%) saturate(2606%) hue-rotate(346deg) brightness(70%) contrast(150%);
-            filter: invert(8%) sepia(88%) saturate(2606%) hue-rotate(346deg) brightness(70%) contrast(150%);
-            transform: rotateZ(7deg);
-            transform-origin: 20% 100%;
-            transition: transform 1.5s linear;
+	-webkit-filter: invert(8%) sepia(88%) saturate(2606%) hue-rotate(346deg) brightness(70%) contrast(150%);
+	filter: invert(8%) sepia(88%) saturate(2606%) hue-rotate(346deg) brightness(70%) contrast(150%);
+	transform: rotateZ(7deg);
+	transform-origin: 20% 100%;
+	transition: transform 1.5s linear;
 }
