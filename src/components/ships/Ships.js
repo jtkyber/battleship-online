@@ -308,23 +308,23 @@ const Ships = () => {
 	return (
 		<>
 			<div id='5' className='ship carrier'>
-				<div className='carrierIcon'></div>
+				<div className='shipImg carrierIcon'></div>
 			</div>
 
 			<div id='4' className='ship battleship'>
-				<div className='battleshipIcon'></div>
+				<div className='shipImg battleshipIcon'></div>
 			</div>
 
 			<div id='3' className='ship cruiser'>
-				<div className='cruiserIcon'></div>
+				<div className='shipImg cruiserIcon'></div>
 			</div>
 
 			<div id='3' className='ship submarine'>
-				<div className='submarineIcon'></div>
+				<div className='shipImg submarineIcon'></div>
 			</div>
 
 			<div id='2' className='ship destroyer'>
-				<div className='destroyerIcon'></div>
+				<div className='shipImg destroyerIcon'></div>
 			</div>
 		</>
 	);
