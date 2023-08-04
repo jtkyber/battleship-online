@@ -52,7 +52,7 @@
 	color: var(--ship-word-color);
 }
 .homeBoard .f6 {
-	background: url('../ships/submarine-vert-home.svg');
+	background: url('../ships/submarine-vert-home.png');
 	background-size: contain;
 	background-repeat: no-repeat;
 	background-position: center;
