@@ -2,6 +2,7 @@
 	cursor: move;
 	z-index: 3;
 	overflow: visible;
+	padding: 0.2rem;
 }
 
 .carrier {
