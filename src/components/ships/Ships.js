@@ -100,58 +100,63 @@ const Ships = () => {
 	// Place a ship down that is currently selected
 
 	window.onclick = e => {
-		if (!isMobile) {
-			if (!shipIsSelected && e.target?.parentElement?.classList?.contains('ship')) {
-				onShipSelect(e);
-			} else if (
-				!isMobile &&
-				shipIsSelected &&
-				e.target.classList.contains('singleSquare') &&
-				rotating === false &&
-				areaIsClear()
-			) {
-				audio.dropShip.play();
-				selectedShip.style.pointerEvents = 'auto';
-				document.querySelector('.userBoard').style.cursor = 'default';
-				selectedShip.style.border = null;
-				shipIsSelected = false;
+		if (isMobile) return;
+
+		if (!shipIsSelected && e.target?.parentElement?.classList?.contains('ship')) {
+			onShipSelect(e);
+		} else if (
+			!isMobile &&
+			shipIsSelected &&
+			e.target.classList.contains('singleSquare') &&
+			rotating === false &&
+			areaIsClear()
+		) {
+			audio.dropShip.play();
+			selectedShip.style.pointerEvents = 'auto';
+			document.querySelector('.userBoard').style.cursor = 'default';
+			selectedShip.style.border = null;
+			shipIsSelected = false;
+		}
+	};
+
+	window.ontouchend = e => {
+		if (!isMobile || showGameInstructions) return;
+
+		if (
+			shipIsSelected &&
+			!moving &&
+			areaIsClear() &&
+			!wasShipTouched(e.changedTouches?.[0].clientX, e.changedTouches?.[0].clientY)
+		) {
+			audio.dropShip.play();
+			selectedShip.style.pointerEvents = 'auto';
+			userBoard.style.cursor = 'default';
+			selectedShip.style.border = null;
+			shipIsSelected = false;
+		} else if (shipIsSelected && !moving) {
+			if (orientation === 'hor') {
+				orientation = 'vert';
+				positionShipOnGrid(e);
+			} else if (orientation === 'vert') {
+				orientation = 'hor';
+				positionShipOnGrid(e);
 			}
-		} else if (!showGameInstructions) {
-			if (
-				shipIsSelected &&
-				!moving &&
-				areaIsClear() &&
-				!wasShipTouched(e.changedTouches?.[0].clientX, e.changedTouches?.[0].clientY)
-			) {
+			audio.rotateShip.play();
+			setManualGridLocation = true;
+			rotating = true;
+		} else if (shipIsSelected && moving) {
+			if (rotating === false && areaIsClear()) {
 				audio.dropShip.play();
 				selectedShip.style.pointerEvents = 'auto';
 				userBoard.style.cursor = 'default';
 				selectedShip.style.border = null;
 				shipIsSelected = false;
-			} else if (shipIsSelected && !moving) {
-				if (orientation === 'hor') {
-					orientation = 'vert';
-					positionShipOnGrid(e);
-				} else if (orientation === 'vert') {
-					orientation = 'hor';
-					positionShipOnGrid(e);
-				}
-				audio.rotateShip.play();
-				setManualGridLocation = true;
-				rotating = true;
-			} else if (shipIsSelected && moving) {
-				if (isMobile && shipIsSelected && rotating === false && areaIsClear()) {
-					audio.dropShip.play();
-					selectedShip.style.pointerEvents = 'auto';
-					userBoard.style.cursor = 'default';
-					selectedShip.style.border = null;
-					shipIsSelected = false;
-				}
-			} else if (!shipIsSelected && e.target.parentElement.classList.contains('ship')) {
-				onShipSelect(e);
 			}
-			moving = false;
+		} else if (!shipIsSelected && e.target.parentElement.classList.contains('ship')) {
+			onShipSelect(e);
 		}
+
+		moving = false;
 	};
 
 	const wasShipTouched = (x, y) => {
@@ -221,6 +226,7 @@ const Ships = () => {
 
 	const matchTouchToSquares = (x, y) => {
 		let selectedSquare = null;
+
 		for (let i = 0; i < squares.length; i++) {
 			const squareLeft = squares[i].getBoundingClientRect().left;
 			const squareRight = squares[i].getBoundingClientRect().right;
@@ -229,7 +235,7 @@ const Ships = () => {
 
 			if (x > squareLeft && x < squareRight && y > squareTop && y < squareBottom) {
 				selectedSquare = squares[i];
-				return;
+				break;
 			}
 		}
 
