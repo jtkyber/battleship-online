@@ -269,7 +269,7 @@ const Game = ({ onRouteChange }) => {
 				throw new Error('Error');
 			}
 			const isOnline = await response.json();
-			if (!isOnline) {
+			if (isOnline === false) {
 				window.alert('Opponent has left the game');
 				user.hash === 'guest' ? setRoute('login') : setRoute('loggedIn');
 			}
